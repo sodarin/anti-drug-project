@@ -1,0 +1,102 @@
+<nz-layout>
+  <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null" [nzCollapsedWidth]="0">
+    <div class="user-panel">
+      <nz-input-group [nzSuffix]="suffixIconSearch">
+        <input type="text" nz-input placeholder="搜索" />
+      </nz-input-group>
+      <ng-template #suffixIconSearch>
+        <i nz-icon nzType="search"></i>
+      </ng-template>
+    </div>
+    <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+      <li nz-submenu nzTitle="禁毒讲堂" nzIcon="caret-down">
+        <ul>
+          <li nz-menu-item>全部课程</li>
+          <li nz-menu-item>学堂在线</li>
+          <li nz-menu-item>寓教于乐</li>
+          <li nz-menu-item>专题讲座</li>
+        </ul>
+      </li>
+      <li nz-submenu nzTitle="班级" nzIcon="caret-down">
+        <ul>
+          <li nz-menu-item>小学班级</li>
+          <li nz-menu-item>初中班级</li>
+          <li nz-menu-item>高中班级</li>
+        </ul>
+      </li>
+      <li nz-menu-item>教师培训</li>
+      <li nz-menu-item>开放资源</li>
+      <li nz-menu-item>师资介绍</li>
+      <li nz-menu-item>心理驿站</li>
+      <li nz-submenu nzTitle="新闻资讯" nzIcon="caret-down">
+        <ul>
+          <li nz-menu-item>禁毒法规</li>
+          <li nz-menu-item>禁毒新闻</li>
+          <li nz-menu-item>经典案例</li>
+        </ul>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-header>
+      <i
+        class="trigger"
+        nz-icon
+        [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+        (click)="isCollapsed = !isCollapsed"
+      ></i>
+      <div class="empty-space mobile-style"></div>
+      <img src="../../assets/img/avatar.jpg"/>
+      <ul class="main-menu" nz-menu nzMode="horizontal">
+        <li nz-submenu nzTitle="禁毒讲堂" nzIcon="caret-down">
+          <ul>
+            <li nz-menu-item>全部课程</li>
+            <li nz-menu-item>学堂在线</li>
+            <li nz-menu-item>寓教于乐</li>
+            <li nz-menu-item>专题讲座</li>
+          </ul>
+        </li>
+        <li nz-submenu nzTitle="班级" nzIcon="caret-down">
+          <ul>
+            <li nz-menu-item>小学班级</li>
+            <li nz-menu-item>初中班级</li>
+            <li nz-menu-item>高中班级</li>
+          </ul>
+        </li>
+        <li nz-menu-item>教师培训</li>
+        <li nz-menu-item>开放资源</li>
+        <li nz-menu-item>师资介绍</li>
+        <li nz-menu-item>心理驿站</li>
+        <li nz-submenu nzTitle="新闻资讯" nzIcon="caret-down">
+          <ul>
+            <li nz-menu-item>禁毒法规</li>
+            <li nz-menu-item>禁毒新闻</li>
+            <li nz-menu-item>经典案例</li>
+          </ul>
+        </li>
+      </ul>
+      <div class="empty-space"></div>
+      <div class="user-panel">
+        <nz-input-group [nzSuffix]="suffixIconSearch">
+          <input type="text" nz-input placeholder="搜索" />
+        </nz-input-group>
+        <ng-template #suffixIconSearch>
+          <i nz-icon nzType="search"></i>
+        </ng-template>
+      </div>
+      <span class="user-operation">
+      <span *ngIf="!login">登录</span>/<span *ngIf="!login" class="register">注册</span>
+  </span>
+      <i class="mobile-user-operation" nz-icon nz-popover nzTitle="个人面板" [nzContent]="userPanelContent" nzPlacement="bottomLeft" nzType="user"></i>
+      <ng-template #userPanelContent>
+        <div><span><i nz-icon nzType="login"></i>登录</span></div>
+        <div><span><i nz-icon nzType="idcard"></i>注册</span></div>
+      </ng-template>
+    </nz-header>
+    <nz-content>
+      <router-outlet></router-outlet>
+    </nz-content>
+    <nz-footer>Powered by dongdong v8.2.32 ©2017-2019 课程存档<br/>
+      课程内容版权均归 中国刑事警察学院禁毒学系 所有 辽ICP备14018221号</nz-footer>
+  </nz-layout>
+</nz-layout>
