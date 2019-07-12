@@ -1,0 +1,79 @@
+nz-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 0;
+}
+.trigger {
+  font-size: 26px;
+  line-height: 64px;
+  padding: 0 24px;
+  cursor: pointer;
+  transition: color 0.3s;;
+  color: rgba(255, 255, 255, .65);
+}
+.trigger:hover {
+  color: rgba(255, 255, 255);
+}
+[nz-menu] {
+  line-height: 64px;
+  font-size: 16px;
+}
+.background-title {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.background-title, .user-panel {
+  font-size: 16px;
+  color: rgba(255, 255, 255, .65);
+  cursor: pointer;
+  -webkit-transition: color .3s;
+  -moz-transition: color .3s;
+  -ms-transition: color .3s;
+  -o-transition: color .3s;
+  transition: color .3s;
+}
+.user-panel {
+  margin-right: 20px;
+}
+.user-panel i {
+  margin-right: 5px;
+}
+.background-title:hover {
+  color: #ffffff;
+}
+.mobile-style {
+  display: none;
+}
+nz-content {
+  margin: 20px 16px 0;
+  min-height: 570px;
+  background: #ffffff;
+  padding: 10px 10px;
+}
+@media screen and (min-width: 777px) {
+  .trigger {
+    display: none;
+  }
+}
+@media screen and (max-width: 776px) {
+  .main-menu {
+    display: none;
+  }
+  .user-panel {
+    display: none;
+  }
+  .background-title {
+    margin: 0;
+  }
+  .mobile-style {
+    display: inline-block;
+  }
+}
+nz-footer {
+  text-align: center;
+}
+:host ::ng-deep .ant-layout-footer {
+  padding: 10px 20px;
+}

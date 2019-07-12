@@ -1,0 +1,50 @@
+<div class="content">
+  <div class="filter-condition">
+    <div class="time-filter">
+      <nz-select class="select-control" [(ngModel)]="selectedTimeFilterValue" nzAllowClear nzPlaceHolder="时间类型">
+        <nz-option nzValue="login" nzLabel="登录时间"></nz-option>
+        <nz-option nzValue="register" nzLabel="注册时间"></nz-option>
+      </nz-select>
+      <nz-range-picker class="time-area" [(ngModel)]="dateRange" (ngModelChange)="onChange($event)"  [nzDateRender]="calendarRender" nzShowTime></nz-range-picker>
+      <ng-template #calendarRender let-current>
+        <div class="ant-calendar-date mobile-width">
+          {{ current.getDate() }}
+        </div>
+      </ng-template>
+    </div>
+    <div class="user-filter">
+      <nz-select class="select-control" [(ngModel)]="selectedRoleFilterValue">
+        <nz-option nzValue="all" nzLabel="所有角色"></nz-option>
+        <nz-option nzValue="student" nzLabel="学员"></nz-option>
+        <nz-option nzValue="teacher" nzLabel="教师"></nz-option>
+        <nz-option nzValue="admin" nzLabel="管理员"></nz-option>
+        <nz-option nzValue="super-admin" nzLabel="超级管理员"></nz-option>
+        <nz-option nzValue="educational-admin" nzLabel="教务管理员"></nz-option>
+      </nz-select>
+      <nz-divider nzType="vertical"></nz-divider>
+      <nz-select class="select-control name-containing-filter" [(ngModel)]="selectedNameContaining">
+        <nz-option nzValue="username" nzLabel="用户名"></nz-option>
+        <nz-option nzValue="birthday" nzLabel="生日"></nz-option>
+      </nz-select>
+      <input class="name-containing-input" nz-input placeholder="Basic usage" [(ngModel)]="inputValue" />
+      <button nz-button nzType="primary" class="search-button"><i nz-icon nzType="search"></i>搜索</button>
+    </div>
+  </div>
+  <nz-divider [nzText]="'用户总数： '"></nz-divider>
+  <nz-table #userListTable [nzData]="dataList">
+    <thead>
+      <tr>
+        <th>用户名</th>
+        <th>生日</th>
+        <th>注册时间</th>
+        <th>最近登录</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of userListTable.data">
+
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {ClientComponent} from '../client/client.component';
 import {FrontDeskComponent} from './front-desk.component';
-import {TestComponent} from './test/test.component';
 import {DashboardComponent} from '../client/dashboard/dashboard.component';
 
 
