@@ -26,12 +26,20 @@
         <nz-option nzValue="username" nzLabel="用户名"></nz-option>
         <nz-option nzValue="birthday" nzLabel="生日"></nz-option>
       </nz-select>
-      <input class="name-containing-input" nz-input placeholder="Basic usage" [(ngModel)]="inputValue" />
+      <input class="name-containing-input" nz-input placeholder="请输入关键字" [(ngModel)]="inputValue" />
       <button nz-button nzType="primary" class="search-button"><i nz-icon nzType="search"></i>搜索</button>
     </div>
   </div>
-  <nz-divider [nzText]="'用户总数： '"></nz-divider>
-  <nz-table #userListTable [nzData]="dataList">
+  <nz-divider [nzText]="'用户总数： ' + total"></nz-divider>
+  <nz-table
+    #userListTable
+    [nzData]="displayData"
+    [nzFrontPagination]="false"
+    [nzTotal]="total"
+    [nzLoading]="loading"
+    [nzPageSize]="10"
+    [(nzPageIndex)]="pageIndex"
+    (nzPageIndexChange)="searchData()">
     <thead>
       <tr>
         <th>用户名</th>
@@ -43,7 +51,26 @@
     </thead>
     <tbody>
       <tr *ngFor="let data of userListTable.data">
-
+        <td>{{data.nickName}}<br/>
+        <span *ngFor="let role of data.roles">{{role}}</span></td>
+        <td>{{data.birthDay}}</td>
+        <td>{{data.creatTime}}<br/>
+        <span>{{data.creatIpArea}}</span></td>
+        <td>{{data.loginTime}}<br/>
+        <span>{{data.loginIp}}, </span><span>{{data.loginIpArea}}</span></td>
+        <td><i nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="click" nz-icon nzType="more" nzTheme="outline"></i></td>
+        <ng-template #operationTemplate>
+          <div>
+            <div><span (click)="viewUserInfo(data.userId)"><i nz-icon nzType="eye" nzTheme="outline"></i>查看用户信息</span></div>
+            <div><span><i nz-icon nzType="edit" nzTheme="outline"></i>编辑用户信息</span></div>
+            <div><span><i nz-icon nzType="team" nzTheme="outline"></i>设置用户组</span></div>
+            <div>
+              <span *ngIf="data.locked==1"><i nz-icon nzType="lock" nzTheme="outline"></i>封禁用户</span>
+              <span *ngIf="data.locked==0"><i nz-icon nzType="unlock" nzTheme="outline"></i>解禁用户</span>
+            </div>
+            <p>Content</p>
+          </div>
+        </ng-template>
       </tr>
     </tbody>
   </nz-table>

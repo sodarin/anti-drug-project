@@ -9,8 +9,8 @@ export class UserManagementService {
 
   constructor(private _http: HttpClient) { }
 
-  getUserList(targetPage: number, pageSize: number, filterOption: []): Observable<any> {
-    return this._http.post(`/api/getIndexUser`, {
+  getUserList(targetPage: number, pageSize: number, filterOption: [] = null): Observable<any> {
+    return this._http.post(`/user/getIndexUser`, {
       pageSize: pageSize,
       pageNum: targetPage,
     })

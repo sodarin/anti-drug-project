@@ -1,6 +1,6 @@
 {
-  "/api": {
-    "target": "http://localhost:8080",
+  "/user": {
+    "target": "http://219.216.65.219:8001",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true

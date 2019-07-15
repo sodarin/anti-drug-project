@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-user-header',
@@ -9,10 +10,16 @@ export class UserHeaderComponent implements OnInit {
 
   location: Location;
 
-  constructor() { }
+  constructor(
+    private route: Router
+  ) { }
 
   ngOnInit() {
     this.location = location;
+  }
+
+  navigate(url: string) {
+    this.route.navigateByUrl(url);
   }
 
 }

@@ -18,13 +18,13 @@
       <div class="background-title mobile-style" (click)="backToHomePage()">后台管理</div>
       <ul nzTheme="dark" class="main-menu" nz-menu nzMode="horizontal">
         <li nz-menu-item (click)="backToHomePage()" [nzSelected]="location?.pathname=='/admin'">后台管理</li>
-        <li nz-menu-item (click)="navigate('/admin/user')" [nzSelected]="location?.pathname=='/admin/user'">用户</li>
+        <li nz-menu-item (click)="navigate('/admin/user')" [nzSelected]="location?.pathname.startsWith('/admin/user')">用户</li>
         <li nz-menu-item [nzSelected]="location?.pathname=='/admin/course'">课程</li>
         <li nz-menu-item [nzSelected]="location?.pathname=='/admin/operation'">运营</li>
       </ul>
       <div class="empty-space"></div>
       <div class="user-panel">
-        <span><i nz-icon nzType="home" nzTheme="outline"></i>回到首页</span>
+        <span (click)="navigate('/client')"><i nz-icon nzType="home" nzTheme="outline"></i>回到首页</span>
       </div>
     </nz-header>
     <nz-content>
