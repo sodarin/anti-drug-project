@@ -14,6 +14,7 @@ import { UserApprovalManagementComponent } from './user/user-approval-management
 import { UserMessageManagementComponent } from './user/user-message-management/user-message-management.component';
 import { OnlineUserTableComponent } from './user/user-management/online-user-table/online-user-table.component';
 import { LoginLogTableComponent } from './user/user-management/login-log-table/login-log-table.component';
+import {CoreModule} from '../core/core.module';
 
 
 
@@ -21,7 +22,8 @@ import { LoginLogTableComponent } from './user/user-management/login-log-table/l
   declarations: [BackgroundComponent, HomePageComponent, UserComponent, UserHeaderComponent, UserTabComponent, UserManagementTableComponent, UserManagementComponent, UserStatisticsComponent, UserTeacherManagementComponent, UserApprovalManagementComponent, UserMessageManagementComponent, OnlineUserTableComponent, LoginLogTableComponent],
   imports: [
     ShareModule,
-    BackgroundRoutingModule
+    BackgroundRoutingModule,
+    CoreModule
   ]
 })
 export class BackgroundModule { }

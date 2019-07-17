@@ -13,6 +13,8 @@ import zh from '@angular/common/locales/zh';
 import {registerLocaleData} from '@angular/common';
 import {LoginModalComponent} from './core/modal/login-modal/login-modal.component';
 import {CoreModule} from './core/core.module';
+import {UserInfoViewModalComponent} from './core/modal/user-info-view-modal/user-info-view-modal.component';
+import {UserInfoEditModalComponent} from './core/modal/user-info-edit-modal/user-info-edit-modal.component';
 
 
 registerLocaleData(zh);
@@ -34,7 +36,9 @@ registerLocaleData(zh);
   ],
   providers: [{ provide: NZ_I18N, useValue: zh_CN }],
   entryComponents: [
-    LoginModalComponent
+    LoginModalComponent,
+    UserInfoViewModalComponent,
+    UserInfoEditModalComponent
   ],
   bootstrap: [AppComponent]
 })
