@@ -12,11 +12,13 @@ import { UserStatisticsComponent } from './user/user-statistics/user-statistics.
 import { UserTeacherManagementComponent } from './user/user-teacher-management/user-teacher-management.component';
 import { UserApprovalManagementComponent } from './user/user-approval-management/user-approval-management.component';
 import { UserMessageManagementComponent } from './user/user-message-management/user-message-management.component';
+import { OnlineUserTableComponent } from './user/user-management/online-user-table/online-user-table.component';
+import { LoginLogTableComponent } from './user/user-management/login-log-table/login-log-table.component';
 
 
 
 @NgModule({
-  declarations: [BackgroundComponent, HomePageComponent, UserComponent, UserHeaderComponent, UserTabComponent, UserManagementTableComponent, UserManagementComponent, UserStatisticsComponent, UserTeacherManagementComponent, UserApprovalManagementComponent, UserMessageManagementComponent],
+  declarations: [BackgroundComponent, HomePageComponent, UserComponent, UserHeaderComponent, UserTabComponent, UserManagementTableComponent, UserManagementComponent, UserStatisticsComponent, UserTeacherManagementComponent, UserApprovalManagementComponent, UserMessageManagementComponent, OnlineUserTableComponent, LoginLogTableComponent],
   imports: [
     ShareModule,
     BackgroundRoutingModule

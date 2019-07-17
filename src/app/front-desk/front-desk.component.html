@@ -84,9 +84,9 @@
           <i nz-icon nzType="search"></i>
         </ng-template>
       </div>
-      <span class="user-operation">
-      <span *ngIf="!login">登录</span>/<span *ngIf="!login" class="register">注册</span>
-  </span>
+      <span *ngIf="!isLogin" class="user-operation">
+        <span (click)="login()">登录</span>/<span class="register">注册</span>
+      </span>
       <i class="mobile-user-operation" nz-icon nz-popover nzTitle="个人面板" [nzContent]="userPanelContent" nzPlacement="bottomLeft" nzType="user"></i>
       <ng-template #userPanelContent>
         <div><span><i nz-icon nzType="login"></i>登录</span></div>

@@ -1,0 +1,42 @@
+<div class="content">
+  <div class="filter-condition">
+    <div class="user-filter">
+      <input class="name-containing-input" nz-input placeholder="用户名" [(ngModel)]="inputValue" />
+      <button nz-button nzType="primary" class="search-button"><i nz-icon nzType="search"></i>搜索</button>
+    </div>
+  </div>
+  <nz-divider [nzText]="'共 ' + total + ' 位在线用户（15分钟以内有活动）'"></nz-divider>
+  <nz-table
+    #onlineUserTable
+    [nzData]="displayData"
+    [nzFrontPagination]="false"
+    [nzTotal]="total"
+    [nzLoading]="loading"
+    [nzPageSize]="10"
+    [(nzPageIndex)]="pageIndex"
+    (nzPageIndexChange)="searchData()">
+    <thead>
+      <tr>
+        <th nzShowFilter
+            [nzFilterMultiple]="false"
+            [nzFilters]="listOfUserRange"
+            (nzFilterChange)="filter($event)">用户名</th>
+        <th>设备</th>
+        <th>客户端</th>
+        <th>操作系统</th>
+        <th>IP</th>
+        <th>最后访问时间</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of onlineUserTable.data">
+        <td>{{data.nickname}}</td>
+        <td>{{data.equipment}}</td>
+        <td>{{data.client}}</td>
+        <td>{{data.operatingSystem}}</td>
+        <td>{{data.ip}}</td>
+        <td>{{data.lastVisitingTime}}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>
