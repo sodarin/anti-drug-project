@@ -15,6 +15,7 @@ import {LoginModalComponent} from './core/modal/login-modal/login-modal.componen
 import {CoreModule} from './core/core.module';
 import {UserInfoViewModalComponent} from './core/modal/user-info-view-modal/user-info-view-modal.component';
 import {UserInfoEditModalComponent} from './core/modal/user-info-edit-modal/user-info-edit-modal.component';
+import {QuillEditorComponent, QuillModule} from 'ngx-quill';
 
 
 registerLocaleData(zh);
@@ -32,9 +33,14 @@ registerLocaleData(zh);
     FrontDeskModule,
     BackgroundModule,
     FormsModule,
-    CoreModule
+    CoreModule,
+    QuillModule.forRoot()
   ],
-  providers: [{ provide: NZ_I18N, useValue: zh_CN }],
+  providers: [
+    { provide: NZ_I18N, useValue: zh_CN },
+    QuillEditorComponent,
+    QuillModule
+    ],
   entryComponents: [
     LoginModalComponent,
     UserInfoViewModalComponent,

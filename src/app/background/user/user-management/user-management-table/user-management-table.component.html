@@ -29,6 +29,7 @@
       <input class="name-containing-input" nz-input placeholder="请输入关键字" [(ngModel)]="inputValue" />
       <button nz-button nzType="primary" class="search-button"><i nz-icon nzType="search"></i>搜索</button>
     </div>
+    <div></div>
   </div>
   <nz-divider [nzText]="'用户总数： ' + total"></nz-divider>
   <nz-table
@@ -58,7 +59,7 @@
         <span>{{data.creatIpArea}}</span></td>
         <td>{{data.loginTime}}<br/>
         <span>{{data.loginIp}}, </span><span>{{data.loginIpArea}}</span></td>
-        <td><i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="click" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
+        <td><i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
         <ng-template #operationTemplate>
           <div class="user-management-operation">
             <div><span (click)="viewUserInfo(data.userId)"><i nz-icon nzType="eye" nzTheme="outline"></i>查看用户信息</span></div>

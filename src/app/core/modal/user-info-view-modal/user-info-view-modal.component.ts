@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {NzModalRef} from 'ng-zorro-antd';
+import {NzMessageService, NzModalRef} from 'ng-zorro-antd';
+import {UserManagementService} from '../../../service/user-management/user-management.service';
 
 @Component({
   selector: 'app-user-info-view-modal',
@@ -8,16 +9,25 @@ import {NzModalRef} from 'ng-zorro-antd';
 })
 export class UserInfoViewModalComponent implements OnInit {
 
+  userInfo: any;
+
+
 
   @Input()
   userId: string;
 
   constructor(
-    private _modal: NzModalRef
+    private _modal: NzModalRef,
+    private userManagementService$: UserManagementService,
+    private _message: NzMessageService
   ) { }
 
   ngOnInit() {
-    console.log(this.userId)
+    this.userManagementService$.getUserDetailById(this.userId).subscribe(result => {
+      this.userInfo = result;
+      document.getElementById('introduction').innerHTML = this.userInfo.about
+
+    }, error1 => this._message.error(error1.error))
   }
 
 

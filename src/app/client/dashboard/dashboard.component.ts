@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {UserManagementService} from '../../service/user-management/user-management.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,9 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  file: any;
+
+  constructor(
+    private userManagementService$: UserManagementService
+  ) { }
 
   ngOnInit() {
+  }
+
+  upload() {
+    this.userManagementService$.uploadFile(this.file).subscribe(result => {
+
+    }, error1 => {
+
+    })
   }
 
 }

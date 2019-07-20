@@ -20,7 +20,7 @@ export class UserManagementTableComponent implements OnInit {
   dataList = [];
   displayData = [];
   loading: boolean = false;
-  total: number;
+  total: number = 0;
   totalPage: number;
   pageIndex: number = 1;
 
@@ -33,7 +33,8 @@ export class UserManagementTableComponent implements OnInit {
     private userManagementService$: UserManagementService,
     private _message: NzMessageService,
     private _modalService: NzModalService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.searchData()
@@ -46,13 +47,12 @@ export class UserManagementTableComponent implements OnInit {
   searchData(pageIndex: number = this.pageIndex) {
     this.displayData = [];
     this.loading = true;
-    this.userManagementService$.getUserList(pageIndex, 10).subscribe( result => {
+    this.userManagementService$.getUserList(pageIndex, 10).subscribe(result => {
       this.loading = false;
       this.total = result[0].totalUser;
-      this.totalPage = Math.ceil( this.total / 10);
+      this.totalPage = Math.ceil(this.total / 10);
       this.dataList = result;
       this.displayData = this.dataList;
-      console.log(result)
     }, error1 => this._message.error(error1.error))
   }
 
@@ -78,9 +78,9 @@ export class UserManagementTableComponent implements OnInit {
       nzWidth: 600,
       nzOkText: '提交',
       nzCancelText: '取消',
-      nzOnOk: () => {},
-      nzOnCancel: () => {}
+      nzOnOk: instance => instance.submit(),
+      nzOnCancel: instance => instance.destroy()
     })
-  }
 
+  }
 }

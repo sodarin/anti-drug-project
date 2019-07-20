@@ -1,1 +1,80 @@
-<p>user-info-edit-modal works!</p>
+<nz-form-item>
+  <nz-form-label [nzSm]="6" [nzXs]="24">姓名</nz-form-label>
+  <nz-form-control [nzSm]="14" [nzXs]="24">
+    <input nz-input [(ngModel)]="trueName" />
+  </nz-form-control>
+</nz-form-item>
+<nz-form-item>
+  <nz-form-label [nzSm]="6" [nzXs]="24">性别</nz-form-label>
+  <nz-form-control [nzSm]="14" [nzXs]="24">
+    <nz-radio-group [(ngModel)]="gender" nzName="gender">
+      <label nz-radio nzValue="secret">秘密</label>
+      <label nz-radio nzValue="male">男性</label>
+      <label nz-radio nzValue="female">女性</label>
+    </nz-radio-group>
+  </nz-form-control>
+</nz-form-item>
+<nz-form-item>
+  <nz-form-label [nzSm]="6" [nzXs]="24">身份证号</nz-form-label>
+  <nz-form-control [nzSm]="14" [nzXs]="24">
+    <input nz-input [(ngModel)]="idcard" />
+  </nz-form-control>
+</nz-form-item>
+<nz-form-item>
+  <nz-form-label [nzSm]="6" [nzXs]="24">手机号码</nz-form-label>
+  <nz-form-control [nzSm]="14" [nzXs]="24">
+    <input nz-input [(ngModel)]="mobile" />
+  </nz-form-control>
+</nz-form-item>
+<nz-form-item>
+  <nz-form-label [nzSm]="6" [nzXs]="24">公司</nz-form-label>
+  <nz-form-control [nzSm]="14" [nzXs]="24">
+    <input nz-input [(ngModel)]="company" />
+  </nz-form-control>
+</nz-form-item>
+<nz-form-item>
+  <nz-form-label [nzSm]="6" [nzXs]="24">职业</nz-form-label>
+  <nz-form-control [nzSm]="14" [nzXs]="24">
+    <input nz-input [(ngModel)]="job" />
+  </nz-form-control>
+</nz-form-item>
+<nz-form-item>
+  <nz-form-label [nzSm]="6" [nzXs]="24">头衔</nz-form-label>
+  <nz-form-control [nzSm]="14" [nzXs]="24">
+    <input nz-input [(ngModel)]="iam" />
+  </nz-form-control>
+</nz-form-item>
+<nz-form-item>
+  <nz-form-label [nzSm]="6" [nzXs]="24">个人签名</nz-form-label>
+  <nz-form-control [nzSm]="14" [nzXs]="24">
+    <textarea [(ngModel)]="signature" nz-input rows="2"></textarea>
+  </nz-form-control>
+</nz-form-item>
+<nz-form-item>
+  <nz-form-label [nzSm]="6" [nzXs]="24">个人主页</nz-form-label>
+  <nz-form-control [nzSm]="14" [nzXs]="24">
+    <input nz-input [(ngModel)]="site" />
+  </nz-form-control>
+</nz-form-item>
+<nz-form-item>
+  <nz-form-label [nzSm]="6" [nzXs]="24">微博</nz-form-label>
+  <nz-form-control [nzSm]="14" [nzXs]="24">
+    <input nz-input [(ngModel)]="weibo" />
+  </nz-form-control>
+</nz-form-item>
+<nz-form-item>
+  <nz-form-label [nzSm]="6" [nzXs]="24">微信</nz-form-label>
+  <nz-form-control [nzSm]="14" [nzXs]="24">
+    <input nz-input [(ngModel)]="weixin" />
+  </nz-form-control>
+</nz-form-item>
+<nz-form-item>
+  <nz-form-label [nzSm]="6" [nzXs]="24">qq</nz-form-label>
+  <nz-form-control [nzSm]="14" [nzXs]="24">
+    <input nz-input [(ngModel)]="qq" />
+  </nz-form-control>
+</nz-form-item>
+<div class="introduction-edit-area" nz-row>
+  <span style="text-align: right; color: rgba(0, 0, 0, .85);" nz-col nzSpan="6">自我介绍： </span>
+  <quill-editor nz-col nzSpan="14" [(ngModel)]="introductionContent"></quill-editor>
+</div>
