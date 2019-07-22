@@ -1,9 +1,9 @@
 <nz-layout>
   <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null" [nzCollapsedWidth]="0">
     <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-      <li nz-menu-item (click)="navigate('/admin/user')" [nzSelected]="location?.pathname=='/admin/user'">用户</li>
-      <li nz-menu-item [nzSelected]="location?.pathname=='/admin/course'">课程</li>
-      <li nz-menu-item [nzSelected]="location?.pathname=='/admin/operation'">运营</li>
+      <li nz-menu-item (click)="navigate('/admin/user')" [nzSelected]="location?.pathname.startsWith('/admin/user')">用户</li>
+      <li nz-menu-item (click)="navigate('/admin/course')" [nzSelected]="location?.pathname.startsWith('/admin/course')">课程</li>
+      <li nz-menu-item (click)="navigate('/admin/operation')" [nzSelected]="location?.pathname.startsWith('/admin/operation')">运营</li>
     </ul>
   </nz-sider>
   <nz-layout>
@@ -19,8 +19,8 @@
       <ul nzTheme="dark" class="main-menu" nz-menu nzMode="horizontal">
         <li nz-menu-item (click)="backToHomePage()" [nzSelected]="location?.pathname=='/admin'">后台管理</li>
         <li nz-menu-item (click)="navigate('/admin/user')" [nzSelected]="location?.pathname.startsWith('/admin/user')">用户</li>
-        <li nz-menu-item [nzSelected]="location?.pathname=='/admin/course'">课程</li>
-        <li nz-menu-item [nzSelected]="location?.pathname=='/admin/operation'">运营</li>
+        <li nz-menu-item (click)="navigate('/admin/course')" [nzSelected]="location?.pathname.startsWith('/admin/course')">课程</li>
+        <li nz-menu-item (click)="navigate('/admin/operation')" [nzSelected]="location?.pathname.startsWith('/admin/operation')">运营</li>
       </ul>
       <div class="empty-space"></div>
       <div class="user-panel">

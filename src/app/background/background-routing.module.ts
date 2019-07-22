@@ -8,6 +8,10 @@ import {UserStatisticsComponent} from './user/user-statistics/user-statistics.co
 import {UserTeacherManagementComponent} from './user/user-teacher-management/user-teacher-management.component';
 import {UserApprovalManagementComponent} from './user/user-approval-management/user-approval-management.component';
 import {UserMessageManagementComponent} from './user/user-message-management/user-message-management.component';
+import {BackCourseComponent} from './back-course/back-course.component';
+import {AdminCourseManagementComponent} from './back-course/admin-course-management/admin-course-management.component';
+import {OperationComponent} from './operation/operation.component';
+import {NewsManagementComponent} from './operation/news-management/news-management.component';
 
 
 const routes: Routes = [
@@ -19,6 +23,13 @@ const routes: Routes = [
           { path: 'teacher', component: UserTeacherManagementComponent },
           { path: 'approval', component: UserApprovalManagementComponent},
           { path: 'message', component: UserMessageManagementComponent }
+        ] },
+      { path: 'course', component: BackCourseComponent, children: [
+          { path: '', component: AdminCourseManagementComponent}
+        ] },
+      { path: 'operation', component: OperationComponent, children: [
+          { path: '', redirectTo: '/admin/operation/news', pathMatch: 'full' },
+          { path: 'news', component: NewsManagementComponent }
         ] }
     ]
   }
