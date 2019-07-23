@@ -20,11 +20,14 @@ import { OperationComponent } from './operation/operation.component';
 import { AdminCourseManagementComponent } from './back-course/admin-course-management/admin-course-management.component';
 import { GroupTopicManagementComponent } from './operation/group-topic-management/group-topic-management.component';
 import { NewsManagementComponent } from './operation/news-management/news-management.component';
+import { UserApprovalPageTabComponent } from './user/user-approval-management/user-approval-page-tab/user-approval-page-tab.component';
+import { ApprovalPendingTableComponent } from './user/user-approval-management/approval-pending-table/approval-pending-table.component';
+import { ApprovalSuccessTableComponent } from './user/user-approval-management/approval-success-table/approval-success-table.component';
 
 
 
 @NgModule({
-  declarations: [BackgroundComponent, HomePageComponent, UserComponent, UserHeaderComponent, UserTabComponent, UserManagementTableComponent, UserManagementComponent, UserStatisticsComponent, UserTeacherManagementComponent, UserApprovalManagementComponent, UserMessageManagementComponent, OnlineUserTableComponent, LoginLogTableComponent, BackCourseComponent, OperationComponent, AdminCourseManagementComponent, GroupTopicManagementComponent, NewsManagementComponent],
+  declarations: [BackgroundComponent, HomePageComponent, UserComponent, UserHeaderComponent, UserTabComponent, UserManagementTableComponent, UserManagementComponent, UserStatisticsComponent, UserTeacherManagementComponent, UserApprovalManagementComponent, UserMessageManagementComponent, OnlineUserTableComponent, LoginLogTableComponent, BackCourseComponent, OperationComponent, AdminCourseManagementComponent, GroupTopicManagementComponent, NewsManagementComponent, UserApprovalPageTabComponent, ApprovalPendingTableComponent, ApprovalSuccessTableComponent],
   imports: [
     ShareModule,
     BackgroundRoutingModule,

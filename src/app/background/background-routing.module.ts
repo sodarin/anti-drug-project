@@ -12,6 +12,7 @@ import {BackCourseComponent} from './back-course/back-course.component';
 import {AdminCourseManagementComponent} from './back-course/admin-course-management/admin-course-management.component';
 import {OperationComponent} from './operation/operation.component';
 import {NewsManagementComponent} from './operation/news-management/news-management.component';
+import {GroupTopicManagementComponent} from './operation/group-topic-management/group-topic-management.component';
 
 
 const routes: Routes = [
@@ -29,7 +30,8 @@ const routes: Routes = [
         ] },
       { path: 'operation', component: OperationComponent, children: [
           { path: '', redirectTo: '/admin/operation/news', pathMatch: 'full' },
-          { path: 'news', component: NewsManagementComponent }
+          { path: 'news', component: NewsManagementComponent },
+          { path: 'group-topic', component: GroupTopicManagementComponent }
         ] }
     ]
   }
