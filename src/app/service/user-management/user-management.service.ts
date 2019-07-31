@@ -58,6 +58,28 @@ export class UserManagementService {
     return this._http.get(`/user/getAllRoles`);
   }
 
+  updateUserRoles(roles: string, userId: string): Observable<any> {
+    return this._http.put(`/user/updateUserRole`, {
+      newRole: roles,
+      userId: userId
+    })
+  }
+
+  updatePassword(password: string, userId: string): Observable<any> {
+    return this._http.put(`/user/updatePassword`, {
+      password: password,
+      userId: userId
+    })
+  }
+
+  createNewUser(username: string, password: string, roleString: string): Observable<any> {
+    return this._http.post(`/user/xxx`, {
+      username: username,
+      password: password,
+      newRole: roleString
+    })
+  }
+
   updateLockedStatus(userId: string, lockedStatus: number): Observable<any> {
     return this._http.put(`/user/lockedUser`, {
       userId: userId,

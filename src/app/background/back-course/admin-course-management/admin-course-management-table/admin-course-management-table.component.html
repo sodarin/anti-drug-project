@@ -1,0 +1,26 @@
+<div class="content">
+  <div class="selection-filter">
+    <nz-cascader nzChangeOnSelect [nzPlaceHolder]="'课程分类'" [nzOptions]="options" [(ngModel)]="courseClassification"></nz-cascader>
+    <nz-divider nzType="vertical"></nz-divider>
+    <nz-select class="select-control" [(ngModel)]="courseStatus" nzAllowClear nzPlaceHolder="课程状态">
+      <nz-option nzValue="" nzLabel="全部状态"></nz-option>
+      <nz-option nzValue="-1" nzLabel="未发布"></nz-option>
+      <nz-option nzValue="1" nzLabel="已发布"></nz-option>
+      <nz-option nzValue="0" nzLabel="已关闭"></nz-option>
+    </nz-select>
+    <nz-divider nzType="vertical"></nz-divider>
+    <nz-select class="select-control" [(ngModel)]="courseType" nzAllowClear nzPlaceHolder="课程类型">
+      <nz-option nzValue="" nzLabel="所有类型"></nz-option>
+      <nz-option nzValue="-1" nzLabel="普通课程"></nz-option>
+      <nz-option nzValue="1" nzLabel="班级课程"></nz-option>
+    </nz-select>
+  </div>
+  <div class="input-filter">
+    <input class="name-containing-input" nz-input placeholder="请输入标题" [(ngModel)]="title" />
+    <nz-divider nzType="vertical"></nz-divider>
+    <input class="name-containing-input" nz-input placeholder="请输入创建者名字" [(ngModel)]="creator" />
+    <button (click)="filterCourse()" nz-button nzType="primary" class="search-button"><i nz-icon nzType="search"></i>搜索</button>
+    <nz-divider nzType="vertical"></nz-divider>
+    <button nz-button nzType="danger" class="create-button"><i nz-icon nzType="plus"></i>新增课程</button>
+  </div>
+</div>
