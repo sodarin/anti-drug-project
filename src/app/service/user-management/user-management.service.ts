@@ -9,24 +9,34 @@ export class UserManagementService {
 
   constructor(private _http: HttpClient) { }
 
-  getUserList(targetPage: number, pageSize: number, filterOption: [] = null): Observable<any> {
+  getUserList(targetPage: number, pageSize: number): Observable<any> {
     return this._http.post(`/user/getIndexUser`, {
       pageSize: pageSize,
       pageNum: targetPage,
     })
   }
+  filterUserList(targetPage: number, pageSize: number, filterOptions: any): Observable<any> {
+    return this._http.post(`/user/getIndexUser`, {
+      pageSize: pageSize,
+      pageNum: targetPage,
+      searchType: filterOptions.searchType,
+      searchParameter: filterOptions.searchParameter,
+      searchTimeType: filterOptions.searchTimeType,
+      starTime: filterOptions.starTime,
+      endTime: filterOptions.endTime,
+      role: filterOptions.role
+    })
+  }
 
   getUserDetailById(userId: string): Observable<any> {
-    return this._http.post(`/user/getUserDetail`, {
-      userId: userId
-    })
+    return this._http.get(`/user/getUserDetail?userId=${userId}`)
   }
 
   updateUserDetail(
     userId: string, trueName: string, gender: string, idcard: string, mobile: string, company: string, job: string, iam: string, signature: string, site: string,
     weibo: string, weixin: string, qq: string, about: string
   ): Observable<any> {
-    return this._http.post(`/user/updateUserDetail`, {
+    return this._http.put(`/user/updateUserDetail`, {
       id: userId,
       truename: trueName,
       gender: gender,
@@ -41,6 +51,39 @@ export class UserManagementService {
       weixin: weixin,
       qq: qq,
       about: about
+    })
+  }
+
+  getAllUserRoles(): Observable<any> {
+    return this._http.get(`/user/getAllRoles`);
+  }
+
+  updateUserRoles(roles: string, userId: string): Observable<any> {
+    return this._http.put(`/user/updateUserRole`, {
+      newRole: roles,
+      userId: userId
+    })
+  }
+
+  updatePassword(password: string, userId: string): Observable<any> {
+    return this._http.put(`/user/updatePassword`, {
+      password: password,
+      userId: userId
+    })
+  }
+
+  createNewUser(username: string, password: string, roleString: string): Observable<any> {
+    return this._http.post(`/user/xxx`, {
+      username: username,
+      password: password,
+      newRole: roleString
+    })
+  }
+
+  updateLockedStatus(userId: string, lockedStatus: number): Observable<any> {
+    return this._http.put(`/user/lockedUser`, {
+      userId: userId,
+      locked: lockedStatus
     })
   }
 
