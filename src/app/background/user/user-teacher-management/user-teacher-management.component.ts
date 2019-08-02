@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+
 @Component({
   selector: 'app-user-teacher-management',
   templateUrl: './user-teacher-management.component.html',
@@ -9,7 +10,7 @@ export class UserTeacherManagementComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
+
 
 }
