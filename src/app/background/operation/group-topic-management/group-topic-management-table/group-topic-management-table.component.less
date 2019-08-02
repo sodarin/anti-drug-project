@@ -1,0 +1,82 @@
+.content {
+  padding: 20px 0;
+}
+.select-control {
+  width: 120px;
+}
+.time-area {
+  margin-left: 20px;
+}
+.user-filter {
+  margin-top: 20px;
+}
+.name-containing-input {
+  width: 225px;
+  margin-left: 10px;
+}
+.search-button {
+  margin-left: 10px;
+}
+
+.role {
+  font-size: 12px;
+  color: rgba(0, 0, 0, .5);
+}
+
+.more-operation {
+  cursor: pointer;
+}
+
+.user-management-operation div > span > i {
+  margin-right: 5px;
+}
+
+.user-management-operation > div {
+  cursor: pointer;
+}
+
+@media screen and (max-width: 776px){
+  .select-control {
+    width: 100%;
+  }
+  .time-area {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+  :host ::ng-deep nz-picker, :host ::ng-deep .ant-calendar-picker {
+    width: 100% !important;
+  }
+  nz-divider {
+    display: none;
+  }
+  .name-containing-filter {
+    margin-top: 10px;
+  }
+  .name-containing-input {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 10px;
+  }
+  .search-button {
+    margin-left: 0;
+    margin-top: 10px;
+    width: 100%;
+  }
+}
+.user-management-operation > div {
+  margin-bottom: 10px;
+}
+
+@media screen and (max-width: 520px){
+  :host ::ng-deep .ant-table-thead > tr > th, :host ::ng-deep .ant-table-tbody > tr > td {
+    padding: 0;
+  }
+}
+.operate {
+  margin-top: 16px;
+  margin-left: 20px;
+}
+
+.operate span {
+  margin-left: 8px;
+}
