@@ -73,6 +73,8 @@ export class AdminCourseManagementTableComponent implements OnInit {
   title: string;
   creator: string;
 
+  totalCourse = 0;
+
   constructor() { }
 
   ngOnInit() {

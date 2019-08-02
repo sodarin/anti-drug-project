@@ -92,7 +92,7 @@ export class UserManagementTableComponent implements OnInit {
     this.loading = true;
     this.userManagementService$.getUserList(pageIndex, 10).subscribe(result => {
       this.loading = false;
-      this.total = result[0].totalUser;
+      this.total = result[0].totalUser ? result[0].totalUser: 0;
       this.totalPage = Math.ceil(this.total / 10);
       this.dataList = result;
       this.displayData = this.dataList;
