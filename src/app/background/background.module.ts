@@ -28,6 +28,12 @@ import { NewsManagementComponent } from './operation/news-management/news-manage
 import { UserApprovalPageTabComponent } from './user/user-approval-management/user-approval-page-tab/user-approval-page-tab.component';
 import { ApprovalPendingTableComponent } from './user/user-approval-management/approval-pending-table/approval-pending-table.component';
 import { ApprovalSuccessTableComponent } from './user/user-approval-management/approval-success-table/approval-success-table.component';
+<<<<<<< HEAD
+import { NewsTapComponent } from './operation/news-management/news-tap/news-tap.component';
+import { NewsManagementTableComponent } from './operation/news-management/news-management-table/news-management-table.component';
+import { ProgramaManagementTableComponent } from './operation/news-management/programa-management-table/programa-management-table.component';
+import { OperationHeaderComponent } from './operation/operation-header/operation-header.component';
+=======
 import { AdminCourseHeaderComponent } from './back-course/admin-course-header/admin-course-header.component';
 import { AdminCourseManagementTabComponent } from './back-course/admin-course-management/admin-course-management-tab/admin-course-management-tab.component';
 import { AdminOpenClassManagementComponent } from './back-course/admin-open-class-management/admin-open-class-management.component';
@@ -37,12 +43,17 @@ import { AdminCourseManagementTableComponent } from './back-course/admin-course-
 import { AdminCourseRecommendationTableComponent } from './back-course/admin-course-management/admin-course-recommendation-table/admin-course-recommendation-table.component';
 import { AdminCourseStatisticsTableComponent } from './back-course/admin-course-management/admin-course-statistics-table/admin-course-statistics-table.component';
 
+>>>>>>> e37f5ee7a4a62f949b882ab20793a5bb7ad639f9
 
 
 @NgModule({
+<<<<<<< HEAD
+  declarations: [BackgroundComponent, HomePageComponent, UserComponent, UserHeaderComponent, UserTabComponent, UserManagementTableComponent, UserManagementComponent, UserStatisticsComponent, UserTeacherManagementComponent, UserApprovalManagementComponent, UserMessageManagementComponent, OnlineUserTableComponent, LoginLogTableComponent, BackCourseComponent, OperationComponent, AdminCourseManagementComponent, GroupTopicManagementComponent, NewsManagementComponent, UserApprovalPageTabComponent, ApprovalPendingTableComponent, ApprovalSuccessTableComponent, NewsTapComponent, NewsManagementTableComponent, ProgramaManagementTableComponent, OperationHeaderComponent],
+=======
 
   declarations: [BackgroundComponent, HomePageComponent, UserComponent, UserHeaderComponent, UserTabComponent, UserManagementTableComponent, UserManagementComponent, UserStatisticsComponent, UserTeacherManagementComponent, UserApprovalManagementComponent, UserMessageManagementComponent, OnlineUserTableComponent, LoginLogTableComponent, BackCourseComponent, OperationComponent, AdminCourseManagementComponent, GroupTopicManagementComponent, NewsManagementComponent, UserApprovalPageTabComponent, ApprovalPendingTableComponent, ApprovalSuccessTableComponent, AdminCourseHeaderComponent, AdminCourseManagementTabComponent, AdminOpenClassManagementComponent, AdminClassManagementComponent, AdminTopicManagementComponent, AdminCourseManagementTableComponent, AdminCourseRecommendationTableComponent, AdminCourseStatisticsTableComponent,TeacherManagementTableComponent,TeacherPromoteComponent,TeacherTabComponent],
 
+>>>>>>> e37f5ee7a4a62f949b882ab20793a5bb7ad639f9
   imports: [
     ShareModule,
     BackgroundRoutingModule,
