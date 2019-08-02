@@ -1,0 +1,74 @@
+<div class="content">
+  <div class="filter-condition">
+    <div class="time-filter">
+      <!-- <nz-select class="select-control" [(ngModel)]="selectedTimeFilterValue" nzAllowClear nzPlaceHolder="时间类型">
+         <nz-option nzValue="login" nzLabel="登录时间"></nz-option>
+         <nz-option nzValue="register" nzLabel="注册时间"></nz-option>
+       </nz-select>
+       <nz-range-picker class="time-area" [(ngModel)]="dateRange" (ngModelChange)="onChange($event)"  [nzDateRender]="calendarRender" nzShowTime></nz-range-picker>
+       <ng-template #calendarRender let-current>
+         <div class="ant-calendar-date mobile-width">
+           {{ current.getDate() }}
+         </div>
+       </ng-template>
+     </div>
+     <div class="user-filter">
+        <nz-select class="select-control" [(ngModel)]="selectedRoleFilterValue">
+          <nz-option nzValue="all" nzLabel="所有角色"></nz-option>
+          <nz-option nzValue="student" nzLabel="学员"></nz-option>
+          <nz-option nzValue="teacher" nzLabel="教师"></nz-option>
+          <nz-option nzValue="admin" nzLabel="管理员"></nz-option>
+          <nz-option nzValue="super-admin" nzLabel="超级管理员"></nz-option>
+          <nz-option nzValue="educational-admin" nzLabel="教务管理员"></nz-option>
+        </nz-select>
+       <nz-divider nzType="vertical"></nz-divider>
+       <nz-select class="select-control name-containing-filter" [(ngModel)]="selectedNameContaining">
+         <nz-option nzValue="username" nzLabel="用户名"></nz-option>
+         <nz-option nzValue="birthday" nzLabel="生日"></nz-option>
+       </nz-select>-->
+      <input class="name-containing-input" nz-input placeholder="用户名" [(ngModel)]="inputValue" />
+      <button nz-button nzType="primary" class="search-button"><i nz-icon nzType="search"></i>搜索</button>
+    </div>
+    <div></div>
+  </div>
+  <nz-divider [nzText]="'用户总数： ' + total"></nz-divider>
+  <nz-table
+    #userListTable
+    [nzData]="displayData"
+    [nzFrontPagination]="false"
+    [nzTotal]="total"
+    [nzLoading]="loading"
+    [nzPageSize]="10"
+    [(nzPageIndex)]="pageIndex"
+    (nzPageIndexChange)="searchData()">
+    <thead>
+    <tr>
+      <th>用户名</th>
+      <th>推荐教师</th>
+      <th>最近登录</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of userListTable.data; let i of userListTable.data.length">
+      <td>{{data.nickName}}</td>
+      <td *ngIf= "data.promoted == 1">
+        <nz-tag [nzColor]="'#108ee9'">荐:{{data.promotedTime}}/序号:{{data.promotedSeq}}</nz-tag>></td>
+      <td *ngIf= "data.promoted == 0">否</td>
+        <!--<span class="role" *ngFor="let role of data.roles">{{role}}</span></td>
+      <td>{{data.birthDay}}</td>
+      <td>{{data.creatTime}}<br/>
+        <span>{{data.creatIpArea}}</span></td>-->
+      <td>{{data.loginTime}}<br/>
+        <span>{{data.loginIp}}, </span><span>{{data.loginIpArea}}</span></td>
+      <td><i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
+      <ng-template #operationTemplate>
+        <div class="user-management-operation">
+          <div><span (click)="viewUserInfo(data.userId)"><i nz-icon nzType="eye" nzTheme="outline"></i>查看</span></div>
+          <div><span (click)="editUserInfo(data.userId)"><i nz-icon nzType="edit" nzTheme="outline"></i>设置推荐</span></div>
+        </div>
+      </ng-template>
+    </tr>
+    </tbody>
+  </nz-table>
+</div>

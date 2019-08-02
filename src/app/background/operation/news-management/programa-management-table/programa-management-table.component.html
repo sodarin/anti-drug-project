@@ -1,0 +1,40 @@
+<div class="content">
+  <nz-table
+    #programaListTable
+    [nzData]="displayData"
+    [nzFrontPagination]="false"
+    [nzTotal]="total"
+    [nzLoading]="loading"
+    [nzPageSize]="10"
+    [(nzPageIndex)]="pageIndex"
+    (nzPageIndexChange)="searchData()">
+    <thead>
+    <tr>
+      <th>栏目名称</th>
+      <th>栏目地址</th>
+      <th>编码</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of programaListTable.data; let i of programaListTable.data.length">
+      <td>{{data.programa}}<br/>
+      <td>{{data.pAddress}}<br/>
+      <td>{{data.pCode}}<br/>
+      <td>{{data.state}}<br/>
+      <td><i class="more-operation" nz-popover nzTitle="编辑" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
+      <ng-template #operationTemplate>
+        <div class="programa-management-operation">
+          <div><span (click)="cancelPrograma(data.ProgramaId)"><i nz-icon nzType="eye" nzTheme="outline"></i>取消发布</span></div>
+          <div><span (click)="recyclePragrama(data.ProgramaId)"><i nz-icon nzType="edit" nzTheme="outline"></i>移至回收站</span></div>
+        </div>
+      </ng-template>
+    </tr>
+    </tbody>
+  </nz-table>
+
+  <ng-template #rolesCheckBox>
+    <nz-checkbox-group [(ngModel)]="checkOption"></nz-checkbox-group>
+  </ng-template>
+</div>
+

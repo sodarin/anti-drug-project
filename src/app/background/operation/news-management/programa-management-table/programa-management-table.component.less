@@ -1,0 +1,23 @@
+.content {
+  padding: 20px 0;
+}
+
+
+@media screen and (max-width: 776px){
+  .select-control {
+    width: 100%;
+  }
+  :host ::ng-deep nz-picker, :host ::ng-deep .ant-calendar-picker {
+    width: 100% !important;
+  }
+  nz-divider {
+    display: none;
+  }
+
+}
+
+@media screen and (max-width: 520px){
+  :host ::ng-deep .ant-table-thead > tr > th, :host ::ng-deep .ant-table-tbody > tr > td {
+    padding: 0;
+  }
+}

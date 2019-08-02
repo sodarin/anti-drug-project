@@ -4,9 +4,10 @@ import { ShareModule } from '../share/share.module';
 import {UserInfoViewModalComponent} from './modal/user-info-view-modal/user-info-view-modal.component';
 import { UserInfoEditModalComponent } from './modal/user-info-edit-modal/user-info-edit-modal.component';
 import {QuillModule} from 'ngx-quill';
+import { CreateUserModalComponent } from './modal/create-user-modal/create-user-modal.component';
 
 @NgModule({
-  declarations: [LoginModalComponent, UserInfoViewModalComponent, UserInfoEditModalComponent],
+  declarations: [LoginModalComponent, UserInfoViewModalComponent, UserInfoEditModalComponent, CreateUserModalComponent],
   imports: [
     ShareModule,
     QuillModule
@@ -14,7 +15,8 @@ import {QuillModule} from 'ngx-quill';
   exports: [
     LoginModalComponent,
     UserInfoViewModalComponent,
-    UserInfoEditModalComponent
+    UserInfoEditModalComponent,
+    CreateUserModalComponent
   ]
 })
 export class CoreModule { }

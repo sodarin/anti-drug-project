@@ -13,6 +13,9 @@ import {AdminCourseManagementComponent} from './back-course/admin-course-managem
 import {OperationComponent} from './operation/operation.component';
 import {NewsManagementComponent} from './operation/news-management/news-management.component';
 import {GroupTopicManagementComponent} from './operation/group-topic-management/group-topic-management.component';
+import {AdminOpenClassManagementComponent} from './back-course/admin-open-class-management/admin-open-class-management.component';
+import {AdminClassManagementComponent} from './back-course/admin-class-management/admin-class-management.component';
+import {AdminTopicManagementComponent} from './back-course/admin-topic-management/admin-topic-management.component';
 
 
 const routes: Routes = [
@@ -26,7 +29,10 @@ const routes: Routes = [
           { path: 'message', component: UserMessageManagementComponent }
         ] },
       { path: 'course', component: BackCourseComponent, children: [
-          { path: '', component: AdminCourseManagementComponent}
+          { path: '', component: AdminCourseManagementComponent},
+          { path: 'open-class', component: AdminOpenClassManagementComponent },
+          { path: 'class', component: AdminClassManagementComponent },
+          { path: 'topic', component: AdminTopicManagementComponent }
         ] },
       { path: 'operation', component: OperationComponent, children: [
           { path: '', redirectTo: '/admin/operation/news', pathMatch: 'full' },

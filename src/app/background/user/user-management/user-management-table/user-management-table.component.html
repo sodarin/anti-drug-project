@@ -2,8 +2,8 @@
   <div class="filter-condition">
     <div class="time-filter">
       <nz-select class="select-control" [(ngModel)]="selectedTimeFilterValue" nzAllowClear nzPlaceHolder="时间类型">
-        <nz-option nzValue="creatTime" nzLabel="登录时间"></nz-option>
-        <nz-option nzValue="loginTime" nzLabel="注册时间"></nz-option>
+        <nz-option nzValue="loginTime" nzLabel="登录时间"></nz-option>
+        <nz-option nzValue="createdTime" nzLabel="注册时间"></nz-option>
       </nz-select>
       <nz-range-picker class="time-area" [(ngModel)]="dateRange" (ngModelChange)="onChange($event)"  [nzDateRender]="calendarRender" nzShowTime></nz-range-picker>
       <ng-template #calendarRender let-current>
@@ -27,6 +27,7 @@
       </nz-select>
       <input class="name-containing-input" nz-input placeholder="请输入关键字" [(ngModel)]="inputValue" />
       <button (click)="filterUser()" nz-button nzType="primary" class="search-button"><i nz-icon nzType="search"></i>搜索</button>
+      <nz-divider nzType="vertical"></nz-divider>
       <button (click)="openCreateUserModal()" nz-button nzType="danger" class="create-button"><i nz-icon nzType="plus"></i>新增用户</button>
     </div>
   </div>
@@ -52,7 +53,7 @@
     <tbody>
       <tr *ngFor="let data of userListTable.data; let i of userListTable.data.length">
         <td>{{data.nickName}}<br/>
-        <span class="role" *ngFor="let role of data.roles">{{role}}</span></td>
+        <span class="role" *ngFor="let role of data.roles">{{role}} </span></td>
         <td>{{data.birthDay}}</td>
         <td>{{data.creatTime}}<br/>
         <span>{{data.creatIpArea}}</span></td>
@@ -64,8 +65,8 @@
             <div><span (click)="viewUserInfo(data.userId)"><i nz-icon nzType="eye" nzTheme="outline"></i>查看用户信息</span></div>
             <div><span (click)="editUserInfo(data.userId)"><i nz-icon nzType="edit" nzTheme="outline"></i>编辑用户信息</span></div>
             <div><span (click)="showUserRoleGroupModal(data, rolesCheckBox)"><i nz-icon nzType="team" nzTheme="outline"></i>设置用户组</span></div>
-            <div><span><i nz-icon nzTheme="outline" nzType="smile"></i>修改用户头像</span></div>
-            <div><span><i nz-icon nzType="file-protect" nzTheme="outline"></i>修改密码</span></div>
+            <div><span (click)="showAvatarUploadModal(data, avatarUpload)"><i nz-icon nzTheme="outline" nzType="smile"></i>修改用户头像</span></div>
+            <div><span (click)="showPasswordModifyModal(data, passwordModifyModal)"><i nz-icon nzType="file-protect" nzTheme="outline"></i>修改密码</span></div>
             <div>
               <span (click)="showLockedConfirmModal(data.userId, 1)" *ngIf="data.locked==0"><i nz-icon nzType="lock" nzTheme="outline"></i>封禁用户</span>
               <span (click)="showLockedConfirmModal(data.userId, 0)" *ngIf="data.locked==1"><i nz-icon nzType="unlock" nzTheme="outline"></i>解禁用户</span>
@@ -78,5 +79,60 @@
 
   <ng-template #rolesCheckBox>
     <nz-checkbox-group [(ngModel)]="checkOption"></nz-checkbox-group>
+  </ng-template>
+
+  <ng-template #avatarUpload>
+    <nz-upload
+      class="avatar-upload"
+      nzAction=""
+      nzName="avatar"
+      nzListType="picture-card"
+      [nzShowUploadList]="false"
+      [nzBeforeUpload]="beforeUpload"
+      [nzPreview]="handlePreview"
+      (nzChange)="handleChange($event)">
+      <img *ngIf="avatarUrl" [src]="avatarUrl" class="avatar" />
+      <ng-container>
+        <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
+        <div class="ant-upload-text">上传头像</div>
+      </ng-container>
+    </nz-upload>
+    <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null"
+              (nzOnCancel)="previewVisible=false">
+      <ng-template #modalContent>
+        <img [src]="previewImage" [ngStyle]="{ 'width': '100%' }"/>
+      </ng-template>
+    </nz-modal>
+  </ng-template>
+
+  <ng-template #passwordModifyModal>
+    <form nz-form [formGroup]="modifyPasswordForm">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="password" nzRequired>新密码</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="请输入密码！">
+          <input
+            nz-input
+            type="password"
+            id="password"
+            formControlName="password"
+            (ngModelChange)="updateConfirmValidator()"
+          />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="confirmPassword" nzRequired>确认密码</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="errorTpl">
+          <input nz-input type="password" formControlName="confirmPassword" id="confirmPassword" />
+          <ng-template #errorTpl let-control>
+            <ng-container *ngIf="control.hasError('required')">
+              请确认密码！
+            </ng-container>
+            <ng-container *ngIf="control.hasError('confirm')">
+              两次输入的密码不一致！
+            </ng-container>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
   </ng-template>
 </div>

@@ -16,8 +16,14 @@ import {CoreModule} from './core/core.module';
 import {UserInfoViewModalComponent} from './core/modal/user-info-view-modal/user-info-view-modal.component';
 import {UserInfoEditModalComponent} from './core/modal/user-info-edit-modal/user-info-edit-modal.component';
 import {QuillEditorComponent, QuillModule} from 'ngx-quill';
+import {CreateUserModalComponent} from './core/modal/create-user-modal/create-user-modal.component';
+
+<<<<<<< HEAD
+=======
 
 
+
+>>>>>>> 67cd71d2ecacf02871de4dac8d0471420f83bed4
 registerLocaleData(zh);
 @NgModule({
   declarations: [
@@ -44,7 +50,8 @@ registerLocaleData(zh);
   entryComponents: [
     LoginModalComponent,
     UserInfoViewModalComponent,
-    UserInfoEditModalComponent
+    UserInfoEditModalComponent,
+    CreateUserModalComponent
   ],
   bootstrap: [AppComponent]
 })
