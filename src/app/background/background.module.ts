@@ -15,11 +15,11 @@ import { UserMessageManagementComponent } from './user/user-message-management/u
 import { OnlineUserTableComponent } from './user/user-management/online-user-table/online-user-table.component';
 import { LoginLogTableComponent } from './user/user-management/login-log-table/login-log-table.component';
 import {CoreModule} from '../core/core.module';
-<<<<<<< HEAD
+
 import { TeacherTabComponent } from './user/user-teacher-management/teacher-tab/teacher-tab.component';
 import { TeacherManagementTableComponent } from './user/user-teacher-management/teacher-management-table/teacher-management-table.component';
 import { TeacherPromoteComponent } from './user/user-teacher-management/teacher-promote/teacher-promote.component';
-=======
+
 import { BackCourseComponent } from './back-course/back-course.component';
 import { OperationComponent } from './operation/operation.component';
 import { AdminCourseManagementComponent } from './back-course/admin-course-management/admin-course-management.component';
@@ -36,16 +36,14 @@ import { AdminTopicManagementComponent } from './back-course/admin-topic-managem
 import { AdminCourseManagementTableComponent } from './back-course/admin-course-management/admin-course-management-table/admin-course-management-table.component';
 import { AdminCourseRecommendationTableComponent } from './back-course/admin-course-management/admin-course-recommendation-table/admin-course-recommendation-table.component';
 import { AdminCourseStatisticsTableComponent } from './back-course/admin-course-management/admin-course-statistics-table/admin-course-statistics-table.component';
->>>>>>> 8fe22397ac567899fa8dbd532002b412851806bd
+
 
 
 
 @NgModule({
-<<<<<<< HEAD
-  declarations: [BackgroundComponent, HomePageComponent, UserComponent, UserHeaderComponent, UserTabComponent, UserManagementTableComponent, UserManagementComponent, UserStatisticsComponent, UserTeacherManagementComponent, UserApprovalManagementComponent, UserMessageManagementComponent, OnlineUserTableComponent, LoginLogTableComponent, TeacherTabComponent, TeacherManagementTableComponent, TeacherPromoteComponent],
-=======
-  declarations: [BackgroundComponent, HomePageComponent, UserComponent, UserHeaderComponent, UserTabComponent, UserManagementTableComponent, UserManagementComponent, UserStatisticsComponent, UserTeacherManagementComponent, UserApprovalManagementComponent, UserMessageManagementComponent, OnlineUserTableComponent, LoginLogTableComponent, BackCourseComponent, OperationComponent, AdminCourseManagementComponent, GroupTopicManagementComponent, NewsManagementComponent, UserApprovalPageTabComponent, ApprovalPendingTableComponent, ApprovalSuccessTableComponent, AdminCourseHeaderComponent, AdminCourseManagementTabComponent, AdminOpenClassManagementComponent, AdminClassManagementComponent, AdminTopicManagementComponent, AdminCourseManagementTableComponent, AdminCourseRecommendationTableComponent, AdminCourseStatisticsTableComponent],
->>>>>>> 8fe22397ac567899fa8dbd532002b412851806bd
+
+  declarations: [BackgroundComponent, HomePageComponent, UserComponent, UserHeaderComponent, UserTabComponent, UserManagementTableComponent, UserManagementComponent, UserStatisticsComponent, UserTeacherManagementComponent, UserApprovalManagementComponent, UserMessageManagementComponent, OnlineUserTableComponent, LoginLogTableComponent, BackCourseComponent, OperationComponent, AdminCourseManagementComponent, GroupTopicManagementComponent, NewsManagementComponent, UserApprovalPageTabComponent, ApprovalPendingTableComponent, ApprovalSuccessTableComponent, AdminCourseHeaderComponent, AdminCourseManagementTabComponent, AdminOpenClassManagementComponent, AdminClassManagementComponent, AdminTopicManagementComponent, AdminCourseManagementTableComponent, AdminCourseRecommendationTableComponent, AdminCourseStatisticsTableComponent,TeacherManagementTableComponent,TeacherPromoteComponent,TeacherTabComponent],
+
   imports: [
     ShareModule,
     BackgroundRoutingModule,
