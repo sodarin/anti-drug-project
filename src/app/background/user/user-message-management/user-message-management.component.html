@@ -1,1 +1,75 @@
-<p>user-message-management works!</p>
+<div class="content">
+  <div class="filter-condition">
+    <div class="time-filter">
+      <nz-range-picker class="time-area"  [(ngModel)]="selectedTimeFilterValue" [nzDateRender]="calendarRender" nzShowTime></nz-range-picker>
+
+      <ng-template #calendarRender let-current>
+        <div class="ant-calendar-date mobile-width">
+          {{ current.getDate() }}
+        </div>
+      </ng-template>
+        <input class="name-containing-input" nz-input placeholder="发信人用户名"   [(ngModel)]="inputSendName" />
+        <input class="name-containing-input" nz-input placeholder="私信内容关键词" [(ngModel)]="inputKey" />
+      <button (click)="filterRecord()" nz-button nzType="primary" class="search-button"><i nz-icon nzType="search"></i>搜索</button>
+    </div>
+  </div>
+<div class="operate">
+  <button
+    nz-button
+    [disabled]="numberOfChecked === 0"
+    [nzType]="'primary'"
+    [nzLoading]="isOperating"
+    (click)="operateData()"
+  >
+    删除
+  </button>
+  <span *ngIf="numberOfChecked">选中 {{ numberOfChecked }} 条记录</span>
+</div>
+  <nz-table
+    #ListTable
+    [nzData]="displayData"
+    [nzFrontPagination]="false"
+    [nzTotal]="total"
+    [nzLoading]="loading"
+    [nzPageSize]="10"
+    [(nzPageIndex)]="pageIndex"
+>
+    <thead>
+    <tr>
+      <th
+        nzShowCheckbox
+        [(nzChecked)]="isAllDisplayDataChecked"
+        [nzIndeterminate]="isIndeterminate"
+        (nzCheckedChange)="checkAll($event)"
+      ></th>
+      <th>发信人</th>
+      <th>收信人</th>
+      <th>内容</th>
+      <th>发送时间</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of ListTable.data; let i of ListTable.data.length">
+      <td
+        nzShowCheckbox
+        [(nzChecked)]="mapOfCheckedId[data.id]"
+        [nzDisabled]="data.disabled"
+        (nzCheckedChange)="refreshStatus()"
+      ></td>
+      <td>{{data.sendName}}<br/>
+        <span class="name" *ngFor="let sendName of data.sendName">{{sendName}}</span></td>
+      <td>{{data.receiveName}}<br/>
+        <span class="name" *ngFor="let receiveName of data.receiveName">{{receiveName}}</span></td>
+      <td>{{data.Mcontent}}<br/>
+        <span class="name" *ngFor="let Mcontent of data.Mcontent">{{Mcontent}}</span></td>
+      <td>{{data.sendTime}}<br/>
+        <span class="sendTime" *ngFor="let sendTime of data.sendTime">{{sendTime}}</span></td>
+    </tr>
+    </tbody>
+  </nz-table>
+
+  <ng-template #rolesCheckBox>
+    <nz-checkbox-group ></nz-checkbox-group>
+  </ng-template>
+
+</div>
