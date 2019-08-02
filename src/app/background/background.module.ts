@@ -23,11 +23,15 @@ import { NewsManagementComponent } from './operation/news-management/news-manage
 import { UserApprovalPageTabComponent } from './user/user-approval-management/user-approval-page-tab/user-approval-page-tab.component';
 import { ApprovalPendingTableComponent } from './user/user-approval-management/approval-pending-table/approval-pending-table.component';
 import { ApprovalSuccessTableComponent } from './user/user-approval-management/approval-success-table/approval-success-table.component';
+import { NewsTapComponent } from './operation/news-management/news-tap/news-tap.component';
+import { NewsManagementTableComponent } from './operation/news-management/news-management-table/news-management-table.component';
+import { ProgramaManagementTableComponent } from './operation/news-management/programa-management-table/programa-management-table.component';
+import { OperationHeaderComponent } from './operation/operation-header/operation-header.component';
 
 
 
 @NgModule({
-  declarations: [BackgroundComponent, HomePageComponent, UserComponent, UserHeaderComponent, UserTabComponent, UserManagementTableComponent, UserManagementComponent, UserStatisticsComponent, UserTeacherManagementComponent, UserApprovalManagementComponent, UserMessageManagementComponent, OnlineUserTableComponent, LoginLogTableComponent, BackCourseComponent, OperationComponent, AdminCourseManagementComponent, GroupTopicManagementComponent, NewsManagementComponent, UserApprovalPageTabComponent, ApprovalPendingTableComponent, ApprovalSuccessTableComponent],
+  declarations: [BackgroundComponent, HomePageComponent, UserComponent, UserHeaderComponent, UserTabComponent, UserManagementTableComponent, UserManagementComponent, UserStatisticsComponent, UserTeacherManagementComponent, UserApprovalManagementComponent, UserMessageManagementComponent, OnlineUserTableComponent, LoginLogTableComponent, BackCourseComponent, OperationComponent, AdminCourseManagementComponent, GroupTopicManagementComponent, NewsManagementComponent, UserApprovalPageTabComponent, ApprovalPendingTableComponent, ApprovalSuccessTableComponent, NewsTapComponent, NewsManagementTableComponent, ProgramaManagementTableComponent, OperationHeaderComponent],
   imports: [
     ShareModule,
     BackgroundRoutingModule,
