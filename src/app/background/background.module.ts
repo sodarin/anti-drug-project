@@ -15,11 +15,14 @@ import { UserMessageManagementComponent } from './user/user-message-management/u
 import { OnlineUserTableComponent } from './user/user-management/online-user-table/online-user-table.component';
 import { LoginLogTableComponent } from './user/user-management/login-log-table/login-log-table.component';
 import {CoreModule} from '../core/core.module';
+import { TeacherTabComponent } from './user/user-teacher-management/teacher-tab/teacher-tab.component';
+import { TeacherManagementTableComponent } from './user/user-teacher-management/teacher-management-table/teacher-management-table.component';
+import { TeacherPromoteComponent } from './user/user-teacher-management/teacher-promote/teacher-promote.component';
 
 
 
 @NgModule({
-  declarations: [BackgroundComponent, HomePageComponent, UserComponent, UserHeaderComponent, UserTabComponent, UserManagementTableComponent, UserManagementComponent, UserStatisticsComponent, UserTeacherManagementComponent, UserApprovalManagementComponent, UserMessageManagementComponent, OnlineUserTableComponent, LoginLogTableComponent],
+  declarations: [BackgroundComponent, HomePageComponent, UserComponent, UserHeaderComponent, UserTabComponent, UserManagementTableComponent, UserManagementComponent, UserStatisticsComponent, UserTeacherManagementComponent, UserApprovalManagementComponent, UserMessageManagementComponent, OnlineUserTableComponent, LoginLogTableComponent, TeacherTabComponent, TeacherManagementTableComponent, TeacherPromoteComponent],
   imports: [
     ShareModule,
     BackgroundRoutingModule,
