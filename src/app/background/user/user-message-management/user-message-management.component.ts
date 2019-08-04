@@ -8,7 +8,7 @@ import {UserMessageManagementService} from '../../../service/userMessageManageme
 })
 export class UserMessageManagementComponent implements OnInit {
 
-  selectedTimeFilterValue: string = 'selectedTime';
+  selectedTimeFilterValue = [];
   dateRange = [];
   inputSendName: string = '';
   inputKey: string = '';

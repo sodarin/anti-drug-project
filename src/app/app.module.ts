@@ -18,12 +18,7 @@ import {UserInfoEditModalComponent} from './core/modal/user-info-edit-modal/user
 import {QuillEditorComponent, QuillModule} from 'ngx-quill';
 import {CreateUserModalComponent} from './core/modal/create-user-modal/create-user-modal.component';
 
-<<<<<<< HEAD
-=======
 
-
-
->>>>>>> 67cd71d2ecacf02871de4dac8d0471420f83bed4
 registerLocaleData(zh);
 @NgModule({
   declarations: [
