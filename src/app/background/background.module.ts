@@ -46,10 +46,17 @@ import { AdminTopicManagementComponent } from './back-course/admin-topic-managem
 import { AdminCourseManagementTableComponent } from './back-course/admin-course-management/admin-course-management-table/admin-course-management-table.component';
 import { AdminCourseRecommendationTableComponent } from './back-course/admin-course-management/admin-course-recommendation-table/admin-course-recommendation-table.component';
 import { AdminCourseStatisticsTableComponent } from './back-course/admin-course-management/admin-course-statistics-table/admin-course-statistics-table.component';
+<<<<<<< HEAD
 import { AdminTopicCourseTableComponent } from './back-course/admin-topic-management/admin-topic-course-table/admin-topic-course-table.component';
 import { AdminTopicClassTableComponent } from './back-course/admin-topic-management/admin-topic-class-table/admin-topic-class-table.component';
 import { AdminTopicManagementTabComponent } from './back-course/admin-topic-management/admin-topic-management-tab/admin-topic-management-tab.component';
 
+=======
+import { AdminReplyManagementComponent } from './back-course/admin-reply-management/admin-reply-management.component';
+import { AdminReplyManagementTabComponent } from './back-course/admin-reply-management/admin-reply-management-tab/admin-reply-management-tab.component';
+import { AdminReplyManagementTableComponent } from './back-course/admin-reply-management/admin-reply-management-table/admin-reply-management-table.component';
+import { AdminReplyAllTableComponent } from './back-course/admin-reply-management/admin-reply-all-table/admin-reply-all-table.component';
+>>>>>>> bcda7f29a21c565b5725e8e44e3a22ae395814f6
 
 
 
@@ -75,7 +82,11 @@ import { AdminTopicManagementTabComponent } from './back-course/admin-topic-mana
     NewsTapComponent,
     NewsManagementTableComponent,
     ProgramaManagementTableComponent,
+<<<<<<< HEAD
     OperationComponent, AdminCourseManagementComponent, GroupTopicManagementComponent, NewsManagementComponent, UserApprovalPageTabComponent, ApprovalPendingTableComponent, ApprovalSuccessTableComponent, AdminCourseHeaderComponent, AdminCourseManagementTabComponent, AdminOpenClassManagementComponent, AdminClassManagementComponent, AdminTopicManagementComponent, AdminCourseManagementTableComponent, AdminCourseRecommendationTableComponent, AdminCourseStatisticsTableComponent,TeacherManagementTableComponent,TeacherPromoteComponent,TeacherTabComponent,  AdminTopicCourseTableComponent, AdminTopicClassTableComponent, AdminTopicManagementTabComponent, ],
+=======
+    OperationComponent, AdminCourseManagementComponent, GroupTopicManagementComponent, NewsManagementComponent, UserApprovalPageTabComponent, ApprovalPendingTableComponent, ApprovalSuccessTableComponent, AdminCourseHeaderComponent, AdminCourseManagementTabComponent, AdminOpenClassManagementComponent, AdminClassManagementComponent, AdminTopicManagementComponent, AdminCourseManagementTableComponent, AdminCourseRecommendationTableComponent, AdminCourseStatisticsTableComponent,TeacherManagementTableComponent,TeacherPromoteComponent,TeacherTabComponent, AdminReplyManagementComponent, AdminReplyManagementTabComponent, AdminReplyManagementTableComponent, AdminReplyAllTableComponent],
+>>>>>>> bcda7f29a21c565b5725e8e44e3a22ae395814f6
 
   imports: [
     ShareModule,

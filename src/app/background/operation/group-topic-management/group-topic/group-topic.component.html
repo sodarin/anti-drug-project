@@ -75,18 +75,10 @@
       <td>{{data.reply_number}}</td>
       <td>{{data.open}}<br/>
         <span class="role" *ngFor="let role of data.roles">{{role}}</span></td>
-      <td><i class="more-operation" nz-popover nzTitle="操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
+      <td><i class="more-operation" nz-popover nzTitle="查看" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
       <ng-template #operationTemplate>
         <div class="user-management-operation">
-          <div><span (click)="viewUserInfo(data.userId)"><i nz-icon nzType="eye" nzTheme="outline"></i>查看用户信息</span></div>
-          <div><span (click)="editUserInfo(data.userId)"><i nz-icon nzType="edit" nzTheme="outline"></i>编辑用户信息</span></div>
-          <div><span (click)="showUserRoleGroupModal(data, rolesCheckBox)"><i nz-icon nzType="team" nzTheme="outline"></i>设置用户组</span></div>
-          <div><span><i nz-icon nzTheme="outline" nzType="smile"></i>修改用户头像</span></div>
-          <div><span><i nz-icon nzType="file-protect" nzTheme="outline"></i>修改密码</span></div>
-          <div>
-            <span (click)="showLockedConfirmModal(data.userId, 1)" *ngIf="data.locked==0"><i nz-icon nzType="lock" nzTheme="outline"></i>封禁用户</span>
-            <span (click)="showLockedConfirmModal(data.userId, 0)" *ngIf="data.locked==1"><i nz-icon nzType="unlock" nzTheme="outline"></i>解禁用户</span>
-          </div>
+          <div><span (click)="closeGroup(data.o_number)"><i nz-icon nzType="eye" nzTheme="outline"></i>关闭小组</span></div>
         </div>
       </ng-template>
     </tr>

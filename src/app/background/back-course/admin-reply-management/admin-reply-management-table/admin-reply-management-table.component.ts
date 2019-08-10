@@ -1,17 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import {GroupTopicManagementService} from '../../../../service/group-topic-management/group-topic-management.service';
+import {CourseReplyService} from '../../../../service/course-reply/course-reply.service';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
-
 @Component({
-  selector: 'app-group-topic',
-  templateUrl: './group-topic.component.html',
-  styleUrls: ['./group-topic.component.less']
+  selector: 'app-admin-reply-management-table',
+  templateUrl: './admin-reply-management-table.component.html',
+  styleUrls: ['./admin-reply-management-table.component.less']
 })
-export class GroupTopicComponent implements OnInit {
-  selectedStateFilterValue   = 'open';
+export class AdminReplyManagementTableComponent implements OnInit {
+  replyname   = 'topic';
   inputValue: string;
-  selectedAttributeFilterValue = 'best';
-
+  // author: string;
   dataList = [];
   displayData = [];
   loading: boolean = false;
@@ -26,10 +24,8 @@ export class GroupTopicComponent implements OnInit {
   isIndeterminate = false;
   mapOfCheckedId: { [key: string]: boolean } = {};
   numberOfChecked = 0;
-
-
   constructor(
-    private groupTopicManagementService$: GroupTopicManagementService,
+    private courseReplyService$: CourseReplyService,
     private  _message: NzMessageService,
     private  _modalService: NzModalService
   ) { }
@@ -39,15 +35,14 @@ export class GroupTopicComponent implements OnInit {
   }
   // 搜索
 
-  filterTopic() {
+  filterReply() {
     this.displayData = [];
     this.loading = true;
     this.filterOptions = {
-      state: this.selectedStateFilterValue,
-      searchParameter: this.inputValue,
-      attribute: this.selectedAttributeFilterValue
+      topic: this.replyname,
+      searchParameter: this.inputValue
     };
-    this.groupTopicManagementService$.filterTopicList(1, 10, this.filterOptions).subscribe(result => {
+    this.courseReplyService$.filterReplyList(1, 10, this.filterOptions).subscribe(result => {
       this.loading = false;
       this.total = result[0].total;
       this.totalPage = Math.ceil(this.total / 10);
@@ -58,14 +53,14 @@ export class GroupTopicComponent implements OnInit {
   searchData(pageIndex: number = this.pageIndex) {
     this.displayData = [];
     this.loading = true;
-    this.groupTopicManagementService$.getTopicList(pageIndex, 10).subscribe(result => {
+    this.courseReplyService$.getReplyList(pageIndex, 10).subscribe(result => {
       this.loading = false;
       this.total = result[0].totalUser;
       this.totalPage = Math.ceil(this.total / 10);
       this.dataList = result;
       this.displayData = this.dataList;
     }, error1 => this._message.error(error1.error))
-  }
+}
   checkAll(value: boolean): void {
     this.displayData.filter(item => !item.disabled).forEach(item => (this.mapOfCheckedId[item.id] = value));
     this.refreshStatus();
@@ -89,9 +84,17 @@ export class GroupTopicComponent implements OnInit {
       this.isOperating = false;
     }, 1000);
   }
-  // 关闭小组
-  closeGroup(id: any){
+  // 提醒教师操作
+  noticeTeacher(){
 
   }
-
+  // 删除操作
+  deleteReply(){
+    this.isOperating = true;
+    setTimeout(() => {
+      this.dataList.forEach(item => (this.mapOfCheckedId[item.id] = false));
+      this.refreshStatus();
+      this.isOperating = false;
+    }, 1000);
+  }
 }
