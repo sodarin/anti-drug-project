@@ -16,6 +16,8 @@ import {GroupTopicManagementComponent} from './operation/group-topic-management/
 import {AdminOpenClassManagementComponent} from './back-course/admin-open-class-management/admin-open-class-management.component';
 import {AdminClassManagementComponent} from './back-course/admin-class-management/admin-class-management.component';
 import {AdminTopicManagementComponent} from './back-course/admin-topic-management/admin-topic-management.component';
+import {WebsitesAnnouncementManagementComponent} from "./operation/websites-announcement-management/websites-announcement-management.component";
+import {NoticeManagementComponent} from "./operation/notice-management/notice-management.component";
 
 
 const routes: Routes = [
@@ -37,7 +39,9 @@ const routes: Routes = [
       { path: 'operation', component: OperationComponent, children: [
           { path: '', redirectTo: '/admin/operation/news', pathMatch: 'full' },
           { path: 'news', component: NewsManagementComponent },
-          { path: 'group-topic', component: GroupTopicManagementComponent }
+          { path: 'group-topic', component: GroupTopicManagementComponent },
+          { path: 'websites', component: WebsitesAnnouncementManagementComponent},
+          { path: 'notice', component: NoticeManagementComponent}
         ] }
     ]
   }

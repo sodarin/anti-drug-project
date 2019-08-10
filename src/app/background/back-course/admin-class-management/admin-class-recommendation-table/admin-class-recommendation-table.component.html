@@ -1,0 +1,36 @@
+<nz-table
+  #classListTable
+  [nzData]="displayData"
+  [nzFrontPagination]="false"
+  [nzTotal]="totalCourse"
+  [nzLoading]="loading"
+  [nzPageSize]="10"
+  [(nzPageIndex)]="pageIndex"
+  (nzPageIndexChange)="searchData()">
+  <thead>
+  <tr>
+    <th>顺序号</th>
+    <th>班级名称</th>
+    <th>创建时间</th>
+    <th>推荐时间</th>
+    <th>操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of classListTable.data">
+    <td>{{data.classId}}</td>
+    <td>{{data.className}}</td>
+    <td>{{data.creatTime}}</td>
+    <td>{{data.recommendationTime}}
+    <td>{{data.Status}}</td>
+    <td><i class="more-operation" nz-popover nzTitle="操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
+    <ng-template #operationTemplate>
+      <div class="user-management-operation">
+        <div><span (click)="edit()"><i nz-icon nzType="eye" nzTheme="outline"></i>设置序号</span></div>
+        <div><span (click)="esc()"><i nz-icon nzType="edit" nzTheme="outline"></i>取消推荐</span></div>
+      </div>
+    </ng-template>
+  </tr>
+  </tbody>
+
+</nz-table>

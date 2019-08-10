@@ -1,0 +1,47 @@
+<div class="content">
+  <div class="input-filter">
+    <input class="name-containing-input" nz-input placeholder="班级名称" [(ngModel)]="className" />
+    <button (click)="filterClass()" nz-button nzType="primary" class="search-button"><i nz-icon nzType="search"></i>搜索</button>
+  </div>
+  <nz-divider [nzText]="'班级：'+ classNum +'个    已发布：'+publishNum + '个   已关闭：'+closeNum+ '个   未发布：'+unPublishNum+' 个' "></nz-divider>
+  <nz-table
+    #classListTable
+    [nzData]="displayData"
+    [nzFrontPagination]="false"
+    [nzTotal]="totalCourse"
+    [nzLoading]="loading"
+    [nzPageSize]="10"
+    [(nzPageIndex)]="pageIndex"
+    (nzPageIndexChange)="searchData()">
+    <thead>
+    <tr>
+      <th>班级编号</th>
+      <th>班级名称</th>
+      <th>课程数</th>
+      <th>学员数</th>
+      <th>价格</th>
+      <th>状态</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of classListTable.data">
+      <td>{{data.classId}}</td>
+      <td>{{data.className}}</td>
+      <td>{{data.courseNum}}</td>
+      <td>{{data.stuNum}}
+      <td>{{data.price}}</td>>
+      <td>{{data.Status}}</td>
+      <td><i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
+      <ng-template #operationTemplate>
+        <div class="user-management-operation">
+          <div><span (click)="management()"><i nz-icon nzType="eye" nzTheme="outline"></i>管理</span></div>
+          <div><span (click)="recommendationClass()"><i nz-icon nzType="edit" nzTheme="outline"></i>推荐班级</span></div>
+          <div><span (click)="publishClass()"><i nz-icon nzType="edit" nzTheme="outline"></i>发布班级</span></div>
+        </div>
+      </ng-template>
+    </tr>
+    </tbody>
+
+  </nz-table>
+</div>

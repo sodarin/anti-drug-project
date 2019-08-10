@@ -1,0 +1,38 @@
+<div class="content">
+  <nz-table
+    #classListTable
+    [nzData]="displayData"
+    [nzFrontPagination]="false"
+    [nzTotal]="totalCourse"
+    [nzLoading]="loading"
+    [nzPageSize]="10"
+    [(nzPageIndex)]="pageIndex"
+    (nzPageIndexChange)="searchData()">
+    <thead>
+    <tr>
+      <th>站内信通知标题</th>
+      <th>发布时间</th>
+      <th>结束时间</th>
+      <th>状态</th>
+      <th>发布人</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of classListTable.data">
+      <td>{{data.title}}</td>
+      <td>{{data.startTime}}</td>
+      <td>{{data.endTime}}</td>
+      <td>{{data.status}}</td>
+      <td>{{data.publishPeople}}</td>
+      <td><i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
+      <ng-template #operationTemplate>
+        <div class="user-management-operation">
+          <div><span (click)="delete()"><i nz-icon nzType="edit" nzTheme="outline"></i>删除</span></div>
+        </div>
+      </ng-template>
+    </tr>
+    </tbody>
+
+  </nz-table>
+</div>
