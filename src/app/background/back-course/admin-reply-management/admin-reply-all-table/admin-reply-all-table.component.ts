@@ -1,71 +1,62 @@
 import { Component, OnInit } from '@angular/core';
+import {CourseReplyAllService} from '../../../../service/course-reply-all/course-reply-all.service';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
-import {UserMessageManagementService} from '../../../service/userMessageManagement/user-message-management.service';
+
 @Component({
-  selector: 'app-user-message-management',
-  templateUrl: './user-message-management.component.html',
-  styleUrls: ['./user-message-management.component.less']
+  selector: 'app-admin-reply-all-table',
+  templateUrl: './admin-reply-all-table.component.html',
+  styleUrls: ['./admin-reply-all-table.component.less']
 })
-export class UserMessageManagementComponent implements OnInit {
-
-  selectedTimeFilterValue = [];
-  dateRange = [];
-  inputSendName: string = '';
-  inputKey: string = '';
-
+export class AdminReplyAllTableComponent implements OnInit {
+  replyname   = 'topic';
+  inputValue: string;
+  // author: string;
   dataList = [];
   displayData = [];
-  loading = false;
+  loading: boolean = false;
   total: number = 0;
   totalPage: number;
   pageIndex: number = 1;
 
   filterOptions: {};
+  checkOption = [];
   isAllDisplayDataChecked = false;
   isOperating = false;
   isIndeterminate = false;
   mapOfCheckedId: { [key: string]: boolean } = {};
   numberOfChecked = 0;
   constructor(
-    private userMessageManagementService$: UserMessageManagementService,
-    private _message: NzMessageService,
-    private _modalService: NzModalService
-  ) {
-  }
+    private courseReplyAllService$: CourseReplyAllService,
+    private  _message: NzMessageService,
+    private  _modalService: NzModalService
+  ) { }
+
   ngOnInit() {
     this.searchData();
-    }
-
-  searchData(pageIndex: number = this.pageIndex) {
-    this.displayData = [];
-    this.loading = true;
-    this.userMessageManagementService$.getMessageList(pageIndex, 10).subscribe(result => {
-      this.loading = false;
-      this.total = result[0].totalUser;
-      this.totalPage = Math.ceil(this.total / 10);
-      this.dataList = result;
-      this.displayData = this.dataList;
-    }, error1 => this._message.error(error1.error));
   }
-    filterRecord() {
-    let startTime = 0;
-    let endTime = new Date().getTime();
-    if (this.dateRange.length == 2) {
-      startTime = new Date(this.dateRange[0]).getTime();
-      endTime = new Date(this.dateRange[1]).getTime();
-    }
+  // 搜索
+
+  filterReplyAll() {
     this.displayData = [];
     this.loading = true;
     this.filterOptions = {
-      searchTimeType: this.selectedTimeFilterValue,
-      starTime: startTime,
-      endTime: endTime,
-      sendName: this.inputSendName,
-      KEY: this.inputKey,
+      topic: this.replyname,
+      searchParameter: this.inputValue
     };
-    this.userMessageManagementService$.filterUserList(1, 10, this.filterOptions).subscribe(result => {
+    this.courseReplyAllService$.filterReplyAllList(1, 10, this.filterOptions).subscribe(result => {
       this.loading = false;
       this.total = result[0].total;
+      this.totalPage = Math.ceil(this.total / 10);
+      this.dataList = result;
+      this.displayData = this.dataList;
+    }, error1 => this._message.error(error1.error))
+  }
+  searchData(pageIndex: number = this.pageIndex) {
+    this.displayData = [];
+    this.loading = true;
+    this.courseReplyAllService$.getReplyAllList(pageIndex, 10).subscribe(result => {
+      this.loading = false;
+      this.total = result[0].totalUser;
       this.totalPage = Math.ceil(this.total / 10);
       this.dataList = result;
       this.displayData = this.dataList;
@@ -87,6 +78,15 @@ export class UserMessageManagementComponent implements OnInit {
   }
   operateData(): void {
     // 删除数据操作
+    this.isOperating = true;
+    setTimeout(() => {
+      this.dataList.forEach(item => (this.mapOfCheckedId[item.id] = false));
+      this.refreshStatus();
+      this.isOperating = false;
+    }, 1000);
+  }
+  // 删除操作
+  deleteReply(){
     this.isOperating = true;
     setTimeout(() => {
       this.dataList.forEach(item => (this.mapOfCheckedId[item.id] = false));

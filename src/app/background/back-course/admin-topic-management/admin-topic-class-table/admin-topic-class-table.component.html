@@ -1,0 +1,81 @@
+<div class="content">
+  <div class="selection-filter">
+    <nz-select class="select-control" [(ngModel)]="title" nzAllowClear nzPlaceHolder="标题">
+      <nz-option nzValue="" nzLabel="内容"></nz-option>
+      <nz-option nzValue="-1" nzLabel="课程编号"></nz-option>
+      <nz-option nzValue="1" nzLabel="课程名"></nz-option>
+    </nz-select>
+  </div>
+  <div class="input-filter">
+    <input class="name-containing-input" nz-input placeholder="关键词" [(ngModel)]="keyWord" />
+    <nz-divider nzType="vertical"></nz-divider>
+    <input class="name-containing-input" nz-input placeholder="作者" [(ngModel)]="creator" />
+    <button (click)="filterClass()" nz-button nzType="primary" class="search-button"><i nz-icon nzType="search"></i>搜索</button>
+    <nz-divider nzType="vertical"></nz-divider>
+    <button nz-button nzType="danger" class="create-button"><i nz-icon nzType="plus"></i>新增帖子</button>
+  </div>
+
+  <nz-table
+    #postListTable
+    [nzData]="displayData"
+    [nzFrontPagination]="false"
+    [nzTotal]="totalPost"
+    [nzLoading]="loading"
+    [nzPageSize]="10"
+    [(nzPageIndex)]="pageIndex"
+    (nzPageIndexChange)="searchData()">
+    <thead>
+    <tr>
+      <th
+        nzShowCheckbox
+        [(nzChecked)]="isAllDisplayDataChecked"
+        [nzIndeterminate]="isIndeterminate"
+        (nzCheckedChange)="checkAll($event)"
+      ></th>
+      <th>帖子</th>
+      <th>回复/查看</th>
+      <th>作者</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of postListTable.data">
+      <td
+        nzShowCheckbox
+        [(nzChecked)]="mapOfCheckedId[data.id]"
+        [nzDisabled]="data.disabled"
+        (nzCheckedChange)="refreshStatus()"
+      ></td>
+      <td>{{data.post}}</td>
+      <td>
+        <span>{{data.reply}}</span><br/>
+        <span>{{data.check}}</span>
+      </td>
+      <td>
+        <span>{{data.creator}}</span><br/>
+        <span>{{data.creatTime}}</span>
+      </td>
+      <td><i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
+      <ng-template #operationTemplate>
+        <div class="topic-management-operation">
+          <div><span (click)="delete(data.postID)"><i nz-icon nzType="file-protect" nzTheme="outline"></i>删除</span></div>
+        </div>
+      </ng-template>
+    </tr>
+    </tbody>
+
+  </nz-table>
+  <div class="operate">
+    <button
+      nz-button
+      [disabled]="numberOfChecked === 0"
+      [nzType]="'primary'"
+      [nzLoading]="isOperating"
+      (click)="operateData()"
+    >
+      删除
+    </button>
+    <span *ngIf="numberOfChecked">选中 {{ numberOfChecked }} 条记录</span>
+  </div>
+</div>
+

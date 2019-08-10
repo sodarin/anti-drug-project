@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {GroupTopicManagementTableService} from '../../../../service/group-topic-management-table/group-topic-management-table.service';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
+import {UserInfoViewModalComponent} from "../../../../core/modal/user-info-view-modal/user-info-view-modal.component";
 
 
 @Component({
@@ -59,5 +60,26 @@ export class GroupTopicManagementTableComponent implements OnInit {
       this.dataList = result;
       this.displayData = this.dataList;
     }, error1 => this._message.error(error1.error))
+  }
+  // 查看小组
+  viewGroup(id: any ){
+    const modal = this._modalService.create({
+      nzTitle: '小组信息',
+      nzContent: UserInfoViewModalComponent,
+      nzComponentParams: {
+        userId: id
+      },
+      nzWidth: 600,
+      nzFooter: null
+    })
+  }
+
+  // 关闭小组
+  closeGroup(id: any){
+
+  }
+  // 转移小组
+  exchangeGroup(id: any){
+
   }
 }

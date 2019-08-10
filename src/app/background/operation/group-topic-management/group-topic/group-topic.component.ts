@@ -89,6 +89,9 @@ export class GroupTopicComponent implements OnInit {
       this.isOperating = false;
     }, 1000);
   }
+  // 关闭小组
+  closeGroup(id: any){
 
+  }
 
 }
