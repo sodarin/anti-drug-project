@@ -19,6 +19,7 @@ import {QuillEditorComponent, QuillModule} from 'ngx-quill';
 import {CreateUserModalComponent} from './core/modal/create-user-modal/create-user-modal.component';
 
 
+
 registerLocaleData(zh);
 @NgModule({
   declarations: [

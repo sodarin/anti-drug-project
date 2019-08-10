@@ -46,6 +46,10 @@ import { AdminTopicManagementComponent } from './back-course/admin-topic-managem
 import { AdminCourseManagementTableComponent } from './back-course/admin-course-management/admin-course-management-table/admin-course-management-table.component';
 import { AdminCourseRecommendationTableComponent } from './back-course/admin-course-management/admin-course-recommendation-table/admin-course-recommendation-table.component';
 import { AdminCourseStatisticsTableComponent } from './back-course/admin-course-management/admin-course-statistics-table/admin-course-statistics-table.component';
+import { AdminTopicCourseTableComponent } from './back-course/admin-topic-management/admin-topic-course-table/admin-topic-course-table.component';
+import { AdminTopicClassTableComponent } from './back-course/admin-topic-management/admin-topic-class-table/admin-topic-class-table.component';
+import { AdminTopicManagementTabComponent } from './back-course/admin-topic-management/admin-topic-management-tab/admin-topic-management-tab.component';
+
 
 
 
@@ -71,7 +75,7 @@ import { AdminCourseStatisticsTableComponent } from './back-course/admin-course-
     NewsTapComponent,
     NewsManagementTableComponent,
     ProgramaManagementTableComponent,
-    OperationComponent, AdminCourseManagementComponent, GroupTopicManagementComponent, NewsManagementComponent, UserApprovalPageTabComponent, ApprovalPendingTableComponent, ApprovalSuccessTableComponent, AdminCourseHeaderComponent, AdminCourseManagementTabComponent, AdminOpenClassManagementComponent, AdminClassManagementComponent, AdminTopicManagementComponent, AdminCourseManagementTableComponent, AdminCourseRecommendationTableComponent, AdminCourseStatisticsTableComponent,TeacherManagementTableComponent,TeacherPromoteComponent,TeacherTabComponent],
+    OperationComponent, AdminCourseManagementComponent, GroupTopicManagementComponent, NewsManagementComponent, UserApprovalPageTabComponent, ApprovalPendingTableComponent, ApprovalSuccessTableComponent, AdminCourseHeaderComponent, AdminCourseManagementTabComponent, AdminOpenClassManagementComponent, AdminClassManagementComponent, AdminTopicManagementComponent, AdminCourseManagementTableComponent, AdminCourseRecommendationTableComponent, AdminCourseStatisticsTableComponent,TeacherManagementTableComponent,TeacherPromoteComponent,TeacherTabComponent,  AdminTopicCourseTableComponent, AdminTopicClassTableComponent, AdminTopicManagementTabComponent, ],
 
   imports: [
     ShareModule,
