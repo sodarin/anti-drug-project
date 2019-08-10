@@ -1,0 +1,84 @@
+<div class="content">
+  <div class="selection-filter">
+    <nz-divider nzType="vertical"></nz-divider>
+    <nz-select class="select-control" [(ngModel)]="replyname" nzAllowClear nzPlaceHolder="标题">
+      <nz-option nzValue="" nzLabel="标题"></nz-option>
+      <nz-option nzValue="-1" nzLabel="内容"></nz-option>
+      <nz-option nzValue="1" nzLabel="课程编号"></nz-option>
+      <nz-option nzValue="0" nzLabel="课程名"></nz-option>
+    </nz-select>
+  </div>
+  <div class="input-filter">
+    <input class="name-containing-input" nz-input placeholder="关键词" [(ngModel)]="inputValue" />
+    <nz-divider nzType="vertical"></nz-divider>
+    <input class="name-containing-input" nz-input placeholder="作者" [(ngModel)]="inputValue" />
+    <button (click)="filterReplyAll()" nz-button nzType="primary" class="search-button"><i nz-icon nzType="search"></i>搜索</button>
+  </div>
+  <div class="operate">
+    <button
+      nz-button
+      [disabled]="numberOfChecked === 0"
+      [nzType]="'primary'"
+      [nzLoading]="isOperating"
+      (click)="operateData()"
+    >
+      删除
+    </button>
+    <span *ngIf="numberOfChecked">选中 {{ numberOfChecked }} 条记录</span>
+  </div>
+  <nz-table
+    #replyListTable
+    [nzData]="displayData"
+    [nzFrontPagination]="false"
+    [nzTotal]="totalCourse"
+    [nzLoading]="loading"
+    [nzPageSize]="10"
+    [(nzPageIndex)]="pageIndex"
+    (nzPageIndexChange)="searchData()">
+    <thead>
+    <tr>
+      <th
+
+        nzShowCheckbox
+        [(nzChecked)]="isAllDisplayDataChecked"
+        [nzIndeterminate]="isIndeterminate"
+        (nzCheckedChange)="checkAll($event)"
+      ></th>
+      <th>问答</th>
+      <th>回复/查看</th>
+      <th>作者</th>
+      <th>创建时间</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of replyListTable.data">
+      <td
+        nzShowCheckbox
+        [(nzChecked)]="mapOfCheckedId[data.id]"
+        [nzDisabled]="data.disabled"
+        (nzCheckedChange)="refreshStatus()"
+      ></td>
+      <td>{{data.reply}}</td>
+      <td>
+        <span>{{data.replycheck}}</span><br/>
+        <span>{{data.check}}</span>
+      </td>
+      <td>{{data.author}}</td>
+      <td>{{data.creatTime}}</td>
+      <td><i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
+      <ng-template #operationTemplate>
+        <div class="user-management-operation">
+          <div><span (click)="deleteReply(data)"><i nz-icon nzType="copy" nzTheme="outline"></i>删除</span></div>
+        </div>
+      </ng-template>
+    </tr>
+    </tbody>
+
+  </nz-table>
+  <ng-template #rolesCheckBox>
+    <nz-checkbox-group [(ngModel)]="checkOption"></nz-checkbox-group>
+  </ng-template>
+</div>
+
+
