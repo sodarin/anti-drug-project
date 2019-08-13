@@ -1,0 +1,9 @@
+<form nz-form [formGroup]="tagCreatingForm">
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="name" nzRequired>标签名称</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="请输入标签名称">
+      <input nz-input formControlName="name" id="name"/>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+<nz-checkbox-group [(ngModel)]="checkOption"></nz-checkbox-group>

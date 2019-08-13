@@ -17,12 +17,9 @@ import {UserInfoViewModalComponent} from './core/modal/user-info-view-modal/user
 import {UserInfoEditModalComponent} from './core/modal/user-info-edit-modal/user-info-edit-modal.component';
 import {QuillEditorComponent, QuillModule} from 'ngx-quill';
 import {CreateUserModalComponent} from './core/modal/create-user-modal/create-user-modal.component';
-
-<<<<<<< HEAD
-=======
+import { CreateTagModalComponent } from './core/modal/create-tag-modal/create-tag-modal.component';
 
 
->>>>>>> 40718c6e53fc0044a98716b2af4591c9b52528e2
 registerLocaleData(zh);
 @NgModule({
   declarations: [
@@ -50,7 +47,8 @@ registerLocaleData(zh);
     LoginModalComponent,
     UserInfoViewModalComponent,
     UserInfoEditModalComponent,
-    CreateUserModalComponent
+    CreateUserModalComponent,
+    CreateTagModalComponent
   ],
   bootstrap: [AppComponent]
 })

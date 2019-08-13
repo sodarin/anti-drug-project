@@ -5,6 +5,12 @@
     "logLevel": "debug",
     "changeOrigin": true
   },
+  "/tag": {
+    "target": "http://219.216.81.67:8001",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
   "/login": {
     "target": "http://39.106.90.140:8002",
     "secure": false,

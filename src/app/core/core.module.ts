@@ -5,9 +5,11 @@ import {UserInfoViewModalComponent} from './modal/user-info-view-modal/user-info
 import { UserInfoEditModalComponent } from './modal/user-info-edit-modal/user-info-edit-modal.component';
 import {QuillModule} from 'ngx-quill';
 import { CreateUserModalComponent } from './modal/create-user-modal/create-user-modal.component';
+import { CreateTagModalComponent } from './modal/create-tag-modal/create-tag-modal.component';
+import { CreateTagGroupModalComponent } from './modal/create-tag-group-modal/create-tag-group-modal.component';
 
 @NgModule({
-  declarations: [LoginModalComponent, UserInfoViewModalComponent, UserInfoEditModalComponent, CreateUserModalComponent],
+  declarations: [LoginModalComponent, UserInfoViewModalComponent, UserInfoEditModalComponent, CreateUserModalComponent, CreateTagModalComponent, CreateTagGroupModalComponent],
   imports: [
     ShareModule,
     QuillModule
@@ -16,7 +18,8 @@ import { CreateUserModalComponent } from './modal/create-user-modal/create-user-
     LoginModalComponent,
     UserInfoViewModalComponent,
     UserInfoEditModalComponent,
-    CreateUserModalComponent
+    CreateUserModalComponent,
+    CreateTagModalComponent
   ]
 })
 export class CoreModule { }
