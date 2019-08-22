@@ -8,7 +8,7 @@
   </div>
   <nz-divider [nzText]="'标签总数： ' + total"></nz-divider>
   <nz-table
-    #userListTable
+    #tagListTable
     [nzData]="displayData"
     [nzFrontPagination]="false"
     [nzTotal]="total"
@@ -26,7 +26,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let data of userListTable.data; let i of userListTable.data.length">
+    <tr *ngFor="let data of tagListTable.data; let i of tagListTable.data.length">
       <td>{{data.id}}</td>
       <td>{{data.name}}</td>
 <!--      标签组id？-->

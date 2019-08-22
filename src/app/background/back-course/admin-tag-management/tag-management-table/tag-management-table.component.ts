@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {TagInfoEditComponent} from '../../../../core/modal/tag-info-edit-modal/tag-info-edit.component';
 import {TagManagementService} from '../../../../service/tag-management/tag-management.service';
-import {UserManagementService} from '../../../../service/user-management/user-management.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {UserInfoEditModalComponent} from '../../../../core/modal/user-info-edit-modal/user-info-edit-modal.component';
 import {CreateTagModalComponent} from '../../../../core/modal/create-tag-modal/create-tag-modal.component';
 
 @Component({
@@ -84,7 +82,7 @@ export class TagManagementTableComponent implements OnInit {
 
   edit(id: string) {
     const modal = this._modalService.create({
-      nzTitle: '编辑个人信息',
+      nzTitle: '编辑标签信息',
       nzContent: TagInfoEditComponent,
       nzComponentParams: {
         id: id

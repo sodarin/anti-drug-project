@@ -1,1 +1,40 @@
-<p>tag-group-management-table works!</p>
+<div class="content">
+  <div class="filter-condition">
+    <div>
+      <h2 style="margin-left: 20px">标签组管理
+        <button nz-button nzType="danger" class="create-button" (click)="openCreateTagGroupModal()"><i nz-icon nzType="plus"></i>新增标签组</button>
+      </h2>
+    </div>
+  </div>
+  <nz-divider [nzText]="'标签组总数： ' + total"></nz-divider>
+  <nz-table
+    #tagGroupListTable
+    [nzData]="displayData"
+    [nzFrontPagination]="false"
+    [nzTotal]="total"
+    [nzLoading]="loading"
+    [nzPageSize]="10"
+    [(nzPageIndex)]="pageIndex"
+    (nzPageIndexChange)="searchData()">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>标签组名称</th>
+      <th>应用于</th>
+      <th>包含标签数量</th>
+      <th>标签组创建时间</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of tagGroupListTable.data; let i of tagGroupListTable.data.length">
+      <td>{{data.id}}</td>
+      <td>{{data.name}}</td>
+      <!--      标签组id？-->
+      <td>{{data.id}}</td>
+      <td>{{data.createdTime}}</td>
+      <button nz-button nzType="default" (click)="edit(data.id)">编辑</button>
+    </tr>
+    </tbody>
+  </nz-table>
+</div>
