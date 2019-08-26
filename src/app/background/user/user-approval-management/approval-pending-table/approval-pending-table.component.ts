@@ -46,7 +46,10 @@ export class ApprovalPendingTableComponent implements OnInit {
       this.loading = false;
       this.total = result[0].totalApproval;
       this.displayData = result;
-    }, error1 => this._message.error(error1.error))
+    }, error1 => {
+      this.loading = false;
+      this._message.error(error1.error)
+    })
   }
 
   filter() {

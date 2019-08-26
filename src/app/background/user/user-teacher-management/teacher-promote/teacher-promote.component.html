@@ -2,13 +2,12 @@
   <div class="filter-condition">
     <div class="time-filter">
       <input class="name-containing-input" nz-input placeholder="用户名" [(ngModel)]="inputValue" />
-      <button nz-button nzType="primary" class="search-button"><i nz-icon nzType="search"></i>搜索</button>
+      <button (click)="search()" nz-button nzType="primary" class="search-button"><i nz-icon nzType="search"></i>搜索</button>
     </div>
-    <div></div>
   </div>
-  <nz-divider [nzText]="'用户总数： ' + total"></nz-divider>
+  <nz-divider></nz-divider>
   <nz-table
-    #userListTable
+    #promotedTeacherListTable
     [nzData]="displayData"
     [nzFrontPagination]="false"
     [nzTotal]="total"
@@ -25,15 +24,15 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let data of userListTable.data; let i of userListTable.data.length">
+    <tr *ngFor="let data of promotedTeacherListTable.data">
       <td>{{data.promotedSeq}}</td>
       <td>{{data.nickName}}</td>
       <td>{{data.promotedTime}}</td>
       <td><i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
       <ng-template #operationTemplate>
         <div class="user-management-operation">
-          <div><span (click)="viewUserInfo(data.userId)"><i nz-icon nzType="eye" nzTheme="outline"></i>设置序号</span></div>
-          <div><span (click)="editUserInfo(data.userId)"><i nz-icon nzType="edit" nzTheme="outline"></i>推荐</span></div>
+          <div><span (click)="setRecommend(data.userId)"><i nz-icon nzType="edit" nzTheme="outline"></i>设置序号</span></div>
+          <div><span (click)="removeRecommend(data.userId)"><i nz-icon nzType="minus-circle" nzTheme="outline"></i>取消推荐</span></div>
         </div>
       </ng-template>
     </tr>

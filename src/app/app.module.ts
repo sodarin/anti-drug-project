@@ -18,6 +18,9 @@ import {UserInfoEditModalComponent} from './core/modal/user-info-edit-modal/user
 import {QuillEditorComponent, QuillModule} from 'ngx-quill';
 import {CreateUserModalComponent} from './core/modal/create-user-modal/create-user-modal.component';
 import { CreateTagModalComponent } from './core/modal/create-tag-modal/create-tag-modal.component';
+import {CreateTagGroupModalComponent} from './core/modal/create-tag-group-modal/create-tag-group-modal.component';
+import {TagInfoEditComponent} from './core/modal/tag-info-edit-modal/tag-info-edit.component';
+import {TeacherRecommendModalComponent} from './core/modal/teacher-recommend-modal/teacher-recommend-modal.component';
 
 
 registerLocaleData(zh);
@@ -48,7 +51,10 @@ registerLocaleData(zh);
     UserInfoViewModalComponent,
     UserInfoEditModalComponent,
     CreateUserModalComponent,
-    CreateTagModalComponent
+    CreateTagModalComponent,
+    CreateTagGroupModalComponent,
+    TagInfoEditComponent,
+    TeacherRecommendModalComponent
   ],
   bootstrap: [AppComponent]
 })

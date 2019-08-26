@@ -4,9 +4,6 @@
 .select-control {
   width: 120px;
 }
-.time-area {
-  margin-left: 20px;
-}
 .user-filter {
   margin-top: 20px;
 }
@@ -17,7 +14,9 @@
 .search-button {
   margin-left: 10px;
 }
-
+.delete-button {
+  margin-left: 10px;
+}
 .name {
   font-size: 12px;
   color: rgba(0, 0, 0, .5);
@@ -50,9 +49,6 @@
   :host ::ng-deep nz-picker, :host ::ng-deep .ant-calendar-picker {
     width: 100% !important;
   }
-  nz-divider {
-    display: none;
-  }
   .name-containing-filter {
     margin-top: 10px;
   }
@@ -62,6 +58,11 @@
     margin-top: 10px;
   }
   .search-button {
+    margin-left: 0;
+    margin-top: 10px;
+    width: 100%;
+  }
+  .delete-button {
     margin-left: 0;
     margin-top: 10px;
     width: 100%;
@@ -77,6 +78,16 @@
 
 .operate span {
   margin-left: 8px;
+}
+.content-column {
+  cursor: pointer;
+}
+.is-ellipsis {
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  color: rgba(0, 0, 0, .65);
 }
 @media screen and (max-width: 520px){
   :host ::ng-deep .ant-table-thead > tr > th, :host ::ng-deep .ant-table-tbody > tr > td {

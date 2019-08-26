@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {TeacherManagementService} from '../../../../service/teacher-management/teacher-management.service';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {UserInfoViewModalComponent} from '../../../../core/modal/user-info-view-modal/user-info-view-modal.component';
-import {UserInfoEditModalComponent} from '../../../../core/modal/user-info-edit-modal/user-info-edit-modal.component';
+import {TeacherRecommendModalComponent} from '../../../../core/modal/teacher-recommend-modal/teacher-recommend-modal.component';
 
 @Component({
   selector: 'app-teacher-management-table',
@@ -11,10 +11,7 @@ import {UserInfoEditModalComponent} from '../../../../core/modal/user-info-edit-
 })
 export class TeacherManagementTableComponent implements OnInit {
 
-  selectedTimeFilterValue: string;
   dateRange: string;
-  selectedRoleFilterValue: string = 'teacher';
-  selectedNameContaining: string = 'username';
   inputValue: string;
 
   dataList = [];
@@ -24,12 +21,8 @@ export class TeacherManagementTableComponent implements OnInit {
   totalPage: number;
   pageIndex: number = 1;
 
-  popoverVisible: boolean;
 
-  selectedUserId: string;
-  userInfoPageVisible: boolean;
-
-  constructor(private TeacherManagementService$: TeacherManagementService,
+  constructor(private teacherManagementService$: TeacherManagementService,
               private _message: NzMessageService,
               private _modalService: NzModalService) { }
 
@@ -37,20 +30,24 @@ export class TeacherManagementTableComponent implements OnInit {
     this.searchData()
   }
 
-  onChange(result: Date): void {
-    console.log('onChange: ', result);
+
+  search() {
+
   }
 
   searchData(pageIndex: number = this.pageIndex) {
     this.displayData = [];
     this.loading = true;
-    this.TeacherManagementService$.getUserList(pageIndex, 10).subscribe(result => {
+    this.teacherManagementService$.getUserList(pageIndex, 10).subscribe(result => {
       this.loading = false;
-      this.total = result[0].totalUser;
+      this.total = result[0].total? result[0].total: 0;
       this.totalPage = Math.ceil(this.total / 10);
       this.dataList = result;
       this.displayData = this.dataList;
-    }, error1 => this._message.error(error1.error))
+    }, error1 => {
+      this.loading = false;
+      this._message.error(error1.error)
+    })
   }
 
 
@@ -66,14 +63,13 @@ export class TeacherManagementTableComponent implements OnInit {
     })
   }
 
-  editUserInfo(id: string) {
+  setRecommendation(id: string) {
     const modal = this._modalService.create({
-      nzTitle: '编辑个人信息',
-      nzContent: UserInfoEditModalComponent,
+      nzTitle: '设置教师推荐序号',
+      nzContent: TeacherRecommendModalComponent,
       nzComponentParams: {
-        userId: id
+        id: id
       },
-      nzWidth: 600,
       nzOkText: '提交',
       nzCancelText: '取消',
       nzOnOk: instance => instance.submit(),

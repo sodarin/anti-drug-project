@@ -96,7 +96,10 @@ export class UserManagementTableComponent implements OnInit {
       this.totalPage = Math.ceil(this.total / 10);
       this.dataList = result;
       this.displayData = this.dataList;
-    }, error1 => this._message.error(error1.message))
+    }, error1 => {
+      this.loading = false;
+      this._message.error(error1.message)
+    })
   }
 
   //新建用户

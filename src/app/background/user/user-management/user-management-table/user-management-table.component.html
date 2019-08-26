@@ -13,7 +13,7 @@
       </ng-template>
     </div>
     <div class="user-filter">
-      <nz-select class="select-control" [(ngModel)]="selectedRoleFilterValue">
+      <nz-select class="select-control" [(ngModel)]="selectedRoleFilterValue" nzAllowClear="false">
         <nz-option nzValue="" nzLabel="所有角色"></nz-option>
         <nz-option nzValue="ROLE_USER" nzLabel="学员"></nz-option>
         <nz-option nzValue="ROLE_TEACHER" nzLabel="教师"></nz-option>

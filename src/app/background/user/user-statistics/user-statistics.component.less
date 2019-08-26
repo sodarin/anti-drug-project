@@ -1,0 +1,32 @@
+.content {
+  padding: 20px 0;
+}
+.name-containing-input {
+  width: 130px;
+  margin-left: 10px;
+}
+.search-button {
+  margin-left: 10px;
+}
+.export-button {
+  margin-left: 10px;
+}
+
+@media screen and (max-width: 776px) {
+  .time-area {
+    margin-top: 10px;
+  }
+  .name-containing-input {
+    margin-left: 0;
+    margin-top: 10px;
+    width: 100%;
+  }
+  :host ::ng-deep nz-picker, :host ::ng-deep .ant-calendar-picker {
+    width: 100% !important;
+  }
+  .search-button, .export-button {
+    margin-left: 0;
+    margin-top: 10px;
+    width: 100%;
+  }
+}

@@ -57,11 +57,17 @@ export class UserInfoEditModalComponent implements OnInit {
   }
 
   submit() {
+    let shouldBeClosed = false;
     this.userManagementService$.updateUserDetail(
       this.userId, this.trueName, this.gender, this.idcard, this.mobile, this.company, this.job, this.iam, this.signature, this.site, this.weibo, this.weixin, this.qq, this.introductionContent
     ).subscribe( result => {
+      shouldBeClosed = true;
       this._message.success("修改成功！");
-    }, error1 => this._message.error(error1.error))
+    }, error1 => {
+      shouldBeClosed = false;
+      this._message.error(error1.error)
+    });
+    return shouldBeClosed;
   }
 
   destroy() {

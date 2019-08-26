@@ -1,1 +1,64 @@
-<p>user-statistics works!</p>
+<div class="content">
+  <div class="filter-condition">
+    <div class="time-filter">
+      <nz-range-picker class="time-area" [(ngModel)]="dateRange" [nzDateRender]="calendarRender" nzShowTime></nz-range-picker>
+      <ng-template #calendarRender let-current>
+        <div class="ant-calendar-date mobile-width">
+          {{ current.getDate() }}
+        </div>
+      </ng-template>
+      <input class="name-containing-input" nz-input placeholder="用户名" [(ngModel)]="usernameInput" />
+      <button nz-button nzType="primary" class="search-button" (click)="search()"><i nz-icon nzType="search"></i>搜索</button>
+      <button nz-button nzType="primary" class="export-button" (click)="exportDta()"><i nz-icon nzType="export"></i>导出</button>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+  <nz-table
+    #userstatisticsTable
+    [nzData]="displayData"
+    [nzFrontPagination]="false"
+    [nzTotal]="total"
+    [nzLoading]="loading"
+    [nzPageSize]="10"
+    [(nzPageIndex)]="pageIndex"
+    (nzPageIndexChange)="searchData()">
+    <thead>
+    <tr>
+      <th>用户名</th>
+      <th>加入班级数</th>
+      <th>退出班级数</th>
+      <th>加入计划数</th>
+      <th>退出计划数</th>
+      <th>学完任务数</th>
+      <th>学习时长(分)</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of userstatisticsTable.data">
+      <td>{{data.nickName}}</td>
+      <td>{{data.joinclassnumber}}</td>
+      <td>{{data.quitclassnumber}}</td>
+      <td>{{data.joinschedulenumber}}</td>
+      <td>{{data.quitschedulenumber}}</td>
+      <td>{{data.haslearnednumber}}</td>
+      <td>{{data.leaningtime}}</td>
+      <td><i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
+      <ng-template #operationTemplate>
+<!--        <div class="user-management-operation">-->
+<!--          <div><span (click)="viewUserInfo(data.userId)"><i nz-icon nzType="eye" nzTheme="outline"></i>查看用户信息</span></div>-->
+<!--          <div><span (click)="editUserInfo(data.userId)"><i nz-icon nzType="edit" nzTheme="outline"></i>编辑用户信息</span></div>-->
+<!--          <div><span><i nz-icon nzType="team" nzTheme="outline"></i>设置用户组</span></div>-->
+<!--          <div><span><i nz-icon nzTheme="outline" nzType="smile"></i>修改用户头像</span></div>-->
+<!--          <div><span><i nz-icon nzType="file-protect" nzTheme="outline"></i>修改密码</span></div>-->
+<!--          <div>-->
+<!--            <span *ngIf="data.locked==1"><i nz-icon nzType="lock" nzTheme="outline"></i>封禁用户</span>-->
+<!--            <span *ngIf="data.locked==0"><i nz-icon nzType="unlock" nzTheme="outline"></i>解禁用户</span>-->
+<!--          </div>-->
+<!--        </div>-->
+      </ng-template>
+    </tr>
+    </tbody>
+  </nz-table>
+</div>
+

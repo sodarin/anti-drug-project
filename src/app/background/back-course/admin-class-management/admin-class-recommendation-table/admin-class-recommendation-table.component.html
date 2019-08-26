@@ -2,7 +2,7 @@
   #classListTable
   [nzData]="displayData"
   [nzFrontPagination]="false"
-  [nzTotal]="totalCourse"
+  [nzTotal]="total"
   [nzLoading]="loading"
   [nzPageSize]="10"
   [(nzPageIndex)]="pageIndex"
@@ -22,12 +22,12 @@
     <td>{{data.className}}</td>
     <td>{{data.creatTime}}</td>
     <td>{{data.recommendationTime}}
-    <td>{{data.Status}}</td>
+    <td>{{data.status}}</td>
     <td><i class="more-operation" nz-popover nzTitle="操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
     <ng-template #operationTemplate>
       <div class="user-management-operation">
-        <div><span (click)="edit()"><i nz-icon nzType="eye" nzTheme="outline"></i>设置序号</span></div>
-        <div><span (click)="esc()"><i nz-icon nzType="edit" nzTheme="outline"></i>取消推荐</span></div>
+        <div><span (click)="edit(data.classId)"><i nz-icon nzType="eye" nzTheme="outline"></i>设置序号</span></div>
+        <div><span (click)="esc(data.classId)"><i nz-icon nzType="edit" nzTheme="outline"></i>取消推荐</span></div>
       </div>
     </ng-template>
   </tr>

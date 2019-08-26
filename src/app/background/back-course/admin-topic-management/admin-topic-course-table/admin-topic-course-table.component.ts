@@ -9,9 +9,9 @@ import {NzMessageService, NzModalService} from "ng-zorro-antd";
 })
 export class AdminTopicCourseTableComponent implements OnInit {
 
-  postType: string = '';
-  attribute: string = '';
-  title: string = '';
+  postType: string;
+  attribute: string;
+  title: string;
   keyWord: string;
   creator: string;
 
@@ -30,7 +30,7 @@ export class AdminTopicCourseTableComponent implements OnInit {
   isOperating = false;
   isIndeterminate = false;
   mapOfCheckedId: { [key: string]: boolean } = {};
-  numberOfChecked = 0;
+  mapOfEllipsis: { [key: string]: boolean } = {};
 
   constructor(
     private adminTopicCourseService$: AdminTopicCourseService,
@@ -58,7 +58,27 @@ export class AdminTopicCourseTableComponent implements OnInit {
       this.totalPage = Math.ceil(this.total / 10);
       this.dataList = result;
       this.displayData = this.dataList;
-    }, error1 => this._message.error(error1.error))
+    }, error1 => {
+      this.loading = false;
+      this._message.error(error1.error)
+    })
+  }
+
+
+  // 批量删除
+  deleteData() {
+    // 删除数据操作
+    let deleteIdList = [];
+    this.displayData.forEach(item => {
+      if (this.mapOfCheckedId[item.id])
+        deleteIdList.push(item.id)
+    });
+    this.isOperating = true;
+    // setTimeout(() => {
+    //   this.dataList.forEach(item => (this.mapOfCheckedId[item.id] = false));
+    //   this.refreshStatus();
+    //   this.isOperating = false;
+    // }, 1000);
   }
   searchData(pageIndex: number = this.pageIndex) {
     this.displayData = [];
@@ -69,36 +89,55 @@ export class AdminTopicCourseTableComponent implements OnInit {
       this.totalPage = Math.ceil(this.total / 10);
       this.dataList = result;
       this.displayData = this.dataList;
-    }, error1 => this._message.error(error1.error))
+      this.displayData.forEach(item => {
+        this.mapOfEllipsis[item.id] = true
+      })
+    }, error1 => {
+      this.loading = false;
+      this._message.error(error1.error)
+    })
   }
 
   // 全选功能
   checkAll(value: boolean): void {
-    this.displayData.filter(item => !item.disabled).forEach(item => (this.mapOfCheckedId[item.id] = value));
+    this.displayData.forEach(item => (this.mapOfCheckedId[item.id] = value));
     this.refreshStatus();
   }
 
   refreshStatus(): void {
-    this.isAllDisplayDataChecked = this.displayData
-      .filter(item => !item.disabled)
-      .every(item => this.mapOfCheckedId[item.id]);
+    this.isAllDisplayDataChecked = this.displayData.every(item => this.mapOfCheckedId[item.id]);
     this.isIndeterminate =
       this.displayData.filter(item => !item.disabled).some(item => this.mapOfCheckedId[item.id]) &&
       !this.isAllDisplayDataChecked;
-    this.numberOfChecked = this.dataList.filter(item => this.mapOfCheckedId[item.id]).length;
   }
-  deletee(): void {
-    // 删除数据操作
-    this.isOperating = true;
-    setTimeout(() => {
-      this.dataList.forEach(item => (this.mapOfCheckedId[item.id] = false));
-      this.refreshStatus();
-      this.isOperating = false;
-    }, 1000);
-  }
-  // 新增帖子
-  plus(id: string) {
 
+  // 跳转到课程话题页面
+  navigateToTopic(id: string) {
+    window.open(``, '_blank')
+  }
+
+  // 展开和折叠信息
+  unfoldOrFoldContent(id: string) {
+    this.mapOfEllipsis[id] = !this.mapOfEllipsis[id];
+  }
+
+  // 加精
+  setElaborate(id: string, data: any) {
+
+  }
+
+  // 置顶
+  setTop(id: string, data: any) {
+
+  }
+
+  delete(id: string): void {
+    this._modalService.confirm({
+      nzTitle: '是否要删除该条记录？',
+      nzOnOk: () => {
+        console.log('111')
+      }
+    })
   }
 
 }

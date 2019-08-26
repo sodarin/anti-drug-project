@@ -2,7 +2,7 @@
   <div class="filter-condition">
     <div class="user-filter">
       <input class="name-containing-input" nz-input placeholder="用户名" [(ngModel)]="inputValue" />
-      <button nz-button nzType="primary" class="search-button"><i nz-icon nzType="search"></i>搜索</button>
+      <button (click)="search()" nz-button nzType="primary" class="search-button"><i nz-icon nzType="search"></i>搜索</button>
     </div>
   </div>
   <nz-divider [nzText]="'共 ' + total + ' 位在线用户（15分钟以内有活动）'"></nz-divider>

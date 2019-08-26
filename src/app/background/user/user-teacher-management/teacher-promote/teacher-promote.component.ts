@@ -3,6 +3,7 @@ import {TeacherManagementService} from '../../../../service/teacher-management/t
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {UserInfoViewModalComponent} from '../../../../core/modal/user-info-view-modal/user-info-view-modal.component';
 import {UserInfoEditModalComponent} from '../../../../core/modal/user-info-edit-modal/user-info-edit-modal.component';
+import {TeacherRecommendModalComponent} from '../../../../core/modal/teacher-recommend-modal/teacher-recommend-modal.component';
 
 
 @Component({
@@ -12,10 +13,7 @@ import {UserInfoEditModalComponent} from '../../../../core/modal/user-info-edit-
 })
 export class TeacherPromoteComponent implements OnInit {
 
-  selectedTimeFilterValue: string;
   dateRange: string;
-  selectedRoleFilterValue: string = 'teacher';
-  selectedNameContaining: string = 'username';
   inputValue: string;
 
   dataList = [];
@@ -25,12 +23,8 @@ export class TeacherPromoteComponent implements OnInit {
   totalPage: number;
   pageIndex: number = 1;
 
-  popoverVisible: boolean;
 
-  selectedUserId: string;
-  userInfoPageVisible: boolean;
-
-  constructor(private TeacherManagementService$: TeacherManagementService,
+  constructor(private teacherManagementService$: TeacherManagementService,
               private _message: NzMessageService,
               private _modalService: NzModalService) { }
 
@@ -38,14 +32,14 @@ export class TeacherPromoteComponent implements OnInit {
     this.searchData()
   }
 
-  onChange(result: Date): void {
-    console.log('onChange: ', result);
+  search() {
+
   }
 
   searchData(pageIndex: number = this.pageIndex) {
     this.displayData = [];
     this.loading = true;
-    this.TeacherManagementService$.getUserList(pageIndex, 10).subscribe(result => {
+    this.teacherManagementService$.getUserList(pageIndex, 10).subscribe(result => {
       this.loading = false;
       this.total = result[0].totalUser;
       this.totalPage = Math.ceil(this.total / 10);
@@ -55,30 +49,22 @@ export class TeacherPromoteComponent implements OnInit {
   }
 
 
-  viewUserInfo(id: string) {
+  setRecommend(id: string) {
     const modal = this._modalService.create({
-      nzTitle: '个人详细信息',
-      nzContent: UserInfoViewModalComponent,
+      nzTitle: '编辑推荐序号',
+      nzContent: TeacherRecommendModalComponent,
       nzComponentParams: {
-        userId: id
+        id: id
       },
-      nzWidth: 600,
-      nzFooter: null
+      nzOnOk: instance => instance.submit(),
+      nzOnCancel: instance => instance.destroy()
     })
   }
 
-  editUserInfo(id: string) {
-    const modal = this._modalService.create({
-      nzTitle: '编辑个人信息',
-      nzContent: UserInfoEditModalComponent,
-      nzComponentParams: {
-        userId: id
-      },
-      nzWidth: 600,
-      nzOkText: '提交',
-      nzCancelText: '取消',
-      nzOnOk: instance => instance.submit(),
-      nzOnCancel: instance => instance.destroy()
+  removeRecommend(id: string) {
+    this._modalService.confirm({
+      nzTitle: '是否取消推荐该教师？',
+      nzOnOk: () => this.teacherManagementService$.getUserDetailById('')
     })
 
   }

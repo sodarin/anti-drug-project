@@ -29,6 +29,10 @@ export class OnlineUserTableComponent implements OnInit {
   ngOnInit() {
   }
 
+  search() {
+
+  }
+
   searchData(pageIndex: number = this.pageIndex) {
     this.displayData = [];
     this.loading = true;
@@ -38,7 +42,10 @@ export class OnlineUserTableComponent implements OnInit {
       this.totalPage = Math.ceil(this.total / 10);
       this.dataList = result;
       this.displayData = this.dataList;
-    }, error1 => this._message.error(error1.error))
+    }, error1 => {
+      this.loading = false;
+      this._message.error(error1.error)
+    })
   }
 
   filter(data: string) {

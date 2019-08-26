@@ -21,16 +21,16 @@
     <input class="name-containing-input" nz-input placeholder="关键词" [(ngModel)]="keyWord" />
     <nz-divider nzType="vertical"></nz-divider>
     <input class="name-containing-input" nz-input placeholder="作者" [(ngModel)]="creator" />
-    <button (click)="filterCourse()" nz-button nzType="primary" class="search-button"><i nz-icon nzType="search"></i>搜索</button>
+    <button (click)="filterPost()" nz-button nzType="primary" class="search-button"><i nz-icon nzType="search"></i>搜索</button>
     <nz-divider nzType="vertical"></nz-divider>
-    <button nz-button nzType="danger" class="create-button"><i nz-icon nzType="plus"></i>新增帖子</button>
+    <button class="delete-button" nz-button [nzType]="'danger'" [nzLoading]="isOperating" (click)="deleteData()"><i nz-icon nzTheme="outline" nzType="delete"></i>删除</button>
   </div>
-
+  <nz-divider></nz-divider>
   <nz-table
     #postListTable
     [nzData]="displayData"
     [nzFrontPagination]="false"
-    [nzTotal]="totalPost"
+    [nzTotal]="total"
     [nzLoading]="loading"
     [nzPageSize]="10"
     [(nzPageIndex)]="pageIndex"
@@ -55,16 +55,19 @@
       <td
         nzShowCheckbox
         [(nzChecked)]="mapOfCheckedId[data.id]"
-        [nzDisabled]="data.disabled"
         (nzCheckedChange)="refreshStatus()"
       ></td>
-      <td>{{data.post}}</td>
+      <td>
+        <span style="color: #108ee9; cursor: pointer; font-size: 16px;" (click)="navigateToTopic(data.id)">{{data.post}}</span>
+        <span (click)="unfoldOrFoldContent(data.id)" class="is-ellipsis" *ngIf="mapOfEllipsis[data.id]">{{data.Mcontent}}</span>
+        <span (click)="unfoldOrFoldContent(data.id)" class="not-ellipsis" *ngIf="!mapOfEllipsis[data.id]">{{data.Mcontent}}</span>
+      </td>
       <td>
         <span>{{data.reply}}</span><br/>
         <span>{{data.check}}</span>
       </td>
-      <td><nz-tag nzMode="checkable" [nzChecked]="true" (nzCheckedChange)="checkChange($event)">精</nz-tag>
-        <nz-tag nzMode="checkable" [nzChecked]="true" (nzCheckedChange)="checkChange($event)">顶</nz-tag>
+      <td><nz-tag nzMode="checkable" [nzChecked]="data.isElaborate" (nzCheckedChange)="setElaborate(data.id, $event)">精</nz-tag>
+        <nz-tag nzMode="checkable" [nzChecked]="data.isTop" (nzCheckedChange)="setTop(data.id, $event)">顶</nz-tag>
       </td>
       <td>
         <span>{{data.creator}}</span><br/>
@@ -80,16 +83,4 @@
     </tbody>
 
   </nz-table>
-  <div class="operate">
-    <button
-      nz-button
-      [disabled]="numberOfChecked === 0"
-      [nzType]="'primary'"
-      [nzLoading]="isOperating"
-      (click)="operateData()"
-    >
-      删除
-    </button>
-    <span *ngIf="numberOfChecked">选中 {{ numberOfChecked }} 条记录</span>
-  </div>
 </div>

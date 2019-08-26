@@ -1,0 +1,51 @@
+<div class="content">
+  <div class="selection-filter">
+    <nz-cascader nzChangeOnSelect [nzPlaceHolder]="'课程分类'" [nzOptions]="options" [(ngModel)]="courseClassification"></nz-cascader>
+    <nz-divider nzType="vertical"></nz-divider>
+    <input class="name-containing-input" nz-input placeholder="请输入标题" [(ngModel)]="title" />
+    <nz-divider nzType="vertical"></nz-divider>
+    <input class="name-containing-input" nz-input placeholder="请输入创建者名字" [(ngModel)]="creator" />
+    <button (click)="filterCourse()" nz-button nzType="primary" class="search-button"><i nz-icon nzType="search"></i>搜索</button>
+  </div>
+  <nz-divider></nz-divider>
+  <nz-table
+    #openClassListTable
+    [nzData]="displayData"
+    [nzFrontPagination]="false"
+    [nzTotal]="totalCourse"
+    [nzLoading]="loading"
+    [nzPageSize]="10"
+    [(nzPageIndex)]="pageIndex"
+    (nzPageIndexChange)="searchData()">
+    <thead>
+    <tr>
+      <th>编号</th>
+      <th>名称</th>
+      <th>创建者</th>
+      <td>推荐时间</td>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of openClassListTable.data">
+      <td>{{data.courseId}}</td>
+      <td>
+        <span style="cursor: pointer; color: #108ee9;" (click)="navigateTo(data.courseId)">{{data.courseName}}</span><br/>
+        <span>分类：{{data.courseClassification}}</span>
+      </td>
+      <td>
+        <span style="color: #108ee9;" (click)="openTeacherIntroModal(data.creatorId)">{{data.creator}}</span><br/>
+        <span>{{data.creatTime}}</span>
+      </td>
+      <td>{{data.recommendTime}}</td>
+      <td><i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
+      <ng-template #operationTemplate>
+        <div class="user-management-operation">
+          <div><span (click)="setRecommendOrder(data.courseId)"><i nz-icon nzType="edit" nzTheme="outline"></i>设置序号</span></div>
+          <div><span (click)="cancelRecommendCourse(data.courseId)"><i nz-icon nzType="down-square" nzTheme="outline"></i>取消推荐</span></div>
+        </div>
+      </ng-template>
+    </tr>
+    </tbody>
+  </nz-table>
+</div>

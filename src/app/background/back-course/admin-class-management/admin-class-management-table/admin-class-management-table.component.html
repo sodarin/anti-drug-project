@@ -3,12 +3,12 @@
     <input class="name-containing-input" nz-input placeholder="班级名称" [(ngModel)]="className" />
     <button (click)="filterClass()" nz-button nzType="primary" class="search-button"><i nz-icon nzType="search"></i>搜索</button>
   </div>
-  <nz-divider [nzText]="'班级：'+ classNum +'个    已发布：'+publishNum + '个   已关闭：'+closeNum+ '个   未发布：'+unPublishNum+' 个' "></nz-divider>
+  <nz-divider [nzText]="'班级：'+ classNum + '个'"></nz-divider>
   <nz-table
     #classListTable
     [nzData]="displayData"
     [nzFrontPagination]="false"
-    [nzTotal]="totalCourse"
+    [nzTotal]="total"
     [nzLoading]="loading"
     [nzPageSize]="10"
     [(nzPageIndex)]="pageIndex"
@@ -19,7 +19,6 @@
       <th>班级名称</th>
       <th>课程数</th>
       <th>学员数</th>
-      <th>价格</th>
       <th>状态</th>
       <th>操作</th>
     </tr>
@@ -27,17 +26,26 @@
     <tbody>
     <tr *ngFor="let data of classListTable.data">
       <td>{{data.classId}}</td>
-      <td>{{data.className}}</td>
-      <td>{{data.courseNum}}</td>
+      <td>
+        <span>{{data.className}}</span><br/>
+        <span>分类：{{data.classClassification ? data.classClassification: '- -'}}</span><br />
+        <span *ngIf="data.recommendation == 1"><nz-tag [nzColor]="'#108ee9'">荐:{{data.promotedTime}}/序号:{{data.promotedSeq}}</nz-tag>></span>
+      </td>
+      <td><span style="color: #108ee9; cursor: pointer;" (click)="checkCourseDetail(data.id)">{{data.courseNum}}</span></td>
       <td>{{data.stuNum}}
-      <td>{{data.price}}</td>>
-      <td>{{data.Status}}</td>
+      <td>{{data.status}}</td>
       <td><i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
       <ng-template #operationTemplate>
         <div class="user-management-operation">
-          <div><span (click)="management()"><i nz-icon nzType="eye" nzTheme="outline"></i>管理</span></div>
-          <div><span (click)="recommendationClass()"><i nz-icon nzType="edit" nzTheme="outline"></i>推荐班级</span></div>
-          <div><span (click)="publishClass()"><i nz-icon nzType="edit" nzTheme="outline"></i>发布班级</span></div>
+          <div><span (click)="management(data.classId)"><i nz-icon nzType="eye" nzTheme="outline"></i>管理</span></div>
+          <div>
+            <span *ngIf="data.recommendStatus == 0" (click)="recommendationClass(data.classId)"><i nz-icon nzType="up-square" nzTheme="outline"></i>推荐班级</span>
+            <span *ngIf="data.recommendStatus == 1" (click)="cancelRecommendation(data.classId)"><i nz-icon nzType="down-square" nzTheme="outline"></i>取消推荐</span>
+          </div>
+          <div>
+            <span *ngIf="data.status != '已发布'" (click)="publishClass(data.classId)"><i nz-icon nzType="check" nzTheme="outline"></i>发布班级</span>
+            <span *ngIf="data.status == '已发布'" (click)="closeClass(data.classId)"><i nz-icon nzType="stop" nzTheme="outline">关闭班级</i></span>
+          </div>
         </div>
       </ng-template>
     </tr>

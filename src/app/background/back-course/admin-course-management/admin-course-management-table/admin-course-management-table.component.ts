@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {AdminCourseService} from '../../../../service/admin-course/admin-course.service';
+import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-admin-course-management-table',
@@ -68,20 +70,97 @@ export class AdminCourseManagementTableComponent implements OnInit {
     }
   ];
   courseClassification = [];
-  courseStatus: string;
-  courseType: string;
-  title: string;
-  creator: string;
+  courseStatus: string = '';
+  courseType: string = '0';
+  title: string = "";
+  creator: string = "";
+  filterOptions = {};
 
   totalCourse = 0;
 
-  constructor() { }
+  displayData = [];
+  dataList = [];
+  loading: boolean = false;
+  pageIndex: number = 1;
+
+  constructor(
+    private adminCourseService$: AdminCourseService,
+    private _message: NzMessageService,
+    private _modal: NzModalService
+  ) { }
 
   ngOnInit() {
+  // this.searchData()
   }
 
   filterCourse() {
+    let courseClassification = '';
+    if (this.courseClassification.length > 0) {
+      courseClassification = this.courseClassification[this.courseClassification.length - 1]
+    }
+    this.filterOptions = {
+      courseClassification: courseClassification,
+      courseStatus: this.courseStatus,
+      courseType: this.courseType,
+      title: this.title,
+      creator: this.creator
+    }
+  }
 
+  searchData(pageIndex: number = this.pageIndex) {
+    this.displayData = [];
+    this.loading = true;
+    this.adminCourseService$.getCourseList(pageIndex, 10).subscribe( result => {
+      this.loading = false;
+      this.totalCourse = result[0].totalCourse ? result[0].totalCourse: 0;
+      this.dataList = result;
+      this.displayData = this.dataList
+    }, error1 => {
+      this.loading = false;
+      this._message.error(error1.error)
+    })
+  }
+
+  showRecommendCourseModal(courseId: string) {
+    this._modal.confirm({
+      nzTitle: '确认要将该课程设为推荐课程吗？',
+      nzOnOk: () => console.log('11')
+    })
+  }
+
+  cancelRecommendCourse(courseId: string) {
+    this._modal.confirm({
+      nzTitle: '是否要取消推荐？',
+      nzOnOk: () => console.log('11')
+    })
+  }
+
+  publishCourse(courseId: string) {
+    this._modal.confirm({
+      nzTitle: '是否要发布该课程？',
+      nzOnOk: () => console.log('11')
+    })
+  }
+
+  closeCourse(courseId: string) {
+    this._modal.confirm({
+      nzTitle: '是否要关闭该课程？',
+      nzOnOk: () => console.log('11')
+    })
+  }
+
+  copyCourse(data: any) {
+    this._modal.confirm({
+      nzTitle: '是否要复制该课程？',
+      nzOnOk: () => console.log('11')
+    })
+  }
+
+  deleteCourse(courseId: string) {
+    this._modal.confirm({
+      nzTitle: '是否要删除该课程？',
+      nzOnOk: () => console.log('11')
+    })
   }
 
 }

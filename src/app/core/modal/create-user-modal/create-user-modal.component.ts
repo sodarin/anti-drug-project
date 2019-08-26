@@ -54,6 +54,7 @@ export class CreateUserModalComponent implements OnInit {
     });
     if (flag && !this.userCreatingForm.errors && username !== '') {
       this.userManagementService$.createNewUser(this.userCreatingForm.controls.username.value, this.userCreatingForm.controls.password.value, roleString).subscribe(result => {
+        shouldBeClosed = true;
         this._message.success("新增用户成功！");
       }, error1 => {
         this._message.error(error1.error);

@@ -1,0 +1,46 @@
+.select-control {
+  width: 120px;
+}
+.selection-filter, .input-filter {
+  margin-top: 20px;
+}
+.search-button {
+  margin-left: 10px;
+}
+.name-containing-input {
+  width: 225px;
+}
+
+
+
+@media screen and (max-width: 776px){
+  .select-control {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  nz-cascader {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  nz-divider {
+    display: none;
+  }
+  .name-containing-input {
+    width: 100%;
+    margin-left: 0;
+    margin-bottom: 10px;
+  }
+  .input-filter {
+    margin-top: 0;
+  }
+  .search-button{
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 520px){
+  :host ::ng-deep .ant-table-thead > tr > th, :host ::ng-deep .ant-table-tbody > tr > td {
+    padding: 0;
+  }
+}

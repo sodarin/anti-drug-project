@@ -7,7 +7,7 @@
     <input class="name-containing-input" nz-input placeholder="请输入关键字" [(ngModel)]="inputValue" />
     <nz-divider nzType="vertical"></nz-divider>
     <nz-range-picker class="time-area" [(ngModel)]="dateRange" (ngModelChange)="onChange($event)"  nzShowTime></nz-range-picker>
-    <button nz-button nzType="primary" class="search-button"><i nz-icon nzType="search"></i>搜索</button>
+    <button (click)="search()" nz-button nzType="primary" class="search-button"><i nz-icon nzType="search"></i>搜索</button>
   </div>
   <nz-divider></nz-divider>
   <nz-table
@@ -35,8 +35,35 @@
         <td>{{data.loginTime}}<br/>
           <span>{{data.loginIp}}</span></td>
         <td>{{data.loginIpArea}}</td>
-        <td><i nz-tooltip nzTitle="查看" nz-icon nzType="eye" nzTheme="outline"></i></td>
+        <td><i (click)="checkLoginLog(data.id, personalLoginLogTable)" nz-tooltip nzTitle="查看" nz-icon nzType="eye" nzTheme="outline"></i></td>
       </tr>
     </tbody>
   </nz-table>
+
+
+  <ng-template #personalLoginLogTable>
+    <nz-table
+      #logDetailTable
+      [nzData]="logList"
+      [nzFrontPagination]="false"
+      [nzTotal]="logListTotal"
+      [nzPageSize]="8"
+      [(nzPageIndex)]="modalPageIndex"
+      (nzPageIndexChange)="turnToNewPage()">
+      <thead>
+        <tr>
+          <th>登录时间</th>
+          <th>登录IP</th>
+          <th>登录地点</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of logDetailTable.data">
+          <td>{{data.loginTime}}</td>
+          <td>{{data.loginIp}}</td>
+          <td>{{data.loginArea}}</td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </ng-template>
 </div>

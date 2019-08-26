@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AdminTopicClassService} from '../../../../service/admin-topic-class/admin-topic-class.service';
 import {NzMessageService, NzModalService} from "ng-zorro-antd";
+import {UserInfoViewModalComponent} from '../../../../core/modal/user-info-view-modal/user-info-view-modal.component';
 
 @Component({
   selector: 'app-admin-topic-class-table',
@@ -29,7 +30,7 @@ export class AdminTopicClassTableComponent implements OnInit {
   isOperating = false;
   isIndeterminate = false;
   mapOfCheckedId: { [key: string]: boolean } = {};
-  numberOfChecked = 0;
+  mapOfEllipsis: { [key: string]: boolean } = {};
 
   constructor(
     private adminTopicClassService$: AdminTopicClassService,
@@ -55,7 +56,25 @@ export class AdminTopicClassTableComponent implements OnInit {
       this.totalPage = Math.ceil(this.total / 10);
       this.dataList = result;
       this.displayData = this.dataList;
-    }, error1 => this._message.error(error1.error))
+    }, error1 => {
+      this.loading = false;
+      this._message.error(error1.error)
+    })
+  }
+
+  // 批量删除
+  deleteData() {
+    let deleteIdList = [];
+    this.displayData.forEach(item => {
+      if (this.mapOfCheckedId[item.id])
+        deleteIdList.push(item.id)
+    });
+    this.isOperating = true;
+    // setTimeout(() => {
+    //   this.dataList.forEach(item => (this.mapOfCheckedId[item.id] = false));
+    //   this.refreshStatus();
+    //   this.isOperating = false;
+    // }, 1000);
   }
   searchData(pageIndex: number = this.pageIndex) {
     this.displayData = [];
@@ -66,7 +85,10 @@ export class AdminTopicClassTableComponent implements OnInit {
       this.totalPage = Math.ceil(this.total / 10);
       this.dataList = result;
       this.displayData = this.dataList;
-    }, error1 => this._message.error(error1.error))
+    }, error1 => {
+      this.loading = false;
+      this._message.error(error1.error)
+    })
   }
 
   // 全选功能
@@ -82,20 +104,35 @@ export class AdminTopicClassTableComponent implements OnInit {
     this.isIndeterminate =
       this.displayData.filter(item => !item.disabled).some(item => this.mapOfCheckedId[item.id]) &&
       !this.isAllDisplayDataChecked;
-    this.numberOfChecked = this.dataList.filter(item => this.mapOfCheckedId[item.id]).length;
   }
-  delete(): void {
-    // 删除数据操作
-    this.isOperating = true;
-    setTimeout(() => {
-      this.dataList.forEach(item => (this.mapOfCheckedId[item.id] = false));
-      this.refreshStatus();
-      this.isOperating = false;
-    }, 1000);
+  // 跳转到班级话题页面
+  navigateToTopic(id: string) {
+    window.open(``, '_blank')
   }
-  // 新增帖子
-  plus(id: string) {
 
+  // 展开和折叠信息
+  unfoldOrFoldContent(id: string) {
+    this.mapOfEllipsis[id] = !this.mapOfEllipsis[id];
+  }
+  // 打开个人介绍模态框
+  openUserIntro(id: string) {
+    const modal = this._modalService.create({
+      nzTitle: '个人详细信息',
+      nzContent: UserInfoViewModalComponent,
+      nzComponentParams: {
+        userId: id
+      },
+      nzWidth: 600,
+      nzFooter: null
+    })
+  }
+  delete(id: string): void {
+    // 删除数据操作
+    // setTimeout(() => {
+    //   this.dataList.forEach(item => (this.mapOfCheckedId[item.id] = false));
+    //   this.refreshStatus();
+    //   this.isOperating = false;
+    // }, 1000);
   }
 
 }

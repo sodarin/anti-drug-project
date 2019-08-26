@@ -68,6 +68,9 @@ import {AdminReplyManagementComponent} from './back-course/admin-reply-managemen
 import {AdminReplyManagementTabComponent} from './back-course/admin-reply-management/admin-reply-management-tab/admin-reply-management-tab.component';
 import {AdminReplyManagementTableComponent} from './back-course/admin-reply-management/admin-reply-management-table/admin-reply-management-table.component';
 import {AdminReplyAllTableComponent} from './back-course/admin-reply-management/admin-reply-all-table/admin-reply-all-table.component';
+import { AdminOpenClassManagementTabComponent } from './back-course/admin-open-class-management/admin-open-class-management-tab/admin-open-class-management-tab.component';
+import { AdminOpenClassManagemenTableComponent } from './back-course/admin-open-class-management/admin-open-class-managemen-table/admin-open-class-managemen-table.component';
+import { AdminOpenClassRecommendationTableComponent } from './back-course/admin-open-class-management/admin-open-class-recommendation-table/admin-open-class-recommendation-table.component';
 
 
 @NgModule({
@@ -84,7 +87,6 @@ import {AdminReplyAllTableComponent} from './back-course/admin-reply-management/
     TagTabComponent,
     TagManagementTableComponent,
     TagGroupManagementTableComponent,
-    TagInfoEditComponent,
     AdminReplyManagementComponent,
     AdminReplyManagementTabComponent,
     AdminReplyManagementTableComponent,
@@ -110,7 +112,7 @@ import {AdminReplyAllTableComponent} from './back-course/admin-reply-management/
     NewsTapComponent,
     NewsManagementTableComponent,
     ProgramaManagementTableComponent,
-    OperationComponent, AdminCourseManagementComponent, GroupTopicManagementComponent, NewsManagementComponent, UserApprovalPageTabComponent, ApprovalPendingTableComponent, ApprovalSuccessTableComponent, AdminCourseHeaderComponent, AdminCourseManagementTabComponent, AdminOpenClassManagementComponent, AdminClassManagementComponent, AdminTopicManagementComponent, AdminCourseManagementTableComponent, AdminCourseRecommendationTableComponent, AdminCourseStatisticsTableComponent,TeacherManagementTableComponent,TeacherPromoteComponent,TeacherTabComponent],
+    OperationComponent, AdminCourseManagementComponent, GroupTopicManagementComponent, NewsManagementComponent, UserApprovalPageTabComponent, ApprovalPendingTableComponent, ApprovalSuccessTableComponent, AdminCourseHeaderComponent, AdminCourseManagementTabComponent, AdminOpenClassManagementComponent, AdminClassManagementComponent, AdminTopicManagementComponent, AdminCourseManagementTableComponent, AdminCourseRecommendationTableComponent, AdminCourseStatisticsTableComponent,TeacherManagementTableComponent,TeacherPromoteComponent,TeacherTabComponent, AdminOpenClassManagementTabComponent, AdminOpenClassManagemenTableComponent, AdminOpenClassRecommendationTableComponent],
 
     imports: [
     ShareModule,
