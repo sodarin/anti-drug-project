@@ -10,13 +10,15 @@ import { CreateTagGroupModalComponent } from './modal/create-tag-group-modal/cre
 import { TeacherRecommendModalComponent } from './modal/teacher-recommend-modal/teacher-recommend-modal.component';
 import {TagInfoEditComponent} from './modal/tag-info-edit-modal/tag-info-edit.component';
 
+import { TagGroupInfoEditModalComponent } from './modal/tag-group-info-edit-modal/tag-group-info-edit-modal.component';
+
 @NgModule({
   declarations: [
     LoginModalComponent,
     UserInfoViewModalComponent,
     UserInfoEditModalComponent,
     TagInfoEditComponent,
-    CreateUserModalComponent, CreateTagModalComponent, CreateTagGroupModalComponent, TeacherRecommendModalComponent],
+    CreateUserModalComponent, CreateTagModalComponent, CreateTagGroupModalComponent, TeacherRecommendModalComponent, TagGroupInfoEditModalComponent],
   imports: [
     ShareModule,
     QuillModule
@@ -29,7 +31,9 @@ import {TagInfoEditComponent} from './modal/tag-info-edit-modal/tag-info-edit.co
     CreateTagModalComponent,
     CreateTagGroupModalComponent,
     TagInfoEditComponent,
-    TeacherRecommendModalComponent
+    TeacherRecommendModalComponent,
+    CreateTagGroupModalComponent,
+    TagGroupInfoEditModalComponent
   ]
 })
 export class CoreModule { }
