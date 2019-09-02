@@ -10,7 +10,13 @@
 .name-containing-input {
   width: 225px;
 }
-
+.is-ellipsis {
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  color: rgba(0, 0, 0, .65);
+}
 
 @media screen and (max-width: 776px){
   .select-control {

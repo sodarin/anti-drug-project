@@ -24,10 +24,6 @@ export class NewsManagementTableComponent implements OnInit {
   totalPage: number;
   pageIndex: number = 1;
 
-  popoverVisible: boolean;
-
-  selectedNewsId: string;
-  newsInfoPageVisible: boolean;
 
   filterOptions: {};
   checkOption = [];
@@ -37,7 +33,7 @@ export class NewsManagementTableComponent implements OnInit {
   isOperating = false;
   isIndeterminate = false;
   mapOfCheckedId: { [key: string]: boolean } = {};
-  numberOfChecked = 0;
+
 
   constructor(
     private newsManagementService$: NewsManagementService,
@@ -64,7 +60,10 @@ export class NewsManagementTableComponent implements OnInit {
       this.totalPage = Math.ceil(this.total / 10);
       this.dataList = result;
       this.displayData = this.dataList;
-    }, error1 => this._message.error(error1.error))
+    }, error1 => {
+      this.loading = false;
+      this._message.error(error1.error)
+    })
   }
   searchData(pageIndex: number = this.pageIndex) {
     this.displayData = [];
@@ -75,23 +74,24 @@ export class NewsManagementTableComponent implements OnInit {
       this.totalPage = Math.ceil(this.total / 10);
       this.dataList = result;
       this.displayData = this.dataList;
-    }, error1 => this._message.error(error1.error))
+    }, error1 => {
+      this.loading = false;
+      this._message.error(error1.error)
+    })
   }
 
   // 全选功能
   checkAll(value: boolean): void {
-    this.displayData.filter(item => !item.disabled).forEach(item => (this.mapOfCheckedId[item.id] = value));
+    this.displayData.forEach(item => (this.mapOfCheckedId[item.id] = value));
     this.refreshStatus();
   }
 
   refreshStatus(): void {
     this.isAllDisplayDataChecked = this.displayData
-      .filter(item => !item.disabled)
       .every(item => this.mapOfCheckedId[item.id]);
     this.isIndeterminate =
-      this.displayData.filter(item => !item.disabled).some(item => this.mapOfCheckedId[item.id]) &&
+      this.displayData.some(item => this.mapOfCheckedId[item.id]) &&
       !this.isAllDisplayDataChecked;
-    this.numberOfChecked = this.dataList.filter(item => this.mapOfCheckedId[item.id]).length;
   }
   operateData(): void {
     // 删除数据操作
@@ -103,13 +103,44 @@ export class NewsManagementTableComponent implements OnInit {
     }, 1000);
   }
 
-  // 取消发布
-  cancelNews(id: string) {
+  checkChange(data: any) {
 
   }
+
+  edit(id: string) {
+
+  }
+
+  // 发布资讯
+  publishNews(id: string) {
+    this._modalService.confirm({
+      nzTitle: '是否要发布该条资讯？',
+      nzOnOk: () => console.log('111')
+    })
+  }
+
+  // 取消发布
+  cancelNews(id: string) {
+    this._modalService.confirm({
+      nzTitle: '是否要将该条资讯取消发布？',
+      nzOnOk: () => console.log('111')
+    })
+  }
+
+  // 永久删除
+  delete(id: string) {
+    this._modalService.confirm({
+      nzTitle: '是否要删除该条资讯？',
+      nzOnOk: () => console.log('111')
+    })
+  }
+
   // 移至回收站
   recycleNews(id: string) {
-
+    this._modalService.confirm({
+      nzTitle: '是否要将该条资讯移入回收站？',
+      nzOnOk: () => console.log('111')
+    })
   }
 
 

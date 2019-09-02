@@ -1,0 +1,50 @@
+.select-control {
+  width: 120px;
+}
+.input-filter {
+  margin-top: 20px;
+}
+.search-button {
+  margin-left: 10px;
+}
+.name-containing-input {
+  width: 225px;
+}
+.is-ellipsis {
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  color: rgba(0, 0, 0, .65);
+}
+
+
+@media screen and (max-width: 776px){
+  .select-control {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  nz-divider {
+    display: none;
+  }
+  .name-containing-input {
+    width: 100%;
+    margin-left: 0;
+    margin-bottom: 10px;
+  }
+  .input-filter {
+    margin-top: 0;
+  }
+  .delete-button {
+    margin-top: 10px;
+  }
+  .search-button, .delete-button {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+@media screen and (max-width: 520px){
+  :host ::ng-deep .ant-table-thead > tr > th, :host ::ng-deep .ant-table-tbody > tr > td {
+    padding: 0;
+  }
+}

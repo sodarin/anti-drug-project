@@ -1,0 +1,20 @@
+<form nz-form [formGroup]="categoryForm">
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">名称</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="名称不能为空">
+      <input nz-input formControlName="name" id="name" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="encode">编码</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="编码不能为空">
+      <input nz-input formControlName="encode" id="encode" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24">分类描述</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <textarea formControlName="desc" nz-input rows="2"></textarea>
+    </nz-form-control>
+  </nz-form-item>
+</form>

@@ -90,7 +90,7 @@ export class AdminCourseManagementTableComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-  // this.searchData()
+    this.searchData()
   }
 
   filterCourse() {

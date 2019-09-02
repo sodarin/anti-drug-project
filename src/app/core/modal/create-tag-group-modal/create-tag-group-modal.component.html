@@ -1,1 +1,30 @@
-<p>create-tag-group-modal works!</p>
+<form nz-form [formGroup]="tagGroupForm">
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">标签组名称</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="名称不能为空">
+      <input nz-input formControlName="name" id="name" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item nz-row>
+    <span style="text-align: right; color: rgba(0, 0, 0, .85);" nz-col nzSm="6" nzXs="24">用于：</span>
+    <label nz-col nzSm="7" nzXs="24" nz-checkbox formControlName="isCourseListSelect">
+      <span>课程列表筛选</span>
+    </label>
+    <label nz-col nzSm="7" nzXs="24" nz-checkbox formControlName="isClassListSelect">
+      <span>班级列表筛选</span>
+    </label>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24">包含标签</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-select
+        style="width: 100%"
+        nzMode="multiple"
+        nzPlaceHolder="Please select"
+        formControlName="tag"
+      >
+        <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+</form>

@@ -4,7 +4,7 @@
       <h2 style="margin-left: 20px">标签管理
         <button nz-button nzType="danger" class="create-button" (click)="openCreateTagModal()"><i nz-icon nzType="plus"></i>新增标签</button>
       </h2>
-         </div>
+    </div>
   </div>
   <nz-divider [nzText]="'标签总数： ' + total"></nz-divider>
   <nz-table
@@ -26,22 +26,19 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let data of tagListTable.data; let i of tagListTable.data.length">
+    <tr *ngFor="let data of tagListTable.data">
       <td>{{data.id}}</td>
       <td>{{data.name}}</td>
 <!--      标签组id？-->
-      <td>{{data.id}}</td>
+      <td>{{data.group}}</td>
       <td>{{data.createdTime}}</td>
-      <button nz-button nzType="default" (click)="edit(data.id)">编辑</button>
-<!--      <td>{{data.loginTime}}<br/>-->
-<!--        <span>{{data.loginIp}}, </span><span>{{data.loginIpArea}}</span></td>-->
-<!--      <td><i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>-->
-<!--      <ng-template #operationTemplate>-->
-<!--        <div class="user-management-operation">-->
-<!--          <div><span (click)="viewUserInfo(data.id)"><i nz-icon nzType="eye" nzTheme="outline"></i>查看</span></div>-->
-<!--          <div><span (click)="editUserInfo(data.id)"><i nz-icon nzType="edit" nzTheme="outline"></i>设置推荐</span></div>-->
-<!--        </div>-->
-<!--      </ng-template>-->
+      <td><i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
+      <ng-template #operationTemplate>
+        <div class="user-management-operation">
+          <div><span (click)="edit(data.id)"><i nz-icon nzType="edit" nzTheme="outline"></i>编辑</span></div>
+          <div><span (click)="delete(data.id)"><i nz-icon nzType="delete" nzTheme="outline"></i>删除</span></div>
+        </div>
+      </ng-template>
     </tr>
     </tbody>
   </nz-table>

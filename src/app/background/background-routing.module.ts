@@ -22,6 +22,9 @@ import {NoticeManagementComponent} from './operation/notice-management/notice-ma
 
 import {AdminReplyManagementComponent} from './back-course/admin-reply-management/admin-reply-management.component';
 import {AdminTagManagementComponent} from './back-course/admin-tag-management/admin-tag-management.component';
+import {AdminNoteManagementComponent} from './back-course/admin-note-management/admin-note-management.component';
+import {AdminRatingManagementComponent} from './back-course/admin-rating-management/admin-rating-management.component';
+import {AdminCategoryManagementComponent} from './back-course/admin-category-management/admin-category-management.component';
 
 
 const routes: Routes = [
@@ -45,6 +48,9 @@ const routes: Routes = [
           {path: 'topic', component: AdminTopicManagementComponent},
           {path: 'reply', component: AdminReplyManagementComponent},
           {path: 'tag', component: AdminTagManagementComponent},
+          {path: 'note', component: AdminNoteManagementComponent},
+          {path: 'rating', component: AdminRatingManagementComponent},
+          {path: 'category', component: AdminCategoryManagementComponent}
         ]
       },
       {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AdminTopicCourseService} from '../../../../service/admin-topic-course/admin-topic-course.service';
 import {NzMessageService, NzModalService} from "ng-zorro-antd";
+import {UserInfoViewModalComponent} from '../../../../core/modal/user-info-view-modal/user-info-view-modal.component';
 
 @Component({
   selector: 'app-admin-topic-course-table',
@@ -109,6 +110,19 @@ export class AdminTopicCourseTableComponent implements OnInit {
     this.isIndeterminate =
       this.displayData.filter(item => !item.disabled).some(item => this.mapOfCheckedId[item.id]) &&
       !this.isAllDisplayDataChecked;
+  }
+
+  // 打开个人介绍模态框
+  openUserIntro(id: string) {
+    const modal = this._modalService.create({
+      nzTitle: '个人详细信息',
+      nzContent: UserInfoViewModalComponent,
+      nzComponentParams: {
+        userId: id
+      },
+      nzWidth: 600,
+      nzFooter: null
+    })
   }
 
   // 跳转到课程话题页面

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {CourseReplyAllService} from '../../../../service/course-reply-all/course-reply-all.service';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
+import {UserInfoViewModalComponent} from '../../../../core/modal/user-info-view-modal/user-info-view-modal.component';
 
 @Component({
   selector: 'app-admin-reply-all-table',
@@ -8,8 +9,9 @@ import {NzMessageService, NzModalService} from 'ng-zorro-antd';
   styleUrls: ['./admin-reply-all-table.component.less']
 })
 export class AdminReplyAllTableComponent implements OnInit {
-  replyname   = 'topic';
+  replyname   = '';
   inputValue: string;
+  keyword: string;
   // author: string;
   dataList = [];
   displayData = [];
@@ -24,7 +26,8 @@ export class AdminReplyAllTableComponent implements OnInit {
   isOperating = false;
   isIndeterminate = false;
   mapOfCheckedId: { [key: string]: boolean } = {};
-  numberOfChecked = 0;
+  mapOfEllipsis: { [key: string]: boolean } = {};
+
   constructor(
     private courseReplyAllService$: CourseReplyAllService,
     private  _message: NzMessageService,
@@ -40,8 +43,9 @@ export class AdminReplyAllTableComponent implements OnInit {
     this.displayData = [];
     this.loading = true;
     this.filterOptions = {
-      topic: this.replyname,
-      searchParameter: this.inputValue
+      searchType: this.replyname,
+      searchParameter: this.keyword,
+      author: this.inputValue
     };
     this.courseReplyAllService$.filterReplyAllList(1, 10, this.filterOptions).subscribe(result => {
       this.loading = false;
@@ -49,7 +53,13 @@ export class AdminReplyAllTableComponent implements OnInit {
       this.totalPage = Math.ceil(this.total / 10);
       this.dataList = result;
       this.displayData = this.dataList;
-    }, error1 => this._message.error(error1.error))
+      this.displayData.forEach(item => {
+        this.mapOfEllipsis[item.id] = true
+      })
+    }, error1 => {
+      this.loading = false;
+      this._message.error(error1.error)
+    })
   }
   searchData(pageIndex: number = this.pageIndex) {
     this.displayData = [];
@@ -60,10 +70,16 @@ export class AdminReplyAllTableComponent implements OnInit {
       this.totalPage = Math.ceil(this.total / 10);
       this.dataList = result;
       this.displayData = this.dataList;
-    }, error1 => this._message.error(error1.error))
+      this.displayData.forEach(item => {
+        this.mapOfEllipsis[item.id] = true
+      })
+    }, error1 => {
+      this.loading = false;
+      this._message.error(error1.error)
+    })
   }
   checkAll(value: boolean): void {
-    this.displayData.filter(item => !item.disabled).forEach(item => (this.mapOfCheckedId[item.id] = value));
+    this.displayData.forEach(item => (this.mapOfCheckedId[item.id] = value));
     this.refreshStatus();
   }
 
@@ -72,26 +88,48 @@ export class AdminReplyAllTableComponent implements OnInit {
       .filter(item => !item.disabled)
       .every(item => this.mapOfCheckedId[item.id]);
     this.isIndeterminate =
-      this.displayData.filter(item => !item.disabled).some(item => this.mapOfCheckedId[item.id]) &&
+      this.displayData.some(item => this.mapOfCheckedId[item.id]) &&
       !this.isAllDisplayDataChecked;
-    this.numberOfChecked = this.dataList.filter(item => this.mapOfCheckedId[item.id]).length;
   }
-  operateData(): void {
+
+  // 导航至问答页面，在新窗口打开
+  turnToDetailPage(id: string) {
+    window.open(``, '_blank')
+  }
+
+  // 折叠和展开内容
+  unfoldOrFoldContent(id: string) {
+    this.mapOfEllipsis[id] = !this.mapOfEllipsis[id];
+  }
+
+  // 打开用户详细信息窗口
+  openUserInfoModal(id: string) {
+    const modal = this._modalService.create({
+      nzTitle: '个人详细信息',
+      nzContent: UserInfoViewModalComponent,
+      nzComponentParams: {
+        userId: id
+      },
+      nzWidth: 600,
+      nzFooter: null
+    })
+  }
+  deleteData(): void {
     // 删除数据操作
     this.isOperating = true;
-    setTimeout(() => {
-      this.dataList.forEach(item => (this.mapOfCheckedId[item.id] = false));
-      this.refreshStatus();
-      this.isOperating = false;
-    }, 1000);
+    let deleteList = [];
+    this.displayData.forEach(item => {
+      if (this.mapOfCheckedId[item.id])
+        deleteList.push(item.id)
+    })
+    // setTimeout(() => {
+    //   this.dataList.forEach(item => (this.mapOfCheckedId[item.id] = false));
+    //   this.refreshStatus();
+    //   this.isOperating = false;
+    // }, 1000);
   }
   // 删除操作
-  deleteReply(){
-    this.isOperating = true;
-    setTimeout(() => {
-      this.dataList.forEach(item => (this.mapOfCheckedId[item.id] = false));
-      this.refreshStatus();
-      this.isOperating = false;
-    }, 1000);
+  deleteReply(id: string){
+
   }
 }

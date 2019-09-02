@@ -21,6 +21,8 @@ import { CreateTagModalComponent } from './core/modal/create-tag-modal/create-ta
 import {CreateTagGroupModalComponent} from './core/modal/create-tag-group-modal/create-tag-group-modal.component';
 import {TagInfoEditComponent} from './core/modal/tag-info-edit-modal/tag-info-edit.component';
 import {TeacherRecommendModalComponent} from './core/modal/teacher-recommend-modal/teacher-recommend-modal.component';
+import {CategoryEditModalComponent} from './core/modal/category-edit-modal/category-edit-modal.component';
+import {TagGroupInfoEditModalComponent} from './core/modal/tag-group-info-edit-modal/tag-group-info-edit-modal.component';
 
 
 registerLocaleData(zh);
@@ -54,7 +56,9 @@ registerLocaleData(zh);
     CreateTagModalComponent,
     CreateTagGroupModalComponent,
     TagInfoEditComponent,
-    TeacherRecommendModalComponent
+    TagGroupInfoEditModalComponent,
+    TeacherRecommendModalComponent,
+    CategoryEditModalComponent
   ],
   bootstrap: [AppComponent]
 })

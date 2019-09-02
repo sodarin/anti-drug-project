@@ -12,11 +12,6 @@ import {CreateTagModalComponent} from '../../../../core/modal/create-tag-modal/c
 })
 export class TagManagementTableComponent implements OnInit {
 
-  selectedTimeFilterValue: string = 'loginTime';
-  dateRange = [];
-  selectedRoleFilterValue: string = '';
-  selectedNameContaining: string = 'nickname';
-  inputValue: string;
 
   dataList = [];
   displayData = [];
@@ -25,26 +20,12 @@ export class TagManagementTableComponent implements OnInit {
   totalPage: number;
   pageIndex: number = 1;
 
-  popoverVisible: boolean;
 
-  selectedUserId: string;
-  userInfoPageVisible: boolean;
-
-  filterOptions: {};
-  checkOption = [];
-
-  avatarUrl: string;
-
-  previewImage = '';
-  previewVisible = false;
-
-  modifyPasswordForm: FormGroup;
 
   constructor(
     private TagManagementService$: TagManagementService,
     private _message: NzMessageService,
     private _modalService: NzModalService,
-    private fb: FormBuilder
   ) {
   }
 
@@ -52,9 +33,7 @@ export class TagManagementTableComponent implements OnInit {
     this.searchData()
   }
 
-  onChange(result: Date): void {
-    console.log('onChange: ', result);
-  }
+
 
   searchData(pageIndex: number = this.pageIndex) {
     this.displayData = [];
@@ -65,7 +44,10 @@ export class TagManagementTableComponent implements OnInit {
       this.totalPage = Math.ceil(this.total / 10);
       this.dataList = result;
       this.displayData = this.dataList;
-    }, error1 => this._message.error(error1.error))
+    }, error1 => {
+      this.loading = false;
+      this._message.error(error1.error)
+    })
   }
 
   //新建标签
@@ -87,11 +69,17 @@ export class TagManagementTableComponent implements OnInit {
       nzComponentParams: {
         id: id
       },
-      nzWidth: 600,
       nzOkText: '提交',
       nzCancelText: '取消',
       nzOnOk: instance => instance.submit(),
       nzOnCancel: instance => instance.destroy()
+    })
+  }
+
+  delete(id: string) {
+    this._modalService.confirm({
+      nzTitle: '是否删除该条标签？',
+      nzOnOk: () => console.log('111')
     })
   }
 

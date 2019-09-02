@@ -2,29 +2,32 @@
   <div class="filter-condition">
     <div class="news-filter">
       <nz-select class="select-control" [(ngModel)]="selectedProgramaValue">
-        <nz-option nzValue="" nzLabel="--所属栏目--"></nz-option>
+        <nz-option nzValue="" nzLabel="全部栏目"></nz-option>
         <nz-option nzValue="PROGRAMA_RULE" nzLabel="禁毒法规"></nz-option>
         <nz-option nzValue="PROGRAMA_NEWS" nzLabel="禁毒新闻"></nz-option>
         <nz-option nzValue="PROGRAMA_EXAMPLE" nzLabel="经典案例"></nz-option>
       </nz-select>
-      <nz-divider nzType="vertical"></nz-divider>
       <input class="name-containing-input" nz-input placeholder="标题关键字" [(ngModel)]="inputValue" />
+      <nz-divider nzType="vertical"></nz-divider>
       <nz-select class="select-control" [(ngModel)]="selectedAttributeValue">
-        <nz-option nzValue="" nzLabel="--属性--"></nz-option>
+        <nz-option nzValue="" nzLabel="全部"></nz-option>
         <nz-option nzValue="ATTRIBUTE_HEADLINE" nzLabel="头条"></nz-option>
         <nz-option nzValue="ATTRIBUTE_RECOMMEND" nzLabel="推荐"></nz-option>
         <nz-option nzValue="ATTRIBUTE_TOP" nzLabel="置顶"></nz-option>
       </nz-select>
+      <nz-divider nzType="vertical"></nz-divider>
       <nz-select class="select-control" [(ngModel)]="selectedStateValue">
-        <nz-option nzValue="" nzLabel="发布状态"></nz-option>
+        <nz-option nzValue="" nzLabel="全部状态"></nz-option>
         <nz-option nzValue="STATE_ALREADY" nzLabel="已发布"></nz-option>
         <nz-option nzValue="STATE_NOT" nzLabel="未发布"></nz-option>
         <nz-option nzValue="STATE_RECYCLE" nzLabel="回收站"></nz-option>
       </nz-select>
       <button (click)="filterNews()" nz-button nzType="primary" class="search-button"><i nz-icon nzType="search"></i>搜索</button>
+      <nz-divider nzType="vertical"></nz-divider>
+      <button nz-button [nzType]="'danger'" [nzLoading]="isOperating" (click)="operateData()"><i nz-icon nzType="delete"></i>删除</button>
     </div>
   </div>
-
+  <nz-divider></nz-divider>
   <nz-table
     #newsListTable
     [nzData]="displayData"
@@ -68,30 +71,22 @@
       <nz-tag nzMode="checkable" [nzChecked]="true" (nzCheckedChange)="checkChange($event)">顶</nz-tag>
       <br/>
       <td>{{data.state}}<br/>
-      <td><i class="more-operation" nz-popover nzTitle="编辑" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
+      <td><i class="more-operation" nz-popover nzTitle="更多操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
       <ng-template #operationTemplate>
         <div class="news-management-operation">
-          <div><span (click)="cancelNews(data.newsId)"><i nz-icon nzType="eye" nzTheme="outline"></i>取消发布</span></div>
-          <div><span (click)="recycleNews(data.newsId)"><i nz-icon nzType="edit" nzTheme="outline"></i>移至回收站</span></div>
+          <div><span (click)="edit(data.newsId)"><i nz-icon nzType="edit" nzTheme="outline"></i>编辑</span></div>
+          <div>
+            <span *ngIf="data.state === '已发布'" (click)="cancelNews(data.newsId)"><i nz-icon nzType="close-circle" nzTheme="outline"></i>取消发布</span>
+            <span *ngIf="data.state != '已发布'" (click)="publishNews(data.newsId)"><i nz-icon nzType="check-circle"></i>发布</span>
+          </div>
+          <div>
+            <span *ngIf="data.state === '回收站'" (click)="delete(data.newsId)"><i nz-icon nzType="delete"></i>永久删除</span>
+            <span (click)="recycleNews(data.newsId)"><i nz-icon nzType="rest" nzTheme="outline"></i>移至回收站</span>
+          </div>
         </div>
       </ng-template>
     </tr>
     </tbody>
   </nz-table>
-  <div class="operate">
-    <button
-      nz-button
-      [disabled]="numberOfChecked === 0"
-      [nzType]="'primary'"
-      [nzLoading]="isOperating"
-      (click)="operateData()"
-    >
-      删除
-    </button>
-    <span *ngIf="numberOfChecked">选中 {{ numberOfChecked }} 条记录</span>
-  </div>
 
-  <ng-template #rolesCheckBox>
-    <nz-checkbox-group [(ngModel)]="checkOption"></nz-checkbox-group>
-  </ng-template>
 </div>

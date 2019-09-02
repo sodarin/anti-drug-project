@@ -70,7 +70,7 @@
         <nz-tag nzMode="checkable" [nzChecked]="data.isTop" (nzCheckedChange)="setTop(data.id, $event)">顶</nz-tag>
       </td>
       <td>
-        <span>{{data.creator}}</span><br/>
+        <span style="color: #108ee9; cursor: pointer;" (click)="openUserIntro(data.creatorId)">{{data.creator}}</span><br/>
         <span>{{data.creatTime}}</span>
       </td>
       <td><i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>

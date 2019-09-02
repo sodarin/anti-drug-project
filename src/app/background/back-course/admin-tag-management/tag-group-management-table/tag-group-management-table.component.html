@@ -27,14 +27,19 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let data of tagGroupListTable.data; let i of tagGroupListTable.data.length">
+    <tr *ngFor="let data of tagGroupListTable.data">
       <td>{{data.id}}</td>
       <td>{{data.name}}</td>
       <!--      标签组id？-->
       <td>{{data.id}}</td>
       <td>{{data.createdTime}}</td>
-      <button nz-button nzType="default" (click)="edit(data.id)">编辑</button>
-    </tr>
+      <td><i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
+      <ng-template #operationTemplate>
+        <div class="user-management-operation">
+          <div><span (click)="edit(data.id)"><i nz-icon nzType="edit" nzTheme="outline"></i>编辑</span></div>
+          <div><span (click)="delete(data.id)"><i nz-icon nzType="delete" nzTheme="outline"></i>删除</span></div>
+        </div>
+      </ng-template>    </tr>
     </tbody>
   </nz-table>
 </div>

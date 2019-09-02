@@ -71,7 +71,17 @@ import {AdminReplyAllTableComponent} from './back-course/admin-reply-management/
 import { AdminOpenClassManagementTabComponent } from './back-course/admin-open-class-management/admin-open-class-management-tab/admin-open-class-management-tab.component';
 import { AdminOpenClassManagemenTableComponent } from './back-course/admin-open-class-management/admin-open-class-managemen-table/admin-open-class-managemen-table.component';
 import { AdminOpenClassRecommendationTableComponent } from './back-course/admin-open-class-management/admin-open-class-recommendation-table/admin-open-class-recommendation-table.component';
-
+import { AdminNoteManagementComponent } from './back-course/admin-note-management/admin-note-management.component';
+import { AdminNoteManagementTabComponent } from './back-course/admin-note-management/admin-note-management-tab/admin-note-management-tab.component';
+import { AdminNoteManagementTableComponent } from './back-course/admin-note-management/admin-note-management-table/admin-note-management-table.component';
+import { AdminRatingManagementComponent } from './back-course/admin-rating-management/admin-rating-management.component';
+import { AdminRatingManagementTabComponent } from './back-course/admin-rating-management/admin-rating-management-tab/admin-rating-management-tab.component';
+import { AdminClassRatingManagementComponent } from './back-course/admin-rating-management/admin-class-rating-management/admin-class-rating-management.component';
+import { AdminCourseRatingManagementComponent } from './back-course/admin-rating-management/admin-course-rating-management/admin-course-rating-management.component';
+import { AdminCategoryManagementComponent } from './back-course/admin-category-management/admin-category-management.component';
+import { AdminCategoryManagementTabComponent } from './back-course/admin-category-management/admin-category-management-tab/admin-category-management-tab.component';
+import { AdminCourseCategoryManagementComponent } from './back-course/admin-category-management/admin-course-category-management/admin-course-category-management.component';
+import { AdminClassCategoryManagementComponent } from './back-course/admin-category-management/admin-class-category-management/admin-class-category-management.component';
 
 @NgModule({
   declarations: [
@@ -112,7 +122,7 @@ import { AdminOpenClassRecommendationTableComponent } from './back-course/admin-
     NewsTapComponent,
     NewsManagementTableComponent,
     ProgramaManagementTableComponent,
-    OperationComponent, AdminCourseManagementComponent, GroupTopicManagementComponent, NewsManagementComponent, UserApprovalPageTabComponent, ApprovalPendingTableComponent, ApprovalSuccessTableComponent, AdminCourseHeaderComponent, AdminCourseManagementTabComponent, AdminOpenClassManagementComponent, AdminClassManagementComponent, AdminTopicManagementComponent, AdminCourseManagementTableComponent, AdminCourseRecommendationTableComponent, AdminCourseStatisticsTableComponent,TeacherManagementTableComponent,TeacherPromoteComponent,TeacherTabComponent, AdminOpenClassManagementTabComponent, AdminOpenClassManagemenTableComponent, AdminOpenClassRecommendationTableComponent],
+    OperationComponent, AdminCourseManagementComponent, GroupTopicManagementComponent, NewsManagementComponent, UserApprovalPageTabComponent, ApprovalPendingTableComponent, ApprovalSuccessTableComponent, AdminCourseHeaderComponent, AdminCourseManagementTabComponent, AdminOpenClassManagementComponent, AdminClassManagementComponent, AdminTopicManagementComponent, AdminCourseManagementTableComponent, AdminCourseRecommendationTableComponent, AdminCourseStatisticsTableComponent,TeacherManagementTableComponent,TeacherPromoteComponent,TeacherTabComponent, AdminOpenClassManagementTabComponent, AdminOpenClassManagemenTableComponent, AdminOpenClassRecommendationTableComponent, AdminNoteManagementComponent, AdminNoteManagementTabComponent, AdminNoteManagementTableComponent, AdminRatingManagementComponent, AdminRatingManagementTabComponent, AdminClassRatingManagementComponent, AdminCourseRatingManagementComponent, AdminCategoryManagementComponent, AdminCategoryManagementTabComponent, AdminCourseCategoryManagementComponent, AdminClassCategoryManagementComponent],
 
     imports: [
     ShareModule,

@@ -1,0 +1,62 @@
+<div class="content">
+  <div class="input-filter">
+    <nz-select class="select-control" [(ngModel)]="searchType" nzAllowClear="false">
+      <nz-option nzValue="-1" nzLabel="内容"></nz-option>
+      <nz-option nzValue="1" nzLabel="课程编号"></nz-option>
+      <nz-option nzValue="0" nzLabel="课程名"></nz-option>
+    </nz-select>
+    <input class="name-containing-input keyword" nz-input placeholder="关键词" [(ngModel)]="keyword" />
+    <nz-divider nzType="vertical"></nz-divider>
+    <input class="name-containing-input" nz-input placeholder="作者" [(ngModel)]="authorName" />
+    <button (click)="search()" nz-button nzType="primary" class="search-button"><i nz-icon nzType="search"></i>搜索</button>
+    <nz-divider nzType="vertical"></nz-divider>
+    <button class="delete-button" nz-button nzType="danger" [nzLoading]="isOperating" (click)="deleteData()"><i nz-icon nzType="delete"></i>删除</button>
+  </div>
+  <nz-divider></nz-divider>
+  <nz-table
+    #replyListTable
+    [nzData]="displayData"
+    [nzFrontPagination]="false"
+    [nzTotal]="total"
+    [nzLoading]="loading"
+    [nzPageSize]="10"
+    [(nzPageIndex)]="pageIndex"
+    (nzPageIndexChange)="searchData()">
+    <thead>
+    <tr>
+      <th
+        nzShowCheckbox
+        [(nzChecked)]="isAllDisplayDataChecked"
+        [nzIndeterminate]="isIndeterminate"
+        (nzCheckedChange)="checkAll($event)"
+      ></th>
+      <th>内容</th>
+      <th>作者</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of replyListTable.data">
+      <td
+        nzShowCheckbox
+        [(nzChecked)]="mapOfCheckedId[data.id]"
+        (nzCheckedChange)="refreshStatus()"
+      ></td>
+      <td>
+        <span (click)="unfoldOrFoldContent(data.id)" class="is-ellipsis" *ngIf="mapOfEllipsis[data.id]">{{data.noteContent}}</span>
+        <span (click)="unfoldOrFoldContent(data.id)" class="not-ellipsis" *ngIf="!mapOfEllipsis[data.id]">{{data.noteContent}}</span>
+      </td>
+      <td>
+        <span style="color: #108ee9; cursor: pointer;" (click)="openUserInfoModal(data.authorId)">{{data.author}}</span>
+        <span>{{data.creatTime}}</span>
+      </td>
+      <td><i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
+      <ng-template #operationTemplate>
+        <div class="user-management-operation">
+          <div><span (click)="deleteNote(data.id)"><i nz-icon nzType="delete" nzTheme="outline"></i>删除</span></div>
+        </div>
+      </ng-template>
+    </tr>
+    </tbody>
+  </nz-table>
+</div>
