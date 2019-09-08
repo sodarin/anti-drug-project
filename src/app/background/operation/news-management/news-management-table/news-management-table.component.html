@@ -1,4 +1,12 @@
 <div class="content">
+  <div class="header">
+    <div>
+      <h2>资讯管理
+        <button nz-button nzType="danger" class="create-button" (click)="openCreateNewsModal()"><i nz-icon nzType="plus"></i>新增资讯</button>
+      </h2>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
   <div class="filter-condition">
     <div class="news-filter">
       <nz-select class="select-control" [(ngModel)]="selectedProgramaValue">
@@ -24,7 +32,7 @@
       </nz-select>
       <button (click)="filterNews()" nz-button nzType="primary" class="search-button"><i nz-icon nzType="search"></i>搜索</button>
       <nz-divider nzType="vertical"></nz-divider>
-      <button nz-button [nzType]="'danger'" [nzLoading]="isOperating" (click)="operateData()"><i nz-icon nzType="delete"></i>删除</button>
+      <button class="delete-button" nz-button [nzType]="'danger'" [nzLoading]="isOperating" (click)="operateData()"><i nz-icon nzType="delete"></i>删除</button>
     </div>
   </div>
   <nz-divider></nz-divider>
@@ -55,11 +63,10 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let data of newsListTable.data; let i of newsListTable.data.length">
+    <tr *ngFor="let data of newsListTable.data">
       <td
         nzShowCheckbox
         [(nzChecked)]="mapOfCheckedId[data.id]"
-        [nzDisabled]="data.disabled"
         (nzCheckedChange)="refreshStatus()"
       ></td>
       <td>{{data.ID}}<br/>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 // @ts-ignore
 import {NewsManagementService} from '../../../../service/news-management/news-management.service';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
+import {NewsEditModalComponent} from '../../../../core/modal/news-edit-modal/news-edit-modal.component';
 
 
 
@@ -44,6 +45,18 @@ export class NewsManagementTableComponent implements OnInit {
   ngOnInit() {
     this.searchData()
   }
+
+  // 新建资讯
+  openCreateNewsModal() {
+    const modal = this._modalService.create({
+      nzTitle: '新建资讯',
+      nzContent: NewsEditModalComponent,
+      nzWidth: 600,
+      nzOnOk: instance => instance.submit(),
+      nzOnCancel: instance => instance.destroy()
+    })
+  }
+
    // 搜索
   filterNews() {
     this.displayData = [];
@@ -108,7 +121,16 @@ export class NewsManagementTableComponent implements OnInit {
   }
 
   edit(id: string) {
-
+    const modal = this._modalService.create({
+      nzTitle: '新建资讯',
+      nzContent: NewsEditModalComponent,
+      nzComponentParams: {
+        id: id
+      },
+      nzWidth: 600,
+      nzOnOk: instance => instance.submit(),
+      nzOnCancel: instance => instance.destroy()
+    })
   }
 
   // 发布资讯

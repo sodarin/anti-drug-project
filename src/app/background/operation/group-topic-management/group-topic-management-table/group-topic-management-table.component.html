@@ -4,9 +4,11 @@
       <nz-option nzValue="open" nzLabel="开启"></nz-option>
       <nz-option nzValue="close" nzLabel="关闭"></nz-option>
     </nz-select>
-    <input class="name-containing-input" nz-input placeholder="小组名" [(ngModel)]="inputValue" />
-    <input class="name-containing-input" nz-input placeholder="组长" [(ngModel)]="inputValue" />
+    <input class="name-containing-input" nz-input placeholder="小组名" [(ngModel)]="groupName" />
+    <input class="name-containing-input" nz-input placeholder="组长" [(ngModel)]="leader" />
     <button (click)="filterTopicTable()" nz-button nzType="primary" class="search-button"><i nz-icon nzType="search"></i>搜索</button>
+    <nz-divider nzType="vertical"></nz-divider>
+    <button (click)="createNewGroup(createGroupModal)" nz-button nzType="danger" class="create-button"><i nz-icon nzType="plus"></i>添加小组</button>
   </div>
   <nz-table
     #topicTableListTable
@@ -19,8 +21,6 @@
     (nzPageIndexChange)="searchData()">
     <thead>
     <tr>
-
-
       <th>编号</th>
       <th>名称</th>
       <th>组长</th>
@@ -33,28 +33,55 @@
     </thead>
 
     <tbody>
-    <tr *ngFor="let data of topicTableListTable.data; let i of topicTableListTable.data.length">
+    <tr *ngFor="let data of topicTableListTable.data">
      <td>{{data.o_number}}</td>
      <td>{{data.group_name}}</td>
      <td>{{data.leader}}</td>
       <td>{{data.member_number}}</td>
       <td>{{data.topic_number}}</td>
       <td>{{data.reply_number}}</td>
-      <td>{{data.open}}<br/>
-        <span class="role" *ngFor="let role of data.roles">{{role}}</span></td>
-      <td><i class="more-operation" nz-popover nzTitle="编辑" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
+      <td>{{data.state}}</td>
+      <td><i class="more-operation" nz-popover [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
       <ng-template #operationTemplate>
         <div class="user-management-operation">
           <div><span (click)="viewGroup(data.o_number)"><i nz-icon nzType="eye" nzTheme="outline"></i>查看小组</span></div>
-          <div><span (click)="closeGroup(data.o_number)"><i nz-icon nzType="edit" nzTheme="outline"></i>关闭小组</span></div>
-          <div><span (click)="exchangeGroup(data)"><i nz-icon nzType="team" nzTheme="outline"></i>转移小组</span></div>
+          <div>
+            <span *ngIf="data.state == '开启'" (click)="closeGroup(data.o_number)"><i nz-icon nzType="close" nzTheme="outline"></i>关闭小组</span>
+            <span *ngIf="data.state == '关闭'" (click)="openGroup(data.o_number)"><i nz-icon nzType="check" nzTheme="outline"></i>开启小组</span>
+          </div>
+          <div><span (click)="exchangeGroup(data, setNewLeader)"><i nz-icon nzType="team" nzTheme="outline"></i>转移小组</span></div>
         </div>
       </ng-template>
     </tr>
     </tbody>
-
   </nz-table>
   <ng-template #rolesCheckBox>
     <nz-checkbox-group [(ngModel)]="checkOption"></nz-checkbox-group>
+  </ng-template>
+
+  <ng-template #createGroupModal>
+    <form nz-form [formGroup]="newGroupForm">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="groupName">名称</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="名称不能为空">
+          <input nz-input formControlName="groupName" id="groupName" />
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+    <div class="introduction-edit-area" nz-row>
+      <span style="text-align: right; color: rgba(0, 0, 0, .85);" nz-col nzSpan="6">小组介绍： </span>
+      <quill-editor nz-col nzSpan="14" [(ngModel)]="introductionContent"></quill-editor>
+    </div>
+  </ng-template>
+
+  <ng-template #setNewLeader>
+    <form nz-form [formGroup]="newGroupForm">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="leaderName">组长名称</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="名称不能为空">
+          <input nz-input formControlName="groupName" id="leaderName" />
+        </nz-form-control>
+      </nz-form-item>
+    </form>
   </ng-template>
 </div>

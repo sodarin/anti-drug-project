@@ -27,5 +27,9 @@ export class NewsManagementService {
     })
   }
 
+  getNewsDetail(id: string): Observable<any> {
+    return this._http.get(``)
+  }
+
 }
 

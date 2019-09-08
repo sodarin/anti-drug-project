@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, TemplateRef} from '@angular/core';
 import {GroupTopicManagementTableService} from '../../../../service/group-topic-management-table/group-topic-management-table.service';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {UserInfoViewModalComponent} from "../../../../core/modal/user-info-view-modal/user-info-view-modal.component";
+import {Router} from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 
 @Component({
@@ -12,7 +14,8 @@ import {UserInfoViewModalComponent} from "../../../../core/modal/user-info-view-
 
 export class GroupTopicManagementTableComponent implements OnInit {
   selectedStateFilterValue   = 'open';
-  inputValue: string;
+  groupName: string;
+  leader: string;
 
   dataList = [];
   displayData = [];
@@ -24,14 +27,22 @@ export class GroupTopicManagementTableComponent implements OnInit {
   filterOptions: {};
   checkOption = [];
   topicTableListTable: any;
+
+  newGroupForm: FormGroup;
+  introductionContent: string = '';
   constructor(
     private groupTopicManagementTableService$: GroupTopicManagementTableService,
     private  _message: NzMessageService,
-    private  _modalService: NzModalService
+    private  _modalService: NzModalService,
+    private router: Router,
+    private fb: FormBuilder
   ) { }
 
   ngOnInit() {
     this.searchData();
+    this.newGroupForm = this.fb.group({
+      groupName: ['', Validators.required]
+    })
   }
   // 搜索
 
@@ -40,7 +51,8 @@ export class GroupTopicManagementTableComponent implements OnInit {
     this.loading = true;
     this.filterOptions = {
       state: this.selectedStateFilterValue,
-      searchParameter: this.inputValue
+      groupName: this.groupName,
+      leader: this.leader
     };
     this.groupTopicManagementTableService$.filterTopicTableList(1, 10, this.filterOptions).subscribe(result => {
       this.loading = false;
@@ -48,7 +60,10 @@ export class GroupTopicManagementTableComponent implements OnInit {
       this.totalPage = Math.ceil(this.total / 10);
       this.dataList = result;
       this.displayData = this.dataList;
-    }, error1 => this._message.error(error1.error))
+    }, error1 => {
+      this.loading = false;
+      this._message.error(error1.error)
+    })
   }
   searchData(pageIndex: number = this.pageIndex) {
     this.displayData = [];
@@ -59,27 +74,57 @@ export class GroupTopicManagementTableComponent implements OnInit {
       this.totalPage = Math.ceil(this.total / 10);
       this.dataList = result;
       this.displayData = this.dataList;
-    }, error1 => this._message.error(error1.error))
+    }, error1 => {
+      this.loading = false;
+      this._message.error(error1.error)
+    })
   }
   // 查看小组
   viewGroup(id: any ){
-    const modal = this._modalService.create({
-      nzTitle: '小组信息',
-      nzContent: UserInfoViewModalComponent,
-      nzComponentParams: {
-        userId: id
-      },
+    window.open(``, '_blank')
+  }
+
+  createNewGroup(template: TemplateRef<{}>) {
+    this._modalService.create({
+      nzTitle: '添加小组',
+      nzContent: template,
       nzWidth: 600,
-      nzFooter: null
+      nzOkText: '创建小组',
+      nzOnOk: () => {
+        let shouldBeClosed = false;
+        this.newGroupForm.markAllAsTouched();
+        this.newGroupForm.controls.groupName.updateValueAndValidity();
+        return shouldBeClosed
+      }
+    })
+  }
+
+  openGroup(id: string) {
+    this._modalService.confirm({
+      nzTitle: '是否要开启小组？',
+      nzOnOk: () => console.log('1111')
     })
   }
 
   // 关闭小组
   closeGroup(id: any){
-
+    this._modalService.confirm({
+      nzTitle: '是否要关闭小组？',
+      nzOnOk: () => console.log('1111')
+    })
   }
   // 转移小组
-  exchangeGroup(id: any){
-
+  exchangeGroup(id: any, template: TemplateRef<{}>){
+    this._modalService.create({
+      nzTitle: '转移小组管理人',
+      nzContent: template,
+      nzWidth: 600,
+      nzOnOk: () => {
+        let shouldBeClosed = false;
+        this.newGroupForm.markAllAsTouched();
+        this.newGroupForm.controls.groupName.updateValueAndValidity();
+        return shouldBeClosed
+      }
+    })
   }
 }

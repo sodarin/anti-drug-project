@@ -1,0 +1,43 @@
+<form nz-form [formGroup]="newsEditForm">
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="title">资讯标题</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="标题不能为空">
+      <input nz-input formControlName="title" id="title" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="programa">所属栏目</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="所属栏目不能为空">
+      <nz-select nz-input formControlName="programa" id="programa">
+        <nz-option *ngFor="let option of listOfProgramma" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24">所属标签</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-select
+        nzMode="multiple"
+        nzPlaceHolder="请选择标签"
+        formControlName="tag">
+        <nz-option *ngFor="let option of listOfTag" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item nz-row>
+    <span style="text-align: right; color: rgba(0, 0, 0, .85);" nz-col nzSm="6" nzXs="24">用于：</span>
+    <label nz-col [nzSm]="4" [nzXs]="24" nz-checkbox formControlName="isTop">
+      <span>置顶</span>
+    </label>
+    <label nz-col [nzSm]="4" [nzXs]="24" nz-checkbox formControlName="isRecommended">
+      <span>头条</span>
+    </label>
+    <label nz-col [nzSm]="4" [nzXs]="24" nz-checkbox formControlName="isHead">
+      <span>推荐</span>
+    </label>
+  </nz-form-item>
+</form>
+<div style="margin-top: 10px" class="content" nz-row>
+  <span style="text-align: right; color: rgba(0, 0, 0, .85);" nz-col nzSm="6" nzXs="24">正文：</span>
+  <quill-editor nz-col nzSpan="14" [(ngModel)]="content"></quill-editor>
+</div>

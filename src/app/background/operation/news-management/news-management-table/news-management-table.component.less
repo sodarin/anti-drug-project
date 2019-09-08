@@ -35,6 +35,7 @@
 @media screen and (max-width: 776px){
   .select-control {
     width: 100%;
+    margin-top: 10px;
   }
   :host ::ng-deep nz-picker, :host ::ng-deep .ant-calendar-picker {
     width: 100% !important;
@@ -50,7 +51,7 @@
     margin-left: 0;
     margin-top: 10px;
   }
-  .search-button {
+  .search-button, .delete-button {
     margin-left: 0;
     margin-top: 10px;
     width: 100%;
@@ -73,3 +74,20 @@
     margin-left: 8px;
   }
 }
+
+.create-button {
+  float: right;
+  color: #f5f5f5;
+  background: #f5222d;
+  border-color: #d9d9d9;
+}
+.create-button:hover {
+  color: #ffffff;
+  background-color: #ff4d4f;
+  border-color: #ff4d4f;
+}
+.create-button {
+  margin-right: 8px;
+  margin-bottom: 12px;
+}
+

@@ -89,9 +89,32 @@ export class GroupTopicComponent implements OnInit {
       this.isOperating = false;
     }, 1000);
   }
-  // 关闭小组
-  closeGroup(id: any){
+
+  // 修改置顶加精属性
+  checkChange(data: any) {
 
   }
+  // 关闭小组
+  closeGroup(id: any){
+    this._modalService.confirm({
+      nzTitle: '是否关闭该小组？',
+      nzOnOk: () => console.log('111')
+    })
+  }
 
+  // 开放小组
+  openGroup(id: string) {
+    this._modalService.confirm({
+      nzTitle: '是否开放该小组？',
+      nzOnOk: () => console.log('111')
+    })
+  }
+
+  // 删除话题
+  delete(id: string) {
+    this._modalService.confirm({
+      nzTitle: '是否删除该话题？',
+      nzOnOk: () => console.log('111')
+    })
+  }
 }

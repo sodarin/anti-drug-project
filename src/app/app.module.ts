@@ -23,6 +23,9 @@ import {TagInfoEditComponent} from './core/modal/tag-info-edit-modal/tag-info-ed
 import {TeacherRecommendModalComponent} from './core/modal/teacher-recommend-modal/teacher-recommend-modal.component';
 import {CategoryEditModalComponent} from './core/modal/category-edit-modal/category-edit-modal.component';
 import {TagGroupInfoEditModalComponent} from './core/modal/tag-group-info-edit-modal/tag-group-info-edit-modal.component';
+import {NewsEditModalComponent} from './core/modal/news-edit-modal/news-edit-modal.component';
+import {ProgramaEditModalComponent} from './core/modal/programa-edit-modal/programa-edit-modal.component';
+import {AnnouncementEditModalComponent} from './core/modal/announcement-edit-modal/announcement-edit-modal.component';
 
 
 registerLocaleData(zh);
@@ -58,7 +61,10 @@ registerLocaleData(zh);
     TagInfoEditComponent,
     TagGroupInfoEditModalComponent,
     TeacherRecommendModalComponent,
-    CategoryEditModalComponent
+    CategoryEditModalComponent,
+    NewsEditModalComponent,
+    ProgramaEditModalComponent,
+    AnnouncementEditModalComponent
   ],
   bootstrap: [AppComponent]
 })

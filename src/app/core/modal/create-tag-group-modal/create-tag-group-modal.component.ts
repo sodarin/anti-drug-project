@@ -54,7 +54,10 @@ export class CreateTagGroupModalComponent implements OnInit {
   }
 
   submit() {
-
+    let shouldBeClosed = false;
+    this.tagGroupForm.markAllAsTouched();
+    this.tagGroupForm.controls.name.updateValueAndValidity();
+    return shouldBeClosed;
   }
 
   destory() {

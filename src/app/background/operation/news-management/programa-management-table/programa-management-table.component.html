@@ -1,4 +1,12 @@
 <div class="content">
+  <div class="header">
+    <div>
+      <h2>栏目管理
+        <button nz-button nzType="danger" class="create-button" (click)="openCreateProgramaModal()"><i nz-icon nzType="plus"></i>新增栏目</button>
+      </h2>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
   <nz-table
     #programaListTable
     [nzData]="displayData"
@@ -16,25 +24,20 @@
       <th>操作</th>
     </tr>
     </thead>
-    <tbody>
-    <tr *ngFor="let data of programaListTable.data; let i of programaListTable.data.length">
+    <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+    <tr *ngFor="let data of programaListTable.data" cdkDrag>
       <td>{{data.programa}}<br/>
       <td>{{data.pAddress}}<br/>
       <td>{{data.pCode}}<br/>
-      <td>{{data.state}}<br/>
-      <td><i class="more-operation" nz-popover nzTitle="编辑" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
+      <td><i class="more-operation" nz-popover [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
       <ng-template #operationTemplate>
         <div class="programa-management-operation">
-          <div><span (click)="cancelPrograma(data.ProgramaId)"><i nz-icon nzType="eye" nzTheme="outline"></i>取消发布</span></div>
-          <div><span (click)="recyclePragrama(data.ProgramaId)"><i nz-icon nzType="edit" nzTheme="outline"></i>移至回收站</span></div>
+          <div><span (click)="delete(data.ProgramaId)"><i nz-icon nzType="delete" nzTheme="outline"></i>删除</span></div>
+          <div><span (click)="edit(data.ProgramaId)"><i nz-icon nzType="edit" nzTheme="outline"></i>编辑</span></div>
         </div>
       </ng-template>
     </tr>
     </tbody>
   </nz-table>
-
-  <ng-template #rolesCheckBox>
-    <nz-checkbox-group [(ngModel)]="checkOption"></nz-checkbox-group>
-  </ng-template>
 </div>
 

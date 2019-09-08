@@ -12,6 +12,9 @@ import {TagInfoEditComponent} from './modal/tag-info-edit-modal/tag-info-edit.co
 
 import { TagGroupInfoEditModalComponent } from './modal/tag-group-info-edit-modal/tag-group-info-edit-modal.component';
 import { CategoryEditModalComponent } from './modal/category-edit-modal/category-edit-modal.component';
+import { NewsEditModalComponent } from './modal/news-edit-modal/news-edit-modal.component';
+import { ProgramaEditModalComponent } from './modal/programa-edit-modal/programa-edit-modal.component';
+import { AnnouncementEditModalComponent } from './modal/announcement-edit-modal/announcement-edit-modal.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +22,7 @@ import { CategoryEditModalComponent } from './modal/category-edit-modal/category
     UserInfoViewModalComponent,
     UserInfoEditModalComponent,
     TagInfoEditComponent,
-    CreateUserModalComponent, CreateTagModalComponent, CreateTagGroupModalComponent, TeacherRecommendModalComponent, TagGroupInfoEditModalComponent, CategoryEditModalComponent],
+    CreateUserModalComponent, CreateTagModalComponent, CreateTagGroupModalComponent, TeacherRecommendModalComponent, TagGroupInfoEditModalComponent, CategoryEditModalComponent, NewsEditModalComponent, ProgramaEditModalComponent, AnnouncementEditModalComponent],
   imports: [
     ShareModule,
     QuillModule
@@ -34,7 +37,10 @@ import { CategoryEditModalComponent } from './modal/category-edit-modal/category
     TagInfoEditComponent,
     TeacherRecommendModalComponent,
     TagGroupInfoEditModalComponent,
-    CategoryEditModalComponent
+    CategoryEditModalComponent,
+    NewsEditModalComponent,
+    ProgramaEditModalComponent,
+    AnnouncementEditModalComponent
   ]
 })
 export class CoreModule { }
