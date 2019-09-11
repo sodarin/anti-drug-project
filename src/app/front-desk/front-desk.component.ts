@@ -20,7 +20,7 @@ export class FrontDeskComponent implements OnInit {
   constructor(
     private router: Router,
     private _modalService: NzModalService,
-    private _message: NzMessageService
+    private _message: NzMessageService,
   ) { }
 
   ngOnInit() {
@@ -33,6 +33,10 @@ export class FrontDeskComponent implements OnInit {
       nzContent: LoginModalComponent,
       nzFooter: null
     })
+  }
+
+  navigateByUrl(url: string) {
+    this.router.navigateByUrl(url);
   }
 
 

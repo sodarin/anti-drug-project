@@ -15,6 +15,10 @@ import { CategoryEditModalComponent } from './modal/category-edit-modal/category
 import { NewsEditModalComponent } from './modal/news-edit-modal/news-edit-modal.component';
 import { ProgramaEditModalComponent } from './modal/programa-edit-modal/programa-edit-modal.component';
 import { AnnouncementEditModalComponent } from './modal/announcement-edit-modal/announcement-edit-modal.component';
+import {CourselistListviewModalComponent} from './courselist-component/courselist-listview-modal/courselist-listview-modal.component';
+import {CourselistClassificationModalComponent} from './courselist-component/courselist-classification-modal/courselist-classification-modal.component';
+import {CourselistSortModalComponent} from './courselist-component/courselist-sort-modal/courselist-sort-modal.component';
+import {CourselistCourseblockModalComponent} from './courselist-component/courselist-courseblock-modal/courselist-courseblock-modal.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +26,16 @@ import { AnnouncementEditModalComponent } from './modal/announcement-edit-modal/
     UserInfoViewModalComponent,
     UserInfoEditModalComponent,
     TagInfoEditComponent,
-    CreateUserModalComponent, CreateTagModalComponent, CreateTagGroupModalComponent, TeacherRecommendModalComponent, TagGroupInfoEditModalComponent, CategoryEditModalComponent, NewsEditModalComponent, ProgramaEditModalComponent, AnnouncementEditModalComponent],
+    CreateUserModalComponent,
+    CreateTagModalComponent,
+    CreateTagGroupModalComponent,
+    TeacherRecommendModalComponent,
+    TagGroupInfoEditModalComponent,
+    CategoryEditModalComponent, NewsEditModalComponent, ProgramaEditModalComponent, AnnouncementEditModalComponent,
+    CourselistCourseblockModalComponent,
+    CourselistSortModalComponent,
+    CourselistClassificationModalComponent,
+    CourselistListviewModalComponent],
   imports: [
     ShareModule,
     QuillModule
@@ -40,7 +53,11 @@ import { AnnouncementEditModalComponent } from './modal/announcement-edit-modal/
     CategoryEditModalComponent,
     NewsEditModalComponent,
     ProgramaEditModalComponent,
-    AnnouncementEditModalComponent
+    AnnouncementEditModalComponent,
+    CourselistCourseblockModalComponent,
+    CourselistSortModalComponent,
+    CourselistClassificationModalComponent,
+    CourselistListviewModalComponent
   ]
 })
 export class CoreModule { }

@@ -11,7 +11,7 @@
     <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
       <li nz-submenu nzTitle="禁毒讲堂" nzIcon="caret-down">
         <ul>
-          <li nz-menu-item>全部课程</li>
+          <li nz-menu-item (click)="navigateByUrl('/client/courselist')">全部课程</li>
           <li nz-menu-item>学堂在线</li>
           <li nz-menu-item>寓教于乐</li>
           <li nz-menu-item>专题讲座</li>
@@ -50,7 +50,7 @@
       <ul class="main-menu" nz-menu nzMode="horizontal">
         <li nz-submenu nzTitle="禁毒讲堂" nzIcon="caret-down">
           <ul>
-            <li nz-menu-item>全部课程</li>
+            <li nz-menu-item (click)="navigateByUrl('/client/courselist')">全部课程</li>
             <li nz-menu-item>学堂在线</li>
             <li nz-menu-item>寓教于乐</li>
             <li nz-menu-item>专题讲座</li>

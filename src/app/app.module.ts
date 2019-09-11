@@ -26,6 +26,7 @@ import {TagGroupInfoEditModalComponent} from './core/modal/tag-group-info-edit-m
 import {NewsEditModalComponent} from './core/modal/news-edit-modal/news-edit-modal.component';
 import {ProgramaEditModalComponent} from './core/modal/programa-edit-modal/programa-edit-modal.component';
 import {AnnouncementEditModalComponent} from './core/modal/announcement-edit-modal/announcement-edit-modal.component';
+import {CourseService} from './Test/course.service';
 
 
 registerLocaleData(zh);
@@ -49,7 +50,8 @@ registerLocaleData(zh);
   providers: [
     { provide: NZ_I18N, useValue: zh_CN },
     QuillEditorComponent,
-    QuillModule
+    QuillModule,
+    CourseService
     ],
   entryComponents: [
     LoginModalComponent,
