@@ -32,7 +32,19 @@ export class TeacherManagementTableComponent implements OnInit {
 
 
   search() {
+    this.displayData = [];
+    this.loading = true;
 
+    this.teacherManagementService$.teacherFilter(1, 10, this.inputValue).subscribe(result => {
+      this.loading = false;
+      this.total = result.data[0].totalNum ? result.data[0].totalNum: 0;
+      this.totalPage = Math.ceil(this.total / 10);
+      this.dataList = result.data;
+      this.displayData = this.dataList;
+    }, error1 => {
+      this.loading=false
+      this._message.error(error1.error)
+    })
   }
 
   searchData(pageIndex: number = this.pageIndex) {
@@ -40,9 +52,9 @@ export class TeacherManagementTableComponent implements OnInit {
     this.loading = true;
     this.teacherManagementService$.getUserList(pageIndex, 10).subscribe(result => {
       this.loading = false;
-      this.total = result[0].total? result[0].total: 0;
-      this.totalPage = Math.ceil(this.total / 10);
-      this.dataList = result;
+      this.total = result.data[0].totalNum? result.data[0].totalNum: 0;
+      this.totalPage = Math.ceil(this.total/10);
+      this.dataList = result.data;
       this.displayData = this.dataList;
     }, error1 => {
       this.loading = false;
@@ -74,6 +86,11 @@ export class TeacherManagementTableComponent implements OnInit {
       nzCancelText: '取消',
       nzOnOk: instance => instance.submit(),
       nzOnCancel: instance => instance.destroy()
+    });
+    modal.afterClose.subscribe(result => {
+      if (result == '1') {
+        this.searchData()
+      }
     })
 
   }

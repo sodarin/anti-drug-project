@@ -79,11 +79,14 @@ export class UserManagementTableComponent implements OnInit {
     };
     this.userManagementService$.filterUserList(1, 10, this.filterOptions).subscribe(result => {
       this.loading = false;
-      this.total = result[0].totalUser ? result[0].totalUser: 0;
+      this.total = result.data[0].totalUser ? result.data[0].totalUser: 0;
       this.totalPage = Math.ceil(this.total / 10);
-      this.dataList = result;
+      this.dataList = result.data;
       this.displayData = this.dataList;
-    }, error1 => this._message.error(error1.error))
+    }, error1 => {
+      this.loading=false
+      this._message.error(error1.error)
+    })
   }
 
   //获取用户列表
@@ -92,9 +95,9 @@ export class UserManagementTableComponent implements OnInit {
     this.loading = true;
     this.userManagementService$.getUserList(pageIndex, 10).subscribe(result => {
       this.loading = false;
-      this.total = result[0].totalUser ? result[0].totalUser: 0;
+      this.total = result.data[0].totalUser ? result.data[0].totalUser: 0;
       this.totalPage = Math.ceil(this.total / 10);
-      this.dataList = result;
+      this.dataList = result.data;
       this.displayData = this.dataList;
     }, error1 => {
       this.loading = false;

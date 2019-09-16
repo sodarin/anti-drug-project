@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
@@ -7,14 +7,16 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 })
 export class UserManagementService {
 
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient) {
+  }
 
   getUserList(targetPage: number, pageSize: number): Observable<any> {
     return this._http.post(`/user/getIndexUser`, {
       pageSize: pageSize,
       pageNum: targetPage,
-    })
+    });
   }
+
   filterUserList(targetPage: number, pageSize: number, filterOptions: any): Observable<any> {
     return this._http.post(`/user/getIndexUser`, {
       pageSize: pageSize,
@@ -25,11 +27,11 @@ export class UserManagementService {
       starTime: filterOptions.starTime,
       endTime: filterOptions.endTime,
       role: filterOptions.role
-    })
+    });
   }
 
   getUserDetailById(userId: string): Observable<any> {
-    return this._http.get(`/user/getUserDetail?userId=${userId}`)
+    return this._http.get(`/user/getUserDetail?userId=${userId}`);
   }
 
   updateUserDetail(
@@ -51,7 +53,7 @@ export class UserManagementService {
       weixin: weixin,
       qq: qq,
       about: about
-    })
+    });
   }
 
   getAllUserRoles(): Observable<any> {
@@ -62,14 +64,14 @@ export class UserManagementService {
     return this._http.put(`/user/updateUserRole`, {
       newRole: roles,
       userId: userId
-    })
+    });
   }
 
   updatePassword(password: string, userId: string): Observable<any> {
     return this._http.put(`/user/updatePassword`, {
       password: password,
       userId: userId
-    })
+    });
   }
 
   createNewUser(username: string, password: string, roleString: string): Observable<any> {
@@ -77,24 +79,24 @@ export class UserManagementService {
       username: username,
       password: password,
       newRole: roleString
-    })
+    });
   }
 
   updateLockedStatus(userId: string, lockedStatus: number): Observable<any> {
     return this._http.put(`/user/lockedUser`, {
       userId: userId,
       locked: lockedStatus
-    })
+    });
   }
 
   uploadFile(file: any): Observable<any> {
-    const headerOptions ={
+    const headerOptions = {
       headers: new HttpHeaders({
         'enctype': 'multipart/form-data'
       })
     };
     return this._http.post(`/user/uploadAvatar`, {
       file: file
-    }, headerOptions)
+    }, headerOptions);
   }
 }

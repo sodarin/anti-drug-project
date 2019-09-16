@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
-import {CreateTagModalComponent} from '../../../../core/modal/create-tag-modal/create-tag-modal.component';
-import {TagInfoEditComponent} from '../../../../core/modal/tag-info-edit-modal/tag-info-edit.component';
 import {TagGroupManagementService} from '../../../../service/tag-group-management/tag-group-management.service';
 import {CreateTagGroupModalComponent} from '../../../../core/modal/create-tag-group-modal/create-tag-group-modal.component';
 import {TagGroupInfoEditModalComponent} from '../../../../core/modal/tag-group-info-edit-modal/tag-group-info-edit-modal.component';
@@ -21,9 +19,6 @@ export class TagGroupManagementTableComponent implements OnInit {
   total: number = 0;
   totalPage: number;
   pageIndex: number = 1;
-
-
-
 
   constructor(
     private TagGroupManagementService$: TagGroupManagementService,
