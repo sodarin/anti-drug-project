@@ -89,33 +89,35 @@
               nzType="down"></i></button>
           <nz-dropdown-menu #menu="nzDropdownMenu">
             <ul nz-menu>
-              <li nz-menu-item>管理后台</li>
-              <li nz-menu-item>我的教学</li>
-              <li nz-menu-item>我的学习</li>
+              <li nz-menu-item (click)="navigateByUrl('/admin')">管理后台</li>
+              <li nz-menu-item (click)="navigateByUrl('我的教学路由')">我的教学</li>
+              <li nz-menu-item (click)="navigateByUrl('我的学习路由')">我的学习</li>
             </ul>
           </nz-dropdown-menu>
         </span>&nbsp;
         <span><i nz-icon [nzType]="'bell'" [nzTheme]="'fill'" class="bell-style"></i></span>&nbsp;
         <span>
-          <nz-avatar nzIcon="user" nzSrc="../../assets/img/userface-small.jpg" nzSize="large" nz-popover
-            [nzPopoverContent]="personalcenter" nzPopoverPlacement="bottomRight"></nz-avatar>
-          <ng-template #personalcenter>
+          <nz-avatar nz-popover nzIcon="user" nzSrc="../../assets/img/userface-small.jpg" nzSize="large"
+            [nzPopoverContent]="usercenter" nzPopoverPlacement="bottomRight"></nz-avatar>
+          <ng-template #usercenter>
             <div class="user-center">
-              <nz-avatar class="user-avatar" nzIcon="user" nzSrc="../../assets/img/userface.jpg" [nzSize]="80">
+              <nz-avatar class="user-avatar pointer-perform" nzIcon="user" nzSrc="../../assets/img/userface.jpg"
+                [nzSize]="80" (click)="navigateByUrl('个人页面的路由')">
               </nz-avatar>&nbsp;
               <span slot="title" style="font-size: 24px">admin</span>
               <br>
-              <nz-divider ></nz-divider>
-              
-              <div nz-row class="center-operation" nzType="flex" nzJustify="center">
+              <nz-divider></nz-divider>
+
+              <div nz-row class="center-operation pointer-perform" nzType="flex" nzJustify="center">
                 <div nz-col nzSpan="11">
-                  <span><i nz-icon [nzType]="'setting'" [nzTheme]="'fill'"></i>个人设置</span>
+                  <span (click)="navigateByUrl('/client/settings')"><i nz-icon [nzType]="'setting'"
+                      [nzTheme]="'fill'"></i>个人设置</span>
                 </div>
                 <div nz-col nzSpan="4">
                   <nz-divider nzType="vertical"></nz-divider>
                 </div>
                 <div nz-col nzSpan="9">
-                  <span><i nz-icon [nzType]="'lock'" [nzTheme]="'fill'"></i>退出登录</span>
+                  <span (click)="logout()"><i nz-icon [nzType]="'lock'" [nzTheme]="'fill'"></i>退出登录</span>
                 </div>
               </div>
 
@@ -136,6 +138,7 @@
       <router-outlet></router-outlet>
     </nz-content>
     <nz-footer>Powered by dongdong v8.2.32 ©2017-2019 课程存档<br />
-      课程内容版权均归 中国刑事警察学院禁毒学系 所有 辽ICP备14018221号</nz-footer>
+      课程内容版权均归 中国刑事警察学院禁毒学系 所有 辽ICP备14018221号
+    </nz-footer>
   </nz-layout>
 </nz-layout>
