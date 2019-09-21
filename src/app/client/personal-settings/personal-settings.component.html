@@ -7,9 +7,9 @@
         <ul>
           <li nz-menu-group nzTitle="个人设置">
             <ul>
-              <li nz-menu-item nzSelected>个人信息</li>
-              <li nz-menu-item>实名认证</li>
-              <li nz-menu-item>安全设置</li>
+              <li nz-menu-item nzSelected (click)="navigateByUrl('/client/settings/information')">个人信息</li>
+              <li nz-menu-item (click)="navigateByUrl('/client/settings/verification')">实名认证</li>
+              <li nz-menu-item (click)="navigateByUrl('/client/settings/security')">安全设置</li>
             </ul>
           </li>
         </ul>
@@ -20,6 +20,7 @@
 
 
   <nz-content class="inner-content">
+    <router-outlet></router-outlet>
   </nz-content>
 
 

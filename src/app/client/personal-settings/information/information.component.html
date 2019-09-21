@@ -1,1 +1,166 @@
-<p>information works!</p>
+<h1>个人信息</h1>
+<nz-divider></nz-divider>
+
+<form nz-form [nzLayout]="'inline'" class="user-form">
+  <div nz-row>
+    <nz-form-item>
+      <nz-upload class="avatar-uploader" nzAction="头像修改的地址" nzName="avatar" nzListType="picture-card"
+        [nzShowUploadList]="false">
+        <ng-container *ngIf="!avatarUrl">
+          <i class="upload-icon" nz-icon></i>
+          <div class="ant-upload-text">Upload</div>
+        </ng-container>
+        <img *ngIf="avatarUrl" [src]="avatarUrl" class="avatar" />
+      </nz-upload>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label><span>用户名</span></nz-form-label>
+      <input nz-input disabled="true" nzSize="small">
+    </nz-form-item>
+  </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label><span>真实姓名</span></nz-form-label>
+        <div>
+          <nz-form-control>
+            <input type="text" nz-input>
+          </nz-form-control>
+        </div>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label nzFor="sex"><span>性别</span></nz-form-label>
+        <div>
+          <nz-form-control>
+            <nz-radio-group id="sex">
+              <label nz-radio nzValue="男">男</label>
+              <label nz-radio nzValue="女">女</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </div>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label><span>头衔</span></nz-form-label>
+        <div>
+          <nz-form-control>
+            <input type="text" nz-input>
+          </nz-form-control>
+        </div>
+      </nz-form-item>
+    </div>
+
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label><span>个性签名</span></nz-form-label>
+        <div>
+          <nz-form-control>
+            <input type="text" nz-input>
+          </nz-form-control>
+        </div>
+      </nz-form-item>
+    </div>
+  </div>
+
+  <div nz-row>
+    <div nz-col [nzSpan]="24">
+      <nz-form-item>
+        <nz-form-label><span>自我介绍</span></nz-form-label>
+        <div>
+          <nz-form-control>
+            <textarea type="text" nz-input style="width: 700px;height: 170px;"></textarea>
+          </nz-form-control>
+        </div>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label><span>公司</span></nz-form-label>
+        <div>
+          <nz-form-control>
+            <input type="text" nz-input>
+          </nz-form-control>
+        </div>
+      </nz-form-item>
+    </div>
+
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label><span>职业</span></nz-form-label>
+        <div>
+          <nz-form-control>
+            <input type="text" nz-input>
+          </nz-form-control>
+        </div>
+      </nz-form-item>
+    </div>
+  </div>
+
+  <div nz-row>
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label><span>个人空间</span></nz-form-label>
+        <div>
+          <nz-form-control>
+            <input type="text" nz-input>
+          </nz-form-control>
+        </div>
+      </nz-form-item>
+    </div>
+
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label><span>微博</span></nz-form-label>
+        <div>
+          <nz-form-control>
+            <input type="text" nz-input>
+          </nz-form-control>
+        </div>
+      </nz-form-item>
+    </div>
+  </div>
+
+  <div nz-row>
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label><span>微信</span></nz-form-label>
+        <div>
+          <nz-form-control>
+            <input type="text" nz-input>
+          </nz-form-control>
+        </div>
+      </nz-form-item>
+    </div>
+
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label><span>QQ</span></nz-form-label>
+        <div>
+          <nz-form-control>
+            <input type="text" nz-input>
+          </nz-form-control>
+        </div>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="24">
+
+      <nz-form-item>
+        <div>
+          <nz-form-control>
+            <button nz-button nzType="primary">保存</button>
+          </nz-form-control>
+        </div>
+      </nz-form-item>
+
+    </div>
+  </div>
+</form>

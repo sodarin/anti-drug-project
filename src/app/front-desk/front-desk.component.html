@@ -83,7 +83,8 @@
       <span *ngIf="!isLogin" class="user-operation">
         <span (click)="login()">登录</span>/<span class="register">注册</span>
       </span>
-      <!-- 登陆后管理员模块 -->
+
+      <!-- 登陆后显示的页面 -->
       <span *ngIf="isLogin" class="admin-operation">
         <span><button class="btn-server" nzType="primary" nz-button nz-dropdown [nzDropdownMenu]="menu">管理后台<i nz-icon
               nzType="down"></i></button>
