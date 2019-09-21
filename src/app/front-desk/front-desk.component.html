@@ -80,6 +80,7 @@
           <i nz-icon nzType="search"></i>
         </ng-template>
       </div>
+      <!-- 未登录时显示 -->
       <span *ngIf="!isLogin" class="user-operation">
         <span (click)="login()">登录</span>/<span class="register">注册</span>
       </span>
@@ -111,14 +112,13 @@
 
               <div nz-row class="center-operation pointer-perform" nzType="flex" nzJustify="center">
                 <div nz-col nzSpan="11">
-                  <span (click)="navigateByUrl('/client/settings')"><i nz-icon [nzType]="'setting'"
-                      [nzTheme]="'fill'"></i>个人设置</span>
+                  <span (click)="navigateByUrl('/client/settings')"><i nz-icon [nzType]="'setting'"></i>个人设置</span>
                 </div>
                 <div nz-col nzSpan="4">
                   <nz-divider nzType="vertical"></nz-divider>
                 </div>
                 <div nz-col nzSpan="9">
-                  <span (click)="logout()"><i nz-icon [nzType]="'lock'" [nzTheme]="'fill'"></i>退出登录</span>
+                  <span (click)="logout()"><i nz-icon [nzType]="'logout'"></i>退出登录</span>
                 </div>
               </div>
 

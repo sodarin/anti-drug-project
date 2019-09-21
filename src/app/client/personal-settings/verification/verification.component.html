@@ -1,1 +1,82 @@
-<p>verification works!</p>
+<h1>实名认证</h1>
+<nz-divider></nz-divider>
+<nz-alert nzType="warning" nzMessage="提示" nzDescription="为保护您的帐号安全、获得更好的服务，请尽快完成实名认证。" nzShowIcon nzCloseable>
+</nz-alert>
+<form nz-form [nzLayout]="'inline'">
+  <div nz-row>
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label nzRequired><span>真实姓名</span></nz-form-label>
+        <div>
+          <nz-form-control>
+            <input type="text" nz-input>
+          </nz-form-control>
+        </div>
+      </nz-form-item>
+    </div>
+
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label nzRequired><span>身份证号</span></nz-form-label>
+        <div>
+          <nz-form-control>
+            <input type="text" nz-input>
+          </nz-form-control>
+        </div>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row class="card-layout">
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-control>
+          <nz-upload class="avatar-uploader" nzAction="身份证修改的api" nzName="avatar" nzListType="picture-card"
+            [nzShowUploadList]="false">
+            <div class="card-upload">
+              <ng-container *ngIf="!cardFrontUrl">
+                <i [nzType]="'idcard'" nz-icon class="card-icon"></i>
+                <p>上传身份证正面照</p>
+              </ng-container>
+              <img *ngIf="cardFrontUrl" [src]="cardFrontUrl" class="avatar" />
+            </div>
+          </nz-upload>
+        </nz-form-control>
+        <p>请上传jpg, gif, png格式的图片, 建议图片大小不超过2MB</p>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-control>
+          <nz-upload class="avatar-uploader" nzAction="身份证修改的api" nzName="avatar" nzListType="picture-card"
+            [nzShowUploadList]="false">
+            <div class="card-upload">
+              <ng-container *ngIf="!cardFrontUrl">
+                <i [nzType]="'idcard'" nz-icon class="card-icon"></i>
+                <p>上传身份证反面照</p>
+              </ng-container>
+              <img *ngIf="cardFrontUrl" [src]="cardFrontUrl" class="avatar" />
+            </div>
+          </nz-upload>
+        </nz-form-control>
+        <p>请上传jpg, gif, png格式的图片, 建议图片大小不超过2MB</p>
+      </nz-form-item>
+    </div>
+  </div>
+
+  <div style="padding: 10px 0px;"><strong style="font-size: 16px;">认证须知</strong></div>
+  <div>
+    <ol>
+      <li>请确保身份证照片清晰可认，严禁PS，否则将由您本人承担相应的法律后果。</li>
+      <li>实名认证成功后，将无法修改和删除实名信息，请谨慎填写。</li>
+      <li>我们将尽快审核您提交的信息，处理完成后您将会收到系统通知。</li>
+    </ol>
+  </div>
+
+  <div style="margin: 20px 0px">
+    <nz-form-item>
+      <nz-form-control>
+        <button nz-button nzType="primary">提交</button>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+</form>

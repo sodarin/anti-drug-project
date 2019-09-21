@@ -7,7 +7,23 @@ import { UserInfoEditModalComponent } from '../../../core/modal/user-info-edit-m
   styleUrls: ['./information.component.less']
 })
 export class InformationComponent implements OnInit {
-  public avatarUrl: string = '../../assets/img/userface.jpg';
+
+
+  user: any = {
+    avatarUrl: '../../assets/img/userface.jpg',
+    username: 'admin',
+    name: '',
+    sex: '',
+    title: '',
+    signature: '',
+    introduction: '',
+    company: '',
+    profession: '',
+    pzoneUrl: '',
+    blogUrl: '',
+    wechat: '',
+    QQ: ''
+  }
   constructor() { }
 
   ngOnInit() {
