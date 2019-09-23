@@ -9,7 +9,7 @@
       </ng-template>
     </div>
     <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-      <li nz-submenu nzTitle="禁毒讲堂" nzIcon="caret-down">
+      <li (click)="navigateByUrl('/client/courselist')" nz-submenu nzTitle="禁毒讲堂" nzIcon="caret-down">
         <ul>
           <li nz-menu-item (click)="navigateByUrl('/client/courselist')">全部课程</li>
           <li nz-menu-item>学堂在线</li>
@@ -17,8 +17,9 @@
           <li nz-menu-item>专题讲座</li>
         </ul>
       </li>
-      <li nz-submenu nzTitle="班级" nzIcon="caret-down">
+      <li (click)="navigateByUrl('/client/classlist')" nz-submenu nzTitle="班级" nzIcon="caret-down">
         <ul>
+          <li nz-menu-item (click)="navigateByUrl('/client/courselist')">全部班级</li>
           <li nz-menu-item>小学班级</li>
           <li nz-menu-item>初中班级</li>
           <li nz-menu-item>高中班级</li>
@@ -48,7 +49,7 @@
       <div class="empty-space mobile-style"></div>
       <img src="../../assets/img/avatar.jpg"/>
       <ul class="main-menu" nz-menu nzMode="horizontal">
-        <li nz-submenu nzTitle="禁毒讲堂" nzIcon="caret-down">
+        <li (click)="navigateByUrl('/client/courselist')" nz-submenu nzTitle="禁毒讲堂" nzIcon="caret-down">
           <ul>
             <li nz-menu-item (click)="navigateByUrl('/client/courselist')">全部课程</li>
             <li nz-menu-item>学堂在线</li>
@@ -56,8 +57,9 @@
             <li nz-menu-item>专题讲座</li>
           </ul>
         </li>
-        <li nz-submenu nzTitle="班级" nzIcon="caret-down">
+        <li (click)="navigateByUrl('/client/classlist')" nz-submenu nzTitle="班级" nzIcon="caret-down">
           <ul>
+            <li nz-menu-item (click)="navigateByUrl('/client/classlist')">全部班级</li>
             <li nz-menu-item>小学班级</li>
             <li nz-menu-item>初中班级</li>
             <li nz-menu-item>高中班级</li>

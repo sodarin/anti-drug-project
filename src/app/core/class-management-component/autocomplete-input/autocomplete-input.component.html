@@ -1,0 +1,12 @@
+<input
+  placeholder="请在此输入用户名"
+  nz-input
+  [(ngModel)]="inputValue"
+  (input)="onInput($event.target?.value)"
+  [nzAutocomplete]="auto"
+/>
+<nz-autocomplete (selectionChange)="emitValue($event)" nzBackfill #auto>
+  <nz-auto-option *ngFor="let option of options" [nzValue]="option">
+    {{ option }}
+  </nz-auto-option>
+</nz-autocomplete>

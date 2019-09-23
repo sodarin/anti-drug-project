@@ -1,0 +1,19 @@
+<nz-card nzHoverable  [nzCover]="coverTemplate" [nzActions]="[courseCounting, studentCounting, topicCounting]">
+  <nz-card-meta
+    [nzTitle]="item.name"
+  >
+  </nz-card-meta>
+</nz-card>
+<ng-template #coverTemplate>
+  <img alt="example" [src]="item.picture"/>
+</ng-template>
+<ng-template #courseCounting>
+  <span><i nz-icon nzType="book"></i>{{item.courseCounting}}</span>
+</ng-template>
+<ng-template #studentCounting>
+  <span><i nz-icon nzType="team"></i>{{item.studentCounting}}</span>
+</ng-template>
+<ng-template #topicCounting>
+  <span><i nz-icon nzType="message"></i>{{item.topicCounting}}</span>
+</ng-template>
+

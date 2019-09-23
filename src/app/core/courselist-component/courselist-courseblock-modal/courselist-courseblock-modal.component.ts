@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Course } from 'src/app/Test/course.module';
+import {Course} from '../../../Test/course.module';
 
 @Component({
   selector: 'app-courselist-courseblock-modal',
@@ -8,7 +8,7 @@ import { Course } from 'src/app/Test/course.module';
   inputs:['course']
 })
 export class CourselistCourseblockModalComponent implements OnInit {
-  course:Course;
+  course: Course;
 
   constructor() { }
 

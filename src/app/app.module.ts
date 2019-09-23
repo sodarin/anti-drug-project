@@ -27,6 +27,7 @@ import {NewsEditModalComponent} from './core/modal/news-edit-modal/news-edit-mod
 import {ProgramaEditModalComponent} from './core/modal/programa-edit-modal/programa-edit-modal.component';
 import {AnnouncementEditModalComponent} from './core/modal/announcement-edit-modal/announcement-edit-modal.component';
 import {CourseService} from './Test/course.service';
+import {AddingCourseModalComponent} from './core/modal/adding-course-modal/adding-course-modal.component';
 
 
 registerLocaleData(zh);
@@ -66,7 +67,8 @@ registerLocaleData(zh);
     CategoryEditModalComponent,
     NewsEditModalComponent,
     ProgramaEditModalComponent,
-    AnnouncementEditModalComponent
+    AnnouncementEditModalComponent,
+    AddingCourseModalComponent
   ],
   bootstrap: [AppComponent]
 })

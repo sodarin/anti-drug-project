@@ -19,6 +19,10 @@ import {CourselistListviewModalComponent} from './courselist-component/courselis
 import {CourselistClassificationModalComponent} from './courselist-component/courselist-classification-modal/courselist-classification-modal.component';
 import {CourselistSortModalComponent} from './courselist-component/courselist-sort-modal/courselist-sort-modal.component';
 import {CourselistCourseblockModalComponent} from './courselist-component/courselist-courseblock-modal/courselist-courseblock-modal.component';
+import { ClasslistClassblockComponent } from './classlist-component/classlist-classblock/classlist-classblock.component';
+import { ClasslistListviewComponent } from './classlist-component/classlist-listview/classlist-listview.component';
+import { AutocompleteInputComponent } from './class-management-component/autocomplete-input/autocomplete-input.component';
+import { AddingCourseModalComponent } from './modal/adding-course-modal/adding-course-modal.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +39,11 @@ import {CourselistCourseblockModalComponent} from './courselist-component/course
     CourselistCourseblockModalComponent,
     CourselistSortModalComponent,
     CourselistClassificationModalComponent,
-    CourselistListviewModalComponent],
+    CourselistListviewModalComponent,
+    ClasslistClassblockComponent,
+    ClasslistListviewComponent,
+    AutocompleteInputComponent,
+    AddingCourseModalComponent],
   imports: [
     ShareModule,
     QuillModule
@@ -57,7 +65,10 @@ import {CourselistCourseblockModalComponent} from './courselist-component/course
     CourselistCourseblockModalComponent,
     CourselistSortModalComponent,
     CourselistClassificationModalComponent,
-    CourselistListviewModalComponent
+    CourselistListviewModalComponent,
+    ClasslistListviewComponent,
+    AutocompleteInputComponent,
+    AddingCourseModalComponent
   ]
 })
 export class CoreModule { }

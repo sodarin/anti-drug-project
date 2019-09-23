@@ -1,0 +1,26 @@
+<div class="setting-page">
+  <h2>教师设置</h2>
+  <nz-divider></nz-divider>
+  <div class="setting-content">
+    <div class="left-content">
+      <span>设置教师</span>
+    </div>
+    <div class="right-content">
+      <div class="drag-list" cdkDropList  (cdkDropListDropped)="drop($event)">
+        <div *ngFor="let item of teacherList" class="drag-box" cdkDrag>
+          <div class="list-info">
+            <img class="avatar" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+            <span>{{item.name}}</span>
+          </div>
+          <i nz-icon nzType="close"></i>
+        </div>
+      </div>
+      <div class="description">
+        <span>相关页面中的老师列举将会按照这里设定的顺序显示。<br />教学服务团队成员有权制订学习计划、答疑、批阅作业/试卷、发起活动。<br />注：班级教师来源课程教师，无法主动添加</span>
+      </div>
+      <div style="margin-top: 3%;">
+        <button nz-button nzType="primary">保存</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -9,20 +9,15 @@ enum Sccondlayer_operator { "all", "administer", "teacher", "student" }
   selector: 'app-courselist-classification-modal',
   templateUrl: './courselist-classification-modal.component.html',
   styleUrls: ['./courselist-classification-modal.component.less'],
-  inputs: ["firsttag", "secondtag", "thirdtag"],
+  inputs: ["firsttag", "secondtag", "thirdtag", "firstlayer", "_secondlayer", "thirdlayer"],
   outputs: ["firstTagClick", "thirdTagClick","secondTagClick"]
 })
 export class CourselistClassificationModalComponent implements OnInit {
-  firstlayer = ["全部", "学堂在线", "教师培训", "专题讲座", "使用教程"];
-  _secondlayer = [
-    [],
-    ["全部", "小学年级", "初中年级", "高中年级", "高职年级"],
-    [],
-    [],
-    ["全部", "管理员", "教师", "学员"]
-  ];
+  firstlayer = [];
+  _secondlayer = [];
   secondlayer = [];
-  thirdlayer = ["全部","班级", "题库", "毒品预防教育", "互联网+"];
+  thirdlayer = [];
+
 
   secondpointer = 0;
   sekey = false;

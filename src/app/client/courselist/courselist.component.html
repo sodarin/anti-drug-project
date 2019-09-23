@@ -7,7 +7,7 @@
     </nz-header>
     <nz-content>
         <div class="classlist-container">
-            <app-courselist-classification-modal [firsttag]="classOne" [secondtag]="classTwo" [thirdtag]="classThree" (firstTagClick)="setfirstTag($event)" (secondTagClick)="setsecondTag($event)" (thirdTagClick)="setthirdTag($event)">
+            <app-courselist-classification-modal [firstlayer]="firstlayer" [_secondlayer]="_secondlayer" [thirdlayer]="thirdlayer" [firsttag]="classOne" [secondtag]="classTwo" [thirdtag]="classThree" (firstTagClick)="setfirstTag($event)" (secondTagClick)="setsecondTag($event)" (thirdTagClick)="setthirdTag($event)">
             </app-courselist-classification-modal>
         </div>
         <div class="classlist-container">

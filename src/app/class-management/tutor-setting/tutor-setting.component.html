@@ -1,0 +1,27 @@
+<div class="setting-page">
+  <h2>助教设置</h2>
+  <nz-divider></nz-divider>
+  <div class="setting-content">
+    <div class="left-content">
+      <span>设置助教</span>
+    </div>
+    <div class="right-content">
+      <div class="drag-list" cdkDropList  (cdkDropListDropped)="drop($event)">
+        <div *ngFor="let item of tutorList" class="drag-box" cdkDrag>
+          <div class="list-info">
+            <img class="avatar" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+            <span>{{item.name}}</span>
+          </div>
+          <i style="cursor: pointer;" nz-icon nzType="close"></i>
+        </div>
+      </div>
+      <app-autocomplete-input (outputEvent)="searchStudent($event)" [searchType]="'student'"></app-autocomplete-input>
+      <div class="description">
+        <span>仅能添加本班级学员</span>
+      </div>
+      <div style="margin-top: 3%;">
+        <button nz-button nzType="primary">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
