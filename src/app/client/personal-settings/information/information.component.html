@@ -82,11 +82,10 @@
       <div nz-col [nzSpan]="24">
         <nz-form-item>
           <nz-form-label><span>自我介绍</span></nz-form-label>
-          <div>
-            <nz-form-control>
-              <textarea type="text" nz-input style="width: 740px;height: 170px;"></textarea>
-            </nz-form-control>
-          </div>
+          <nz-form-control>
+            <quill-editor [(ngModel)]='user.introduction' [style]="{height: '300px'}">
+            </quill-editor>
+          </nz-form-control>
         </nz-form-item>
       </div>
     </div>

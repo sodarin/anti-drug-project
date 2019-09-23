@@ -9,13 +9,15 @@ import { InformationComponent } from './personal-settings/information/informatio
 import { RouterModule } from '@angular/router';
 import { VerificationComponent } from './personal-settings/verification/verification.component';
 import { SecuritySettingComponent } from './personal-settings/security-setting/security-setting.component'
+import { QuillModule } from 'ngx-quill'
 
 @NgModule({
   declarations: [ClientComponent, DashboardComponent, CourselistComponent, PersonalSettingsComponent, InformationComponent, VerificationComponent, SecuritySettingComponent],
   imports: [
     ShareModule,
     CoreModule,
-    RouterModule
+    RouterModule,
+    QuillModule
   ]
 })
 export class ClientModule { }

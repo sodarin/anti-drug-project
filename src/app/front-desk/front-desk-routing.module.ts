@@ -18,6 +18,7 @@ const routes: Routes = [
       { path: 'courselist', component: CourselistComponent },
       {
         path: 'settings', component: PersonalSettingsComponent, children: [
+          { path: '', redirectTo: 'information', pathMatch: 'full' },
           { path: 'information', component: InformationComponent },
           { path: 'verification', component: VerificationComponent },
           { path: 'security', component: SecuritySettingComponent },

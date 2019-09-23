@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { NzMessageService, NzModalService } from 'ng-zorro-antd';
+import { LoginPasswdEditModelComponent } from '../../../core/modal/login-passwd-edit-model/login-passwd-edit-model.component';
+import { LoginModalComponent } from '../../../core/modal/login-modal/login-modal.component';
 
 @Component({
   selector: 'app-security-setting',
@@ -17,14 +20,22 @@ export class SecuritySettingComponent implements OnInit {
   loading: boolean = false;
 
 
-  constructor() { }
+  constructor(private _modalService: NzModalService) { }
 
   ngOnInit() {
   }
 
   edit(command) {
+    if (command == 'login') { this.editLoginPasswd() }
   }
 
-  editLoginPasswd() { }
+  editLoginPasswd() {
+    const modal = this._modalService.create({
+      nzTitle: '密码修改',
+      nzContent: LoginPasswdEditModelComponent,
+      nzFooter: null
+    })
+  }
+
 
 }

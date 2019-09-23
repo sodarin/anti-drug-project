@@ -28,6 +28,7 @@ import { ProgramaEditModalComponent } from './core/modal/programa-edit-modal/pro
 import { AnnouncementEditModalComponent } from './core/modal/announcement-edit-modal/announcement-edit-modal.component';
 import { CourseService } from './Test/course.service';
 import { ClientModule } from './client/client.module'
+import { LoginPasswdEditModelComponent } from './core/modal/login-passwd-edit-model/login-passwd-edit-model.component';
 
 
 registerLocaleData(zh);
@@ -57,6 +58,7 @@ registerLocaleData(zh);
   ],
   entryComponents: [
     LoginModalComponent,
+    LoginPasswdEditModelComponent,
     UserInfoViewModalComponent,
     UserInfoEditModalComponent,
     CreateUserModalComponent,
