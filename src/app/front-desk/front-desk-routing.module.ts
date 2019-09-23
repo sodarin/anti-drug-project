@@ -35,8 +35,7 @@ const routes: Routes = [
           { path: 'tutorsetting', component: TutorSettingComponent },
           { path: 'coursesetting', component: CourseSettingComponent },
           { path: 'studentsetting', component: StudentSettingComponent }
-        ]}
-    ]},
+        ]},
       {
         path: 'settings', component: PersonalSettingsComponent, children: [
           { path: '', redirectTo: 'information', pathMatch: 'full' },
@@ -45,6 +44,8 @@ const routes: Routes = [
           { path: 'security', component: SecuritySettingComponent },
         ]
       }
+    ]},
+
     ];
 
 @NgModule({

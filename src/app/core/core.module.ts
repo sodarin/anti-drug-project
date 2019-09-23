@@ -70,7 +70,8 @@ import { LoginPasswdEditModelComponent } from './modal/login-passwd-edit-model/l
     CourselistListviewModalComponent,
     ClasslistListviewComponent,
     AutocompleteInputComponent,
-    AddingCourseModalComponent
+    AddingCourseModalComponent,
+    LoginPasswdEditModelComponent
   ]
 })
 export class CoreModule { }

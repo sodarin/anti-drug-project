@@ -8,6 +8,7 @@ import { Router } from '@angular/router'
 export class PersonalSettingsComponent implements OnInit {
 
   private avatarUrl: string = '../../assets/img/userface.jpg';
+
   constructor(private router: Router) { }
 
   ngOnInit() {

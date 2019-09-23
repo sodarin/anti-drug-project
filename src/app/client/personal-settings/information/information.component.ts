@@ -23,7 +23,9 @@ export class InformationComponent implements OnInit {
     blogUrl: '',
     wechat: '',
     QQ: ''
-  }
+  };
+
+  introduction: string = '';
   constructor() { }
 
   ngOnInit() {
