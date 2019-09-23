@@ -1,18 +1,18 @@
 {
   "/user": {
-    "target": "http://219.216.81.67:8001",
+    "target": "http://172.28.150.67:8001",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
   "/tag": {
-    "target": "http://219.216.81.67:8001",
+    "target": "http://172.28.150.67:8001",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
   "/tagGroup": {
-    "target": "http://219.216.81.67:8001",
+    "target": "http://172.28.150.67:8001",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true

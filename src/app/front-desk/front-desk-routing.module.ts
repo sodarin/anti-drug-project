@@ -13,11 +13,16 @@ import {TeacherSettingComponent} from '../class-management/teacher-setting/teach
 import {TutorSettingComponent} from '../class-management/tutor-setting/tutor-setting.component';
 import {CourseSettingComponent} from '../class-management/course-setting/course-setting.component';
 import {StudentSettingComponent} from '../class-management/student-setting/student-setting.component';
+import { PersonalSettingsComponent } from '../client/personal-settings/personal-settings.component';
+import { InformationComponent } from '../client/personal-settings/information/information.component';
+import { VerificationComponent } from '../client/personal-settings/verification/verification.component';
+import { SecuritySettingComponent } from '../client/personal-settings/security-setting/security-setting.component';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/client', pathMatch: 'full'},
-  { path: 'client', component: FrontDeskComponent, children: [
+  { path: '', redirectTo: '/client', pathMatch: 'full' },
+  {
+    path: 'client', component: FrontDeskComponent, children: [
       { path: '', component: ClientComponent },
       { path: 'dashboard', component: DashboardComponent },
       { path: 'courselist', component: CourselistComponent},
@@ -32,7 +37,15 @@ const routes: Routes = [
           { path: 'studentsetting', component: StudentSettingComponent }
         ]}
     ]},
-];
+      {
+        path: 'settings', component: PersonalSettingsComponent, children: [
+          { path: '', redirectTo: 'information', pathMatch: 'full' },
+          { path: 'information', component: InformationComponent },
+          { path: 'verification', component: VerificationComponent },
+          { path: 'security', component: SecuritySettingComponent },
+        ]
+      }
+    ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

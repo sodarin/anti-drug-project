@@ -12,7 +12,7 @@ export class TeacherRecommendModalComponent implements OnInit {
   @Input()
   id: string;
 
-  recommendOrder: number;
+  recommendOrder: number = 1;
 
   constructor(
     private teacherManagementService$: TeacherManagementService,
@@ -25,13 +25,16 @@ export class TeacherRecommendModalComponent implements OnInit {
 
   submit() {
     let shouldBeClosed = false;
-    this.teacherManagementService$.getUserDetailById('').subscribe( result => {
-      shouldBeClosed = true;
-      this._message.success('序号编辑成功！')
-    }, error1 => {
-      shouldBeClosed = false;
-      this._message.error(error1.error)
-    } );
+    if(this.recommendOrder == 0) {
+      this._message.error('推荐序号不能为0！')
+    } else {
+      this.teacherManagementService$.changePromotedSeq(this.id,this.recommendOrder).subscribe( result => {
+        this._message.success('序号编辑成功！');
+        this._modal.destroy('1')
+      }, error1 => {
+        this._message.error(error1.error)
+      } );
+    }
     return shouldBeClosed;
   }
 

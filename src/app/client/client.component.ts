@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit } from '@angular/core'
+import { Router } from '@angular/router'
 @Component({
   selector: 'app-client',
   templateUrl: './client.component.html',
@@ -11,13 +11,17 @@ export class ClientComponent implements OnInit {
 
   isCollapsed: boolean = true;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
 
   siderControl(data: any) {
     this.isCollapsed = data;
+  }
+
+  navigateByUrl(url: string) {
+    this.router.navigateByUrl(url);
   }
 
 }

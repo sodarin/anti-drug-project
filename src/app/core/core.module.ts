@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { LoginModalComponent } from './modal/login-modal/login-modal.component';
 import { ShareModule } from '../share/share.module';
-import {UserInfoViewModalComponent} from './modal/user-info-view-modal/user-info-view-modal.component';
+import { UserInfoViewModalComponent } from './modal/user-info-view-modal/user-info-view-modal.component';
 import { UserInfoEditModalComponent } from './modal/user-info-edit-modal/user-info-edit-modal.component';
-import {QuillModule} from 'ngx-quill';
+import { QuillModule } from 'ngx-quill';
 import { CreateUserModalComponent } from './modal/create-user-modal/create-user-modal.component';
 import { CreateTagModalComponent } from './modal/create-tag-modal/create-tag-modal.component';
 import { CreateTagGroupModalComponent } from './modal/create-tag-group-modal/create-tag-group-modal.component';
 import { TeacherRecommendModalComponent } from './modal/teacher-recommend-modal/teacher-recommend-modal.component';
-import {TagInfoEditComponent} from './modal/tag-info-edit-modal/tag-info-edit.component';
+import { TagInfoEditComponent } from './modal/tag-info-edit-modal/tag-info-edit.component';
 
 import { TagGroupInfoEditModalComponent } from './modal/tag-group-info-edit-modal/tag-group-info-edit-modal.component';
 import { CategoryEditModalComponent } from './modal/category-edit-modal/category-edit-modal.component';
@@ -23,6 +23,7 @@ import { ClasslistClassblockComponent } from './classlist-component/classlist-cl
 import { ClasslistListviewComponent } from './classlist-component/classlist-listview/classlist-listview.component';
 import { AutocompleteInputComponent } from './class-management-component/autocomplete-input/autocomplete-input.component';
 import { AddingCourseModalComponent } from './modal/adding-course-modal/adding-course-modal.component';
+import { LoginPasswdEditModelComponent } from './modal/login-passwd-edit-model/login-passwd-edit-model.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { AddingCourseModalComponent } from './modal/adding-course-modal/adding-c
     ClasslistClassblockComponent,
     ClasslistListviewComponent,
     AutocompleteInputComponent,
-    AddingCourseModalComponent],
+    AddingCourseModalComponent,
+    LoginPasswdEditModelComponent],
   imports: [
     ShareModule,
     QuillModule
