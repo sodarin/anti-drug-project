@@ -24,6 +24,7 @@ import { ClasslistListviewComponent } from './classlist-component/classlist-list
 import { AutocompleteInputComponent } from './class-management-component/autocomplete-input/autocomplete-input.component';
 import { AddingCourseModalComponent } from './modal/adding-course-modal/adding-course-modal.component';
 import { LoginPasswdEditModelComponent } from './modal/login-passwd-edit-model/login-passwd-edit-model.component';
+import { SecurityProblemEditModalComponent } from './modal/security-problem-edit-modal/security-problem-edit-modal.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { LoginPasswdEditModelComponent } from './modal/login-passwd-edit-model/l
     ClasslistListviewComponent,
     AutocompleteInputComponent,
     AddingCourseModalComponent,
-    LoginPasswdEditModelComponent],
+    LoginPasswdEditModelComponent,
+    SecurityProblemEditModalComponent],
   imports: [
     ShareModule,
     QuillModule

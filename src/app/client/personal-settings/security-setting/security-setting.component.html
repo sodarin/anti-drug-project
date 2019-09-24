@@ -14,23 +14,23 @@
 
         <ng-template #action>
           <button nz-button nzType="primary" *ngIf="item.setup" (click)="edit(item.type)">修改</button>
-          <button nz-button nzType="primary" *ngIf="!item.setup">设置</button>
+          <button nz-button nzType="primary" *ngIf="!item.setup" (click)="edit(item.type)">设置</button>
         </ng-template>
 
-        <nz-list-item-meta [nzTitle]="settingTitle" [nzAvatar]="settingsAvatar" [nzDescription]="settingDesc">
-        </nz-list-item-meta>
+        <nz-list-item-meta [nzTitle]=" settingTitle" [nzAvatar]="settingsAvatar" [nzDescription]="settingDesc">
+            </nz-list-item-meta>
 
-        <ng-template #settingTitle>
-          <span slot="title">{{item.title}}</span>
-        </ng-template>
+            <ng-template #settingTitle>
+              <span slot="title">{{item.title}}</span>
+            </ng-template>
 
-        <ng-template #settingsAvatar>
-          <nz-avatar [nzIcon]="item.avatar.type" [nzSize]="45"></nz-avatar>
-        </ng-template>
+            <ng-template #settingsAvatar>
+              <nz-avatar [nzIcon]="item.avatar.type" [nzSize]="45"></nz-avatar>
+            </ng-template>
 
-        <ng-template #settingDesc>
-          <p>{{item.description}}</p>
-        </ng-template>
+            <ng-template #settingDesc>
+              <p>{{item.description}}</p>
+            </ng-template>
 
       </nz-list-item>
     </ng-template>

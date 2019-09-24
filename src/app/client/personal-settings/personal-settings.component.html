@@ -1,25 +1,29 @@
-<nz-layout class="outer-layout">
-
-  <nz-sider nzWidth="250px">
-    <ul nz-menu nzMode="inline" [nzInlineIndent]="50" class="sider-menu">
-      <ul >
-        <li nz-menu-group nzTitle="个人设置" class="menu-item">
+<nz-layout>
+  <nz-content>
+    <div class="inner-layout">
+      <div class="left-content">
+        <ul nz-menu nzMode="inline" [nzInlineIndent]="50" style="height: 100%">
           <ul>
-            <li nz-menu-item nzSelected (click)="navigateByUrl('/client/settings/information')">个人信息</li>
-            <li nz-menu-item (click)="navigateByUrl('/client/settings/verification')">实名认证</li>
-            <li nz-menu-item (click)="navigateByUrl('/client/settings/security')">安全设置</li>
+            <li nz-menu-group nzTitle="个人设置" class="menu-item">
+              <ul>
+                <li nz-menu-item nzSelected (click)="navigateByUrl('/client/settings/information')">
+                  个人信息
+                </li>
+                <li nz-menu-item (click)="navigateByUrl('/client/settings/verification')">
+                  实名认证
+                </li>
+                <li nz-menu-item (click)="navigateByUrl('/client/settings/security')">
+                  安全设置
+                </li>
+              </ul>
+            </li>
           </ul>
-        </li>
-      </ul>
-    </ul>
-  </nz-sider>
+        </ul>
+      </div>
 
-  <nz-layout class="inner-layout">
-    <nz-content>
-      <router-outlet></router-outlet>
-    </nz-content>
-  </nz-layout>
-
-
-
+      <div class="right-content">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </nz-content>
 </nz-layout>

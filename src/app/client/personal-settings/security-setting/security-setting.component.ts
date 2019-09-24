@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { LoginPasswdEditModelComponent } from '../../../core/modal/login-passwd-edit-model/login-passwd-edit-model.component';
+import { SecurityProblemEditModalComponent } from '../../../core/modal/security-problem-edit-modal/security-problem-edit-modal.component';
 import { LoginModalComponent } from '../../../core/modal/login-modal/login-modal.component';
 
 @Component({
@@ -25,6 +26,7 @@ export class SecuritySettingComponent implements OnInit {
 
   edit(command) {
     if (command == 'login') { this.editLoginPasswd() }
+    else if (command == 'security') { this.editSecurityProblem() }
   }
 
   editLoginPasswd() {
@@ -32,6 +34,15 @@ export class SecuritySettingComponent implements OnInit {
       nzTitle: '密码修改',
       nzContent: LoginPasswdEditModelComponent,
       nzFooter: null
+    })
+  }
+
+  editSecurityProblem() {
+    const modal = this._modalService.create({
+      nzTitle: '安全问题',
+      nzContent: SecurityProblemEditModalComponent,
+      nzFooter: null,
+      nzWidth: 350
     })
   }
 

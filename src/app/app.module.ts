@@ -30,6 +30,7 @@ import {CourseService} from './Test/course.service';
 import {AddingCourseModalComponent} from './core/modal/adding-course-modal/adding-course-modal.component';
 import { ClientModule } from './client/client.module'
 import { LoginPasswdEditModelComponent } from './core/modal/login-passwd-edit-model/login-passwd-edit-model.component';
+import { SecurityProblemEditModalComponent } from './core/modal/security-problem-edit-modal/security-problem-edit-modal.component';
 
 
 registerLocaleData(zh);
@@ -60,6 +61,7 @@ registerLocaleData(zh);
   entryComponents: [
     LoginModalComponent,
     LoginPasswdEditModelComponent,
+    SecurityProblemEditModalComponent,
     UserInfoViewModalComponent,
     UserInfoEditModalComponent,
     CreateUserModalComponent,

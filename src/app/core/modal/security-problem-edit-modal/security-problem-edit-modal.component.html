@@ -1,0 +1,26 @@
+<div style="margin: 0px 0px 30px 0px;padding-right: 45px">
+  <nz-alert nzType="warning" nzMessage="安全问题一经设置,不可再次修改"></nz-alert>
+</div>
+<form nz-form [formGroup]="securityEditForm" (ngSubmit)="doEdit()">
+  <nz-form-item>
+    <nz-form-label nzSpan="5">安全问题</nz-form-label>
+    <nz-form-control nzSpan="15">
+      <input type="text" nz-input formControlName="problem" [disabled]="true">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzSpan="5">答案</nz-form-label>
+    <nz-form-control nzSpan="15" nzErrorTip="生日不能为空">
+      <nz-date-picker formControlName="answer" nzFormat="yyyy-MM-dd HH:mm:ss" [nzDisabledDate]="disabledDate"
+        [nzDisabledTime]="disabledDateTime" [nzShowTime]="{ nzDefaultOpenValue: timeDefaultValue }">
+      </nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control>
+      <button nz-button class="edit-form-button" [nzType]="'primary'">
+        提交
+      </button>
+    </nz-form-control>
+  </nz-form-item>
+</form>
