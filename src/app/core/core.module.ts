@@ -19,6 +19,7 @@ import {CourselistListviewModalComponent} from './courselist-component/courselis
 import {CourselistClassificationModalComponent} from './courselist-component/courselist-classification-modal/courselist-classification-modal.component';
 import {CourselistSortModalComponent} from './courselist-component/courselist-sort-modal/courselist-sort-modal.component';
 import {CourselistCourseblockModalComponent} from './courselist-component/courselist-courseblock-modal/courselist-courseblock-modal.component';
+import { UserPageComponent } from './user-page/user-page.component';
 
 @NgModule({
   declarations: [
@@ -35,10 +36,11 @@ import {CourselistCourseblockModalComponent} from './courselist-component/course
     CourselistCourseblockModalComponent,
     CourselistSortModalComponent,
     CourselistClassificationModalComponent,
-    CourselistListviewModalComponent],
+    CourselistListviewModalComponent,
+    UserPageComponent],
   imports: [
     ShareModule,
-    QuillModule
+    QuillModule,
   ],
   exports: [
     LoginModalComponent,

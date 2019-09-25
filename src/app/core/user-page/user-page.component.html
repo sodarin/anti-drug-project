@@ -1,0 +1,103 @@
+<div class="computer-style">
+
+  <div style="background-image: url('/assets/img/background.jpg');height:200px">
+    <div nz-row>
+      <div nz-col nzSpan="8">
+        <div style="text-align: right;margin-top: 20px;margin-right: 10px">
+          <nz-avatar [nzSize]="130" nzIcon="user"
+                     nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
+        </div>
+      </div>
+      <div nz-col nzSpan="8" style="margin-right: 0;margin-top: 20px">
+        <div class="name">name</div>
+        <div class="title">user</div>
+        <div class="title"> 0 粉丝 | 0 关注</div>
+        <button nz-button nzType="primary" style="margin-top: 10px">关注</button>
+      </div>
+      <div nz-col nzSpan="8">
+        <nz-card style="width:300px;margin-top:60px;background-color: rgba(255,255,255,0.5)">
+          <p class="title">Card content</p>
+        </nz-card>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align: center">
+    <nz-tabset style="width: auto">
+      <nz-tab nzTitle="个人介绍">
+
+      </nz-tab>
+      <nz-tab *ngIf="this.type=='teacher'" nzTitle="在教课程">
+        Content of Tab Pane 2
+      </nz-tab>
+      <nz-tab *ngIf="this.type=='teacher'" nzTitle="在教班级">
+        Content of Tab Pane 3
+      </nz-tab>
+      <nz-tab nzTitle="在学课程">
+        Content of Tab Pane 3
+      </nz-tab>
+      <nz-tab nzTitle="在学班级">
+        Content of Tab Pane 3
+      </nz-tab>
+      <nz-tab nzTitle="收藏课程">
+        Content of Tab Pane 3
+      </nz-tab>
+      <nz-tab nzTitle="加入小组">
+        Content of Tab Pane 3
+      </nz-tab>
+      <nz-tab nzTitle="关注/粉丝">
+        Content of Tab Pane 3
+      </nz-tab>
+
+    </nz-tabset>
+  </div>
+</div>
+
+<div class="mobile-style">
+  <div style="background-image: url('/assets/img/background.jpg');height:220px">
+    <div nz-row>
+      <div style="margin-top: 10px;text-align: center">
+        <nz-avatar [nzSize]="70" nzIcon="user"
+                   nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
+
+        <div class="namemo">name</div>
+        <div class="titlemo">user</div>
+        <div class="titlemo"> 0 粉丝 | 0 关注</div>
+
+        <button nz-button nzType="primary" style="margin-top: 10px">关注</button>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align: center">
+    <nz-tabset style="height:auto;width: 90%" nzTabPosition="left">
+      <nz-tab nzTitle="个人介绍">
+
+      </nz-tab>
+      <nz-tab *ngIf="this.type=='teacher'" nzTitle="在教课程">
+        Content of Tab Pane 2
+      </nz-tab>
+      <nz-tab *ngIf="this.type=='teacher'" nzTitle="在教班级">
+        Content of Tab Pane 3
+      </nz-tab>
+      <nz-tab nzTitle="在学课程">
+        Content of Tab Pane 3
+      </nz-tab>
+      <nz-tab nzTitle="在学班级">
+        Content of Tab Pane 3
+      </nz-tab>
+      <nz-tab nzTitle="收藏课程">
+        Content of Tab Pane 3
+      </nz-tab>
+      <nz-tab nzTitle="加入小组">
+        Content of Tab Pane 3
+      </nz-tab>
+      <nz-tab nzTitle="关注/粉丝">
+        Content of Tab Pane 3
+      </nz-tab>
+
+    </nz-tabset>
+  </div>
+
+
+</div>
