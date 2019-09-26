@@ -124,6 +124,11 @@ import { AdminClassCategoryManagementComponent } from './back-course/admin-categ
     ProgramaManagementTableComponent,
     OperationComponent, AdminCourseManagementComponent, GroupTopicManagementComponent, NewsManagementComponent, UserApprovalPageTabComponent, ApprovalPendingTableComponent, ApprovalSuccessTableComponent, AdminCourseHeaderComponent, AdminCourseManagementTabComponent, AdminOpenClassManagementComponent, AdminClassManagementComponent, AdminTopicManagementComponent, AdminCourseManagementTableComponent, AdminCourseRecommendationTableComponent, AdminCourseStatisticsTableComponent, TeacherManagementTableComponent, TeacherPromoteComponent, TeacherTabComponent, AdminOpenClassManagementTabComponent, AdminOpenClassManagemenTableComponent, AdminOpenClassRecommendationTableComponent, AdminNoteManagementComponent, AdminNoteManagementTabComponent, AdminNoteManagementTableComponent, AdminRatingManagementComponent, AdminRatingManagementTabComponent, AdminClassRatingManagementComponent, AdminCourseRatingManagementComponent, AdminCategoryManagementComponent, AdminCategoryManagementTabComponent, AdminCourseCategoryManagementComponent, AdminClassCategoryManagementComponent],
 
+  exports: [
+    TeacherManagementTableComponent,
+    TeacherPromoteComponent
+  ],
+
   imports: [
     ShareModule,
     BackgroundRoutingModule,

@@ -4,6 +4,8 @@ import {ClientComponent} from '../client/client.component';
 import {FrontDeskComponent} from './front-desk.component';
 import {DashboardComponent} from '../client/dashboard/dashboard.component';
 import {CourselistComponent} from '../client/courselist/courselist.component';
+import {TeacherComponent} from '../client/teacher/teacher.component';
+import {UserPageComponent} from '../core/user-page/user-page.component'
 import {ClasslistComponent} from '../client/classlist/classlist.component';
 import {ClassManagementComponent} from '../class-management/class-management.component';
 import {ManagementDashboardComponent} from '../class-management/management-dashboard/management-dashboard.component';
@@ -20,6 +22,7 @@ import { SecuritySettingComponent } from '../client/personal-settings/security-s
 import {CoverSettingComponent} from '../class-management/cover-setting/cover-setting.component';
 
 
+
 const routes: Routes = [
   { path: '', redirectTo: '/client', pathMatch: 'full' },
   {
@@ -27,6 +30,8 @@ const routes: Routes = [
       { path: '', component: ClientComponent },
       { path: 'dashboard', component: DashboardComponent },
       { path: 'courselist', component: CourselistComponent},
+      { path: 'teacher', component: TeacherComponent},
+      { path: 'userpage', component: UserPageComponent},
       { path: 'classlist', component: ClasslistComponent },
       { path: 'classroom/:id', component: ClassManagementComponent, children: [
           { path: 'manage', component: ManagementDashboardComponent},
