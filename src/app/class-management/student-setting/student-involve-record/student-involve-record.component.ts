@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-student-involve-record',
@@ -7,9 +8,59 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StudentInvolveRecordComponent implements OnInit {
 
-  constructor() { }
+  @Input()
+  classroomId: string;
+
+  name: string;
+  recordList = [];
+  total: number;
+  loading: boolean = false;
+  pageIndex: number = 1;
+
+  constructor(
+    private routerInfo: ActivatedRoute
+  ) { }
 
   ngOnInit() {
+    this.classroomId = this.routerInfo.snapshot.params['id'];
+    this.recordList = [
+      {
+        imgUrl: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+        name: '董卓然',
+        involveTime: new Date(),
+        involveType: '免费加入',
+        involveReason: '免费加入'
+      },
+      {
+        imgUrl: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+        name: '董卓然',
+        involveTime: new Date(),
+        involveType: '免费加入',
+        involveReason: '免费加入'
+      },
+      {
+        imgUrl: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+        name: '董卓然',
+        involveTime: new Date(),
+        involveType: '免费加入',
+        involveReason: '免费加入'
+      },
+      {
+        imgUrl: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+        name: '董卓然',
+        involveTime: new Date(),
+        involveType: '免费加入',
+        involveReason: '免费加入'
+      }
+
+    ]
   }
 
+  filterStudent() {
+
+  }
+
+  searchData(pageIndex: number = this.pageIndex) {
+
+  }
 }

@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-informal-student-table',
@@ -16,9 +17,12 @@ export class InformalStudentTableComponent implements OnInit {
   loading: boolean = false;
   pageIndex: number = 1;
 
-  constructor() { }
+  constructor(
+    private routerInfo: ActivatedRoute
+  ) { }
 
   ngOnInit() {
+    this.classroomId = this.routerInfo.snapshot.params['id']
   }
 
   filterStudent() {

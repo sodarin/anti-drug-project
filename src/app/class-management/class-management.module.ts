@@ -15,13 +15,18 @@ import { FormalStudentTableComponent } from './student-setting/formal-student-ta
 import { InformalStudentTableComponent } from './student-setting/informal-student-table/informal-student-table.component';
 import { StudentInvolveRecordComponent } from './student-setting/student-involve-record/student-involve-record.component';
 import { StudentExitRecordComponent } from './student-setting/student-exit-record/student-exit-record.component';
+import {QuillModule} from 'ngx-quill';
+import { CoverSettingComponent } from './cover-setting/cover-setting.component';
+import { PaperMarkingComponent } from './paper-marking/paper-marking.component';
+import { HomeworkMarkingComponent } from './homework-marking/homework-marking.component';
 
 @NgModule({
-  declarations: [ClassManagementComponent, ManagementDashboardComponent, ClassInfoManagementComponent, HeadTeacherSettingComponent, TeacherSettingComponent, TutorSettingComponent, CourseSettingComponent, StudentSettingComponent, StudentSettingTabComponent, FormalStudentTableComponent, InformalStudentTableComponent, StudentInvolveRecordComponent, StudentExitRecordComponent],
+  declarations: [ClassManagementComponent, ManagementDashboardComponent, ClassInfoManagementComponent, HeadTeacherSettingComponent, TeacherSettingComponent, TutorSettingComponent, CourseSettingComponent, StudentSettingComponent, StudentSettingTabComponent, FormalStudentTableComponent, InformalStudentTableComponent, StudentInvolveRecordComponent, StudentExitRecordComponent, CoverSettingComponent, PaperMarkingComponent, HomeworkMarkingComponent],
   imports: [
     ShareModule,
     CoreModule,
-    RouterModule
+    RouterModule,
+    QuillModule
   ]
 })
 export class ClassManagementModule { }

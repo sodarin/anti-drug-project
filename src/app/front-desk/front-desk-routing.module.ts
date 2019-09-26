@@ -17,6 +17,7 @@ import { PersonalSettingsComponent } from '../client/personal-settings/personal-
 import { InformationComponent } from '../client/personal-settings/information/information.component';
 import { VerificationComponent } from '../client/personal-settings/verification/verification.component';
 import { SecuritySettingComponent } from '../client/personal-settings/security-setting/security-setting.component';
+import {CoverSettingComponent} from '../class-management/cover-setting/cover-setting.component';
 
 
 const routes: Routes = [
@@ -34,7 +35,8 @@ const routes: Routes = [
           { path: 'teachersetting', component: TeacherSettingComponent },
           { path: 'tutorsetting', component: TutorSettingComponent },
           { path: 'coursesetting', component: CourseSettingComponent },
-          { path: 'studentsetting', component: StudentSettingComponent }
+          { path: 'studentsetting', component: StudentSettingComponent },
+          { path: 'coversetting', component: CoverSettingComponent }
         ]},
       {
         path: 'settings', component: PersonalSettingsComponent, children: [
