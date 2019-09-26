@@ -1,0 +1,85 @@
+<div class="statistic-content">
+  <div nz-row class="basic-info" [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32, xl: 32, xxl: 32 }">
+    <div nz-col nzSpan="8">
+      <div class="statistic-box">
+        <h2>设置</h2>
+        <nz-divider></nz-divider>
+        <div class="list-block">
+          <span class="header">简介</span>
+          <i *ngIf="isSetIntro" nz-icon nzType="check-circle" nzTheme="twotone"></i>
+          <i *ngIf="!isSetIntro" nz-icon nzType="close-circle" nzTheme="twotone"></i>
+        </div>
+        <nz-divider></nz-divider>
+        <div class="list-block">
+          <span class="header">图片</span>
+          <i *ngIf="isSetImage" nz-icon nzType="check-circle" nzTheme="twotone"></i>
+          <i *ngIf="!isSetImage" nz-icon nzType="close-circle" nzTheme="twotone"></i>
+        </div>
+      </div>
+    </div>
+    <div nz-col nzSpan="8">
+      <div class="statistic-box">
+        <h2>课程</h2>
+        <nz-divider></nz-divider>
+        <div class="list-block">
+          <span class="header">课程数</span>
+          <nz-tag [nzColor]="'#108ee9'"><a href="https://github.com/NG-ZORRO/ng-zorro-antd">1</a></nz-tag>
+        </div>
+        <nz-divider></nz-divider>
+        <div class="list-block">
+          <span class="header">任务数</span>
+          <nz-tag>7</nz-tag>
+        </div>
+      </div>
+    </div>
+    <div nz-col nzSpan="8">
+      <div class="statistic-box">
+        <h2>学员</h2>
+        <nz-divider></nz-divider>
+        <div class="list-block">
+          <span class="header">学员数</span>
+          <nz-tag [nzColor]="'#108ee9'"><a href="https://github.com/NG-ZORRO/ng-zorro-antd">25</a></nz-tag>
+        </div>
+        <nz-divider></nz-divider>
+        <div class="list-block">
+          <span class="header">旁听生数</span>
+          <nz-tag><a href="https://github.com/NG-ZORRO/ng-zorro-antd">25</a></nz-tag>
+        </div>
+      </div>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+  <div nz-row class="class-info">
+    <div nz-col nzSpan="12">
+      <h2>班级学习情况</h2>
+      <nz-row [nzGutter]="8">
+        <nz-col nzSpan="12">
+          <nz-statistic [nzValue]="0 | number" [nzTitle]="'全部学员数'"></nz-statistic>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-statistic [nzValue]="0 | number" [nzTitle]="'正式学员数'"></nz-statistic>
+        </nz-col>
+      </nz-row>
+      <nz-row [nzGutter]="8">
+        <nz-col nzSpan="12">
+          <nz-statistic [nzValue]="0 | number" [nzTitle]="'任务完成学习数'"></nz-statistic>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-statistic [nzValue]="0 | number" [nzTitle]="'新增话题数'"></nz-statistic>
+        </nz-col>
+      </nz-row>
+    </div>
+    <div nz-col nzSpan="12">
+      <h2>最新评价</h2>
+      <nz-list
+        [nzDataSource]="commentList"
+        nzSize="small"
+        [nzLoading]="commentLoading"
+        [nzRenderItem]="commentItem">
+        <ng-template #commentItem let-item>
+          <nz-list-item [nzContent]="item"></nz-list-item>
+        </ng-template>
+      </nz-list>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+<nz-list [nzDataSource]="classlist" [nzRenderItem]="item" [nzGrid]="{ gutter: 24, xs: 24, sm: 24, md: 12, lg: 12, xl: 8 }">
+  <ng-template #item let-item>
+    <nz-list-item [nzContent]="nzContent">
+      <ng-template #nzContent>
+        <app-classlist-classblock [item]="item"></app-classlist-classblock>
+      </ng-template>
+    </nz-list-item>
+  </ng-template>
+</nz-list>

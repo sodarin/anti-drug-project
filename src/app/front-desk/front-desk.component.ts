@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router';
-import {NzMessageService, NzModalService} from 'ng-zorro-antd';
-import {LoginModalComponent} from '../core/modal/login-modal/login-modal.component';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { Router } from '@angular/router';
+import { NzMessageService, NzModalService } from 'ng-zorro-antd';
+import { LoginModalComponent } from '../core/modal/login-modal/login-modal.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-front-desk',
@@ -13,7 +13,7 @@ export class FrontDeskComponent implements OnInit {
 
 
 
-  isLogin: boolean = false;
+  isLogin: boolean = true;
   isCollapsed: boolean = true;
 
 
@@ -33,6 +33,12 @@ export class FrontDeskComponent implements OnInit {
       nzContent: LoginModalComponent,
       nzFooter: null
     })
+  }
+
+  logout() {
+    // 注销相关逻辑
+    console.log('已注销');
+
   }
 
   navigateByUrl(url: string) {

@@ -1,0 +1,38 @@
+<h1>安全认证</h1>
+<nz-divider></nz-divider>
+<nz-alert nzType="warning" nzMessage="安全等级:中" nzDescription="可以进一步设置" nzShowIcon>
+</nz-alert>
+<div class="main-layout">
+  <nz-list [nzDataSource]="list" [nzRenderItem]="item" [nzItemLayout]="'horizontal'">
+    <ng-template #item let-item>
+      <nz-list-item [nzContent]="itemContent" [nzActions]="[action]">
+
+        <ng-template #itemContent>
+          <p *ngIf="item.setup" class="is-setup"><i nz-icon nzType="check-circle" nzTheme="fill"></i>已设置</p>
+          <p *ngIf="!item.setup" class="not-setup"><i nz-icon nzType="exclamation-circle" nzTheme="fill"></i>未设置</p>
+        </ng-template>
+
+        <ng-template #action>
+          <button nz-button nzType="primary" *ngIf="item.setup" (click)="edit(item.type)">修改</button>
+          <button nz-button nzType="primary" *ngIf="!item.setup" (click)="edit(item.type)">设置</button>
+        </ng-template>
+
+        <nz-list-item-meta [nzTitle]=" settingTitle" [nzAvatar]="settingsAvatar" [nzDescription]="settingDesc">
+            </nz-list-item-meta>
+
+            <ng-template #settingTitle>
+              <span slot="title">{{item.title}}</span>
+            </ng-template>
+
+            <ng-template #settingsAvatar>
+              <nz-avatar [nzIcon]="item.avatar.type" [nzSize]="45"></nz-avatar>
+            </ng-template>
+
+            <ng-template #settingDesc>
+              <p>{{item.description}}</p>
+            </ng-template>
+
+      </nz-list-item>
+    </ng-template>
+  </nz-list>
+</div>

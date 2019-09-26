@@ -4,6 +4,7 @@ import {ShareModule} from '../share/share.module';
 import {FrontDeskRoutingModule} from './front-desk-routing.module';
 import {ClientModule} from '../client/client.module';
 import {CoreModule} from '../core/core.module';
+import {ClassManagementModule} from '../class-management/class-management.module';
 
 
 
@@ -13,7 +14,8 @@ import {CoreModule} from '../core/core.module';
     ShareModule,
     FrontDeskRoutingModule,
     ClientModule,
-    CoreModule
+    CoreModule,
+    ClassManagementModule
   ]
 })
 export class FrontDeskModule { }

@@ -1,0 +1,36 @@
+<div class="modal-content">
+  <div class="filter-area">
+    <input class="name-containing-input" nz-input placeholder="请输入用户名" [(ngModel)]="title" />
+    <button (click)="filterCourse()" nz-button nzType="primary" class="search-button"><i nz-icon nzType="search"></i>搜索</button>
+  </div>
+  <nz-divider></nz-divider>
+  <nz-table #courseListTable
+            nzSize="small"
+            [nzData]="courseList"
+            [nzTotal]="total"
+            [nzLoading]="loading"
+            [nzPageSize]="8"
+            [(nzPageIndex)]="pageIndex"
+            (nzPageIndexChange)="searchData()">
+    <thead>
+    <tr>
+      <th
+        nzShowCheckbox
+        [(nzChecked)]="isAllDisplayDataChecked"
+        [nzIndeterminate]="isIndeterminate"
+        (nzCheckedChange)="checkAll($event)"
+      ></th>
+      <th>课程名称</th>
+      <th>教学计划名称</th>
+      <th>教师名称</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of courseListTable.data">
+      <td><img [src]="data?.imgUrl" />{{ data.name }}</td>
+      <td>{{ data.planName }}</td>
+      <td>{{ data.teacherName }}</td>
+    </tr>
+    </tbody>
+  </nz-table>
+</div>

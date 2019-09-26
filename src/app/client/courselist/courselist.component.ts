@@ -14,6 +14,19 @@ enum Order { Hot, New, Rec }
   styleUrls: ['./courselist.component.less'],
 })
 export class CourselistComponent implements OnInit {
+
+  firstlayer = ["全部", "学堂在线", "教师培训", "专题讲座", "使用教程"];
+  _secondlayer = [
+    [],
+    ["全部", "小学年级", "初中年级", "高中年级", "高职年级"],
+    [],
+    [],
+    ["全部", "管理员", "教师", "学员"]
+  ];
+  thirdlayer = ["全部","班级", "题库", "毒品预防教育", "互联网+"];
+
+
+
   courseList = [];
   //Search params
   currentPage: number = 1;

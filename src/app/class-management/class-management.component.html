@@ -1,0 +1,41 @@
+<nz-layout>
+  <nz-header>
+    <div class="header">
+      <img class="header-image" [src]="classroom?.imgUrl">
+      <div class="header-info">
+        <div>{{'虹桥中学（二年级一班）毒品预防教育'}}<nz-tag [nzColor]="'#108ee9'">{{'已发布'}}</nz-tag></div>
+        <button nzSize="small" nz-button nzType="primary">返回班级主页</button>
+      </div>
+    </div>
+  </nz-header>
+  <nz-content>
+    <div class="content">
+      <div class="left-content">
+        <ul nz-menu nzMode="inline">
+          <li nz-menu-item (click)="navigatTo('client/classroom/' + classroomId + '/manage')" [nzSelected]="location?.pathname.endsWith('manage')">管理首页</li>
+          <li nz-menu-group nzTitle="班级设置">
+            <ul>
+              <li nz-menu-item (click)="navigatTo('client/classroom/' + classroomId + '/basicinfo')" [nzSelected]="location?.pathname.endsWith('basicinfo')">基本信息</li>
+              <li nz-menu-item>封面图片</li>
+              <li nz-menu-item (click)="navigatTo('client/classroom/' + classroomId + '/headteacher')" [nzSelected]="location?.pathname.endsWith('headteacher')">班主任设置</li>
+              <li nz-menu-item (click)="navigatTo('client/classroom/' + classroomId + '/teachersetting')" [nzSelected]="location?.pathname.endsWith('teachersetting')">教师设置</li>
+              <li nz-menu-item (click)="navigatTo('client/classroom/' + classroomId + '/tutorsetting')" [nzSelected]="location?.pathname.endsWith('tutorsetting')">助教设置</li>
+            </ul>
+          </li>
+          <li nz-menu-group nzTitle="班级管理">
+            <ul>
+              <li nz-menu-item (click)="navigatTo('client/classroom/' + classroomId + '/coursesetting')" [nzSelected]="location?.pathname.endsWith('coursesetting')">课程管理</li>
+              <li nz-menu-item (click)="navigatTo('client/classroom/' + classroomId + '/studentsetting')" [nzSelected]="location?.pathname.endsWith('studentsetting')">学员管理</li>
+              <li nz-menu-item>试卷批阅</li>
+              <li nz-menu-item>作业批阅</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="right-content">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+
+  </nz-content>
+</nz-layout>
