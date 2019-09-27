@@ -1,7 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import differenceInCalendarDays from 'date-fns/difference_in_calendar_days';
-import setHours from 'date-fns/set_hours';
 @Component({
   selector: "app-security-problem-edit-modal",
   templateUrl: "./security-problem-edit-modal.component.html",
@@ -9,9 +7,9 @@ import setHours from 'date-fns/set_hours';
 })
 export class SecurityProblemEditModalComponent implements OnInit {
 
-  today = new Date();
-  timeDefaultValue = setHours(new Date(), 0);
+  today = new Date().getTime();
   securityEditForm: FormGroup;
+
 
   constructor(private formBuilder: FormBuilder) { }
 
@@ -40,14 +38,8 @@ export class SecurityProblemEditModalComponent implements OnInit {
 
   disabledDate = (current: Date): boolean => {
     // Can not select days before today and today
-    return differenceInCalendarDays(current, this.today) > 0;
+    return current.getTime() > this.today;
   };
 
-  disabledDateTime = (): object => {
-    return {
-      nzDisabledHours: () => this.range(0, 24).splice(4, 20),
-      nzDisabledMinutes: () => this.range(30, 60),
-      nzDisabledSeconds: () => [55, 56]
-    };
-  };
+
 }

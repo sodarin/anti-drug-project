@@ -19,6 +19,7 @@ import {CourselistListviewModalComponent} from './courselist-component/courselis
 import {CourselistClassificationModalComponent} from './courselist-component/courselist-classification-modal/courselist-classification-modal.component';
 import {CourselistSortModalComponent} from './courselist-component/courselist-sort-modal/courselist-sort-modal.component';
 import {CourselistCourseblockModalComponent} from './courselist-component/courselist-courseblock-modal/courselist-courseblock-modal.component';
+import { UserPageComponent } from './user-page/user-page.component';
 import { ClasslistClassblockComponent } from './classlist-component/classlist-classblock/classlist-classblock.component';
 import { ClasslistListviewComponent } from './classlist-component/classlist-listview/classlist-listview.component';
 import { AutocompleteInputComponent } from './class-management-component/autocomplete-input/autocomplete-input.component';
@@ -42,6 +43,7 @@ import { SecurityProblemEditModalComponent } from './modal/security-problem-edit
     CourselistSortModalComponent,
     CourselistClassificationModalComponent,
     CourselistListviewModalComponent,
+    UserPageComponent,
     ClasslistClassblockComponent,
     ClasslistListviewComponent,
     AutocompleteInputComponent,
@@ -50,7 +52,7 @@ import { SecurityProblemEditModalComponent } from './modal/security-problem-edit
     SecurityProblemEditModalComponent],
   imports: [
     ShareModule,
-    QuillModule
+    QuillModule,
   ],
   exports: [
     LoginModalComponent,

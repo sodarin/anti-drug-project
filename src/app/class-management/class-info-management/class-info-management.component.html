@@ -1,1 +1,73 @@
-<p>class-info-management works!</p>
+<div class="setting-page">
+  <form nz-form [formGroup]="classInfoEditForm" (ngSubmit)="submitForm()">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">名称</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="名称栏不能为空">
+        <input nz-input formControlName="name" id="name" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="intro">简介</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <quill-editor formControlName="intro" id="intro"></quill-editor>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="tags">标签</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-select nzMode="multiple"
+                   formControlName="tags"
+                   nzAllowClear
+                   id="tags" >
+          <nz-option *ngFor="let option of tagOptions" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="isShow">班级展示</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-radio-group formControlName="isShow" id="isShow">
+          <label nz-radio [nzValue]="true">开启</label>
+          <label nz-radio [nzValue]="false">关闭</label>
+        </nz-radio-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="expireType">班级有效期</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-radio-group formControlName="expireType" id="expireType">
+          <label nz-radio nzValue="expiration">截止日期</label>
+          <label nz-radio nzValue="usefulLife">有效期天数</label>
+          <label nz-radio nzValue="forever">永久有效</label>
+        </nz-radio-group>
+      </nz-form-control>
+    </nz-form-item>
+
+<!--    <div>-->
+<!--      <input *ngIf="classInfoEditForm.controls.expireType.value === 'usefulLife'" [(ngModel)]="usefulLife" />天-->
+<!--      <nz-date-picker *ngIf="classInfoEditForm.controls.expireType.value === 'expiration'" [(ngModel)]="expirationDate"></nz-date-picker>-->
+<!--    </div>-->
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="classification">分类</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-select formControlName="classification"
+                   id="classification" >
+          <nz-option *ngFor="let option of classificationOptions" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
+
+    <nz-form-item>
+      <nz-form-control [nzXs]="{ span: 24, offset: 0 }" [nzSm]="{ span: 16, offset: 8 }">
+        <button nz-button nzType="primary">提交</button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+
+</div>

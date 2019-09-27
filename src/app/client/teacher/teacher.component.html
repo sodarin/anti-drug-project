@@ -1,0 +1,42 @@
+<nz-layout>
+
+  <nz-header>
+    <h1 class="classlist_title">所有教师</h1>
+    <div class="empty-space"></div>
+  </nz-header>
+
+  <ng-container>
+
+    <div style="text-align: center">
+      <nz-list  [nzDataSource]="this.data" style="margin:30px" [nzRenderItem]="item"
+               [nzGrid]="{ gutter: 24, xs: 24, sm: 12, md: 12, lg: 8, xl: 6 }">
+        <ng-template #item let-item>
+          <nz-list-item [nzContent]="nzContent">
+            <ng-template #nzContent>
+              <nz-card (mouseover)=show1(item) (mouseleave)="show2(item)"
+                       nzHoverable style="width:240px;height:350px;margin: 30px" [nzCover]="coverTemplate">
+                <nz-card-meta [nzTitle]="titleTemplate" [nzDescription]=descripTemplate></nz-card-meta>
+                <button nz-button nzType="primary" style="text-align: center"
+                        *ngIf="!this.item.isshow" (click)="follow(item)">关注</button>
+              </nz-card>
+              <ng-template #coverTemplate>
+                <nz-avatar [nzSize]="100" style="text-align:center;margin:60px auto;" nzIcon="user"></nz-avatar>
+              </ng-template>
+              <ng-template  #titleTemplate>
+                <h3 *ngIf="this.item.isshow">{{item.title}}</h3>
+              </ng-template>
+              <ng-template #descripTemplate>
+                <div *ngIf="this.item.isshow">{{item.title}}</div>
+              </ng-template>
+
+            </ng-template>
+          </nz-list-item>
+        </ng-template>
+        <nz-pagination [nzPageIndex]="1" [nzTotal]="data.length" (nzPageIndexChange)="searchData()" [nzPageSize]="12"></nz-pagination>
+      </nz-list>
+    </div>
+
+  </ng-container>
+
+
+</nz-layout>

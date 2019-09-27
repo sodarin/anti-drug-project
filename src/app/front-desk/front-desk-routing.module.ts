@@ -24,6 +24,9 @@ import { CoverPhotoComponent } from '../course-management/cover-photo/cover-phot
 import { FileComponent } from '../course-management/file/file.component';
 import { QuestionComponent } from '../course-management/question/question.component'
 import { TestPaperComponent } from '../course-management/test-paper/test-paper.component';
+import { TeacherComponent } from '../client/teacher/teacher.component';
+import { UserPageComponent } from '../core/user-page/user-page.component';
+import { CoverSettingComponent } from '../class-management/cover-setting/cover-setting.component';
 
 
 
@@ -34,7 +37,9 @@ const routes: Routes = [
     path: 'client', component: FrontDeskComponent, children: [
       { path: '', component: ClientComponent },
       { path: 'dashboard', component: DashboardComponent },
-      { path: 'courselist', component: CourselistComponent },
+      { path: 'courselist', component: CourselistComponent},
+      { path: 'teacher', component: TeacherComponent},
+      { path: 'userpage', component: UserPageComponent},
       { path: 'classlist', component: ClasslistComponent },
       {
         path: 'classroom/:id', component: ClassManagementComponent, children: [
@@ -44,9 +49,9 @@ const routes: Routes = [
           { path: 'teachersetting', component: TeacherSettingComponent },
           { path: 'tutorsetting', component: TutorSettingComponent },
           { path: 'coursesetting', component: CourseSettingComponent },
-          { path: 'studentsetting', component: StudentSettingComponent }
-        ]
-      },
+          { path: 'studentsetting', component: StudentSettingComponent },
+          { path: 'coversetting', component: CoverSettingComponent }
+        ]},
       {
         path: 'settings', component: PersonalSettingsComponent, children: [
           { path: '', redirectTo: 'information', pathMatch: 'full' },

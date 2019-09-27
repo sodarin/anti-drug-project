@@ -1,0 +1,23 @@
+<div class="setting-page">
+  <div class="page-header">
+    <h2>封面管理</h2>
+  </div>
+  <nz-divider></nz-divider>
+  <div class="page-content">
+    <nz-upload
+      nzType="drag"
+      [nzLimit]="1"
+      nzAction="https://jsonplaceholder.typicode.com/posts/"
+      (nzChange)="handleChange($event)"
+    >
+      <p class="ant-upload-drag-icon">
+        <i nz-icon nzType="picture"></i>
+      </p>
+      <p class="ant-upload-text">可通过点击或拖拽上传图片</p>
+      <p class="ant-upload-hint">
+        请上传jpg, gif, png格式的图片, 建议图片尺寸为 525×350px。
+        建议图片大小不超过2MB。
+      </p>
+    </nz-upload>
+  </div>
+</div>

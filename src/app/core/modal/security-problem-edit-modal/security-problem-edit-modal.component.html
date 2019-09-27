@@ -11,8 +11,7 @@
   <nz-form-item>
     <nz-form-label nzSpan="5">答案</nz-form-label>
     <nz-form-control nzSpan="15" nzErrorTip="生日不能为空">
-      <nz-date-picker formControlName="answer" nzFormat="yyyy-MM-dd HH:mm:ss" [nzDisabledDate]="disabledDate"
-        [nzDisabledTime]="disabledDateTime" [nzShowTime]="{ nzDefaultOpenValue: timeDefaultValue }">
+      <nz-date-picker formControlName="answer" nzFormat="yyyy-MM-dd" [nzDisabledDate]="disabledDate">
       </nz-date-picker>
     </nz-form-control>
   </nz-form-item>

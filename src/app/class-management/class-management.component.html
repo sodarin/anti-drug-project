@@ -16,7 +16,7 @@
           <li nz-menu-group nzTitle="班级设置">
             <ul>
               <li nz-menu-item (click)="navigatTo('client/classroom/' + classroomId + '/basicinfo')" [nzSelected]="location?.pathname.endsWith('basicinfo')">基本信息</li>
-              <li nz-menu-item>封面图片</li>
+              <li nz-menu-item (click)="navigatTo('client/classroom/' + classroomId + '/coversetting')" [nzSelected]="location?.pathname.endsWith('coversetting')">封面图片</li>
               <li nz-menu-item (click)="navigatTo('client/classroom/' + classroomId + '/headteacher')" [nzSelected]="location?.pathname.endsWith('headteacher')">班主任设置</li>
               <li nz-menu-item (click)="navigatTo('client/classroom/' + classroomId + '/teachersetting')" [nzSelected]="location?.pathname.endsWith('teachersetting')">教师设置</li>
               <li nz-menu-item (click)="navigatTo('client/classroom/' + classroomId + '/tutorsetting')" [nzSelected]="location?.pathname.endsWith('tutorsetting')">助教设置</li>
