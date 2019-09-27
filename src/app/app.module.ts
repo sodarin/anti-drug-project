@@ -18,20 +18,20 @@ import { UserInfoEditModalComponent } from './core/modal/user-info-edit-modal/us
 import { QuillEditorComponent, QuillModule } from 'ngx-quill';
 import { CreateUserModalComponent } from './core/modal/create-user-modal/create-user-modal.component';
 import { CreateTagModalComponent } from './core/modal/create-tag-modal/create-tag-modal.component';
-import {CreateTagGroupModalComponent} from './core/modal/create-tag-group-modal/create-tag-group-modal.component';
-import {TagInfoEditComponent} from './core/modal/tag-info-edit-modal/tag-info-edit.component';
-import {TeacherRecommendModalComponent} from './core/modal/teacher-recommend-modal/teacher-recommend-modal.component';
-import {CategoryEditModalComponent} from './core/modal/category-edit-modal/category-edit-modal.component';
-import {TagGroupInfoEditModalComponent} from './core/modal/tag-group-info-edit-modal/tag-group-info-edit-modal.component';
-import {NewsEditModalComponent} from './core/modal/news-edit-modal/news-edit-modal.component';
-import {ProgramaEditModalComponent} from './core/modal/programa-edit-modal/programa-edit-modal.component';
-import {AnnouncementEditModalComponent} from './core/modal/announcement-edit-modal/announcement-edit-modal.component';
-import {CourseService} from './Test/course.service';
-import {AddingCourseModalComponent} from './core/modal/adding-course-modal/adding-course-modal.component';
+import { CreateTagGroupModalComponent } from './core/modal/create-tag-group-modal/create-tag-group-modal.component';
+import { TagInfoEditComponent } from './core/modal/tag-info-edit-modal/tag-info-edit.component';
+import { TeacherRecommendModalComponent } from './core/modal/teacher-recommend-modal/teacher-recommend-modal.component';
+import { CategoryEditModalComponent } from './core/modal/category-edit-modal/category-edit-modal.component';
+import { TagGroupInfoEditModalComponent } from './core/modal/tag-group-info-edit-modal/tag-group-info-edit-modal.component';
+import { NewsEditModalComponent } from './core/modal/news-edit-modal/news-edit-modal.component';
+import { ProgramaEditModalComponent } from './core/modal/programa-edit-modal/programa-edit-modal.component';
+import { AnnouncementEditModalComponent } from './core/modal/announcement-edit-modal/announcement-edit-modal.component';
+import { CourseService } from './Test/course.service';
+import { AddingCourseModalComponent } from './core/modal/adding-course-modal/adding-course-modal.component';
 import { ClientModule } from './client/client.module'
 import { LoginPasswdEditModelComponent } from './core/modal/login-passwd-edit-model/login-passwd-edit-model.component';
 import { SecurityProblemEditModalComponent } from './core/modal/security-problem-edit-modal/security-problem-edit-modal.component';
-
+import { CourseManagementModule } from './course-management/course-management.module'
 
 registerLocaleData(zh);
 @NgModule({
@@ -50,7 +50,8 @@ registerLocaleData(zh);
     FormsModule,
     CoreModule,
     QuillModule.forRoot(),
-    ClientModule
+    ClientModule,
+    CourseManagementModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: zh_CN },

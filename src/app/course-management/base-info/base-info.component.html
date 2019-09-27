@@ -1,0 +1,50 @@
+<div class="base-page">
+  <h1>个人信息</h1>
+  <nz-divider></nz-divider>
+  <div class="content">
+    <form nz-form [nzLayout]="'vertical'" style="width: 1300px">
+      <nz-form-item>
+        <nz-form-label nzSpan="3">标题:</nz-form-label>
+        <nz-form-control nzSpan="21"><input type="text" nz-input></nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzSpan="3">副标题:</nz-form-label>
+        <nz-form-control nzSpan="21"><textarea rows="2" nz-input></textarea></nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzSpan="3">标签:</nz-form-label>
+        <nz-form-control nzSpan="21">
+          <nz-select style="width: 100%" nzMode="multiple" nzPlaceHolder="请选择标签">
+            <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value">
+            </nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzSpan="3">分类:</nz-form-label>
+        <nz-form-control nzSpan="21">
+          <nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="Choose">
+            <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
+            <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
+            <nz-option nzValue="disabled" nzLabel="Disabled" nzDisabled></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzSpan="3">连载状态:</nz-form-label>
+        <nz-form-control nzSpan="21">
+          <nz-radio-group>
+            <label nz-radio nzValue="非连载教程">非连载教程</label>
+            <label nz-radio nzValue="更新中">更新中</label>
+            <label nz-radio nzValue="已完结">已完结</label>
+          </nz-radio-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control>
+          <button nz-button nzType="primary" style="float: right">保存</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,57 @@
+<nz-layout>
+  <nz-header>
+    <div class="header">
+      <img class="header-image" [src]="">
+      <div class="header-info">
+        <div>{{'哈哈'}}<nz-tag [nzColor]="'#87d068'">{{'更新中'}}</nz-tag>
+          <div>教师:{{'admin'}}</div>
+        </div>
+        <button nzSize="small" nz-button nzType="primary">返回课程主页</button>
+      </div>
+    </div>
+  </nz-header>
+  <nz-content>
+    <div class="content">
+      <div class="left-content">
+        <ul nz-menu nzMode="inline" class="sider-menu">
+          <ul>
+            <li nz-menu-item (click)="navigateByUrl('/client/course/base')">基本信息</li>
+            <li nz-menu-item (click)="navigateByUrl('/client/course/detail')">详细信息</li>
+            <li nz-menu-item (click)="navigateByUrl('/client/course/cover')">封面图片</li>
+          </ul>
+          <li nz-menu-divider></li>
+          <ul>
+            <li nz-menu-item (click)="navigateByUrl('/client/course/file')">课程文件</li>
+            <li nz-menu-item (click)="navigateByUrl('/client/course/testpaper')">试卷管理</li>
+            <li nz-menu-item (click)="navigateByUrl('/client/course/question')">题目管理</li>
+          </ul>
+          <li nz-menu-divider></li>
+          <ul>
+            <li nz-menu-item>计划概览</li>
+            <li nz-menu-item>计划任务</li>
+            <li nz-menu-item>计划设置</li>
+            <li nz-menu-item>营销设置</li>
+            <li nz-menu-item>教师设置</li>
+            <li nz-menu-item>学员设置</li>
+          </ul>
+          <li nz-menu-divider></li>
+          <ul>
+            <li nz-menu-item>试卷批阅</li>
+            <li nz-menu-item>作业批阅</li>
+          </ul>
+          <li nz-menu-divider></li>
+          <ul>
+            <li nz-menu-item>订单查询</li>
+          </ul>
+          <li nz-menu-divider></li>
+          <ul>
+            <li nz-menu-item>教学计划管理</li>
+          </ul>
+        </ul>
+      </div>
+      <div class="right-content">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </nz-content>
+</nz-layout>
