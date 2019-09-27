@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PaperMarkingComponent } from './paper-marking.component';
+import { PaperResultDetailComponent } from './paper-result-detail.component';
 
-describe('PaperMarkingComponent', () => {
-  let component: PaperMarkingComponent;
-  let fixture: ComponentFixture<PaperMarkingComponent>;
+describe('PaperResultDetailComponent', () => {
+  let component: PaperResultDetailComponent;
+  let fixture: ComponentFixture<PaperResultDetailComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PaperMarkingComponent ]
+      declarations: [ PaperResultDetailComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PaperMarkingComponent);
+    fixture = TestBed.createComponent(PaperResultDetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -27,6 +27,10 @@ import { TestPaperComponent } from '../course-management/test-paper/test-paper.c
 import { TeacherComponent } from '../client/teacher/teacher.component';
 import { UserPageComponent } from '../core/user-page/user-page.component';
 import { CoverSettingComponent } from '../class-management/cover-setting/cover-setting.component';
+import {TestpaperListingComponent} from '../class-management/testpaper-listing/testpaper-listing.component';
+import {ResultTableComponent} from '../class-management/testpaper-listing/result-table/result-table.component';
+import {PaperResultDetailComponent} from '../class-management/testpaper-listing/paper-result-detail/paper-result-detail.component';
+import {PaperResultAnalysisComponent} from '../class-management/testpaper-listing/paper-result-analysis/paper-result-analysis.component';
 
 
 
@@ -50,8 +54,13 @@ const routes: Routes = [
           { path: 'tutorsetting', component: TutorSettingComponent },
           { path: 'coursesetting', component: CourseSettingComponent },
           { path: 'studentsetting', component: StudentSettingComponent },
-          { path: 'coversetting', component: CoverSettingComponent }
+          { path: 'coversetting', component: CoverSettingComponent },
+          { path: 'testpaper', component: TestpaperListingComponent, children: [
+              { path: ':paperid/result', component: ResultTableComponent },
+            ] }
         ]},
+      { path: 'classroom/:id/testpaper/:paperid/result/:studentid', component: PaperResultDetailComponent },
+      { path: 'classroom/:id/testpaper/:paperid/analysis', component: PaperResultAnalysisComponent},
       {
         path: 'settings', component: PersonalSettingsComponent, children: [
           { path: '', redirectTo: 'information', pathMatch: 'full' },

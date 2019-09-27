@@ -17,11 +17,14 @@ import { StudentInvolveRecordComponent } from './student-setting/student-involve
 import { StudentExitRecordComponent } from './student-setting/student-exit-record/student-exit-record.component';
 import {QuillModule} from 'ngx-quill';
 import { CoverSettingComponent } from './cover-setting/cover-setting.component';
-import { PaperMarkingComponent } from './paper-marking/paper-marking.component';
 import { HomeworkMarkingComponent } from './homework-marking/homework-marking.component';
+import { TestpaperListingComponent } from './testpaper-listing/testpaper-listing.component';
+import { ResultTableComponent } from './testpaper-listing/result-table/result-table.component';
+import { PaperResultDetailComponent } from './testpaper-listing/paper-result-detail/paper-result-detail.component';
+import { PaperResultAnalysisComponent } from './testpaper-listing/paper-result-analysis/paper-result-analysis.component';
 
 @NgModule({
-  declarations: [ClassManagementComponent, ManagementDashboardComponent, ClassInfoManagementComponent, HeadTeacherSettingComponent, TeacherSettingComponent, TutorSettingComponent, CourseSettingComponent, StudentSettingComponent, StudentSettingTabComponent, FormalStudentTableComponent, InformalStudentTableComponent, StudentInvolveRecordComponent, StudentExitRecordComponent, CoverSettingComponent, PaperMarkingComponent, HomeworkMarkingComponent],
+  declarations: [ClassManagementComponent, ManagementDashboardComponent, ClassInfoManagementComponent, HeadTeacherSettingComponent, TeacherSettingComponent, TutorSettingComponent, CourseSettingComponent, StudentSettingComponent, StudentSettingTabComponent, FormalStudentTableComponent, InformalStudentTableComponent, StudentInvolveRecordComponent, StudentExitRecordComponent, CoverSettingComponent, HomeworkMarkingComponent, TestpaperListingComponent, ResultTableComponent, PaperResultDetailComponent, PaperResultAnalysisComponent],
   imports: [
     ShareModule,
     CoreModule,
