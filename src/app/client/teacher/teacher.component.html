@@ -8,7 +8,7 @@
   <ng-container>
 
     <div style="text-align: center">
-      <nz-list  [nzDataSource]="this.data" style="margin:30px" [nzRenderItem]="item"
+      <nz-list  [nzDataSource]="data" style="margin:30px" [nzRenderItem]="item"
                [nzGrid]="{ gutter: 24, xs: 24, sm: 12, md: 12, lg: 8, xl: 6 }">
         <ng-template #item let-item>
           <nz-list-item [nzContent]="nzContent">

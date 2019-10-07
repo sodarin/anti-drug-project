@@ -1,0 +1,85 @@
+<nz-layout>
+    <nz-content class="content1" >
+      <div style="background-color: #ffffff;" class="video-content"></div>
+      <div class="inner-layout">
+        <div class="logo">
+          <img src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"  width="130" height="100"/>
+          <div class="video-info">
+            <div class="titleone" style="font-size:22px;font-weight:600">"禁毒微电影"</div>
+            <div class="statistics">
+              <div class="statistic1">
+                <nz-statistic [nzValue]="1132| number"  [nzPrefix]="prefixTpl1" [nzValueStyle]="{fontSize:'13px '}"></nz-statistic>
+                <ng-template #prefixTpl1><i nz-icon nzType="eye"></i></ng-template>
+              </div>
+              <div class="statistic2">
+                <nz-statistic [nzValue]="938| number"  [nzPrefix]="prefixTpl" [nzValueStyle]="{fontSize:'13px '}"></nz-statistic>
+                <ng-template #prefixTpl><i nz-icon nzType="message"></i></ng-template>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="operation">
+          <div class="setting-icon"><nz-avatar [nzIcon]="'setting'" [nzShape]="'square'" [nzSize]="20" style="cursor: pointer;"></nz-avatar></div>
+          <div class="detail-operation">
+            <nz-statistic class="like" [nzValue]="113| number"  [nzPrefix]="prefixTpl55" [nzValueStyle]="{fontSize:'18px '}"></nz-statistic>
+            <ng-template #prefixTpl55><nz-avatar  [nzIcon]="'like'"  [nzShape]="'circle'" style="cursor: pointer"></nz-avatar></ng-template>
+            <span style="font-size:18px"><nz-avatar [nzIcon]="'share-alt'" [nzShape]="'circle'"  [nzSize]="32" style="cursor: pointer"></nz-avatar>分享</span>
+            <span style="font-size:18px"><nz-avatar [nzIcon]="'save'" [nzShape]="'circle'" [nzSize]="32" style="cursor: pointer"></nz-avatar>收藏</span>
+            <span style="font-size:18px"><nz-avatar [nzIcon]="'mobile'" [nzShape]="'circle'" [nzSize]="32" style="cursor: pointer"></nz-avatar>二维码</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="content2">
+        <div class="left-content">
+          <div style="background-color: #ffffff;" class="video-intro">禁毒微电影《觉醒》</div>
+          <div class="comment-area" style="background-color: #ffffff;">
+            <h4 class="commenttitle">评论</h4>
+            <nz-divider></nz-divider>
+            <nz-comment>
+              <nz-comment-content>
+                <nz-form-item>
+                  <textarea [(ngModel)]="inputValue" nz-input rows="4"></textarea>
+                </nz-form-item>
+                <nz-form-item class="commentbutton">
+                  <button nz-button nzType="primary" [nzLoading]="submitting" [disabled]="!inputValue" (click)="handleSubmit()">
+                    发表评论
+                  </button>
+                </nz-form-item>
+              </nz-comment-content>
+            </nz-comment>
+            <ng-template #commentTemplateRef let-comment="comment">
+              <nz-comment [nzAuthor]="comment.author" [nzDatetime]="comment.datetime">
+                <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="comment.avatar"></nz-avatar>
+                <nz-comment-content>
+                  <p>{{ comment.content }}</p>
+                </nz-comment-content>
+                <nz-comment-action>回复</nz-comment-action>
+                <ng-container *ngIf="comment.children && comment.children.length">
+                  <ng-template ngFor let-child [ngForOf]="comment.children">
+                    <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{ comment: child }">
+                    </ng-template>
+                  </ng-template>
+                </ng-container>
+              </nz-comment>
+            </ng-template>
+            <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{ comment: data }"> </ng-template>
+          </div>
+        </div>
+        <div class="right-content">
+          <div class="teacher-card" style="background-color: #ffffff;">
+            <h4 class="sidertitle">课程教师</h4>
+            <nz-divider></nz-divider>
+            <div class="Avatar" style="cursor: pointer"><nz-avatar  [nzShape]="'circle'" [nzSize]="100" nzIcon="user" nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar></div>
+            <div style="font-weight:400;margin-bottom: 10px;" >唐浩</div>
+            <div style="font-weight:300;margin-bottom: 10px;">副教授</div>
+            <div style="font-weight:bold;margin-bottom: 10px; text-align: left">青少年毒品预防教育!</div>
+          </div>
+        </div>
+      </div>
+
+    </nz-content>
+
+
+</nz-layout>

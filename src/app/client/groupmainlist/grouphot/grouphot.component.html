@@ -1,0 +1,85 @@
+<div>
+  <h2>新晋小组</h2>
+  <nz-divider></nz-divider>
+  <nz-list
+    class="demo-loadmore-list"
+    [nzDataSource]="list"
+    [nzItemLayout]="'horizontal'"
+    [nzRenderItem]="item"
+    [nzPagination]="pagination"
+    [nzLoading]="loading"
+  >
+    <tr>
+      <th
+        [(nzChecked)]="isAllDisplayDataChecked"
+        (nzCheckedChange)="checkAll($event)"
+      ></th>
+    </tr>
+
+    <ng-template #item let-item>
+      <nz-list-item
+      >
+        <nz-skeleton [nzAvatar]="false" [nzActive]="true" [nzTitle]="false"   [nzLoading]="item.loading">
+          <nz-list-item-meta
+            [nzTitle]="nzTitle"
+            [nzAvatar]="nzAvater"
+            [nzDescription]="nzDescription"
+
+          >
+            <ng-template #nzTitle>
+              <a >{{ item.name.last }} </a>
+            </ng-template>
+            <ng-template #nzAvater>
+              <nz-avatar [nzShape]="'square'" [nzSize]="64" nzText="回复">  </nz-avatar>
+            </ng-template>
+            <ng-template #nzDescription>
+            <span ><nz-avatar nzSize="small" nzIcon="user"
+                              nz-popover
+                              [nzPopoverTitle]="tem"
+                              [nzPopoverContent]="content"
+            >
+              <ng-template #tem>
+                    <nz-card style="width:300px;"  [nzActions]="[actionSetting, actionEdit,actionShow]">
+        <nz-card-meta
+          [nzTitle]="nzTitle"
+          [nzDescription]="nzDescription"
+          [nzAvatar]="avatarTemplate"
+        ></nz-card-meta>
+      </nz-card>
+      <ng-template #nzTitle>
+        <span>{{name}}</span>
+      </ng-template>
+      <ng-template #nzDescription>
+        <a>{{name}}</a>
+       </ng-template>
+      <ng-template #avatarTemplate>
+        <nz-avatar nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
+      </ng-template>
+      <ng-template #actionSetting>
+        <a>{{study}}</a>
+        <p>在学</p>
+      </ng-template>
+      <ng-template #actionEdit>
+        <a>{{focuson}}</a>
+        <p>关注</p>
+      </ng-template>
+                <ng-template #actionShow>
+        <a>{{fans}}</a>
+        <p>粉丝</p>
+      </ng-template>
+                  </ng-template>
+              <ng-template #content>
+                <a style="color: gray">暂没有签名</a>
+              </ng-template>
+            </nz-avatar><b >{{memberleader}} 发起了话题 · 10天前 · {{name}}</b></span>
+            </ng-template>
+          </nz-list-item-meta>
+        </nz-skeleton>
+      </nz-list-item>
+    </ng-template>
+    <ng-template #pagination>
+      <nz-pagination [nzPageIndex]="1" [nzTotal]="50" (nzPageIndexChange)="loadData($event)"></nz-pagination>
+    </ng-template>
+  </nz-list>
+
+</div>

@@ -22,7 +22,7 @@ export class ClassManagementComponent implements OnInit {
 
   ngOnInit() {
     this.location = location;
-    this.classroomId = this.routeInfo.snapshot.params['id']
+    this.classroomId = this.routeInfo.snapshot.params['id'];
   }
 
   navigatTo(url: string) {

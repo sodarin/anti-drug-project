@@ -26,10 +26,10 @@
         </ul>
       </li>
       <li nz-menu-item>教师培训</li>
-      <li nz-menu-item (click)="navigateByUrl('/client/userpage')">开放资源</li>
+      <li nz-menu-item (click)="navigateByUrl('/client/openresource')">开放资源</li>
       <li nz-menu-item (click)="navigateByUrl('/client/teacher')">师资介绍</li>
-      <li nz-menu-item>心理驿站</li>
-      <li nz-submenu nzTitle="新闻资讯" nzIcon="caret-down">
+      <li nz-menu-item (click)="navigateByUrl('/client/groupmainlist')">小组列表</li>
+      <li nz-submenu nzTitle="新闻资讯" nzIcon="caret-down" (click)="navigateByUrl('/client/news')">
         <ul>
           <li nz-menu-item>禁毒法规</li>
           <li nz-menu-item>禁毒新闻</li>
@@ -62,10 +62,10 @@
           </ul>
         </li>
         <li nz-menu-item>教师培训</li>
-        <li nz-menu-item (click)="navigateByUrl('/client/userpage')">开放资源</li>
+        <li nz-menu-item (click)="navigateByUrl('/client/openresource')">开放资源</li>
         <li nz-menu-item (click)="navigateByUrl('/client/teacher')">师资介绍</li>
-        <li nz-menu-item>心理驿站</li>
-        <li nz-submenu nzTitle="新闻资讯" nzIcon="caret-down">
+        <li nz-menu-item (click)="navigateByUrl('/client/groupmainlist')">小组列表</li>
+        <li nz-submenu nzTitle="新闻资讯" nzIcon="caret-down" (click)="navigateByUrl('/client/newsall')">
           <ul>
             <li nz-menu-item>禁毒法规</li>
             <li nz-menu-item>禁毒新闻</li>
@@ -94,12 +94,12 @@
           <nz-dropdown-menu #menu="nzDropdownMenu">
             <ul nz-menu>
               <li nz-menu-item (click)="navigateByUrl('/admin')">管理后台</li>
-              <li nz-menu-item (click)="navigateByUrl('我的教学路由')">我的教学</li>
-              <li nz-menu-item (click)="navigateByUrl('我的学习路由')">我的学习</li>
+              <li nz-menu-item (click)="navigateByUrl('/client/mine/teachingcourse')">我的教学</li>
+              <li nz-menu-item (click)="navigateByUrl('/client/mine/mycourse')">我的学习</li>
             </ul>
           </nz-dropdown-menu>
         </span>&nbsp;
-        <span><i nz-icon [nzType]="'bell'" [nzTheme]="'fill'" class="bell-style"></i></span>&nbsp;
+        <span><i [ngStyle]="" nz-icon [nzType]="'bell'" [nzTheme]="'fill'" class="bell-style"></i></span>&nbsp;
         <span>
           <nz-avatar nz-popover nzIcon="user" nzSrc="../../assets/img/userface-small.jpg" nzSize="large"
             [nzPopoverContent]="usercenter" nzPopoverPlacement="bottomRight"></nz-avatar>

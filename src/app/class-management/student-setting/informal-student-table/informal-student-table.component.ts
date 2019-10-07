@@ -22,7 +22,7 @@ export class InformalStudentTableComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.classroomId = this.routerInfo.snapshot.params['id']
+    this.classroomId = location.pathname.split('/')[3];
   }
 
   filterStudent() {

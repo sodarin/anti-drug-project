@@ -1,0 +1,126 @@
+<div class="table-content">
+    <div nz-row>
+      <div nz-col nzSpan="18">
+        <div class="filter-area">
+          <input class="name-containing-input" nz-input placeholder="请输入标题关键字" [(ngModel)]="name" />
+          <button (click)="filterStudent()" nz-button nzType="primary" class="search-button"><i nz-icon
+              nzType="search"></i>搜索</button>
+        </div>
+      </div>
+      <div nz-col nzSpan="6">
+        <button style="margin-right: 2%;" nz-button nzType="primary" (click)="showmysharefirm()">我的分享</button>
+        <button style="margin-right: 2%;" nz-button nzType="primary" (click)="showusersharefirm()">分享资料</button>
+      </div>
+    </div>
+    <nz-divider></nz-divider>
+    <app-td-classification></app-td-classification>
+    <div nz-row>
+      <div nz-col nzSpan="6">
+        <button style="margin-right: 2%;" nz-button nzType="primary" (click)="showuploadfirm()">上传资料</button>
+        <button style="margin-right: 2%;" nz-button nzType="primary"
+          (click)="openBatchProcessing()">{{buttonval}}</button>
+      </div>
+      <div *ngIf="isbatcheditable==true" nz-col nzSpan="12">
+        <button style="margin-right: 2%;" nz-button nzType="primary" (click)="showaddTagsfirm()">添加标签</button>
+        <button style="margin-right: 2%;" nz-button nzType="primary" (click)="showShareConfirm()">共享</button>
+        <button style="margin-right: 2%;" nz-button nzType="danger" (click)="showDeleteConfirm()">删除</button>
+      </div>
+    </div>
+    <nz-divider style="margin: 10px;margin-left: 0;"></nz-divider>
+    <nz-list [nzDataSource]="dataList" [nzRenderItem]="item"
+      [nzGrid]="{ gutter: 24, xs: 24, sm: 12, md: 12, lg: 8, xl: 6 }">
+      <ng-template #item let-item>
+        <nz-list-item [nzContent]="datablock">
+          <ng-template #datablock>
+            <app-td-card [data]="item" [isbatcheditable]="isbatcheditable" (batchselected)="addbatchItem($event)">
+            </app-td-card>
+          </ng-template>
+        </nz-list-item>
+      </ng-template>
+    </nz-list>
+    <nz-divider style="margin: 10px;margin-left: 0;"></nz-divider>
+    <div style="display: flex;flex-direction: row;justify-content:center;">
+      <nz-pagination [(nzPageIndex)]="currentpage" [nzTotal]="totalpage" (nzPageIndexChange)="onPageChange($event)">
+      </nz-pagination>
+    </div>
+  </div>
+  
+  <nz-modal [(nzVisible)]="uploadVisible" nzTitle="上传资料" (nzOnCancel)="handleCancel_upload()" (nzOnOk)="handleOk_upload()"
+    nzOkText='确定' nzCancelText='取消' nzMaskClosable="false">
+    <div class="editarea">
+      <quill-editor [styles]="{height: '250px'}" placeholder="请添加资料内容" [(ngModel)]="None"></quill-editor>
+    </div>
+  </nz-modal>
+  
+  
+  <nz-modal [(nzVisible)]="addtagVisible" nzTitle="批量添加标签" (nzOnCancel)="handleCancel_addTags()"
+    (nzOnOk)="handleOk_addTags()" nzOkText='保存' nzCancelText='取消' nzMaskClosable="false">
+    <div style="margin-top:10px;">
+      <b>标签:</b>
+      <nz-select [nzMaxTagCount]="3" [nzMaxTagPlaceholder]="tagPlaceHolder" style="width: 100%" nzMode="multiple"
+        nzPlaceHolder="请添加标签" [(ngModel)]="None">
+        <nz-option *ngFor="let option of tags" [nzLabel]="option" [nzValue]="option">
+        </nz-option>
+      </nz-select>
+      <ng-template #tagPlaceHolder let-selectedList> and {{ selectedList.length }} more selected </ng-template>
+    </div>
+  </nz-modal>
+  
+  
+  
+  <nz-modal [(nzVisible)]="userShareVisible" nzTitle="分享资料" (nzOnCancel)="handleCancel_usershare()"
+    (nzOnOk)="handleOk_usershare()" nzOkText='保存' nzCancelText='取消' nzMaskClosable="false">
+    <div style="margin-top:10px;">
+      <b>分享资料给:</b>
+      <nz-select [nzMaxTagCount]="3" [nzMaxTagPlaceholder]="tagPlaceHolder" style="width: 100%" nzMode="multiple"
+        nzPlaceHolder="请添加标签" [(ngModel)]="None">
+        <nz-option *ngFor="let option of users" [nzLabel]="option" [nzValue]="option">
+        </nz-option>
+      </nz-select>
+      <ng-template #tagPlaceHolder let-selectedList> and {{ selectedList.length }} more selected </ng-template>
+    </div>
+  </nz-modal>
+  
+  <nz-modal [(nzVisible)]="myShareVisible" nzTitle="我的分享历史" (nzOnCancel)="handleCancel_myshare()"
+    (nzOnOk)="handleOk_myshare()" nzOkText='确定' nzCancelText='取消' nzMaskClosable="false">
+    <div style="margin-top:10px;">
+      <nz-tabset>
+        <nz-tab nzTitle="分享用户">
+          <nz-table #basicTable [nzData]="listOfData">
+            <thead>
+              <tr>
+                <th>昵称</th>
+                <th>时间</th>
+                <th>可执行操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of myshareuser">
+                <td>将资料分享给{{ data.name }}</td>
+                <td>{{ data.date }}</td>
+                <td>
+                  <a (click)="cancelShare()">取消分享</a>
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </nz-tab>
+        <nz-tab nzTitle="历史纪录">
+          <nz-table #basicTable [nzData]="listOfData">
+            <thead>
+              <tr>
+                <th>操作</th>
+                <th>时间</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of sharehistory">
+                <td>{{ data.operation }}</td>
+                <td>{{ data.date }}</td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </nz-tab>
+      </nz-tabset>
+    </div>
+  </nz-modal>

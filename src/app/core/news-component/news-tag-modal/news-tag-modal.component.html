@@ -1,0 +1,40 @@
+<nz-layout>
+  <nz-divider ></nz-divider>
+  <div class="left-content">
+  <div class="title">
+    <nz-header>
+      <div class="classlist-container">
+        <nz-page-header  nzTitle="标签：" nzSubtitle="news.tag"> </nz-page-header>
+        <nz-divider ></nz-divider>
+      </div>
+    </nz-header>
+  </div>
+  </div>
+  <nz-divider ></nz-divider>
+  <nz-content>
+    <div class="left-content">
+
+      <nz-divider ></nz-divider>
+      <div class="listview">
+        <app-news-listview-modal></app-news-listview-modal>
+      </div>
+    </div>
+
+    <div class="right-content">
+      <nz-divider ></nz-divider>
+      <nz-list [nzDataSource]="data2" nzBordered [nzHeader]="'热门标签'" [nzRenderItem]="item1" [nzGrid]="{ gutter: 24, xs: 4, sm: 4, md: 4, lg: 4, xl: 4 }">
+        <ng-template style="margin-top: 16px;" #item1 let-item1 >
+          <nz-list-item (click)="navigateByUrl('/core/newstag')">
+            <div>
+              <nz-tag [nzColor]="'blue'">{{ item1 }}</nz-tag>
+            </div>
+          </nz-list-item>
+        </ng-template>
+      </nz-list>
+    </div>
+  </nz-content>
+
+
+</nz-layout>
+
+

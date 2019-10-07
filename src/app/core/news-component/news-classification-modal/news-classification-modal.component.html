@@ -1,0 +1,43 @@
+<nz-list style="background: #ffffff; padding: 2% 2%;" [nzDataSource]="data" nzBordered [nzHeader]="'热门焦点'" [nzRenderItem]="defaultItem">
+  <ng-template #defaultItem let-item>
+    <nz-list-item (click)="navigateByUrl('/client/newsdetails')">
+      <span class="ant-typography"><mark>[ITEM]</mark></span>
+      {{ item }}
+    </nz-list-item>
+  </ng-template>
+</nz-list>
+
+<nz-divider ></nz-divider>
+<nz-list style="background: #ffffff; padding: 2% 2%;" [nzDataSource]="data2" nzBordered [nzHeader]="'热门标签'" [nzRenderItem]="item1" [nzGrid]="{ gutter: 24, xs: 4, sm: 4, md: 4, lg: 4, xl: 4 }">
+  <ng-template style="margin-top: 16px;" #item1 let-item1 >
+    <nz-list-item (click)="navigateByUrl('/client/newstag')">
+      <div>
+        <nz-tag [nzColor]="'blue'">{{ item1 }}</nz-tag>
+      </div>
+    </nz-list-item>
+  </ng-template>
+</nz-list>
+
+
+<nz-divider ></nz-divider>
+<nz-list style="background: #ffffff; padding: 2% 2%;" [nzDataSource]="data1" [nzRenderItem]="item"  nzBordered [nzHeader]="'热门评论'" >
+    <ng-template #item let-item >
+      <nz-comment [nzAuthor]="item.author" [nzDatetime]="item.datetime">
+        <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="item.avatar"></nz-avatar>
+        <nz-comment-content>
+          <p>{{ item.content }}</p>
+        </nz-comment-content>
+        <nz-comment-action>Reply to</nz-comment-action>
+      </nz-comment>
+    </ng-template>
+</nz-list>
+
+<nz-divider ></nz-divider>
+<nz-list style="background: #ffffff; padding: 2% 2%;" [nzDataSource]="data" nzBordered [nzHeader]="'编辑推荐'" [nzRenderItem]="defaultItem">
+  <ng-template #defaultItem let-item>
+    <nz-list-item (click)="navigateByUrl('/client/newsdetails')">
+      <span class="ant-typography"><mark>[ITEM]</mark></span>
+      {{ item }}
+    </nz-list-item>
+  </ng-template>
+</nz-list>

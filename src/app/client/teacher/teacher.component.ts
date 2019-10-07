@@ -22,6 +22,10 @@ export class TeacherComponent implements OnInit {
     {
       title: 'Title 4',
       isshow:true
+    },
+    {
+      title: 'Title 4',
+      isshow:true
     }]
 
   constructor() {

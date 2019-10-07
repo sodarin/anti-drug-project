@@ -32,6 +32,8 @@ import { ClientModule } from './client/client.module'
 import { LoginPasswdEditModelComponent } from './core/modal/login-passwd-edit-model/login-passwd-edit-model.component';
 import { SecurityProblemEditModalComponent } from './core/modal/security-problem-edit-modal/security-problem-edit-modal.component';
 import { CourseManagementModule } from './course-management/course-management.module'
+import {PaperScoreStatisticsComponent} from './core/modal/paper-score-statistics/paper-score-statistics.component';
+import {TeachingPlanAddingModalComponent} from './core/modal/teaching-plan-adding-modal/teaching-plan-adding-modal.component';
 
 registerLocaleData(zh);
 @NgModule({
@@ -75,7 +77,9 @@ registerLocaleData(zh);
     NewsEditModalComponent,
     ProgramaEditModalComponent,
     AnnouncementEditModalComponent,
-    AddingCourseModalComponent
+    AddingCourseModalComponent,
+    PaperScoreStatisticsComponent,
+    TeachingPlanAddingModalComponent
   ],
   bootstrap: [AppComponent]
 })

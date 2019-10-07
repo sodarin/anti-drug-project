@@ -20,6 +20,7 @@ export class CourseSettingComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.classroomId = location.pathname.split('/')[3];
     this.courseList.push({
       title: '初中第6课 培养好习惯，牢记拒绝方法我要变得很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长(教学计划：默认教学计划)',
       descr: '看清陷阱，远离诱惑',

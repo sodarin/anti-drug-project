@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ManagementDashboardComponent implements OnInit {
 
+  classroomId: string;
+
   isSetIntro: boolean = true;
   isSetImage: boolean = true;
 
@@ -17,6 +19,7 @@ export class ManagementDashboardComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.classroomId = location.pathname.split('/')[3];
   }
 
 }

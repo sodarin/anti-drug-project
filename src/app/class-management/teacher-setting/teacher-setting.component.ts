@@ -9,12 +9,14 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 export class TeacherSettingComponent implements OnInit {
 
   teacherList = [];
+  classroomId: string;
 
   loading: boolean = false;
 
   constructor() { }
 
   ngOnInit() {
+    this.classroomId = location.pathname.split('/')[3];
     this.teacherList = [
       {'name': 'admin'},
       {'name': 'ddd'},

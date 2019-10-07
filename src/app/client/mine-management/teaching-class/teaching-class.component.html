@@ -1,0 +1,40 @@
+<div class="setting-page">
+  <div class="page-header">
+    <h2>所教班级</h2>
+  </div>
+  <nz-divider></nz-divider>
+  <div class="page-content">
+    <div class="drag-list" cdkDropList (cdkDropListDropped)="drop($event)">
+      <div *ngFor="let item of courseList" class="drag-box" cdkDrag>
+        <div class="list-info">
+          <img class="img-info" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+          <div class="text-info">
+            <div class="info-header">
+              <div class="course-title" nz-tooltip [nzTitle]="item.title">{{item.title}}</div>
+              <nz-tag [nzColor]="'#87d068'">更新中</nz-tag>
+              <span class="empty-space"></span>
+              <i  style="cursor: pointer; font-size: 16px; line-height: 24px;"  nz-icon nzType="setting" ></i>管理班级
+
+            </div>
+            <div class="course-describe"><span>{{item.descr}}</span></div>
+            <div class="empty-space"></div>
+            <div class="info-footer">
+              <div class="course-data">
+                <div>
+                  <span><b>今日新增</b></span>
+                  <nz-divider nzType="vertical"></nz-divider>
+                  <span>学员：{{item.stuNum}}</span>
+                  <nz-divider nzType="vertical"></nz-divider>
+                  <span>话题：{{item.topicNum}}</span>
+                  <nz-divider nzType="vertical"></nz-divider>
+                  <span>任务完成：学习{{item.taskNum}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <nz-divider></nz-divider>
+  </div>
+</div>

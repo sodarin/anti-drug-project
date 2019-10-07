@@ -1,0 +1,39 @@
+<nz-layout>
+  <nz-content>
+    <div class="content">
+      <div class="left-content">
+        <ul nz-menu nzMode="inline">
+          <li nz-menu-group nzTitle="我的教学">
+            <ul>
+              <li nz-menu-item (click)="navigatTo('client/mine/teachingcourse')" [nzSelected]="location?.pathname.endsWith('teachingcourse')">在教课程</li>
+<!--              <li nz-menu-item (click)="navigatTo('client/mine/teachingclass')" [nzSelected]="location?.pathname.endsWith('teachingclass')">教学课表</li>-->
+              <li nz-menu-item (click)="navigatTo('client/mine/teachingclass')" [nzSelected]="location?.pathname.endsWith('teachingclass')">在教班级</li>
+              <li nz-menu-item (click)="navigatTo('client/mine/studentQA')" [nzSelected]="location?.pathname.endsWith('studentQA')">学员问题</li>
+              <li nz-menu-item (click)="navigatTo('client/mine/studenttopic')" [nzSelected]="location?.pathname.endsWith('studenttopic')">学员话题</li>
+              <li nz-menu-item (click)="navigatTo('client/mine/papermarking')" [nzSelected]="location?.pathname.endsWith('papermarking')">试卷批阅</li>
+<!--              <li nz-menu-item (click)="navigatTo('client/mine/homeworkmarking')" [nzSelected]="location?.pathname.endsWith('homeworkmarking')">作业批阅</li>-->
+              <li nz-menu-item (click)="navigatTo('client/mine/teachingdatabase')" [nzSelected]="location?.pathname.endsWith('teachingdatabase')">教学资料库</li>
+            </ul>
+          </li>
+          <li nz-menu-group nzTitle="我的学习">
+            <ul>l
+              <li nz-menu-item (click)="navigatTo('client/mine/mycourse')" [nzSelected]="location?.pathname.endsWith('mycourse')">我的课程</li>
+              <li nz-menu-item (click)="navigatTo('client/mine/myclass')" [nzSelected]="location?.pathname.endsWith('myclass')">我的班级</li>
+<!--              <li nz-menu-item (click)="navigatTo('client/mine/mylive')" [nzSelected]="location?.pathname.endsWith('mylive')">我的直播</li>-->
+              <li nz-menu-item (click)="navigatTo('client/mine/myQA')" [nzSelected]="location?.pathname.endsWith('myQA')">我的问答</li>
+              <li nz-menu-item (click)="navigatTo('client/mine/mytopic')" [nzSelected]="location?.pathname.endsWith('mytopic')">我的话题</li>
+              <li nz-menu-item (click)="navigatTo('client/mine/mynote')" [nzSelected]="location?.pathname.endsWith('mynote')">我的笔记</li>
+<!--              <li nz-menu-item (click)="navigatTo('client/mine/myhomework')" [nzSelected]="location?.pathname.endsWith('myhomework')">我的作业</li>-->
+              <li nz-menu-item (click)="navigatTo('client/mine/myexam')" [nzSelected]="location?.pathname.endsWith('myexam')">我的考试</li>
+              <li nz-menu-item (click)="navigatTo('client/mine/mygroup')" [nzSelected]="location?.pathname.endsWith('mygroup')">我的小组</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="right-content">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+
+  </nz-content>
+</nz-layout>

@@ -1,0 +1,11 @@
+<nz-card style="width: 300px;margin-top: 16px" >
+  <nz-card-meta
+    [nzAvatar]="avatarTemplate"
+    [nzDescription]="data.type"
+    [nzTitle]="data.title"
+    [nzDescription]="data.content"
+  ></nz-card-meta>
+</nz-card>
+<ng-template #avatarTemplate>
+  <nz-avatar [nzText]="data.update_date"></nz-avatar>
+</ng-template>

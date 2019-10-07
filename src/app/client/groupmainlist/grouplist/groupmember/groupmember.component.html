@@ -1,0 +1,30 @@
+<div class="top">
+  <div class="icons-list">
+    <h2>组长</h2>
+    <nz-avatar [nzSize]="54" nzIcon="user"></nz-avatar>
+  </div>
+  <nz-divider></nz-divider>
+  <div>
+    <div class="header">
+      <h2>副组长</h2>
+      <button nz-button nzType="primary" (click)="cancel()">撤销副组长</button>
+    </div>
+    <ul *ngFor="let img of imgs">
+      <nz-avatar [nzSize]="64">{{img.data}}</nz-avatar>
+    </ul>
+  </div>
+  <nz-divider></nz-divider>
+  <div>
+    <div class="header">
+      <h2>组员</h2>
+      <div>
+        <button nz-button nzType="primary" (click)="delete_member()">踢出成员</button>
+        <nz-divider nzType="vertical"></nz-divider>
+        <button nz-button nzType="primary" (click)="setting()">设置副组长</button>
+      </div>
+    </div>
+    <ul *ngFor="let img of imgs">
+      <nz-avatar [nzSize]="64">{{img.data}}</nz-avatar>
+    </ul>
+  </div>
+</div>

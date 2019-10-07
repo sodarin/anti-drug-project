@@ -32,7 +32,7 @@ export class FormalStudentTableComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.classroomId = this.routerInfo.snapshot.params['id'];
+    this.classroomId = location.pathname.split('/')[3];
     this.studentList.push({
       imgUrl: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
       name: '董卓然',
@@ -141,6 +141,10 @@ export class FormalStudentTableComponent implements OnInit {
       nzCancelText: '取消',
       nzOnOk: () => console.log(this.expireTime)
     })
+  }
+
+  checkData(data: any) {
+    console.log(data)
   }
 
 }

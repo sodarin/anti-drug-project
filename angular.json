@@ -35,7 +35,9 @@
               "src/styles.less",
               "src/theme.less"
             ],
-            "scripts": [],
+            "scripts": [
+              "node_modules/echarts/dist/echarts.min.js"
+            ],
             "es5BrowserSupport": true
           },
           "configurations": {

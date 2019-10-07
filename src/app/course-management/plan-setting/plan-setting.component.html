@@ -1,0 +1,88 @@
+<div class="setting-page">
+  <div class="content">
+    <form nz-form [formGroup]="planInfoEditForm" [nzLayout]="'vertical'" style="width: 1300px">
+      <nz-form-item>
+        <nz-form-label nzSpan="4" nzRequired nzFor="name">计划名称</nz-form-label>
+        <nz-form-control nzSpan="20" nzErrorTip="名称栏不能为空">
+          <input nz-input formControlName="name" id="name" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzSpan="4">学习模式</nz-form-label>
+        <nz-form-control nzSpan="20">
+          <span>自由式学习</span>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzSpan="4" nzFor="rule">完成规则</nz-form-label>
+        <nz-form-control nzSpan="20">
+          <nz-radio-group formControlName="rule" id="rule">
+            <label nz-radio [nzValue]="'1'">由任务完成条件决定</label>
+            <label nz-radio [nzValue]="'2'">无限制</label>
+          </nz-radio-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzSpan="4" nzFor="intro">计划简介</nz-form-label>
+        <nz-form-control nzSpan="20">
+          <quill-editor formControlName="intro" id="intro"></quill-editor>
+        </nz-form-control>
+      </nz-form-item>
+
+
+      <nz-form-item>
+        <nz-form-label nzSpan="4">课程目标</nz-form-label>
+        <nz-form-control nzSpan="20">
+          <div class="drag-list" cdkDropList (cdkDropListDropped)="drop($event)" *ngIf="targetList">
+            <div *ngFor="let item of targetList" class="drag-box" cdkDrag>
+              <div>
+                <span title="可以改变顺序"><i nz-icon nzType="drag" nzTheme="outline"></i>
+                  {{item.target}}</span>
+              </div>
+              <span class="perform"><i nz-icon nzType="close"></i></span>
+            </div>
+          </div>
+          <br>
+          <!-- <nz-input-group [nzAddOnAfter]="addTargetButton">
+            <input type="text" nz-input>
+          </nz-input-group>
+
+          <ng-template #addTargetButton>
+            <button nz-button nzType="primary">添加</button>
+          </ng-template> -->
+          <nz-input-group nzSearch [nzAddOnAfter]="addTargetButton">
+            <input formControlName="target" type="text" nz-input placeholder="输入课程目标" />
+          </nz-input-group>
+          <ng-template #addTargetButton>
+            <button nz-button nzType="primary" nzSearch (click)="addCourseTarget()">添加</button>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzSpan="4">适应人群</nz-form-label>
+        <nz-form-control nzSpan="20">
+<!--          <nz-input-group nzSearch [nzAddOnAfter]="addCrowdButton">-->
+<!--            <input type="text" nz-input placeholder="输入适应人群">-->
+<!--          </nz-input-group>-->
+<!--          <ng-template #addCrowdButton>-->
+<!--            <button nz-button nzType="primary" nzSearch>添加</button>-->
+<!--          </ng-template>-->
+          <nz-select nzMode="tags" style="width: 100%;" nzPlaceHolder="Tag Mode" formControlName="tags">
+<!--            <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value"> </nz-option>-->
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control nzSpan="20" nzOffset="4">
+          <button nz-button nzType="primary">提交</button>
+        </nz-form-control>
+      </nz-form-item>
+
+    </form>
+  </div>
+
+</div>

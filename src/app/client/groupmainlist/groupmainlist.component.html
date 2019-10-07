@@ -1,0 +1,159 @@
+<div class="container">
+  <div class="all">
+    <div class="left" style="background: #ffffff;">
+      <div class="first">
+        <h2>热门小组</h2>
+        <app-groupnow></app-groupnow>
+      </div>
+      <nz-divider></nz-divider>
+      <div class="two">
+        <app-grouphot></app-grouphot>
+      </div>
+    </div>
+    <div class="right" style="background: #ffffff;">
+      <button nz-button nzType="primary" (click)="oclick()"><i nz-icon nzType="plus-circle" nzTheme="outline"></i>创建小组 </button>
+      <nz-divider></nz-divider>
+      <input class="name-containing-input" nz-input placeholder="小组搜索" [(ngModel)]="search" />
+      <button (click)="filterTopicTable()" nz-button nzType="primary" class="search-button"><i nz-icon nzType="search"></i>搜索</button>
+
+      <nz-divider></nz-divider>
+
+      <nz-card>
+        <nz-card-meta
+          [nzTitle]="nzTitle"
+          [nzDescription]="nzDescription"
+          [nzAvatar]="avatarTemplate"
+        ></nz-card-meta>
+      </nz-card>
+      <ng-template #nzTitle>
+        <a>admin</a>
+      </ng-template>
+      <ng-template #nzDescription>
+        <button class="buttony" nz-button [nzSize]="'small'"  nzType="primary" (click)="tclick()">我的小组</button>
+      </ng-template>
+      <ng-template #avatarTemplate>
+        <nz-avatar nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                   nz-popover
+                   [nzPopoverTitle]="tem"
+                   [nzPopoverContent]="content">
+          <ng-template #tem>
+            <nz-card [nzActions]="[actionSetting, actionEdit,actionShow]">
+              <nz-card-meta
+                [nzTitle]="nzTitle"
+                [nzDescription]="nzDescription"
+                [nzAvatar]="avatarTemplate"
+              ></nz-card-meta>
+            </nz-card>
+            <ng-template #nzTitle>
+              <span>admin</span>
+            </ng-template>
+            <ng-template #nzDescription>
+              <a>admin</a>
+            </ng-template>
+            <ng-template #avatarTemplate>
+              <nz-avatar nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
+            </ng-template>
+            <ng-template #actionSetting>
+              <a>{{study}}</a>
+              <p>在学</p>
+            </ng-template>
+            <ng-template #actionEdit>
+              <a>{{focuson}}</a>
+              <p>关注</p>
+            </ng-template>
+            <ng-template #actionShow>
+              <a>{{fans}}</a>
+              <p>粉丝</p>
+            </ng-template>
+          </ng-template>
+          <ng-template #content>
+            <a style="color: gray">暂没有签名</a>
+          </ng-template>
+        </nz-avatar>
+      </ng-template>
+
+      <nz-divider></nz-divider>
+      <h3>我的小组</h3>
+      <div>
+      <nz-list
+        class="demo-loadmore-list"
+        [nzDataSource]="list"
+        [nzItemLayout]="'horizontal'"
+        [nzRenderItem]="item"
+      >
+
+        <ng-template #item let-item>
+          <nz-list-item
+          >
+            <nz-skeleton [nzAvatar]="false" [nzActive]="true" [nzTitle]="false"   [nzLoading]="item.loading">
+              <nz-list-item-meta
+                [nzTitle]="nzTitle"
+                [nzAvatar]="nzAvater"
+                [nzDescription]="nzDescription"
+
+              >
+                <ng-template #nzTitle>
+                  <a >{{ item.name.last }} </a>
+                </ng-template>
+                <ng-template #nzAvater>
+                  <nz-avatar [nzShape]="'square'" [nzSize]="64" nzSrc="topic.img">  </nz-avatar>
+                </ng-template>
+                <ng-template #nzDescription>
+                    <span >
+                      <b> <i nz-icon nzType="team" ></i>6</b>
+                     <b> <i nz-icon nzType="message" ></i>16</b>
+                    </span>
+                </ng-template>
+              </nz-list-item-meta>
+            </nz-skeleton>
+          </nz-list-item>
+        </ng-template>
+      </nz-list>
+
+      </div>
+      <nz-divider></nz-divider>
+      <h3>新晋小组</h3>
+      <nz-list
+        class="demo-loadmore-list"
+        [nzDataSource]="list"
+        [nzItemLayout]="'horizontal'"
+        [nzRenderItem]="item"
+      >
+
+        <ng-template #item let-item>
+          <nz-list-item
+          >
+            <nz-skeleton [nzAvatar]="false" [nzActive]="true" [nzTitle]="false"   [nzLoading]="item.loading">
+              <nz-list-item-meta
+                [nzTitle]="nzTitle"
+                [nzAvatar]="nzAvater"
+                [nzDescription]="nzDescription"
+
+              >
+                <ng-template #nzTitle>
+                  <a >{{item.name.last }} </a>
+                </ng-template>
+                <ng-template #nzAvater>
+                  <nz-avatar [nzShape]="'square'" [nzSize]="64" nzText="头像">  </nz-avatar>
+                </ng-template>
+                <ng-template #nzDescription>
+                    <span >
+                      <b> <i nz-icon nzType="team" ></i>{{team}}</b>
+                     <b> <i nz-icon nzType="message" ></i>{{message}}</b>
+                    </span>
+                </ng-template>
+              </nz-list-item-meta>
+            </nz-skeleton>
+          </nz-list-item>
+        </ng-template>
+      </nz-list>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+

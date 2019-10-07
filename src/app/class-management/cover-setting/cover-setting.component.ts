@@ -8,11 +8,14 @@ import {NzMessageService} from 'ng-zorro-antd';
 })
 export class CoverSettingComponent implements OnInit {
 
+  classroomId: string;
+
   constructor(
     private msg: NzMessageService
   ) { }
 
   ngOnInit() {
+    this.classroomId = location.pathname.split('/')[3];
   }
 
   handleChange({ file, fileList }: { [key: string]: any }): void {

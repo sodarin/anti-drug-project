@@ -1,0 +1,26 @@
+<div class="setting-page">
+  <nz-divider></nz-divider>
+  <div class="page-content">
+    <div *ngFor="let item of courseList"  cdkDrag>
+    <div nz-row nzType="flex" nzJustify="space-around" nzAlign="middle">
+      <div nz-col nzSpan="6">
+        <img class="img-info" [src]="item.avatar" /><!--课程图片-->
+      </div>
+      <div nz-col nzSpan="12">
+        <div class="info-header" (chick)="viewClass()">
+          <div class="course-title" nz-tooltip [nzTitle]="item.title">{{item.title}} <nz-tag [nzColor]="'#87d068'">更新中</nz-tag></div><!--课程标题-->
+
+        </div>
+        <div class="course-describe">
+              <span>学习进度</span>
+              <nz-progress [nzPercent]="item.num" [nzStrokeWidth]="5"></nz-progress>
+        </div>
+      </div>
+        <div nz-col nzSpan="6">
+          <button style="margin-right: 2%;" nz-button nzType="primary" (chick)="continueLearning()">继续学习</button>
+        </div>
+      <nz-divider></nz-divider>
+</div>
+    </div>
+  </div>
+</div>

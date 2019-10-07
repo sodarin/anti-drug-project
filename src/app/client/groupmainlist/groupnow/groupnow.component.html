@@ -1,0 +1,39 @@
+<div>
+  <nz-divider></nz-divider>
+  <nz-list
+    class="demo-loadmore-list"
+    [nzDataSource]="list"
+    [nzItemLayout]="'horizontal'"
+    [nzRenderItem]="item"
+  >
+
+
+    <ng-template #item let-item>
+      <nz-list-item
+      >
+        <nz-skeleton [nzAvatar]="false" [nzActive]="true" [nzTitle]="false"   [nzLoading]="item.loading">
+          <nz-list-item-meta
+            [nzTitle]="nzTitle"
+            [nzAvatar]="nzAvater"
+            [nzDescription]="nzDescription"
+
+          >
+            <ng-template #nzTitle>
+              <a (click)="navigateByUrl('/client/groupmainlist/grouplist')" >{{name}} </a>
+            </ng-template>
+            <ng-template #nzAvater>
+              <nz-avatar [nzShape]="'square'" [nzSize]="64" nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png">  </nz-avatar>
+            </ng-template>
+            <ng-template #nzDescription>
+                    <span >
+                      <b> <i nz-icon nzType="team" ></i>{{team}}</b>
+                     <b> <i nz-icon nzType="message" ></i>{{message}}</b>
+                    </span>
+            </ng-template>
+          </nz-list-item-meta>
+        </nz-skeleton>
+      </nz-list-item>
+    </ng-template>
+  </nz-list>
+
+</div>
