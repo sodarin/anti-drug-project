@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NzEmptyService } from 'ng-zorro-antd';
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-question',
@@ -18,9 +20,10 @@ export class QuestionComponent implements OnInit {
   selectVisible: boolean = false;
 
 
-  constructor() { }
+  constructor(private nzEmptyService: NzEmptyService, private router: Router) { }
 
   ngOnInit() {
+    this.nzEmptyService.resetDefault();
   }
 
   courseChange(value: string) {
@@ -29,6 +32,10 @@ export class QuestionComponent implements OnInit {
     } else {
       this.selectVisible = false;
     }
+  }
+
+  navigateByUrl(url: string) {
+    this.router.navigateByUrl(url);
   }
 
 }

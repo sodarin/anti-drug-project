@@ -1,0 +1,79 @@
+<div>
+  <nz-breadcrumb>
+    <nz-breadcrumb-item>
+      <a (click)="navigateByUrl('/client/course/question')">题目管理</a>
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item>
+      添加题目
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item>
+      判断题
+    </nz-breadcrumb-item>
+  </nz-breadcrumb>
+  <div class="content">
+    <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="lblLength" [nzNoColon]="colonVisible">从属</nz-form-label>
+        <nz-form-control [nzSpan]="conLength" nzExtra="可以针对本课程、某个教学计划或者某个学习任务出题">
+          <nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="Choose">
+            <nz-option nzValue="按课程" nzLabel="按课程"></nz-option>
+            <nz-option nzValue="默认教学计划" nzLabel="默认教学计划"></nz-option>
+          </nz-select>
+          <nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="Choose" *ngIf="selectVisible">
+            <nz-option nzValue="请选择" nzLabel="请选择"></nz-option>
+            <nz-option nzValue="期中测试" nzLabel="期中测试"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="lblLength" [nzNoColon]="colonVisible">难度</nz-form-label>
+        <nz-form-control [nzSpan]="conLength">
+          <nz-radio-group>
+            <label nz-radio nzValue="随机生成">简单</label>
+            <label nz-radio nzValue="按难易程度">一般</label>
+            <label nz-radio nzValue="按难易程度">困难</label>
+          </nz-radio-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="lblLength" [nzNoColon]="colonVisible" nzRequired nzfor="stem">题干</nz-form-label>
+        <nz-form-control [nzSpan]="conLength" nzErrorTip="请输入题干">
+          <quill-editor formControlName="stem" id="stem"></quill-editor>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="lblLength" [nzNoColon]="colonVisible" nzRequired nzRequired nzfor="answer">答案
+        </nz-form-label>
+        <nz-form-control [nzSpan]="conLength" nzErrorTip="请选择正确答案">
+          <nz-radio-group formControlName="answer" id="answer">
+            <label nz-radio nzValue="正确">正确</label>
+            <label nz-radio nzValue="错误">错误</label>
+          </nz-radio-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzOffset="3" [nzNoColon]="colonVisible"><a (click)="isCollapse=!isCollapse">显示/隐藏 高级选项 ...</a>
+        </nz-form-label>
+      </nz-form-item>
+      <nz-form-item *ngIf="isCollapse">
+        <nz-form-label [nzSpan]="lblLength" [nzNoColon]="colonVisible">解析</nz-form-label>
+        <nz-form-control [nzSpan]="conLength">
+          <quill-editor></quill-editor>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item *ngIf="isCollapse">
+        <nz-form-label [nzSpan]="lblLength" [nzNoColon]="colonVisible">分值</nz-form-label>
+        <nz-form-control [nzSpan]="conLength">
+          <input type="text" nz-input style="width: 120px;" value="2">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control nzOffset="3" [nzSpan]="conLength">
+          <button nz-button nzType="primary" class="spacing">保存并继续添加</button>
+          <button nz-button nzType="primary">保存</button>
+          <button nz-button nzType="link">返回</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+</div>

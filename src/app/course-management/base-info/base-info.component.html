@@ -2,10 +2,12 @@
   <h1>个人信息</h1>
   <nz-divider></nz-divider>
   <div class="content">
-    <form nz-form [nzLayout]="'vertical'" style="width: 1300px">
+    <form nz-form [nzLayout]="'vertical'" style="width: 1300px" [formGroup]="validateForm" (ngSubmit)="submitForm()">
       <nz-form-item>
-        <nz-form-label nzSpan="3">标题:</nz-form-label>
-        <nz-form-control nzSpan="21"><input type="text" nz-input></nz-form-control>
+        <nz-form-label nzSpan="3" nzRequired nzfor="title">标题:</nz-form-label>
+        <nz-form-control nzSpan="21" nzErrorTip="请输入标题">
+          <input type="text" nz-input formControlName="title" id="title">
+        </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label nzSpan="3">副标题:</nz-form-label>

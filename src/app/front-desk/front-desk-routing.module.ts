@@ -27,11 +27,19 @@ import { TestPaperComponent } from '../course-management/test-paper/test-paper.c
 import { TeacherComponent } from '../client/teacher/teacher.component';
 import { UserPageComponent } from '../core/user-page/user-page.component';
 import { CoverSettingComponent } from '../class-management/cover-setting/cover-setting.component';
-import {TestpaperListingComponent} from '../class-management/testpaper-listing/testpaper-listing.component';
-import {ResultTableComponent} from '../class-management/testpaper-listing/result-table/result-table.component';
-import {PaperResultDetailComponent} from '../class-management/testpaper-listing/paper-result-detail/paper-result-detail.component';
-import {PaperResultAnalysisComponent} from '../class-management/testpaper-listing/paper-result-analysis/paper-result-analysis.component';
-
+import { TestpaperListingComponent } from '../class-management/testpaper-listing/testpaper-listing.component';
+import { ResultTableComponent } from '../class-management/testpaper-listing/result-table/result-table.component';
+import { PaperResultDetailComponent } from '../class-management/testpaper-listing/paper-result-detail/paper-result-detail.component';
+import { PaperResultAnalysisComponent } from '../class-management/testpaper-listing/paper-result-analysis/paper-result-analysis.component';
+import { TestPaperCreateComponent } from '../course-management/test-paper/test-paper-create/test-paper-create.component';
+import { QuestionCreateComponent } from '../course-management/question/question-create/question-create.component';
+import { SingleChoiceComponent } from '../course-management/question/question-create/single-choice/single-choice.component';
+import { MultipleChoiceComponent } from '../course-management/question/question-create/multiple-choice/multiple-choice.component';
+import { EssayComponent } from '../course-management/question/question-create/essay/essay.component';
+import { IndefiniteChoiceComponent } from '../course-management/question/question-create/indefinite-choice/indefinite-choice.component';
+import { JudgementComponent } from '../course-management/question/question-create/judgement/judgement.component';
+import { CompletionComponent } from '../course-management/question/question-create/completion/completion.component';
+import { MaterialComponent } from '../course-management/question/question-create/material/material.component'
 
 
 
@@ -41,9 +49,9 @@ const routes: Routes = [
     path: 'client', component: FrontDeskComponent, children: [
       { path: '', component: ClientComponent },
       { path: 'dashboard', component: DashboardComponent },
-      { path: 'courselist', component: CourselistComponent},
-      { path: 'teacher', component: TeacherComponent},
-      { path: 'userpage', component: UserPageComponent},
+      { path: 'courselist', component: CourselistComponent },
+      { path: 'teacher', component: TeacherComponent },
+      { path: 'userpage', component: UserPageComponent },
       { path: 'classlist', component: ClasslistComponent },
       {
         path: 'classroom/:id', component: ClassManagementComponent, children: [
@@ -55,12 +63,15 @@ const routes: Routes = [
           { path: 'coursesetting', component: CourseSettingComponent },
           { path: 'studentsetting', component: StudentSettingComponent },
           { path: 'coversetting', component: CoverSettingComponent },
-          { path: 'testpaper', component: TestpaperListingComponent, children: [
+          {
+            path: 'testpaper', component: TestpaperListingComponent, children: [
               { path: ':paperid/result', component: ResultTableComponent },
-            ] }
-        ]},
+            ]
+          }
+        ]
+      },
       { path: 'classroom/:id/testpaper/:paperid/result/:studentid', component: PaperResultDetailComponent },
-      { path: 'classroom/:id/testpaper/:paperid/analysis', component: PaperResultAnalysisComponent},
+      { path: 'classroom/:id/testpaper/:paperid/analysis', component: PaperResultAnalysisComponent },
       {
         path: 'settings', component: PersonalSettingsComponent, children: [
           { path: '', redirectTo: 'information', pathMatch: 'full' },
@@ -77,7 +88,21 @@ const routes: Routes = [
           { path: 'cover', component: CoverPhotoComponent },
           { path: 'file', component: FileComponent },
           { path: 'testpaper', component: TestPaperComponent },
-          { path: 'question', component: QuestionComponent }]
+          { path: 'testpapercreate', component: TestPaperCreateComponent },
+          { path: 'question', component: QuestionComponent },
+          {
+            path: 'question_create', component: QuestionCreateComponent, children: [
+              { path: '', redirectTo: 'single_choice', pathMatch: 'full' },
+              { path: 'single_choice', component: SingleChoiceComponent },
+              { path: 'multiple_choice', component: MultipleChoiceComponent },
+              { path: 'essay', component: EssayComponent },
+              { path: 'indefinite_choice', component: IndefiniteChoiceComponent },
+              { path: 'judgement', component: JudgementComponent },
+              { path: 'completion', component: CompletionComponent },
+              { path: 'material', component: MaterialComponent }
+            ]
+          }
+        ]
       }
     ]
   },

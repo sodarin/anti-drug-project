@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { NzEmptyService } from 'ng-zorro-antd';
+import { UploadFile } from 'ng-zorro-antd/upload';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-file',
@@ -7,19 +10,32 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FileComponent implements OnInit {
 
-  listOfFiles: any[] = []
+  listOfFiles: any[] = [];//已上传的文件
+  listOfTmps: any[] = [];//待上传的临时文件
+
+  uploading = false;
+  fileList: UploadFile[] = [];
 
   isAllDisplayDataChecked = false;
   isOperating = false;
   isIndeterminate = false;
   listOfDisplayData: any[] = [];
   listOfAllData: any[] = [];
+
   mapOfCheckedId: { [key: string]: boolean } = {};
   numberOfChecked = 0;
 
-  constructor() { }
+  isVisible: boolean = false;
+
+  constructor(private nzEmptyService: NzEmptyService) { }
+
+  beforeUpload = (file: UploadFile): boolean => {
+    this.fileList = this.fileList.concat(file);
+    return false;
+  }
 
   ngOnInit() {
+    this.nzEmptyService.resetDefault();
   }
 
   currentPageDataChange($event: any[]): void {
