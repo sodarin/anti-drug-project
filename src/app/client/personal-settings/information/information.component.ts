@@ -33,7 +33,7 @@ export class InformationComponent implements OnInit {
   constructor(private personInfoEditService: PersonInfoEditService, private notification: NzNotificationService) { }
 
   editPersonalInfo() {
-    this.personInfoEditService.editPersonalInfo(this.user).subscribe(result => {
+    this.personInfoEditService.updateUserDetail(this.user).subscribe(result => {
       this.notification.create(
         'success',
         '添加成功',
@@ -43,7 +43,7 @@ export class InformationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.personInfoEditService.getAllInfo(1).subscribe(result => {
+    this.personInfoEditService.getPersonDetail(1).subscribe(result => {
       let data = result.data;
       this.user.id = data.id;
       this.user.trueName = data.trueName;

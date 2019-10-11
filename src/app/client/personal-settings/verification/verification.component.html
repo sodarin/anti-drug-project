@@ -8,8 +8,16 @@
       <nz-form-item>
         <nz-form-label nzRequired><span>真实姓名</span></nz-form-label>
         <div>
-          <nz-form-control nzErrorTip="请输入真实姓名">
+          <nz-form-control [nzErrorTip]="nameErrorTpl">
             <input type="text" nz-input formControlName="trueName">
+            <ng-template #nameErrorTpl let-control>
+              <ng-container *ngIf="control.hasError('required')">
+                请输入真实姓名
+              </ng-container>
+              <ng-container *ngIf="control.hasError('pattern')">
+                请输入汉字姓名
+              </ng-container>
+            </ng-template>
           </nz-form-control>
         </div>
       </nz-form-item>
@@ -19,8 +27,16 @@
       <nz-form-item>
         <nz-form-label nzRequired><span>身份证号</span></nz-form-label>
         <div>
-          <nz-form-control nzErrorTip="请输入身份证号">
+          <nz-form-control [nzErrorTip]="errorTpl">
             <input type="text" nz-input formControlName="id">
+            <ng-template #errorTpl let-control>
+              <ng-container *ngIf="control.hasError('required')">
+                请输入身份证号
+              </ng-container>
+              <ng-container *ngIf="control.hasError('pattern')">
+                请输入正确的身份证号
+              </ng-container>
+            </ng-template>
           </nz-form-control>
         </div>
       </nz-form-item>

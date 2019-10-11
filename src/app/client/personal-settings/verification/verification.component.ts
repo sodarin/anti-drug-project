@@ -14,8 +14,8 @@ export class VerificationComponent implements OnInit {
 
   ngOnInit() {
     this.validateForm = this.fb.group({
-      trueName: [null, [Validators.required]],
-      id: [null, [Validators.required]],
+      trueName: [null, [Validators.required, Validators.pattern(/^[\u4E00-\u9FA5]{1,5}$/)]],
+      id: [null, [Validators.required, Validators.pattern(/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/)]],
       cardFrontUrl: [null, [Validators.required]],
       cardBackUrl: [null, [Validators.required]],
     });

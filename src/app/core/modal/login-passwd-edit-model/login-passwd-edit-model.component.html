@@ -2,36 +2,29 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="4">当前密码</nz-form-label>
     <nz-form-control nzErrorTip="请输入当前密码" [nzSpan]="18">
-      <input
-        type="password"
-        nz-input
-        formControlName="currentPasswd"
-        placeholder="请输入当前密码"
-      />
+      <input type="password" nz-input formControlName="currentPasswd" placeholder="请输入当前密码" />
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
     <nz-form-label [nzSpan]="4">新密码</nz-form-label>
-    <nz-form-control nzErrorTip="请输入新密码" [nzSpan]="18">
-      <input
-        type="password"
-        nz-input
-        formControlName="newPasswd"
-        placeholder="请输入新密码"
-        (ngModelChange)="updateConfirmValidator()"
-      />
+    <nz-form-control [nzErrorTip]="errorTpl" [nzSpan]="18">
+      <input type="password" nz-input formControlName="newPasswd" placeholder="请输入新密码"
+        (ngModelChange)="updateConfirmValidator()" />
+      <ng-template #errorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          请输入新密码
+        </ng-container>
+        <ng-container *ngIf="control.getError('minlength')">
+          最少需要输入 5 个字符
+        </ng-container>
+      </ng-template>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
     <nz-form-label [nzSpan]="4">确认密码</nz-form-label>
-    <nz-form-control [nzErrorTip]="errorTpl" [nzSpan]="18">
-      <input
-        type="password"
-        nz-input
-        formControlName="newPasswdAgain"
-        placeholder="请再次输入新密码"
-      />
-      <ng-template #errorTpl let-control>
+    <nz-form-control [nzErrorTip]="errorTplAgain" [nzSpan]="18">
+      <input type="password" nz-input formControlName="newPasswdAgain" placeholder="请再次输入新密码" />
+      <ng-template #errorTplAgain let-control>
         <ng-container *ngIf="control.hasError('required')">
           请输入确认密码
         </ng-container>

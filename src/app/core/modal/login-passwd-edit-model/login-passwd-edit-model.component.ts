@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import {FormBuilder,FormControl,FormGroup,Validators} from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 @Component({
   selector: "app-login-passwd-edit-model",
   templateUrl: "./login-passwd-edit-model.component.html",
@@ -13,7 +13,7 @@ export class LoginPasswdEditModelComponent implements OnInit {
   ngOnInit() {
     this.passwdEditForm = this.formBuilder.group({
       currentPasswd: [null, [Validators.required]],
-      newPasswd: [null, [Validators.required]],
+      newPasswd: [null, [Validators.minLength(5), Validators.required]],
       newPasswdAgain: [null, [Validators.required, this.confirmmationValidator]]
     });
   }
