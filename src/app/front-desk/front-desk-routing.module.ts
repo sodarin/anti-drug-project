@@ -40,6 +40,8 @@ import { IndefiniteChoiceComponent } from '../course-management/question/questio
 import { JudgementComponent } from '../course-management/question/question-create/judgement/judgement.component';
 import { CompletionComponent } from '../course-management/question/question-create/completion/completion.component';
 import { MaterialComponent } from '../course-management/question/question-create/material/material.component'
+import { PlanOverviewComponent } from '../course-management/plan-overview/plan-overview.component';
+import { PlanTasksComponent } from '../course-management/plan-tasks/plan-tasks.component';
 
 
 
@@ -101,7 +103,9 @@ const routes: Routes = [
               { path: 'completion', component: CompletionComponent },
               { path: 'material', component: MaterialComponent }
             ]
-          }
+          },
+          { path: 'overview', component: PlanOverviewComponent },
+          { path: 'tasks', component: PlanTasksComponent }
         ]
       }
     ]

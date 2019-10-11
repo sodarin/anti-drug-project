@@ -2,14 +2,14 @@
 <nz-divider></nz-divider>
 <nz-alert nzType="warning" nzMessage="提示" nzDescription="为保护您的帐号安全、获得更好的服务，请尽快完成实名认证。" nzShowIcon nzCloseable>
 </nz-alert>
-<form nz-form [nzLayout]="'inline'">
+<form nz-form [nzLayout]="'inline'" [formGroup]="validateForm" (ngSubmit)="submitForm()">
   <div nz-row>
     <div nz-col [nzSpan]="12">
       <nz-form-item>
         <nz-form-label nzRequired><span>真实姓名</span></nz-form-label>
         <div>
-          <nz-form-control>
-            <input type="text" nz-input>
+          <nz-form-control nzErrorTip="请输入真实姓名">
+            <input type="text" nz-input formControlName="trueName">
           </nz-form-control>
         </div>
       </nz-form-item>
@@ -19,8 +19,8 @@
       <nz-form-item>
         <nz-form-label nzRequired><span>身份证号</span></nz-form-label>
         <div>
-          <nz-form-control>
-            <input type="text" nz-input>
+          <nz-form-control nzErrorTip="请输入身份证号">
+            <input type="text" nz-input formControlName="id">
           </nz-form-control>
         </div>
       </nz-form-item>
@@ -29,7 +29,7 @@
   <div nz-row class="card-layout">
     <div nz-col [nzSpan]="12">
       <nz-form-item>
-        <nz-form-control>
+        <nz-form-control nzErrorTip="请上传身份证正面照">
           <nz-upload class="avatar-uploader" nzAction="身份证修改的api" nzName="avatar" nzListType="picture-card"
             [nzShowUploadList]="false">
             <div class="card-upload">
@@ -39,6 +39,7 @@
               </ng-container>
               <img *ngIf="cardFrontUrl" [src]="cardFrontUrl" class="avatar" />
             </div>
+            <input type="hidden" formControlName="cardFrontUrl">
           </nz-upload>
         </nz-form-control>
         <p>请上传jpg, gif, png格式的图片, 建议图片大小不超过2MB</p>
@@ -46,7 +47,7 @@
     </div>
     <div nz-col [nzSpan]="12">
       <nz-form-item>
-        <nz-form-control>
+        <nz-form-control nzErrorTip="请上传身份证背面照">
           <nz-upload class="avatar-uploader" nzAction="身份证修改的api" nzName="avatar" nzListType="picture-card"
             [nzShowUploadList]="false">
             <div class="card-upload">
@@ -56,6 +57,7 @@
               </ng-container>
               <img *ngIf="cardFrontUrl" [src]="cardFrontUrl" class="avatar" />
             </div>
+            <input type="hidden" formControlName="cardBackUrl">
           </nz-upload>
         </nz-form-control>
         <p>请上传jpg, gif, png格式的图片, 建议图片大小不超过2MB</p>

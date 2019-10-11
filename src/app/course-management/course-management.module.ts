@@ -17,10 +17,12 @@ import { IndefiniteChoiceComponent } from './question/question-create/indefinite
 import { JudgementComponent } from './question/question-create/judgement/judgement.component';
 import { CompletionComponent } from './question/question-create/completion/completion.component';
 import { MaterialComponent } from './question/question-create/material/material.component';
-import { QuestionCreateComponent } from './question/question-create/question-create.component'
+import { QuestionCreateComponent } from './question/question-create/question-create.component';
+import { PlanOverviewComponent } from './plan-overview/plan-overview.component';
+import { PlanTasksComponent } from './plan-tasks/plan-tasks.component'
 
 @NgModule({
-  declarations: [CourseManagementComponent, BaseInfoComponent, DetailInfoComponent, CoverPhotoComponent, FileComponent, TestPaperComponent, QuestionComponent, TestPaperCreateComponent, SingleChoiceComponent, MultipleChoiceComponent, EssayComponent, IndefiniteChoiceComponent, JudgementComponent, CompletionComponent, MaterialComponent, QuestionCreateComponent],
+  declarations: [CourseManagementComponent, BaseInfoComponent, DetailInfoComponent, CoverPhotoComponent, FileComponent, TestPaperComponent, QuestionComponent, TestPaperCreateComponent, SingleChoiceComponent, MultipleChoiceComponent, EssayComponent, IndefiniteChoiceComponent, JudgementComponent, CompletionComponent, MaterialComponent, QuestionCreateComponent, PlanOverviewComponent, PlanTasksComponent],
   imports: [
     ShareModule,
     RouterModule,
