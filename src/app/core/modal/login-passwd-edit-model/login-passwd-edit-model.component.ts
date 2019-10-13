@@ -17,9 +17,9 @@ export class LoginPasswdEditModelComponent implements OnInit {
 
   ngOnInit() {
     this.passwdEditForm = this.formBuilder.group({
-      currentPasswd: [null, [Validators.required]],
-      newPasswd: [null, [Validators.minLength(5), Validators.required]],
-      newPasswdAgain: [null, [Validators.required, this.confirmmationValidator]]
+      oldPassword: [null, [Validators.required]],
+      newPassword: [null, [Validators.minLength(5), Validators.required]],
+      newPasswordAgain: [null, [Validators.required, this.confirmmationValidator]]
     });
   }
 
@@ -47,7 +47,7 @@ export class LoginPasswdEditModelComponent implements OnInit {
       }
     }
     if (this.check) {
-      this._loginPasswdEditService.updateUserPassword({ userId: 1, passord: "" }).subscribe(result => {
+      this._loginPasswdEditService.updateUserPassword({ userId: 1, oldPassword: "", newPassWord: "" }).subscribe(result => {
         this._nzNotificationService.create('success', '修改成功!', `${result}`)
       },
         error => {

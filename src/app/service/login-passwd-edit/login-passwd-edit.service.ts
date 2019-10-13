@@ -14,4 +14,5 @@ export class LoginPasswdEditService {
     let api = "user/updateUserPassword"
     return this._http.put(api, user);
   }
+
 }
