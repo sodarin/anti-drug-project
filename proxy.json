@@ -5,8 +5,8 @@
     "logLevel": "debug",
     "changeOrigin": true
   },
-  "/tag": {
-    "target": "http://172.28.150.67:8001",
+  "/course": {
+    "target": "http://202.199.13.224:9002",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
