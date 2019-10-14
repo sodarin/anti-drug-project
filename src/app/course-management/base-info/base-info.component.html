@@ -15,9 +15,9 @@
       </nz-form-item>
       <nz-form-item>
         <nz-form-label nzSpan="3">标签:</nz-form-label>
-        <nz-form-control nzSpan="21">
+        <nz-form-control nzSpan="21" nzExtra="用于按标签搜索课程、相关课程的提取等，由网校管理员后台统一管理">
           <nz-select style="width: 100%" nzMode="multiple" nzPlaceHolder="请选择标签">
-            <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value">
+            <nz-option *ngFor="let option of listOfTag" [nzLabel]="option.label" [nzValue]="option.value">
             </nz-option>
           </nz-select>
         </nz-form-control>
@@ -25,17 +25,19 @@
       <nz-form-item>
         <nz-form-label nzSpan="3">分类:</nz-form-label>
         <nz-form-control nzSpan="21">
-          <nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="Choose">
-            <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
-            <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
-            <nz-option nzValue="disabled" nzLabel="Disabled" nzDisabled></nz-option>
+          <nz-select style="width: 40%;" nzAllowClear nzPlaceHolder="分类" formControlName="category">
+            <nz-option-group *ngFor="let class of listOfCategories" [nzLabel]="class.name">
+              <nz-option [nzLabel]="class.name" [nzValue]="class.id"></nz-option>
+              <nz-option *ngFor="let subclass of class.children" [nzLabel]="subclass.name" [nzValue]="subclass.id">
+              </nz-option>
+            </nz-option-group>
           </nz-select>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label nzSpan="3">连载状态:</nz-form-label>
         <nz-form-control nzSpan="21">
-          <nz-radio-group>
+          <nz-radio-group formControlName="status">
             <label nz-radio nzValue="非连载教程">非连载教程</label>
             <label nz-radio nzValue="更新中">更新中</label>
             <label nz-radio nzValue="已完结">已完结</label>

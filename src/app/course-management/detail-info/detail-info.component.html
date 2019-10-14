@@ -1,7 +1,8 @@
 <div class="detail-page">
   <h1>详细信息</h1>
   <nz-divider></nz-divider>
-
+  <nz-alert nzType="success" nzMessage="保存成功" nzShowIcon *ngIf="promptVisable">
+  </nz-alert>
   <div class="content">
     <form nz-form [nzLayout]="'vertical'" style="width: 1300px">
       <nz-form-item>
@@ -44,7 +45,8 @@
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <button nz-button nzType="primary" style="float: right">保存</button>
+        <button nz-button nzType="primary" style="float: right" (click)="saveInfo()"
+          [nzLoading]="isLoading">保存</button>
       </nz-form-item>
     </form>
   </div>

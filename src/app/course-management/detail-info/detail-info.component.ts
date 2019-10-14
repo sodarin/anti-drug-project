@@ -9,7 +9,8 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 export class DetailInfoComponent implements OnInit {
 
   targetList: any[] = [{ id: 1, target: "均分90" }, { id: 2, target: "达到及格线" }]
-
+  promptVisable: boolean = false;
+  isLoading: boolean = false;
 
   constructor() { }
 
@@ -18,6 +19,14 @@ export class DetailInfoComponent implements OnInit {
 
   drop(event: CdkDragDrop<any[]>) {
     moveItemInArray(this.targetList, event.previousIndex, event.currentIndex);
+  }
+
+  saveInfo() {
+    this.isLoading = true;
+    setTimeout(() => {
+      this.promptVisable = true;
+      this.isLoading = false;
+    }, 1500);
   }
 
 }

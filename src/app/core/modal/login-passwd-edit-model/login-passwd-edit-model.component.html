@@ -1,4 +1,4 @@
-<form nz-form [formGroup]="passwdEditForm" (ngSubmit)="doEdit()">
+<form nz-form [formGroup]="passwdEditForm" >
   <nz-form-item>
     <nz-form-label [nzSpan]="4">当前密码</nz-form-label>
     <nz-form-control nzErrorTip="请输入当前密码" [nzSpan]="18">
@@ -36,7 +36,7 @@
   </nz-form-item>
   <nz-form-item>
     <nz-form-control>
-      <button nz-button class="edit-form-button" [nzType]="'primary'">
+      <button nz-button class="edit-form-button" [nzType]="'primary'" (click)="doEdit()">
         修改
       </button>
     </nz-form-control>

@@ -9,7 +9,6 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 })
 export class LoginPasswdEditModelComponent implements OnInit {
   passwdEditForm: FormGroup;
-  check: boolean = true;
 
   constructor(private formBuilder: FormBuilder,
     private _loginPasswdEditService: LoginPasswdEditService,
@@ -25,30 +24,36 @@ export class LoginPasswdEditModelComponent implements OnInit {
 
   updateConfirmValidator() {
     Promise.resolve().then(() =>
-      this.passwdEditForm.controls.newPasswdAgain.updateValueAndValidity()
+      this.passwdEditForm.controls.newPasswordAgain.updateValueAndValidity()
     );
   }
 
   confirmmationValidator = (control: FormControl): { [s: string]: boolean } => {
     if (!control.value) {
       return { required: true };
-    } else if (control.value !== this.passwdEditForm.controls.newPasswd.value) {
+    } else if (control.value !== this.passwdEditForm.controls.newPassword.value) {
       return { confirm: true, error: true };
     }
     return {};
   };
 
   doEdit() {
+    var check: boolean = true;
     for (const i in this.passwdEditForm.controls) {
       this.passwdEditForm.controls[i].markAsDirty();
       this.passwdEditForm.controls[i].updateValueAndValidity();
       if (this.passwdEditForm.controls[i].errors) {
-        this.check = false;
+        check = false;
       }
     }
-    if (this.check) {
-      this._loginPasswdEditService.updateUserPassword({ userId: 1, oldPassword: "", newPassWord: "" }).subscribe(result => {
-        this._nzNotificationService.create('success', '修改成功!', `${result}`)
+
+    if (check) {
+      this._loginPasswdEditService.updateUserPassword({
+        userId: 1,
+        oldPassword: this.passwdEditForm.controls.oldPassword.value,
+        newPassword: this.passwdEditForm.controls.newPassword.value
+      }).subscribe(result => {
+        this._nzNotificationService.create('success', '修改成功!', `${result.data}`)
       },
         error => {
           this._nzNotificationService.create('error', '修改失败!', `${error}`)
