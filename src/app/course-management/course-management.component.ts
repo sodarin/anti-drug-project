@@ -9,9 +9,12 @@ import { Router } from '@angular/router'
 })
 export class CourseManagementComponent implements OnInit {
 
+  location: Location;
+
   constructor(private router: Router) { }
 
   ngOnInit() {
+    this.location = this.location;
   }
   navigateByUrl(url: string) {
     this.router.navigateByUrl(url);

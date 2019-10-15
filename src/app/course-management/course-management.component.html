@@ -15,20 +15,28 @@
       <div class="left-content">
         <ul nz-menu nzMode="inline" class="sider-menu">
           <ul>
-            <li nz-menu-item (click)="navigateByUrl('/client/course/base')">基本信息</li>
-            <li nz-menu-item (click)="navigateByUrl('/client/course/detail')">详细信息</li>
-            <li nz-menu-item (click)="navigateByUrl('/client/course/cover')">封面图片</li>
+            <li nz-menu-item (click)="navigateByUrl('/client/course/base')"
+              [nzSelected]="location?.pathname.startsWith('/client/course/base')">基本信息</li>
+            <li nz-menu-item (click)="navigateByUrl('/client/course/detail')"
+              [nzSelected]="location?.pathname.startsWith('/client/course/detail')">详细信息</li>
+            <li nz-menu-item (click)="navigateByUrl('/client/course/cover')"
+              [nzSelected]="location?.pathname.startsWith('/client/course/cover')">封面图片</li>
           </ul>
           <li nz-menu-divider></li>
           <ul>
-            <li nz-menu-item (click)="navigateByUrl('/client/course/file')">课程文件</li>
-            <li nz-menu-item (click)="navigateByUrl('/client/course/testpaper')">试卷管理</li>
-            <li nz-menu-item (click)="navigateByUrl('/client/course/question')">题目管理</li>
+            <li nz-menu-item (click)="navigateByUrl('/client/course/file')"
+              [nzSelected]="location?.pathname.startsWith('/client/course/file')">课程文件</li>
+            <li nz-menu-item (click)="navigateByUrl('/client/course/testpaper')"
+              [nzSelected]="location?.pathname.startsWith('/client/course/testpaper')">试卷管理</li>
+            <li nz-menu-item (click)="navigateByUrl('/client/course/question')"
+              [nzSelected]="location?.pathname.startsWith('/client/course/question')">题目管理</li>
           </ul>
           <li nz-menu-divider></li>
           <ul>
-            <li nz-menu-item (click)="navigateByUrl('/client/course/overview')">计划概览</li>
-            <li nz-menu-item (click)="navigateByUrl('/client/course/tasks')">计划任务</li>
+            <li nz-menu-item (click)="navigateByUrl('/client/course/overview')"
+              [nzSelected]="location?.pathname.startsWith('/client/course/overview')">计划概览</li>
+            <li nz-menu-item (click)="navigateByUrl('/client/course/tasks')"
+              [nzSelected]="location?.pathname.startsWith('/client/course/tasks')">计划任务</li>
             <li nz-menu-item>计划设置</li>
             <li nz-menu-item>营销设置</li>
             <li nz-menu-item>教师设置</li>

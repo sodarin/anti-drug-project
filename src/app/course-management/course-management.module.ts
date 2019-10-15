@@ -20,13 +20,15 @@ import { MaterialComponent } from './question/question-create/material/material.
 import { QuestionCreateComponent } from './question/question-create/question-create.component';
 import { PlanOverviewComponent } from './plan-overview/plan-overview.component';
 import { PlanTasksComponent } from './plan-tasks/plan-tasks.component'
+import { NgxEchartsModule } from 'ngx-echarts';
 
 @NgModule({
   declarations: [CourseManagementComponent, BaseInfoComponent, DetailInfoComponent, CoverPhotoComponent, FileComponent, TestPaperComponent, QuestionComponent, TestPaperCreateComponent, SingleChoiceComponent, MultipleChoiceComponent, EssayComponent, IndefiniteChoiceComponent, JudgementComponent, CompletionComponent, MaterialComponent, QuestionCreateComponent, PlanOverviewComponent, PlanTasksComponent],
   imports: [
     ShareModule,
     RouterModule,
-    QuillModule
+    QuillModule, 
+    NgxEchartsModule
   ]
 })
 export class CourseManagementModule { }

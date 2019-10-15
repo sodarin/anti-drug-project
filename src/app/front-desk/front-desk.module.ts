@@ -6,7 +6,7 @@ import { ClientModule } from '../client/client.module';
 import { CoreModule } from '../core/core.module';
 import { ClassManagementModule } from '../class-management/class-management.module';
 import { CourseManagementModule } from '../course-management/course-management.module'
-
+import { NgxEchartsModule } from 'ngx-echarts';
 
 
 @NgModule({
@@ -17,7 +17,8 @@ import { CourseManagementModule } from '../course-management/course-management.m
     ClientModule,
     CoreModule,
     ClassManagementModule,
-    CourseManagementModule
+    CourseManagementModule,
+    NgxEchartsModule
   ]
 })
 export class FrontDeskModule { }

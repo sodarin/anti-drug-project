@@ -32,7 +32,7 @@ import { ClientModule } from './client/client.module'
 import { LoginPasswdEditModelComponent } from './core/modal/login-passwd-edit-model/login-passwd-edit-model.component';
 import { SecurityProblemEditModalComponent } from './core/modal/security-problem-edit-modal/security-problem-edit-modal.component';
 import { CourseManagementModule } from './course-management/course-management.module'
-
+import { NgxEchartsModule } from 'ngx-echarts';
 registerLocaleData(zh);
 @NgModule({
   declarations: [
@@ -51,7 +51,8 @@ registerLocaleData(zh);
     CoreModule,
     QuillModule.forRoot(),
     ClientModule,
-    CourseManagementModule
+    CourseManagementModule,
+    NgxEchartsModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: zh_CN },
