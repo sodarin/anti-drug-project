@@ -1,38 +1,40 @@
 # Summary
 
-Date : 2019-10-07 11:56:36
+Date : 2019-10-15 15:19:06
 
 Directory d:\vscode\angular\anti-drug-project\anti-drug-project\src\app\course-management
 
-Total : 65 files,  2487 codes, 34 comments, 433 blanks, all 2954 lines
+Total : 73 files,  2967 codes, 34 comments, 479 blanks, all 3480 lines
 
 [details](details.md)
 
 ## Languages
 | language | files | code | comment | blank | total |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| HTML | 16 | 1,001 | 4 | 22 | 1,027 |
-| TypeScript | 33 | 924 | 30 | 263 | 1,217 |
-| Less | 16 | 562 | 0 | 148 | 710 |
+| TypeScript | 37 | 1,156 | 30 | 282 | 1,468 |
+| HTML | 18 | 1,123 | 4 | 24 | 1,151 |
+| Less | 18 | 688 | 0 | 173 | 861 |
 
 ## Directories
 | path | files | code | comment | blank | total |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| . | 65 | 2,487 | 34 | 433 | 2,954 |
-| base-info | 4 | 110 | 0 | 19 | 129 |
-| cover-photo | 4 | 69 | 0 | 18 | 87 |
-| detail-info | 4 | 140 | 0 | 28 | 168 |
-| file | 4 | 110 | 0 | 21 | 131 |
-| question | 36 | 1,502 | 34 | 258 | 1,794 |
-| question\question-create | 32 | 1,350 | 34 | 230 | 1,614 |
-| question\question-create\completion | 4 | 163 | 4 | 28 | 195 |
-| question\question-create\essay | 4 | 164 | 4 | 29 | 197 |
-| question\question-create\indefinite-choice | 4 | 219 | 5 | 33 | 257 |
-| question\question-create\judgement | 4 | 167 | 4 | 29 | 200 |
-| question\question-create\material | 4 | 159 | 4 | 29 | 192 |
-| question\question-create\multiple-choice | 4 | 220 | 5 | 36 | 261 |
-| question\question-create\single-choice | 4 | 209 | 8 | 31 | 248 |
-| test-paper | 8 | 376 | 0 | 64 | 440 |
-| test-paper\test-paper-create | 4 | 263 | 0 | 42 | 305 |
+| . | 73 | 2,967 | 34 | 479 | 3,480 |
+| base-info | 4 | 127 | 0 | 19 | 146 |
+| cover-photo | 4 | 73 | 0 | 18 | 91 |
+| detail-info | 4 | 154 | 0 | 28 | 182 |
+| file | 4 | 165 | 0 | 31 | 196 |
+| plan-overview | 4 | 250 | 0 | 26 | 276 |
+| plan-tasks | 4 | 80 | 0 | 17 | 97 |
+| question | 36 | 1,541 | 34 | 248 | 1,823 |
+| question\question-create | 32 | 1,378 | 34 | 219 | 1,631 |
+| question\question-create\completion | 4 | 167 | 4 | 28 | 199 |
+| question\question-create\essay | 4 | 168 | 4 | 27 | 199 |
+| question\question-create\indefinite-choice | 4 | 223 | 5 | 31 | 259 |
+| question\question-create\judgement | 4 | 171 | 4 | 27 | 202 |
+| question\question-create\material | 4 | 163 | 4 | 27 | 194 |
+| question\question-create\multiple-choice | 4 | 224 | 5 | 34 | 263 |
+| question\question-create\single-choice | 4 | 213 | 8 | 30 | 251 |
+| test-paper | 8 | 383 | 0 | 66 | 449 |
+| test-paper\test-paper-create | 4 | 270 | 0 | 44 | 314 |
 
 [details](details.md)

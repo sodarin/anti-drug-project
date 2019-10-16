@@ -18,4 +18,14 @@ export class CourseBaseInfoEditService {
     });
   }
 
+  setBaseInfo(config: any): Observable<any> {
+    const api = '/course/setBaseInfo';
+    return this._http.put(api, config)
+  }
+
+  getAllTags() {
+    const api = '/info/tags';
+    return this._http.get(api);
+  }
+
 }

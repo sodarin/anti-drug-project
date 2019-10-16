@@ -9,18 +9,16 @@ import { EChartOption } from 'echarts';
 export class PlanOverviewComponent implements OnInit {
 
   dateRange: any[] = [];
-  options = {
-    title: {
-      text: '未知'
-    },
+
+  trendOptions = {
     tooltip: {
       trigger: 'axis',
       axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-        type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        type: 'line'        // 默认为直线，可选为：'line' | 'shadow'
       }
     },
     legend: {
-      data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎', '百度', '谷歌', '必应', '其他']
+      data: ['新增学员', '免费试看数']
     },
     grid: {
       left: '3%',
@@ -31,7 +29,7 @@ export class PlanOverviewComponent implements OnInit {
     xAxis: [
       {
         type: 'category',
-        data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+        data: ['2019-10-10', '2019-10-11', '2019-10-12', '2019-10-13', '2019-10-14', '2019-10-15', '2019-10-16']
       }
     ],
     yAxis: [
@@ -41,68 +39,60 @@ export class PlanOverviewComponent implements OnInit {
     ],
     series: [
       {
-        name: '直接访问',
+        name: '新增学员',
         type: 'bar',
+        stack: '广告',
         data: [320, 332, 301, 334, 390, 330, 320]
       },
       {
-        name: '邮件营销',
+        name: '免费试看数',
         type: 'bar',
-        stack: '广告',
+        stack: '广告',//表示堆叠在一起的柱状图哦
         data: [120, 132, 101, 134, 90, 230, 210]
       },
-      {
-        name: '联盟广告',
-        type: 'bar',
-        stack: '广告',
-        data: [220, 182, 191, 234, 290, 330, 310]
-      },
-      {
-        name: '视频广告',
-        type: 'bar',
-        stack: '广告',
-        data: [150, 232, 201, 154, 190, 330, 410]
-      },
-      {
-        name: '搜索引擎',
-        type: 'bar',
-        data: [862, 1018, 964, 1026, 1679, 1600, 1570],
-        markLine: {
-          lineStyle: {
-            normal: {
-              type: 'dashed'
-            }
-          },
-          data: [
-            [{ type: 'min' }, { type: 'max' }]
-          ]
-        }
-      },
-      {
-        name: '百度',
-        type: 'bar',
-        barWidth: 5,
-        stack: '搜索引擎',
-        data: [620, 732, 701, 734, 1090, 1130, 1120]
-      },
-      {
-        name: '谷歌',
-        type: 'bar',
-        stack: '搜索引擎',
-        data: [120, 132, 101, 134, 290, 230, 220]
-      },
-      {
-        name: '必应',
-        type: 'bar',
-        stack: '搜索引擎',
-        data: [60, 72, 71, 74, 190, 130, 110]
-      },
-      {
-        name: '其他',
-        type: 'bar',
-        stack: '搜索引擎',
-        data: [62, 82, 91, 84, 109, 110, 120]
+    ]
+  };
+
+  finishedOptions = {
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+        type: 'line'        // 默认为直线，可选为：'line' | 'shadow'
       }
+    },
+    legend: {
+      data: ['完课人数', '完课率']
+    },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true
+    },
+    xAxis: [
+      {
+        type: 'category',
+        data: ['2019-10-10', '2019-10-11', '2019-10-12', '2019-10-13', '2019-10-14', '2019-10-15', '2019-10-16']
+      }
+    ],
+    yAxis: [
+      {
+        type: 'value'
+      }
+    ],
+    series: [
+      {
+        name: '完课人数',
+        type: 'bar',
+        stack: '广告',
+        data: [320, 332, 301, 334, 390, 330, 320]
+      },
+      {
+        name: '完课率',
+        type: 'bar',
+        stack: '广告',//表示堆叠在一起的柱状图哦
+        data: [120, 132, 101, 134, 90, 230, 210]
+      },
     ]
   };
   constructor() { }

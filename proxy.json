@@ -1,12 +1,18 @@
 {
   "/user": {
-    "target": "http://202.199.13.168:9011",
+    "target": "http://202.199.13.113:9011",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
   "/course": {
     "target": "http://202.199.13.224:9002",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/info": {
+    "target": "http://202.199.13.113:9004",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true

@@ -31,7 +31,7 @@
       <div class="date-range-picker">
         <nz-range-picker [(ngModel)]="dateRange" (ngModelChange)="onChange($event)"></nz-range-picker>
       </div>
-      <div echarts [options]="options" class="statictic-chart">
+      <div echarts [options]="trendOptions" class="statictic-chart">
       </div>
     </div>
     <div class="statictic-body">
@@ -41,7 +41,7 @@
       <div class="date-range-picker">
         <nz-range-picker [(ngModel)]="dateRange" (ngModelChange)="onChange($event)"></nz-range-picker>
       </div>
-      <div echarts [options]="options" class="statictic-chart">
+      <div echarts [options]="finishedOptions" class="statictic-chart">
       </div>
     </div>
   </div>
