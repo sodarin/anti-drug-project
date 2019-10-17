@@ -4,7 +4,7 @@
   <nz-alert nzType="success" nzMessage="保存成功" nzShowIcon *ngIf="promptVisable">
   </nz-alert>
   <div class="content">
-    <form nz-form [nzLayout]="'vertical'" style="width: 1300px">
+    <form nz-form [nzLayout]="'vertical'" style="width: 1300px" >
       <nz-form-item>
         <nz-form-label nzSpan="3">课程简介</nz-form-label>
         <nz-form-control nzSpan="21">
@@ -45,7 +45,8 @@
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <button nz-button nzType="primary" style="float: right" (click)="saveInfo()" [nzLoading]="isLoading">保存</button>
+        <button nz-button nzType="primary" style="float: right" (click)="setDetailInfo()"
+          [nzLoading]="isLoading">保存</button>
       </nz-form-item>
     </form>
   </div>

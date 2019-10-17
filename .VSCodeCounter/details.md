@@ -1,20 +1,20 @@
 # Details
 
-Date : 2019-10-15 15:19:06
+Date : 2019-10-16 17:05:18
 
 Directory d:\vscode\angular\anti-drug-project\anti-drug-project\src\app\course-management
 
-Total : 73 files,  2967 codes, 34 comments, 479 blanks, all 3480 lines
+Total : 73 files,  2980 codes, 34 comments, 484 blanks, all 3498 lines
 
 [summary](results.md)
 
 ## Files
 | filename | language | code | comment | blank | total |
 | :--- | :--- | ---: | ---: | ---: | ---: |
-| [base-info\base-info.component.html](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/base-info/base-info.component.html) | HTML | 54 | 0 | 1 | 55 |
+| [base-info\base-info.component.html](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/base-info/base-info.component.html) | HTML | 56 | 0 | 1 | 57 |
 | [base-info\base-info.component.less](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/base-info/base-info.component.less) | Less | 12 | 0 | 2 | 14 |
 | [base-info\base-info.component.spec.ts](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/base-info/base-info.component.spec.ts) | TypeScript | 20 | 0 | 6 | 26 |
-| [base-info\base-info.component.ts](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/base-info/base-info.component.ts) | TypeScript | 41 | 0 | 10 | 51 |
+| [base-info\base-info.component.ts](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/base-info/base-info.component.ts) | TypeScript | 64 | 0 | 13 | 77 |
 | [course-management.component.html](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/course-management.component.html) | HTML | 65 | 0 | 1 | 66 |
 | [course-management.component.less](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/course-management.component.less) | Less | 59 | 0 | 11 | 70 |
 | [course-management.component.spec.ts](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/course-management.component.spec.ts) | TypeScript | 20 | 0 | 6 | 26 |
@@ -35,7 +35,7 @@ Total : 73 files,  2967 codes, 34 comments, 479 blanks, all 3480 lines
 | [plan-overview\plan-overview.component.html](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/plan-overview/plan-overview.component.html) | HTML | 48 | 0 | 1 | 49 |
 | [plan-overview\plan-overview.component.less](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/plan-overview/plan-overview.component.less) | Less | 70 | 0 | 12 | 82 |
 | [plan-overview\plan-overview.component.spec.ts](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/plan-overview/plan-overview.component.spec.ts) | TypeScript | 20 | 0 | 6 | 26 |
-| [plan-overview\plan-overview.component.ts](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/plan-overview/plan-overview.component.ts) | TypeScript | 112 | 0 | 7 | 119 |
+| [plan-overview\plan-overview.component.ts](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/plan-overview/plan-overview.component.ts) | TypeScript | 100 | 0 | 9 | 109 |
 | [plan-tasks\plan-tasks.component.html](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/plan-tasks/plan-tasks.component.html) | HTML | 17 | 0 | 1 | 18 |
 | [plan-tasks\plan-tasks.component.less](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/plan-tasks/plan-tasks.component.less) | Less | 32 | 0 | 6 | 38 |
 | [plan-tasks\plan-tasks.component.spec.ts](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/plan-tasks/plan-tasks.component.spec.ts) | TypeScript | 20 | 0 | 6 | 26 |

@@ -21,7 +21,7 @@ export class DetailInfoComponent implements OnInit {
     moveItemInArray(this.targetList, event.previousIndex, event.currentIndex);
   }
 
-  saveInfo() {
+  setDetailInfo() {
     this.isLoading = true;
     setTimeout(() => {
       this.promptVisable = true;

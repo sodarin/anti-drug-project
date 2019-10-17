@@ -1,13 +1,13 @@
-Date : 2019-10-15 15:19:06
+Date : 2019-10-16 17:05:18
 Directory : d:\vscode\angular\anti-drug-project\anti-drug-project\src\app\course-management
-Total : 73 files,  2967 codes, 34 comments, 479 blanks, all 3480 lines
+Total : 73 files,  2980 codes, 34 comments, 484 blanks, all 3498 lines
 
 Languages
 +------------+------------+------------+------------+------------+------------+
 | language   | files      | code       | comment    | blank      | total      |
 +------------+------------+------------+------------+------------+------------+
-| TypeScript |         37 |      1,156 |         30 |        282 |      1,468 |
-| HTML       |         18 |      1,123 |          4 |         24 |      1,151 |
+| TypeScript |         37 |      1,167 |         30 |        287 |      1,484 |
+| HTML       |         18 |      1,125 |          4 |         24 |      1,153 |
 | Less       |         18 |        688 |          0 |        173 |        861 |
 +------------+------------+------------+------------+------------+------------+
 
@@ -15,12 +15,12 @@ Directories
 +--------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
 | path                                                                           | files      | code       | comment    | blank      | total      |
 +--------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
-| .                                                                              |         73 |      2,967 |         34 |        479 |      3,480 |
+| .                                                                              |         73 |      2,980 |         34 |        484 |      3,498 |
 | question                                                                       |         36 |      1,541 |         34 |        248 |      1,823 |
 | question\question-create                                                       |         32 |      1,378 |         34 |        219 |      1,631 |
 | test-paper                                                                     |          8 |        383 |          0 |         66 |        449 |
 | test-paper\test-paper-create                                                   |          4 |        270 |          0 |         44 |        314 |
-| plan-overview                                                                  |          4 |        250 |          0 |         26 |        276 |
+| plan-overview                                                                  |          4 |        238 |          0 |         28 |        266 |
 | question\question-create\multiple-choice                                       |          4 |        224 |          5 |         34 |        263 |
 | question\question-create\indefinite-choice                                     |          4 |        223 |          5 |         31 |        259 |
 | question\question-create\single-choice                                         |          4 |        213 |          8 |         30 |        251 |
@@ -30,7 +30,7 @@ Directories
 | file                                                                           |          4 |        165 |          0 |         31 |        196 |
 | question\question-create\material                                              |          4 |        163 |          4 |         27 |        194 |
 | detail-info                                                                    |          4 |        154 |          0 |         28 |        182 |
-| base-info                                                                      |          4 |        127 |          0 |         19 |        146 |
+| base-info                                                                      |          4 |        152 |          0 |         22 |        174 |
 | plan-tasks                                                                     |          4 |         80 |          0 |         17 |         97 |
 | cover-photo                                                                    |          4 |         73 |          0 |         18 |         91 |
 +--------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
@@ -39,10 +39,10 @@ Files
 +--------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
 | filename                                                                       | language   | code       | comment    | blank      | total      |
 +--------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
-| base-info\base-info.component.html                                             | HTML       |         54 |          0 |          1 |         55 |
+| base-info\base-info.component.html                                             | HTML       |         56 |          0 |          1 |         57 |
 | base-info\base-info.component.less                                             | Less       |         12 |          0 |          2 |         14 |
 | base-info\base-info.component.spec.ts                                          | TypeScript |         20 |          0 |          6 |         26 |
-| base-info\base-info.component.ts                                               | TypeScript |         41 |          0 |         10 |         51 |
+| base-info\base-info.component.ts                                               | TypeScript |         64 |          0 |         13 |         77 |
 | course-management.component.html                                               | HTML       |         65 |          0 |          1 |         66 |
 | course-management.component.less                                               | Less       |         59 |          0 |         11 |         70 |
 | course-management.component.spec.ts                                            | TypeScript |         20 |          0 |          6 |         26 |
@@ -63,7 +63,7 @@ Files
 | plan-overview\plan-overview.component.html                                     | HTML       |         48 |          0 |          1 |         49 |
 | plan-overview\plan-overview.component.less                                     | Less       |         70 |          0 |         12 |         82 |
 | plan-overview\plan-overview.component.spec.ts                                  | TypeScript |         20 |          0 |          6 |         26 |
-| plan-overview\plan-overview.component.ts                                       | TypeScript |        112 |          0 |          7 |        119 |
+| plan-overview\plan-overview.component.ts                                       | TypeScript |        100 |          0 |          9 |        109 |
 | plan-tasks\plan-tasks.component.html                                           | HTML       |         17 |          0 |          1 |         18 |
 | plan-tasks\plan-tasks.component.less                                           | Less       |         32 |          0 |          6 |         38 |
 | plan-tasks\plan-tasks.component.spec.ts                                        | TypeScript |         20 |          0 |          6 |         26 |
@@ -112,5 +112,5 @@ Files
 | test-paper\test-paper.component.less                                           | Less       |         26 |          0 |          6 |         32 |
 | test-paper\test-paper.component.spec.ts                                        | TypeScript |         20 |          0 |          6 |         26 |
 | test-paper\test-paper.component.ts                                             | TypeScript |         21 |          0 |          8 |         29 |
-| Total                                                                          |            |      2,967 |         34 |        479 |      3,480 |
+| Total                                                                          |            |      2,980 |         34 |        484 |      3,498 |
 +--------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
