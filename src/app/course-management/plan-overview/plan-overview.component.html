@@ -29,7 +29,10 @@
     <div class="statictic-body">
       <div class="statictic-header">学员趋势</div>
       <div class="date-range-picker">
-        <nz-range-picker [(ngModel)]="dateRange" (ngModelChange)="onChange($event)"></nz-range-picker>
+        <nz-range-picker [(ngModel)]="dateRange" (ngModelChange)="onChange($event)" [nzPlaceHolder]="['Start', 'End']">
+        </nz-range-picker>
+        <button nz-button nzType="link" style="margin-left: 20px;">7天</button>
+        <button nz-button nzType="link">30天</button>
       </div>
       <div echarts [options]="trendOptions" class="statictic-chart">
       </div>
@@ -39,7 +42,10 @@
           <i nz-icon nzType="question-circle" nzTheme="fill" class="help-icon"></i>
         </span></div>
       <div class="date-range-picker">
-        <nz-range-picker [(ngModel)]="dateRange" (ngModelChange)="onChange($event)"></nz-range-picker>
+        <nz-range-picker [(ngModel)]="dateRange" (ngModelChange)="onChange($event)" [nzPlaceHolder]="['Start', 'End']">
+        </nz-range-picker>
+        <button nz-button nzType="link" style="margin-left: 20px;">7天</button>
+        <button nz-button nzType="link">30天</button>
       </div>
       <div echarts [options]="finishedOptions" class="statictic-chart">
       </div>

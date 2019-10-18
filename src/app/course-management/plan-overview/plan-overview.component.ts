@@ -7,9 +7,8 @@ import { EChartOption } from 'echarts';
   styleUrls: ['./plan-overview.component.less']
 })
 export class PlanOverviewComponent implements OnInit {
-
+  colors = ['#5793f3', '#d14a61', '#675bba'];
   dateRange: any[] = [];
-
   trendOptions = {
     tooltip: {
       trigger: 'axis',
@@ -21,7 +20,8 @@ export class PlanOverviewComponent implements OnInit {
       data: ['新增学员', '免费试看数']
     },
     grid: {
-      left: '3%',
+      show: true,
+      left: '0%',
       right: '4%',
       bottom: '3%',
       containLabel: true
@@ -34,21 +34,32 @@ export class PlanOverviewComponent implements OnInit {
     ],
     yAxis: [
       {
-        type: 'value'
+        type: 'value',
+        name: '人数',
+        min: 0,
+        max: 5,
+        position: 'left',
+        axisLine: {
+          lineStyle: {
+            color: '#5793f3'
+          }
+        }
       }
     ],
     series: [
       {
         name: '新增学员',
-        type: 'bar',
+        color: ['#fd7c81'],
+        type: 'line',
         stack: '广告',
-        data: [320, 332, 301, 334, 390, 330, 320]
+        data: [0, 0, 0, 0, 0, 0, 0]
       },
       {
         name: '免费试看数',
-        type: 'bar',
+        color: ['#6994fd'],
+        type: 'line',
         stack: '广告',//表示堆叠在一起的柱状图哦
-        data: [120, 132, 101, 134, 90, 230, 210]
+        data: [0, 0, 0, 0, 0, 0, 0]
       },
     ]
   };
@@ -64,7 +75,8 @@ export class PlanOverviewComponent implements OnInit {
       data: ['完课人数', '完课率']
     },
     grid: {
-      left: '3%',
+      show: true,
+      left: '0%',
       right: '4%',
       bottom: '3%',
       containLabel: true
@@ -75,23 +87,49 @@ export class PlanOverviewComponent implements OnInit {
         data: ['2019-10-10', '2019-10-11', '2019-10-12', '2019-10-13', '2019-10-14', '2019-10-15', '2019-10-16']
       }
     ],
-    yAxis: [
-      {
-        type: 'value'
+    yAxis: [{
+      type: 'value',
+      name: '人数',
+      min: 0,
+      max: 5,
+      position: 'left',
+      axisLine: {
+        lineStyle: {
+          color: '#5793f3'
+        }
+      },
+      axisLabel: {
+        formatter: '{value}'
       }
-    ],
+    },
+    {
+      type: 'value',
+      name: '完课率',
+      min: 0,
+      max: 100,
+      position: 'right',
+      axisLine: {
+        lineStyle: {
+          color: '#d14a61'
+        }
+      },
+      axisLabel: {
+        formatter: '{value} %'
+      }
+    }],
     series: [
       {
         name: '完课人数',
-        type: 'bar',
+        color: ["#92d178"],
+        type: 'line',
         stack: '广告',
-        data: [320, 332, 301, 334, 390, 330, 320]
+        data: [0, 0, 0, 0, 0, 0, 0]
       },
       {
         name: '完课率',
-        type: 'bar',
-        stack: '广告',//表示堆叠在一起的柱状图哦
-        data: [120, 132, 101, 134, 90, 230, 210]
+        color: ['#fecf7d'],
+        type: 'line',
+        data: [0, 0, 0, 0, 0, 0, 0]
       },
     ]
   };
