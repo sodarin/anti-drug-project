@@ -14,7 +14,8 @@
           <nz-list-item [nzContent]="nzContent">
             <ng-template #nzContent>
               <nz-card (mouseover)=show1(item) (mouseleave)="show2(item)"
-                       nzHoverable style="width:240px;height:350px;margin: 30px" [nzCover]="coverTemplate">
+                       nzHoverable style="width:240px;height:350px;margin: 30px" [nzCover]="coverTemplate"
+                       (click)="navigateByUrl('/client/userpage/'+item.id)">
                 <nz-card-meta [nzTitle]="titleTemplate" [nzDescription]=descripTemplate></nz-card-meta>
                 <button nz-button nzType="primary" style="text-align: center"
                         *ngIf="!this.item.isshow" (click)="follow(item)">关注</button>

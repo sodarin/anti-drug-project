@@ -34,6 +34,10 @@ import {NewsSortModalComponent} from './news-component/news-sort-modal/news-sort
 import {NewsListviewModalComponent} from './news-component/news-listview-modal/news-listview-modal.component';
 import {NewsClassificationModalComponent} from './news-component/news-classification-modal/news-classification-modal.component';
 import {NewsNewsblockModalComponent} from './news-component/news-newsblock-modal/news-newsblock-modal.component';
+import { FocusDetailComponent } from './focus-detail/focus-detail.component';
+import { CoreRoutingModule  } from "./core-routing.module";
+import { FansComponent } from './fans/fans.component';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -66,11 +70,16 @@ import {NewsNewsblockModalComponent} from './news-component/news-newsblock-modal
     NewsSortModalComponent,
     NewsDetailsModalComponent,
     NewsTagModalComponent,
+    FocusDetailComponent,
+    FansComponent,
   ],
   imports: [
     ShareModule,
     QuillModule,
-    NgxEchartsModule
+    NgxEchartsModule,
+    CoreRoutingModule ,
+    RouterModule
+
   ],
   exports: [
     LoginModalComponent,
