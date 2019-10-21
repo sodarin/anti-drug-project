@@ -11,7 +11,7 @@ import { OpenresourcedetailService } from '../../service/openresourcedetail/open
 })
 export class OpenresourcedetailComponent implements OnInit {
   displayData: any;
-  teacherData; any;
+  teacherData: any;
   movietitle: any;
   HitNum: any;
   PostNum: any;

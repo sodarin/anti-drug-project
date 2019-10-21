@@ -88,8 +88,8 @@
       </span>
 
       <!-- 登陆后显示的页面 -->
-      <span *ngIf="isLogin" class="admin-operation">
-        <span><button class="btn-server" nzType="primary" nz-button nz-dropdown [nzDropdownMenu]="menu">管理后台<i nz-icon
+      <div *ngIf="isLogin" class="admin-operation">
+        <div><button class="btn-server" nzType="primary" nz-button nz-dropdown [nzDropdownMenu]="menu">管理后台<i nz-icon
               nzType="down"></i></button>
           <nz-dropdown-menu #menu="nzDropdownMenu">
             <ul nz-menu>
@@ -98,20 +98,19 @@
               <li nz-menu-item (click)="navigateByUrl('/client/mine/mycourse')">我的学习</li>
             </ul>
           </nz-dropdown-menu>
-        </span>&nbsp;
-        <span><i [ngStyle]="" nz-icon [nzType]="'bell'" [nzTheme]="'fill'" class="bell-style"></i></span>&nbsp;
-        <span>
+        </div>
+        <div><i [ngStyle]="" nz-icon [nzType]="'bell'" [nzTheme]="'fill'" class="bell-style"></i></div>
+        <div>
           <nz-avatar nz-popover nzIcon="user" nzSrc="../../assets/img/userface-small.jpg" nzSize="large"
             [nzPopoverContent]="usercenter" nzPopoverPlacement="bottomRight"></nz-avatar>
           <ng-template #usercenter>
             <div class="user-center">
               <nz-avatar class="user-avatar pointer-perform" nzIcon="user" nzSrc="../../assets/img/userface.jpg"
                 [nzSize]="80" (click)="navigateByUrl('个人页面的路由')">
-              </nz-avatar>&nbsp;
-              <span slot="title" style="font-size: 24px">admin</span>
+              </nz-avatar>
+              <span slot="title" style="font-size: 24px;margin-left: 10px;">admin</span>
               <br>
               <nz-divider></nz-divider>
-
               <div nz-row class="center-operation pointer-perform" nzType="flex" nzJustify="center">
                 <div nz-col nzSpan="11">
                   <span (click)="navigateByUrl('/client/settings')"><i nz-icon [nzType]="'setting'"></i>个人设置</span>
@@ -123,13 +122,10 @@
                   <span (click)="logout()"><i nz-icon [nzType]="'logout'"></i>退出登录</span>
                 </div>
               </div>
-
-
             </div>
-
           </ng-template>
-        </span>
-      </span>
+        </div>
+      </div>
       <i class="mobile-user-operation" nz-icon nz-popover nzTitle="个人面板" [nzContent]="userPanelContent"
         nzPlacement="bottomLeft" nzType="user"></i>
       <ng-template #userPanelContent>
