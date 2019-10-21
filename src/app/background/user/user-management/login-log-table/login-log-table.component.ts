@@ -1,6 +1,6 @@
 import {Component, OnInit, TemplateRef} from '@angular/core';
-import {NzMessageService, NzModalService} from 'ng-zorro-antd';
-import {UserManagementService} from '../../../../service/user-management/user-management.service';
+import {NzNotificationService} from 'ng-zorro-antd';
+import {LoginLogService} from '../../../../service/login-log/login-log.service';
 
 @Component({
   selector: 'app-login-log-table',
@@ -10,7 +10,7 @@ import {UserManagementService} from '../../../../service/user-management/user-ma
 export class LoginLogTableComponent implements OnInit {
 
   selectedKeywordType: string = 'nickname';
-  inputValue: string;
+  inputValue: string = '';
   dateRange: string;
 
   dataList = [];
@@ -20,20 +20,51 @@ export class LoginLogTableComponent implements OnInit {
   totalPage: number;
   pageIndex: number = 1;
 
-  logList = [];
-  logListTotal = 0;
-  modalPageIndex = 1;
+
+  filterOptions = {
+    keyword: '',
+    endTime: 0,
+    startTime: 0,
+  };
 
   constructor(
-    private _message: NzMessageService,
-    private userManagementService$: UserManagementService,
-    private _modal: NzModalService
+    private _notification: NzNotificationService,
+    private loginLogService$: LoginLogService,
   ) { }
 
   ngOnInit() {
+    this.searchData()
   }
 
   search() {
+    let startTime = 0;
+    let endTime = new Date().getTime() / 1000;
+    this.pageIndex = 1;
+    if (this.dateRange.length == 2) {
+      startTime = Math.floor(new Date(this.dateRange[0]).getTime() / 1000);
+      endTime = Math.floor(new Date(this.dateRange[1]).getTime() / 1000)
+    }
+    this.displayData = [];
+    this.loading = true;
+    this.filterOptions = {
+      startTime: startTime,
+      endTime: endTime,
+      keyword: this.inputValue
+    };
+    this.loginLogService$.getLoginLogList(1, 10, this.filterOptions).subscribe(result => {
+      this.loading = false;
+      this.total = result.total;
+      this.totalPage = Math.ceil( this.total / 10);
+      this.dataList = result.data;
+      this.displayData = this.dataList;
+      console.log(result)
+    }, error1 => {
+      this.loading = false;
+      this._notification.create(
+        'error',
+        '发生错误！',
+        `${error1.error}`)
+    })
 
   }
 
@@ -44,32 +75,31 @@ export class LoginLogTableComponent implements OnInit {
   searchData(pageIndex: number = this.pageIndex) {
     this.displayData = [];
     this.loading = true;
-    this.userManagementService$.getUserList(pageIndex, 10).subscribe( result => {
+    this.loginLogService$.getLoginLogList(pageIndex, 10, this.filterOptions).subscribe( result => {
       this.loading = false;
-      this.total = result[0].totalUser;
+      this.total = result.total;
       this.totalPage = Math.ceil( this.total / 10);
-      this.dataList = result;
+      this.dataList = result.data;
       this.displayData = this.dataList;
-      console.log(result)
     }, error1 => {
       this.loading = false;
-      this._message.error(error1.error)
+      this._notification.create(
+        'error',
+        '发生错误！',
+        `${error1.error}`)
     })
   }
 
   checkLoginLog(id: string, template: TemplateRef<{}>) {
-    this.logList = [];
-    this.userManagementService$.getUserDetailById(id).subscribe( result => {
-      this.logList = result;
-      this._modal.create({
-        nzTitle: '查看登录日志',
-        nzContent: template,
-        nzFooter: null
-      })
-    })
+    // this.logList = [];
+    // this.loginLogService$.getUserDetailById(id).subscribe( result => {
+    //   this.logList = result;
+    //   this._modal.create({
+    //     nzTitle: '查看登录日志',
+    //     nzContent: template,
+    //     nzFooter: null
+    //   })
+    // })
   }
 
-  turnToNewPage() {
-
-  }
 }

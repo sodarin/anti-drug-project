@@ -1,0 +1,12 @@
+<div class="container">
+  <h2>发表话题</h2>
+  <nz-divider></nz-divider>
+  <h3>标题</h3>
+  <input style="width: 92%;" class="name-containing-input" nz-input placeholder="输入小组名称" [(ngModel)]="inputValue" />
+  <div class="introduction-edit-area" nz-row>
+    <h3 style="text-align: left; color: rgba(0, 0, 0, .85);" nz-col nzSpan="10">内容:</h3>
+    <quill-editor style="height: 240px;" nz-col nzSpan="22" [(ngModel)]="content"></quill-editor>
+  </div>
+  <button style="margin-top: 10%" nz-button nzType="primary">发布</button>
+</div>
+

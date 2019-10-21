@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {TagManagementService} from '../../../service/tag-management/tag-management.service';
-import {NzMessageService} from 'ng-zorro-antd';
+import {NzMessageService, NzModalRef, NzModalService} from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-create-tag-modal',
@@ -16,7 +16,7 @@ export class CreateTagModalComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private tagManagementService$: TagManagementService,
-    private _message: NzMessageService
+    private _modal: NzModalRef
   ) { }
 
   ngOnInit() {
@@ -38,22 +38,8 @@ export class CreateTagModalComponent implements OnInit {
     this.tagCreatingForm.markAllAsTouched();
     this.tagCreatingForm.controls.name.updateValueAndValidity();
     let name = this.tagCreatingForm.controls.name.value;
-    let flag = false;
-    let updateRoleList = [];
-    this.checkOption.forEach(item => {
-      if (item.checked) {
-        flag = true;
-        updateRoleList.push(item.label)
-      }
-    });
-    if (flag && !this.tagCreatingForm.errors && name !== '') {
-      this.tagManagementService$.createNewTag(this.tagCreatingForm.controls.name.value).subscribe(result => {
-        this._message.success("新增标签成功！");
-      }, error1 => {
-        this._message.error(error1.error);
-        shouldBeClosed = false;
-      })
-
+    if (!this.tagCreatingForm.errors && name !== '') {
+      this._modal.destroy(name)
     }
     return shouldBeClosed
   }
@@ -62,17 +48,4 @@ export class CreateTagModalComponent implements OnInit {
 
   }
 
-  confirmationValidator = (control: FormControl): { [s: string]: boolean } => {
-    if (!control.value) {
-      return { required: true };
-    } else if (control.value !== this.tagCreatingForm.controls.password.value) {
-      return { confirm: true, error: true };
-    }
-    return {};
-  };
-
-  updateConfirmValidator(): void {
-    /** wait for refresh value */
-    Promise.resolve().then(() => this.tagCreatingForm.controls.confirmPassword.updateValueAndValidity());
-  }
 }

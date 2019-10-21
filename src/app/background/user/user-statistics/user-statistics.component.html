@@ -37,12 +37,12 @@
     <tbody>
     <tr *ngFor="let data of userstatisticsTable.data">
       <td>{{data.nickName}}</td>
-      <td>{{data.joinclassnumber}}</td>
-      <td>{{data.quitclassnumber}}</td>
-      <td>{{data.joinschedulenumber}}</td>
-      <td>{{data.quitschedulenumber}}</td>
-      <td>{{data.haslearnednumber}}</td>
-      <td>{{data.leaningtime}}</td>
+      <td>{{data.joinedClassroomNum}}</td>
+      <td>{{data.exitClassroomNum}}</td>
+      <td>{{data.joinedCourseNum}}</td>
+      <td>{{data.exitCourseNum}}</td>
+      <td>{{data.finishedTaskNum}}</td>
+      <td>{{data.learnedSeconds/60}}</td>
       <td><i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
       <ng-template #operationTemplate>
 <!--        <div class="user-management-operation">-->

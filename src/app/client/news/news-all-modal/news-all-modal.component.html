@@ -1,0 +1,62 @@
+<nz-layout>
+
+  <nz-divider ></nz-divider>
+  <div class="title">
+    <nz-header>
+      <div class="classlist-container">
+        <app-news-sort-modal></app-news-sort-modal>
+        <nz-divider ></nz-divider>
+      </div>
+    </nz-header>
+  </div>
+
+  <nz-divider ></nz-divider>
+  <nz-content>
+    <div class="left-content">
+      <nz-card style="height: 450px" [nzCover]="coverTemplate"  [nzHoverable]="true" (click)="navigateByUrl('/client/newsdetails')">
+        <nz-card-meta
+          nzDescription="This is the description"
+          nzTitle="Card title"
+          [nzAvatar]="avatarTemplate"
+        ></nz-card-meta>
+      </nz-card>
+      <ng-template #coverTemplate>
+        <img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
+      </ng-template>
+
+      <nz-divider ></nz-divider>
+      <div class="listview">
+        <app-news-listview-modal></app-news-listview-modal>
+      </div>
+    </div>
+
+    <div class="right-content">
+      <div class="card">
+        <nz-card style="height: 200px" [nzCover]="coverTemplate"  [nzHoverable]="true" (click)="navigateByUrl('/client/newsdetails')">
+          <nz-card-meta
+            nzDescription="This is the description"
+            nzTitle="Card title"
+            [nzAvatar]="avatarTemplate"
+          ></nz-card-meta>
+        </nz-card>
+
+        <nz-divider></nz-divider>
+        <nz-card style="height: 200px" [nzCover]="coverTemplate" [nzHoverable]="true" (click)="navigateByUrl('/client/newsdetails')">
+          <nz-card-meta
+            nzDescription="This is the description"
+            nzTitle="Card title"
+            [nzAvatar]="avatarTemplate"
+          ></nz-card-meta>
+        </nz-card>
+      </div>
+      <nz-divider></nz-divider>
+      <div class="classlist-container">
+        <app-news-classification-modal ></app-news-classification-modal>
+      </div>
+    </div>
+  </nz-content>
+
+
+</nz-layout>
+
+

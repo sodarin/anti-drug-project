@@ -1,9 +1,9 @@
 <div class="content">
   <div class="input-filter">
     <nz-select class="select-control" [(ngModel)]="searchType" nzAllowClear="false">
-      <nz-option nzValue="-1" nzLabel="内容"></nz-option>
-      <nz-option nzValue="1" nzLabel="课程编号"></nz-option>
-      <nz-option nzValue="0" nzLabel="课程名"></nz-option>
+      <nz-option nzValue="content" nzLabel="内容"></nz-option>
+      <nz-option nzValue="courseSetId" nzLabel="课程编号"></nz-option>
+      <nz-option nzValue="courseTitle" nzLabel="课程名"></nz-option>
     </nz-select>
     <input class="name-containing-input keyword" nz-input placeholder="关键词" [(ngModel)]="keyword" />
     <nz-divider nzType="vertical"></nz-divider>
@@ -43,12 +43,15 @@
         (nzCheckedChange)="refreshStatus()"
       ></td>
       <td>
-        <span (click)="unfoldOrFoldContent(data.id)" class="is-ellipsis" *ngIf="mapOfEllipsis[data.id]">{{data.noteContent}}</span>
-        <span (click)="unfoldOrFoldContent(data.id)" class="not-ellipsis" *ngIf="!mapOfEllipsis[data.id]">{{data.noteContent}}</span>
+        <span [innerHTML]="data.content"></span>
+        <span *ngIf="data.courseSetTitle !== ''"><span (click)="navigateTo(data.courseSetId)" style="color: #6dd2ee; cursor: pointer; font-size: 14px;">{{data.courseSetTitle}}</span><span style="font-size: 12px;">></span></span>
+        <span *ngIf="data.courseTitle !== ''"><span (click)="navigateTo(data.courseId)" style="color: #6dd2ee; cursor: pointer;">{{data.courseTitle}}</span><span style="font-size: 12px;">></span></span>
+        <span *ngIf="data.taskName !== ''" (click)="navigateTo(data.taskId)" style="color: #6dd2ee; cursor: pointer; font-size: 14px;">{{data.taskName}}</span>
       </td>
       <td>
-        <span style="color: #108ee9; cursor: pointer;" (click)="openUserInfoModal(data.authorId)">{{data.author}}</span>
-        <span>{{data.creatTime}}</span>
+        <span style="color: #108ee9; cursor: pointer;" (click)="openUserInfoModal(data.userId)">{{data.userName}}</span>
+        <br/>
+        <span>{{data.createdTime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
       </td>
       <td><i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
       <ng-template #operationTemplate>

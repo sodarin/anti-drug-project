@@ -1,0 +1,53 @@
+<div class="setting-page">
+  <div class="page-header">
+    <h2>我的批阅</h2>
+  </div>
+  <nz-divider></nz-divider>
+  <div class="page-content">
+    <nz-list
+      [nzDataSource]="data"
+      [nzItemLayout]="'vertical'"
+      [nzRenderItem]="item"
+      [nzPagination]="pagination"
+      [nzLoading]="false"
+    >
+      <ng-template #item let-item>
+        <nz-list-item [nzContent]="item.testTime" [nzActions]="[starAction, likeAction, msgAction]" [nzExtra]="extra">
+          <ng-template #starAction><i nz-icon nzType="area-chart" nz-tooltip nzTooltipTitle="成绩分布" (click)="showScoreStatistics(item)"></i></ng-template>
+          <ng-template #likeAction><i nz-icon nzType="bars" nz-tooltip nzTooltipTitle="答题分布" (click)="navigateTo('client/testpaper/' + item.id + '/analysis')"></i></ng-template>
+          <ng-template #msgAction><i nz-icon nzType="check" nz-tooltip nzTooltipTitle="批阅"></i></ng-template>
+          <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="item.description">
+            <ng-template #nzTitle>
+              <span>{{ item.title }}</span>
+            </ng-template>
+          </nz-list-item-meta>
+          <ng-template #extra>
+            <div class="extra-action">
+              <div class="marked" (click)="navigateTo('client/course/' + courseId + '/papers/' + item.id + '/resulttable?status=finished')">
+                <span style="color: #67C23A">已批</span>
+                <nz-divider style="margin: 12px 0;"></nz-divider>
+                <span style="color: #67C23A; text-align: center">{{item.marked}}</span>
+              </div>
+              <div class="marking" (click)="navigateTo('client/course/' + courseId + '/papers/' + item.id + '/resulttable?status=reviewing')">
+                <span style="color: #ffa51f;">未批</span>
+                <nz-divider style="margin: 12px 0;"></nz-divider>
+                <span style="color: #ffa51f; text-align: center">{{item.marking}}</span>
+              </div>
+              <div class="unhandle" (click)="navigateTo('client/course/' + courseId + '/papers/' + item.id + '/resulttable?status=doing')">
+                <span style="color: #ed3e3e;">未交</span>
+                <nz-divider style="margin: 12px 0;"></nz-divider>
+                <span style="color: #ed3e3e; text-align: center">{{item.unhandle}}</span>
+              </div>
+            </div>
+          </ng-template>
+        </nz-list-item>
+      </ng-template>
+      <ng-template #pagination>
+        <nz-pagination
+          ([nzPageIndex])="pageIndex"
+          [nzTotal]="total"
+          (nzPageIndexChange)="searchData($event)"></nz-pagination>
+      </ng-template>
+    </nz-list>
+  </div>
+</div>

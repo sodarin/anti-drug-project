@@ -1,9 +1,9 @@
 <div class="content">
   <div class="input-filter">
     <nz-select class="select-control" [(ngModel)]="title" nzAllowClear="false" nzPlaceHolder="标题">
-      <nz-option nzValue="" nzLabel="内容"></nz-option>
-      <nz-option nzValue="-1" nzLabel="课程编号"></nz-option>
-      <nz-option nzValue="1" nzLabel="课程名"></nz-option>
+      <nz-option nzValue="" nzLabel="搜索条件"></nz-option>
+      <nz-option nzValue="content" nzLabel="内容"></nz-option>
+      <nz-option nzValue="title" nzLabel="课程名"></nz-option>
     </nz-select>
     <nz-divider nzType="vertical"></nz-divider>
     <input class="name-containing-input" nz-input placeholder="关键词" [(ngModel)]="keyWord" />
@@ -45,17 +45,17 @@
         (nzCheckedChange)="refreshStatus()"
       ></td>
       <td>
-        <span style="color: #108ee9; cursor: pointer; font-size: 16px;" (click)="navigateToTopic(data.id)">{{data.post}}</span>
-        <span (click)="unfoldOrFoldContent(data.id)" class="is-ellipsis" *ngIf="mapOfEllipsis[data.id]">{{data.Mcontent}}</span>
-        <span (click)="unfoldOrFoldContent(data.id)" class="not-ellipsis" *ngIf="!mapOfEllipsis[data.id]">{{data.Mcontent}}</span>
+        <span style="color: #108ee9; cursor: pointer;" (click)="navigateTo(data.threadId)">{{data.threadTitle}}</span><br/>
+        <span [innerHTML]="data.content"></span>
+        <span *ngIf="data.classroomTitle !== ''"><span (click)="navigateTo(data.classroomId)" style="color: #6dd2ee; cursor: pointer; font-size: 14px;">{{data.classroomTitle}}</span><span style="font-size: 12px;"></span></span>
       </td>
       <td>
-        <span>{{data.reply}}</span><br/>
-        <span>{{data.check}}</span>
+        <span>{{data.postNum}}</span>/
+        <span>{{data.hitNum}}</span>
       </td>
       <td>
-        <span style="color: #108ee9; cursor: pointer;" (click)="openUserIntro(data.creatorId)">{{data.creator}}</span><br/>
-        <span>{{data.creatTime}}</span>
+        <span style="color: #108ee9; cursor: pointer;" (click)="openUserIntro(data.userId)">{{data.nickName}}</span><br/>
+        <span>{{data.createdTime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
       </td>
       <td><i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
       <ng-template #operationTemplate>

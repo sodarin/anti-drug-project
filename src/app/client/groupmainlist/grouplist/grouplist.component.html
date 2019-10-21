@@ -1,0 +1,29 @@
+<div class="container">
+  <header>
+    <div class="top">
+      <nz-card-meta class="word"
+                         [nzTitle]="nzTitle"
+                         [nzAvatar]="nzAvater"
+                         [nzDescription]="nzDescription">
+        <ng-template #nzTitle>
+          <h2>{{topicname}}</h2>
+        </ng-template>
+        <ng-template #nzAvater>
+          <nz-avatar [nzShape]="'square'" [nzSize]="64" nzText="回复">  </nz-avatar>
+        </ng-template>
+        <ng-template #nzDescription>
+          <span >{{number}}个成员     {{topicnumber}}个话题      创建时间：{{date}}</span>
+        </ng-template>
+      </nz-card-meta>
+    </div>
+  </header>
+  <nz-content>
+    <router-outlet ></router-outlet>
+  </nz-content>
+
+</div>
+
+
+
+
+

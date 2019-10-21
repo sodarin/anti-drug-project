@@ -1,20 +1,23 @@
 <div class="content">
   <div class="selection-filter">
     <nz-select class="select-control" [(ngModel)]="postType" nzAllowClear nzPlaceHolder="帖子类型">
-      <nz-option nzValue="" nzLabel="话题"></nz-option>
-      <nz-option nzValue="-1" nzLabel="问答"></nz-option>
-      <nz-option nzValue="1" nzLabel="活动"></nz-option>
+      <nz-option nzValue="" nzLabel="全部类型"></nz-option>
+      <nz-option nzValue="discussion" nzLabel="话题"></nz-option>
+      <nz-option nzValue="question" nzLabel="问答"></nz-option>
+      <nz-option nzValue="activity" nzLabel="活动"></nz-option>
     </nz-select>
     <nz-divider nzType="vertical"></nz-divider>
     <nz-select class="select-control" [(ngModel)]="attribute" nzAllowClear nzPlaceHolder="属性">
-      <nz-option nzValue="" nzLabel="置顶"></nz-option>
-      <nz-option nzValue="-1" nzLabel="加精"></nz-option>
+      <nz-option nzValue="" nzLabel="全部"></nz-option>
+      <nz-option nzValue="isStick" nzLabel="置顶"></nz-option>
+      <nz-option nzValue="isElite" nzLabel="加精"></nz-option>
     </nz-select>
     <nz-divider nzType="vertical"></nz-divider>
     <nz-select class="select-control" [(ngModel)]="title" nzAllowClear nzPlaceHolder="标题">
-      <nz-option nzValue="" nzLabel="内容"></nz-option>
-      <nz-option nzValue="-1" nzLabel="课程编号"></nz-option>
-      <nz-option nzValue="1" nzLabel="课程名"></nz-option>
+      <nz-option nzValue="title" nzLabel="标题"></nz-option>
+      <nz-option nzValue="content" nzLabel="内容"></nz-option>
+      <nz-option nzValue="courseId" nzLabel="课程编号"></nz-option>
+      <nz-option nzValue="courseTitle" nzLabel="课程名"></nz-option>
     </nz-select>
   </div>
   <div class="input-filter">
@@ -43,7 +46,7 @@
         [nzIndeterminate]="isIndeterminate"
         (nzCheckedChange)="checkAll($event)"
       ></th>
-      <th>帖子</th>
+      <th nzWidth="600px">帖子</th>
       <th>回复/查看</th>
       <th>属性</th>
       <th>作者</th>
@@ -58,25 +61,26 @@
         (nzCheckedChange)="refreshStatus()"
       ></td>
       <td>
-        <span style="color: #108ee9; cursor: pointer; font-size: 16px;" (click)="navigateToTopic(data.id)">{{data.post}}</span>
-        <span (click)="unfoldOrFoldContent(data.id)" class="is-ellipsis" *ngIf="mapOfEllipsis[data.id]">{{data.Mcontent}}</span>
-        <span (click)="unfoldOrFoldContent(data.id)" class="not-ellipsis" *ngIf="!mapOfEllipsis[data.id]">{{data.Mcontent}}</span>
+        <span style="color: #108ee9; cursor: pointer; font-size: 16px;" (click)="navigateToTopic(data.id)">{{data.title}}</span>
+        <span [innerHTML]="data.content"></span>
+        <span *ngIf="data.courseSetTitle !== ''"><span (click)="navigateToTopic(data.courseSetId)" style="color: #6dd2ee; cursor: pointer; font-size: 14px;">{{data.courseSetTitle}}</span><span style="font-size: 12px;">></span></span>
+        <span *ngIf="data.courseTitle !== ''" (click)="navigateToTopic(data.courseId)" style="color: #6dd2ee; cursor: pointer;">{{data.courseTitle}}</span>
       </td>
       <td>
-        <span>{{data.reply}}</span><br/>
-        <span>{{data.check}}</span>
+        <span>{{data.postNum}}</span>/
+        <span>{{data.hitNum}}</span>
       </td>
-      <td><nz-tag nzMode="checkable" [nzChecked]="data.isElaborate" (nzCheckedChange)="setElaborate(data.id, $event)">精</nz-tag>
-        <nz-tag nzMode="checkable" [nzChecked]="data.isTop" (nzCheckedChange)="setTop(data.id, $event)">顶</nz-tag>
+      <td><nz-tag nzMode="checkable" [nzChecked]="data.isElite == 1" (nzCheckedChange)="setElaborate(data, $event)">精</nz-tag>
+        <nz-tag nzMode="checkable" [nzChecked]="data.isStick == 1" (nzCheckedChange)="setTop(data, $event)">顶</nz-tag>
       </td>
       <td>
-        <span style="color: #108ee9; cursor: pointer;" (click)="openUserIntro(data.creatorId)">{{data.creator}}</span><br/>
-        <span>{{data.creatTime}}</span>
+        <span style="color: #108ee9; cursor: pointer;" (click)="openUserIntro(data.userId)">{{data.userName}}</span><br/>
+        <span>{{data.createdTime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
       </td>
       <td><i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
       <ng-template #operationTemplate>
         <div class="topic-management-operation">
-          <div><span (click)="delete(data.postID)"><i nz-icon nzType="file-protect" nzTheme="outline"></i>删除</span></div>
+          <div><span (click)="delete(data.id)"><i nz-icon nzType="file-protect" nzTheme="outline"></i>删除</span></div>
         </div>
       </ng-template>
     </tr>

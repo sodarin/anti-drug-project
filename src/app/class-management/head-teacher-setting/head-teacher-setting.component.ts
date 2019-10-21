@@ -8,7 +8,7 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class HeadTeacherSettingComponent implements OnInit {
 
-  classroomId: number;
+  classroomId: string;
 
   teacherList = [];
   loading: boolean = false;
@@ -18,7 +18,7 @@ export class HeadTeacherSettingComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.classroomId = this.routerInfo.snapshot.params['id'];
+    this.classroomId = location.pathname.split('/')[3];
     this.teacherList.push({
       name: 'chen'
     })

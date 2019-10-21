@@ -10,12 +10,7 @@
   <nz-table
     #programaListTable
     [nzData]="displayData"
-    [nzFrontPagination]="false"
-    [nzTotal]="total"
-    [nzLoading]="loading"
-    [nzPageSize]="10"
-    [(nzPageIndex)]="pageIndex"
-    (nzPageIndexChange)="searchData()">
+    [nzLoading]="loading">
     <thead>
     <tr>
       <th>栏目名称</th>
@@ -25,15 +20,15 @@
     </tr>
     </thead>
     <tbody cdkDropList (cdkDropListDropped)="drop($event)">
-    <tr *ngFor="let data of programaListTable.data" cdkDrag>
-      <td>{{data.programa}}<br/>
+    <tr *ngFor="let data of programaListTable.nzData" cdkDrag>
+      <td>{{data.name}}<br/>
       <td>{{data.pAddress}}<br/>
       <td>{{data.pCode}}<br/>
       <td><i class="more-operation" nz-popover [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
       <ng-template #operationTemplate>
         <div class="programa-management-operation">
-          <div><span (click)="delete(data.ProgramaId)"><i nz-icon nzType="delete" nzTheme="outline"></i>删除</span></div>
-          <div><span (click)="edit(data.ProgramaId)"><i nz-icon nzType="edit" nzTheme="outline"></i>编辑</span></div>
+          <div><span (click)="delete(data.id)"><i nz-icon nzType="delete" nzTheme="outline"></i>删除</span></div>
+          <div><span (click)="edit(data)"><i nz-icon nzType="edit" nzTheme="outline"></i>编辑</span></div>
         </div>
       </ng-template>
     </tr>

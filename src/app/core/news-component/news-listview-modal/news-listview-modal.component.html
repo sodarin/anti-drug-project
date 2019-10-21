@@ -1,0 +1,11 @@
+<div class="list-area">
+  <nz-list [nzDataSource]="displayData" [nzRenderItem]="item" [nzGrid]="{ gutter: 24, xs: 24, sm: 12, md: 12, lg: 8, xl: 6 }">
+    <ng-template #item let-item>
+      <nz-list-item [nzContent]="nzContent">
+        <ng-template #nzContent>
+          <app-news-newsblock-modal [data]="item"></app-news-newsblock-modal>
+        </ng-template>
+      </nz-list-item>
+    </ng-template>
+  </nz-list>
+</div>

@@ -1,6 +1,7 @@
 <div class="content">
   <div class="filter-condition">
-    <nz-select class="select-control" [(ngModel)]="selectedStateFilterValue" nzAllowClear nzPlaceHolder="小组状态">
+    <nz-select class="select-control" [(ngModel)]="selectedStateFilterValue" nzPlaceHolder="小组状态">
+      <nz-option nzValue="" nzLabel="全部状态"></nz-option>
       <nz-option nzValue="open" nzLabel="开启"></nz-option>
       <nz-option nzValue="close" nzLabel="关闭"></nz-option>
     </nz-select>
@@ -34,20 +35,20 @@
 
     <tbody>
     <tr *ngFor="let data of topicTableListTable.data">
-     <td>{{data.o_number}}</td>
-     <td>{{data.group_name}}</td>
-     <td>{{data.leader}}</td>
-      <td>{{data.member_number}}</td>
-      <td>{{data.topic_number}}</td>
-      <td>{{data.reply_number}}</td>
-      <td>{{data.state}}</td>
+      <td>{{data.groupId}}</td>
+      <td style="color: #108ee9; cursor: pointer;" (click)="navigateTo('client/groupmainlist/'+ data.groupId)">{{data.groupTitle}}</td>
+      <td style="color: #108ee9; cursor: pointer;" (click)="viewUserInfo(data.userId)">{{data.groupOwnerName}}</td>
+      <td>{{data.groupMemberNum}}</td>
+      <td>{{data.groupThreadNum}}</td>
+      <td>{{data.groupPostNum}}</td>
+      <td>{{data.groupStatus == 'open'? '开放': '关闭'}}</td>
       <td><i class="more-operation" nz-popover [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
       <ng-template #operationTemplate>
         <div class="user-management-operation">
-          <div><span (click)="viewGroup(data.o_number)"><i nz-icon nzType="eye" nzTheme="outline"></i>查看小组</span></div>
+          <div><span (click)="navigateTo('client/groupmainlist/'+ data.groupId)"><i nz-icon nzType="eye" nzTheme="outline"></i>查看小组</span></div>
           <div>
-            <span *ngIf="data.state == '开启'" (click)="closeGroup(data.o_number)"><i nz-icon nzType="close" nzTheme="outline"></i>关闭小组</span>
-            <span *ngIf="data.state == '关闭'" (click)="openGroup(data.o_number)"><i nz-icon nzType="check" nzTheme="outline"></i>开启小组</span>
+            <span *ngIf="data.groupStatus == 'open'" (click)="closeGroup(data.groupId)"><i nz-icon nzType="close" nzTheme="outline"></i>关闭小组</span>
+            <span *ngIf="data.groupStatus == 'close'" (click)="openGroup(data.groupId)"><i nz-icon nzType="check" nzTheme="outline"></i>开启小组</span>
           </div>
           <div><span (click)="exchangeGroup(data, setNewLeader)"><i nz-icon nzType="team" nzTheme="outline"></i>转移小组</span></div>
         </div>

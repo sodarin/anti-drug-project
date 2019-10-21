@@ -39,20 +39,20 @@ export class UserInfoEditModalComponent implements OnInit {
   ngOnInit() {
 
     this.userManagementService$.getUserDetailById(this.userId).subscribe(result => {
-      this.userInfo = result;
-      this.trueName = result.trueName;
-      this.gender = result.gender;
-      this.idcard = result.idcard;
-      this.mobile = result.mobile;
-      this.company = result.company;
-      this.job = result.job;
-      this.iam = result.iam;
-      this.signature = result.signature;
-      this.site = result.site;
-      this.weibo = result.weibo;
-      this.weixin = result.weixin;
-      this.qq = result.qq;
-      this.introductionContent = result.about
+      this.userInfo = result.data;
+      this.trueName = result.data.trueName;
+      this.gender = result.data.gender;
+      this.idcard = result.data.idcard;
+      this.mobile = result.data.mobile;
+      this.company = result.data.company;
+      this.job = result.data.job;
+      this.iam = result.data.iam;
+      this.signature = result.data.signature;
+      this.site = result.data.site;
+      this.weibo = result.data.weibo;
+      this.weixin = result.data.weixin;
+      this.qq = result.data.qq;
+      this.introductionContent = result.data.about
     })
   }
 

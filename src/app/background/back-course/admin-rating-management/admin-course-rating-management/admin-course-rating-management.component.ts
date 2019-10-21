@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {CourseReplyService} from '../../../../service/course-reply/course-reply.service';
-import {NzMessageService, NzModalService} from 'ng-zorro-antd';
+import {NzMessageService, NzModalService, NzNotificationService} from 'ng-zorro-antd';
 import {UserInfoViewModalComponent} from '../../../../core/modal/user-info-view-modal/user-info-view-modal.component';
+import {AdminReviewService} from '../../../../service/admin-review/admin-review.service';
 
 @Component({
   selector: 'app-admin-course-rating-management',
@@ -10,10 +11,10 @@ import {UserInfoViewModalComponent} from '../../../../core/modal/user-info-view-
 })
 export class AdminCourseRatingManagementComponent implements OnInit {
 
-  rating  = '-1';
-  keyword: string;
-  authorName: string;
-  courseName: string;
+  rating  = '0';
+  keyword: string = '';
+  authorName: string = '';
+  courseName: string = '';
   // author: string;
   dataList = [];
   displayData = [];
@@ -22,7 +23,12 @@ export class AdminCourseRatingManagementComponent implements OnInit {
   totalPage: number;
   pageIndex: number = 1;
 
-  filterOptions: {};
+  filterOptions = {
+    rating: '',
+    author: '',
+    course: '',
+    keyword: ''
+  };
   checkOption = [];
   isAllDisplayDataChecked = false;
   isOperating = false;
@@ -31,13 +37,17 @@ export class AdminCourseRatingManagementComponent implements OnInit {
   mapOfEllipsis: { [key: string]: boolean } = {};
 
   constructor(
-    private courseReplyService$: CourseReplyService,
-    private  _message: NzMessageService,
+    private adminReviewService$: AdminReviewService,
+    private  _notification: NzNotificationService,
     private  _modalService: NzModalService
   ) { }
 
   ngOnInit() {
     this.searchData()
+  }
+
+  navigateTo(url: string) {
+    window.open(url, '_blank')
   }
 
   search() {
@@ -49,35 +59,46 @@ export class AdminCourseRatingManagementComponent implements OnInit {
       course: this.courseName,
       keyword: this.keyword
     };
-    this.courseReplyService$.filterReplyList(1, 10, this.filterOptions).subscribe(result => {
+    this.pageIndex = 1;
+    this.adminReviewService$.getCourseReviews(1, 10, this.filterOptions).subscribe(result => {
       this.loading = false;
-      this.total = result[0].total;
+      this.total = result.data.total;
       this.totalPage = Math.ceil(this.total / 10);
-      this.dataList = result;
+      this.dataList = result.data.data;
       this.displayData = this.dataList;
       this.displayData.forEach(item => {
-        this.mapOfEllipsis[item.id] = true
-      })
+        this.mapOfEllipsis[item.id] = true;
+        this.mapOfCheckedId[item.id] = false
+      });
+      this.isAllDisplayDataChecked = false;
+      this.isIndeterminate = false;
     }, error1 => {
       this.loading = false;
-      this._message.error(error1.error)
+      this._notification.error(
+        '发生错误！',
+        `${error1.error}`)
     })
   }
   searchData(pageIndex: number = this.pageIndex) {
     this.displayData = [];
     this.loading = true;
-    this.courseReplyService$.getReplyList(pageIndex, 10).subscribe(result => {
+    this.adminReviewService$.getCourseReviews(pageIndex, 10, this.filterOptions).subscribe(result => {
       this.loading = false;
-      this.total = result[0].totalUser;
+      this.total = result.data.total;
       this.totalPage = Math.ceil(this.total / 10);
-      this.dataList = result;
+      this.dataList = result.data.data;
       this.displayData = this.dataList;
       this.displayData.forEach(item => {
-        this.mapOfEllipsis[item.id] = true
-      })
+        this.mapOfEllipsis[item.id] = true;
+        this.mapOfCheckedId[item.id] = false
+      });
+      this.isAllDisplayDataChecked = false;
+      this.isIndeterminate = false;
     }, error1 => {
       this.loading = false;
-      this._message.error(error1.error)
+      this._notification.error(
+        '发生错误！',
+        `${error1.error}`)
     })
   }
   checkAll(value: boolean): void {
@@ -119,21 +140,45 @@ export class AdminCourseRatingManagementComponent implements OnInit {
       if (this.mapOfCheckedId[item.id])
         deleteList.push(item.id)
     });
-    // setTimeout(() => {
-    //   this.dataList.forEach(item => (this.mapOfCheckedId[item.id] = false));
-    //   this.refreshStatus();
-    //   this.isOperating = false;
-    // }, 1000);
+    this.adminReviewService$.deleteCourseReviewList(deleteList).subscribe(result => {
+      this.isOperating = false;
+      if (this.isAllDisplayDataChecked && this.pageIndex === this.totalPage) {
+        this.pageIndex --;
+      }
+      this.searchData();
+      this._notification.create(
+        'success',
+        '删除成功！',
+        ''
+      )
+    }, error1 => {
+      this.isOperating = false;
+      this._notification.create(
+        'error',
+        '发生错误！',
+        `${error1.error}`
+      )
+    })
   }
 
   // 删除单条数据
   deleteRatingRecord(id: string){
 
-    // setTimeout(() => {
-    //   this.dataList.forEach(item => (this.mapOfCheckedId[item.id] = false));
-    //   this.refreshStatus();
-    //   this.isOperating = false;
-    // }, 1000);
+    this.adminReviewService$.deleteCourseReview(id).subscribe(result => {
+      if (this.displayData.length === 1) {
+        this.pageIndex --;
+      }
+      this.searchData();
+      this._notification.success(
+        '成功删除！',
+        ''
+      )
+    }, error1 => {
+      this._notification.error(
+        '发生错误！',
+        `${error1.error}`
+      )
+    })
   }
 
 }

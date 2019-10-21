@@ -1,0 +1,26 @@
+<nz-list [nzDataSource]="data" [nzRenderItem]="item" [nzGrid]="{ gutter: 16, span: 6 }">
+        <ng-template #item let-item>
+          <nz-list-item [nzContent]="nzContent">
+            <ng-template #nzContent>
+                    <nz-card style="width: 180px;margin-top: 16px" [nzLoading]="loading" nzType="vertical" [nzCover]="coverTemplate">
+                            <nz-card-meta
+                              [nzAvatar]="avatarTemplate"
+                              nzTitle="慕课讨论区"
+                            ></nz-card-meta>
+                            <div class="cardbottom">
+                                  <div>
+                                      <i nz-icon nzType="team" nzTheme="outline"></i>
+                                      <span>3  | </span>
+                      
+                                      <i nz-icon nzType="message" nzTheme="outline"></i>
+                                      <span>1</span>
+                                  </div>
+                              </div>
+                          </nz-card>
+            </ng-template>
+          </nz-list-item>
+        </ng-template>
+      </nz-list>
+<ng-template #avatarTemplate>
+<nz-avatar nzIcon="user"></nz-avatar>
+</ng-template>

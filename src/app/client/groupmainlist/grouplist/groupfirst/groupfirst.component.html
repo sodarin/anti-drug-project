@@ -1,0 +1,102 @@
+<div class="filter-condition">
+  <nz-select class="select-control" [(ngModel)]="selectedStateFilterValue" nzAllowClear nzPlaceHolder="全部/精华">
+    <nz-option nzValue="all" nzLabel="全部"></nz-option>
+    <nz-option nzValue="special" nzLabel="精华"></nz-option>
+  </nz-select>
+  <nz-divider nzType="vertical"></nz-divider>
+  <nz-select class="select-control" [(ngModel)]="selectedAttributeFilterValue" nzAllowClear nzPlaceHolder="排序">
+    <nz-option nzValue="new" nzLabel="最新发帖"></nz-option>
+    <nz-option nzValue="last" nzLabel="最后回复"></nz-option>
+    <nz-option nzValue="number" nzLabel="回复数"></nz-option>
+  </nz-select>
+</div>
+
+<nz-divider></nz-divider>
+<nz-list
+  class="demo-loadmore-list"
+  [nzDataSource]="list"
+  [nzItemLayout]="'horizontal'"
+  [nzRenderItem]="item"
+  [nzPagination]="pagination"
+  [nzLoading]="loading"
+>
+  <tr>
+    <th
+      [(nzChecked)]="isAllDisplayDataChecked"
+      (nzCheckedChange)="checkAll($event)"
+    ></th>
+  </tr>
+
+  <ng-template #item let-item>
+    <nz-list-item
+    >
+      <nz-skeleton [nzAvatar]="false" [nzActive]="true" [nzTitle]="false"   [nzLoading]="item.loading">
+        <nz-list-item-meta
+          [nzTitle]="nzTitle"
+          [nzAvatar]="nzAvater"
+          [nzDescription]="nzDescription"
+
+        >
+          <th      [(nzChecked)]="mapOfCheckedId[data.id]"
+                   (nzCheckedChange)="refreshStatus()"></th>
+          <ng-template #nzTitle>
+            <a >{{item.name.last }} <nz-tag nzMode="checkable" [nzChecked]="true" (nzCheckedChange)="checkChange($event)">置顶</nz-tag>
+              <nz-tag nzMode="checkable" [nzChecked]="true" (nzCheckedChange)="checkChange($event)" nzColor="red">精华</nz-tag></a>
+          </ng-template>
+          <ng-template #nzAvater>
+            <nz-avatar [nzShape]="'square'" [nzSize]="64" nzText="回复" >
+
+            </nz-avatar>
+          </ng-template>
+          <ng-template #nzDescription>
+            <span ><nz-avatar nzSize="small" nzIcon="user"
+                              nz-popover
+                              [nzPopoverTitle]="tem"
+                              [nzPopoverContent]="content">
+               <ng-template #tem>
+                    <nz-card style="width:300px;"  [nzActions]="[actionSetting, actionEdit,actionShow]">
+        <nz-card-meta
+          [nzTitle]="nzTitle"
+          [nzDescription]="nzDescription"
+          [nzAvatar]="avatarTemplate"
+        ></nz-card-meta>
+      </nz-card>
+      <ng-template #nzTitle>
+        <span>{{name}} <button class="onebutton" nzType="primary" (click)="focus()"  >关注</button></span>
+      </ng-template>
+      <ng-template #nzDescription>
+        <span>{{name}} <button style="float:right;" nzType="primary" (click)="message()" >私信</button></span>
+       </ng-template>
+      <ng-template #avatarTemplate>
+        <nz-avatar nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png">
+          <!--ng-template #member>
+            <nz-avatar>{{image}}</nz-avatar>
+          </ng-template-->
+        </nz-avatar>
+      </ng-template>
+      <ng-template #actionSetting>
+        <a>{{study}}</a>
+        <p>在学</p>
+      </ng-template>
+      <ng-template #actionEdit>
+        <a>{{focuson}}</a>
+        <p>关注</p>
+      </ng-template>
+                <ng-template #actionShow>
+        <a>{{fans}}</a>
+        <p>粉丝</p>
+      </ng-template>
+                  </ng-template>
+              <ng-template #content>
+                <a style="color: gray">暂没有签名</a>
+              </ng-template>
+            </nz-avatar><b >发起了话题 · {{date}} · 最后回复{{name}} · {{date1}}</b></span>
+          </ng-template>
+          </nz-list-item-meta>
+      </nz-skeleton>
+    </nz-list-item>
+  </ng-template>
+  <ng-template #pagination>
+    <nz-pagination [nzPageIndex]="1" [nzTotal]="50" (nzPageIndexChange)="loadData($event)"></nz-pagination>
+  </ng-template>
+</nz-list>

@@ -1,0 +1,73 @@
+<nz-layout>
+  <nz-divider nzDashed="true"></nz-divider>
+  <nz-content>
+    <div class="left-content" >
+      <nz-page-header nzTitle="Page Title" >
+        <nz-breadcrumb nz-page-header-breadcrumb>
+          <nz-breadcrumb-item>资讯频道</nz-breadcrumb-item>
+          <nz-breadcrumb-item>
+            <a>news.type</a>
+          </nz-breadcrumb-item>
+          <nz-breadcrumb-item>正文</nz-breadcrumb-item>
+        </nz-breadcrumb>
+        <nz-page-header-content>
+          <div class="wrap">
+            <div class="content">
+              <div class="content">
+                <p nz-paragraph>
+                  news.content
+                </p>
+                <p>标签：news.tag</p>
+                <p class="content-link">
+                  <i nz-icon [nzType]="'heart'">news.likes</i>
+                  <button nz-icon [nzType]="'share-alt'" nz-popover  [nzPopoverContent]="contentTemplate" nzPopoverTrigger="click"></button>
+                  <ng-template #contentTemplate>
+                    <div>
+                      <i nz-icon [nzType]="'wechat'"></i>
+                      <i nz-icon [nzType]="'weibo'"></i>
+                      <i nz-icon [nzType]="'qq'"></i>
+                    </div>
+                  </ng-template>
+                </p>
+                <p>文章评论：news.discussion</p>
+                <nz-list *ngIf="data.length" [nzDataSource]="data" [nzRenderItem]="item" [nzItemLayout]="'horizontal'">
+                  <ng-template #item let-item>
+                    <nz-comment [nzAuthor]="item.author" [nzDatetime]="item.displayTime">
+                      <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="item.avatar"></nz-avatar>
+                      <nz-comment-content>
+                        <p>{{ item.content }}</p>
+                      </nz-comment-content>
+                    </nz-comment>
+                  </ng-template>
+                </nz-list>
+                <nz-comment>
+                  <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="user.avatar"></nz-avatar>
+                  <nz-comment-content>
+                    <nz-form-item>
+                      <textarea [(ngModel)]="inputValue" nz-input rows="4"></textarea>
+                    </nz-form-item>
+                    <nz-form-item>
+                      <button nz-button nzType="primary" [nzLoading]="submitting" [disabled]="!inputValue" (click)="handleSubmit()">
+                        发表评论
+                      </button>
+                    </nz-form-item>
+                  </nz-comment-content>
+                </nz-comment>
+              </div>
+            </div>
+          </div>
+        </nz-page-header-content>
+      </nz-page-header>
+
+    </div>
+
+    <div class="right-content">
+
+
+      <nz-divider nzDashed="true"></nz-divider>
+      <div class="classlist-container">
+        <app-news-classification-modal ></app-news-classification-modal>
+      </div>
+    </div>
+  </nz-content>
+</nz-layout>

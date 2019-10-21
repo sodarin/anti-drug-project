@@ -1,6 +1,8 @@
 import {Component, OnInit, TemplateRef} from '@angular/core';
 import {AdminCourseService} from '../../../../service/admin-course/admin-course.service';
-import {NzMessageService, NzModalService} from 'ng-zorro-antd';
+import {NzMessageService, NzModalService, NzNotificationService} from 'ng-zorro-antd';
+import {UserInfoViewModalComponent} from '../../../../core/modal/user-info-view-modal/user-info-view-modal.component';
+import {TeacherRecommendModalComponent} from '../../../../core/modal/teacher-recommend-modal/teacher-recommend-modal.component';
 
 @Component({
   selector: 'app-admin-course-recommendation-table',
@@ -72,7 +74,11 @@ export class AdminCourseRecommendationTableComponent implements OnInit {
   courseClassification = [];
   title: string = "";
   creator: string = "";
-  filterOptions = {};
+  filterOptions = {
+    courseClassification: '',
+    title: '',
+    creator: ''
+  };
 
   totalCourse = 0;
 
@@ -86,8 +92,12 @@ export class AdminCourseRecommendationTableComponent implements OnInit {
   constructor(
     private adminCourseService$: AdminCourseService,
     private _modal: NzModalService,
-    private _message: NzMessageService
-  ) { }
+    private _notification: NzNotificationService
+  ) {
+    this.adminCourseService$.changeStatus.subscribe(value => {
+      this.searchData()
+    })
+  }
 
   ngOnInit() {
   }
@@ -101,34 +111,103 @@ export class AdminCourseRecommendationTableComponent implements OnInit {
       courseClassification: courseClassification,
       title: this.title,
       creator: this.creator
-    }
+    };
+    this.displayData = [];
+    this.loading = true;
+    this.pageIndex = 1;
+    this.adminCourseService$.getRecommendedList(this.pageIndex, 10, this.filterOptions).subscribe( result => {
+      this.loading = false;
+      this.totalCourse = result.data.total ? result.data.total: 0;
+      this.dataList = result.data.data;
+      this.displayData = this.dataList
+    }, error1 => this._notification.create(
+      'error',
+      '发生错误！',
+      `${error1.error}`))
   }
 
   searchData(pageIndex: number = this.pageIndex) {
     this.displayData = [];
     this.loading = true;
-    this.adminCourseService$.getRecommenderCourseList(pageIndex, 10).subscribe( result => {
+    this.adminCourseService$.getRecommendedList(pageIndex, 10, this.filterOptions).subscribe( result => {
       this.loading = false;
-      this.totalCourse = result[0].totalCourse ? result[0].totalCourse: 0;
-      this.dataList = result;
+      this.totalCourse = result.data.total ? result.data.total: 0;
+      this.dataList = result.data.data;
       this.displayData = this.dataList
-    }, error1 => this._message.error(error1.error))
+    }, error1 => this._notification.create(
+      'error',
+      '发生错误！',
+      `${error1.error}`))
   }
 
-  setOrder(data: any, template: TemplateRef<{}>) {
+  setOrder(data: any) {
     this.courseOrder = data.courseOrder;
-    this._modal.create({
+    const modal = this._modal.create({
       nzTitle: '设置推荐序号',
-      nzContent: template,
-      nzOnOk: () => console.log('111')
+      nzContent: TeacherRecommendModalComponent,
+      nzOnOk: instance => instance.submit(),
+      nzOnCancel: instance => instance.destroy()
+    });
+    modal.afterClose.subscribe(result => {
+      if (result) {
+        this.adminCourseService$.setRecommendCourse(data.id, result).subscribe(result => {
+          this._notification.create(
+            'success',
+            '设置推荐成功！',
+            ''
+          );
+          let i;
+          this.adminCourseService$.changeStatus.subscribe(value => i = value);
+          this.adminCourseService$.changeStatus.next(i + 1);
+        }, error1 => {
+          this._notification.create(
+            'error',
+            '发生错误！',
+            `${error1.error}`
+          )
+        })
+      }
     })
   }
 
   cancelRecommendCourse(courseId: string) {
     this._modal.confirm({
       nzTitle: '是否要取消推荐？',
-      nzOnOk: () => console.log('11')
+      nzOnOk: () => {
+        this.adminCourseService$.cancelRecommendCourse(courseId).subscribe(result => {
+          this._notification.create(
+            'success',
+            '取消推荐成功！',
+            ''
+          );
+          let i;
+          this.adminCourseService$.changeStatus.subscribe(value => i = value);
+          this.adminCourseService$.changeStatus.next(i + 1);
+        }, error1 => {
+          this._notification.create(
+            'error',
+            '发生错误！',
+            `${error1.error}`
+          )
+        })
+      }
     })
+  }
+
+  viewUserInfo(id: string) {
+    const modal = this._modal.create({
+      nzTitle: '个人详细信息',
+      nzContent: UserInfoViewModalComponent,
+      nzComponentParams: {
+        userId: id
+      },
+      nzWidth: 600,
+      nzFooter: null
+    })
+  }
+
+  navigateTo(url: string) {
+    window.open(url, '_blank')
   }
 
 }

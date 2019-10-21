@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {ProgramaManagementService} from '../../../../service/programa-management/programa-management.service';
-import {NzMessageService, NzModalService} from 'ng-zorro-antd';
+import {NzMessageService, NzModalService, NzNotificationService} from 'ng-zorro-antd';
 import { moveItemInArray, CdkDragDrop } from '@angular/cdk/drag-drop';
 import {ProgramaEditModalComponent} from '../../../../core/modal/programa-edit-modal/programa-edit-modal.component';
+import {NewsManagementService} from '../../../../service/news-management/news-management.service';
 
 @Component({
   selector: 'app-programa-management-table',
@@ -14,17 +15,11 @@ export class ProgramaManagementTableComponent implements OnInit {
   dataList = [];
   displayData = [];
   loading: boolean = false;
-  total: number = 0;
-  totalPage: number;
-  pageIndex: number = 1;
 
-
-  filterOptions: {};
-  checkOption = [];
 
   constructor(
-    private programaManagementService$: ProgramaManagementService,
-    private _message: NzMessageService,
+    private newsManagementService$: NewsManagementService,
+    private _notification: NzNotificationService,
     private _modalService: NzModalService
   ) { }
 
@@ -32,18 +27,18 @@ export class ProgramaManagementTableComponent implements OnInit {
     this.searchData()
   }
 
-  searchData(pageIndex: number = this.pageIndex) {
+  searchData() {
     this.displayData = [];
     this.loading = true;
-    this.programaManagementService$.getProgramaList(pageIndex, 10).subscribe(result => {
+    this.newsManagementService$.getCategoryList().subscribe(result => {
       this.loading = false;
-      this.total = result[0].totalNews;
-      this.totalPage = Math.ceil(this.total / 10);
       this.dataList = result;
       this.displayData = this.dataList;
     }, error1 => {
       this.loading = false;
-      this._message.error(error1.error)
+      this._notification.error(
+        '发生错误！',
+        `${error1.error}`)
     })
   }
 
@@ -60,6 +55,22 @@ export class ProgramaManagementTableComponent implements OnInit {
       nzWidth: 600,
       nzOnOk: instance => instance.submit(),
       nzOnCancel: instance => instance.destroy()
+    });
+    _modal.afterClose.subscribe(result => {
+      if (result) {
+        this.newsManagementService$.insertCategory(result.name, result.code, result.categoryid).subscribe(result => {
+          this.searchData();
+          this._notification.success(
+            '添加成功！',
+            ''
+          )
+        }, error1 => {
+          this._notification.error(
+            '添加失败',
+            `${error1.error}`
+          )
+        })
+      }
     })
   }
 
@@ -67,20 +78,49 @@ export class ProgramaManagementTableComponent implements OnInit {
   delete(id: string) {
     this._modalService.confirm({
       nzTitle: '是否删除该栏目？',
-      nzOnOk: () => console.log('111')
+      nzOnOk: () => {
+        this.newsManagementService$.deleteCategory(id).subscribe(result => {
+          this.searchData();
+          this._notification.success(
+            '删除成功！',
+            ''
+          )
+        }, error1 => {
+          this._notification.error(
+            '删除失败！',
+            `${error1.error}`
+          )
+        })
+      }
     })
   }
 
-  edit(id: string) {
+  edit(item: any) {
     const _modal = this._modalService.create({
       nzTitle: '添加栏目',
       nzContent: ProgramaEditModalComponent,
       nzComponentParams: {
-        id: id
+        item: item
       },
       nzWidth: 600,
       nzOnOk: instance => instance.submit(),
       nzOnCancel: instance => instance.destroy()
+    });
+    _modal.afterClose.subscribe(result => {
+      if (result) {
+        this.newsManagementService$.updateCategory(item.id, result.name, result.code, result.categoryid).subscribe(result => {
+          this.searchData();
+          this._notification.success(
+            '添加成功！',
+            ''
+          )
+        }, error1 => {
+          this._notification.error(
+            '添加失败！',
+            `${error1.error}`
+          )
+        })
+      }
     })
   }
 }

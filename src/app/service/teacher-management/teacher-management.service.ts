@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 
 @Injectable({
@@ -7,30 +7,31 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 })
 export class TeacherManagementService {
 
+  changeStatus: Subject<number> = new BehaviorSubject<number>(1);
+
   constructor(private _http: HttpClient) { }
 
-  getUserList(targetPage: number, pageSize: number, filterOption: [] = null): Observable<any> {
-    const httpParam = new HttpParams()
-      .set('pageNum', `${targetPage}`)
-      .set('pageSize', `${pageSize}`);
-    return this._http.get(`/user/getAllTeachers`, {
-      params: httpParam
-    })
+  getUserList(targetPage: number, pageSize: number, filterOption: any, promoted = 0): Observable<any> {
+    if (filterOption == '') {
+      return this._http.get(`/user/getAllTeachers?pageNum=${targetPage}&pageSize=${pageSize}&promoted=${promoted}`)
+    } else {
+      const httpParam = new HttpParams()
+        .set('pageNum', `${targetPage}`)
+        .set('pageSize', `${pageSize}`)
+        .set('promoted', `${promoted}`)
+        .set('nickName', `${filterOption}`);
+      return this._http.get(`/user/getAllTeachers`, {
+        params: httpParam
+      })
+    }
+
+
   }
 
   getUserDetailById(userId: string): Observable<any> {
     return this._http.get(`/user/getUserDetail?userId=${userId}`)
   }
 
-  teacherFilter(targetPage: number, pageSize: number,nickName: string): Observable<any> {
-    const httpParam = new HttpParams()
-      .set('pageNum', `${targetPage}`)
-      .set('pageSize', `${pageSize}`)
-      .set('nickName', `${nickName}`);
-    return this._http.get(`/user/getAllTeachers`, {
-      params: httpParam
-    })
-  }
 
   changePromoted(userId: string): Observable<any>{
     return this._http.put("/user/updatePromoted",

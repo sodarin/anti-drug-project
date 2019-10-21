@@ -14,47 +14,34 @@
     <div class="content">
       <div class="left-content">
         <ul nz-menu nzMode="inline" class="sider-menu">
-          <ul>
-            <li nz-menu-item (click)="navigateByUrl('/client/course/base')"
-              [nzSelected]="location?.pathname.startsWith('/client/course/base')">基本信息</li>
-            <li nz-menu-item (click)="navigateByUrl('/client/course/detail')"
-              [nzSelected]="location?.pathname.startsWith('/client/course/detail')">详细信息</li>
-            <li nz-menu-item (click)="navigateByUrl('/client/course/cover')"
-              [nzSelected]="location?.pathname.startsWith('/client/course/cover')">封面图片</li>
-          </ul>
+          <li nz-menu-item (click)="navigateByUrl('/client/course/1/base')"
+            [nzSelected]="location?.pathname.endsWith('base')">基本信息</li>
+          <li nz-menu-item (click)="navigateByUrl('/client/course/1/detail')"
+            [nzSelected]="location?.pathname.endsWith('detail')">详细信息</li>
+          <li nz-menu-item (click)="navigateByUrl('/client/course/1/cover')"
+            [nzSelected]="location?.pathname.endsWith('cover')">封面图片</li>
           <li nz-menu-divider></li>
-          <ul>
-            <li nz-menu-item (click)="navigateByUrl('/client/course/file')"
-              [nzSelected]="location?.pathname.startsWith('/client/course/file')">课程文件</li>
-            <li nz-menu-item (click)="navigateByUrl('/client/course/testpaper')"
-              [nzSelected]="location?.pathname.startsWith('/client/course/testpaper')">试卷管理</li>
-            <li nz-menu-item (click)="navigateByUrl('/client/course/question')"
-              [nzSelected]="location?.pathname.startsWith('/client/course/question')">题目管理</li>
-          </ul>
+          <li nz-menu-item (click)="navigateByUrl('/client/course/1/file')"
+            [nzSelected]="location?.pathname.endsWith('file')">课程文件</li>
+          <li nz-menu-item (click)="navigateByUrl('/client/course/1/testpaper')"
+            [nzSelected]="location?.pathname.endsWith('testpapter')">试卷管理</li>
+          <li nz-menu-item (click)="navigateByUrl('/client/course/1/question')"
+            [nzSelected]="location?.pathname.endsWith('question')">题目管理</li>
           <li nz-menu-divider></li>
-          <ul>
-            <li nz-menu-item (click)="navigateByUrl('/client/course/overview')"
-              [nzSelected]="location?.pathname.startsWith('/client/course/overview')">计划概览</li>
-            <li nz-menu-item (click)="navigateByUrl('/client/course/tasks')"
-              [nzSelected]="location?.pathname.startsWith('/client/course/tasks')">计划任务</li>
-            <li nz-menu-item>计划设置</li>
-            <li nz-menu-item>营销设置</li>
-            <li nz-menu-item>教师设置</li>
-            <li nz-menu-item>学员设置</li>
-          </ul>
+          <li nz-menu-item>计划概览</li>
+          <li nz-menu-item>计划任务</li>
+          <li nz-menu-item (click)="navigateByUrl('/client/course/1/plansetting')"
+            [nzSelected]="location?.pathname.endsWith('plansetting')">计划设置</li>
+          <li nz-menu-item (click)="navigateByUrl('/client/course/1/teachersetting')"
+            [nzSelected]="location?.pathname.endsWith('teachersetting')">教师设置</li>
+          <li nz-menu-item (click)="navigateByUrl('/client/course/1/studentsetting')"
+            [nzSelected]="location?.pathname.endsWith('studentsetting')">学员设置</li>
           <li nz-menu-divider></li>
-          <ul>
-            <li nz-menu-item>试卷批阅</li>
-            <li nz-menu-item>作业批阅</li>
-          </ul>
+          <li nz-menu-item (click)="navigateByUrl('/client/course/1/papers')"
+            [nzSelected]="location?.pathname.endsWith('papers')">试卷批阅</li>
           <li nz-menu-divider></li>
-          <ul>
-            <li nz-menu-item>订单查询</li>
-          </ul>
-          <li nz-menu-divider></li>
-          <ul>
-            <li nz-menu-item>教学计划管理</li>
-          </ul>
+          <li nz-menu-item (click)="navigateByUrl('/client/course/1/teaching_plan')"
+            [nzSelected]="location?.pathname.endsWith('teaching_plan')">教学计划管理</li>
         </ul>
       </div>
       <div class="right-content">

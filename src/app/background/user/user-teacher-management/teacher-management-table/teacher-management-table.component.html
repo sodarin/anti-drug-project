@@ -36,7 +36,10 @@
       <ng-template #operationTemplate>
         <div class="user-management-operation">
           <div><span (click)="viewUserInfo(data.id)"><i nz-icon nzType="eye" nzTheme="outline"></i>查看</span></div>
-          <div><span (click)="setRecommendation(data.id)"><i nz-icon nzType="edit" nzTheme="outline"></i>设置推荐</span></div>
+          <div>
+            <span *ngIf="data.promoted == 0" (click)="setRecommendation(data.id)"><i nz-icon nzType="edit" nzTheme="outline"></i>设置推荐</span>
+            <span *ngIf="data.promoted == 1" (click)="cancelRecommendation(data.id)"><i nz-icon nzType="close-circle" nzTheme="outline"></i>取消推荐</span>
+          </div>
         </div>
       </ng-template>
     </tr>

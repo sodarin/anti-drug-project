@@ -1,0 +1,38 @@
+<div class="table-content">
+  <nz-table #recordListTable
+            [nzData]="recordList"
+            [nzTotal]="total"
+            [nzLoading]="loading"
+            [nzPageSize]="8"
+            [(nzPageIndex)]="pageIndex"
+            (nzPageIndexChange)="searchData()">
+    <thead>
+    <tr>
+      <th>名称</th>
+      <th>学员数</th>
+      <th>状态</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of recordListTable.data">
+      <td>{{data.name}}</td>
+      <td>{{data.number}}</td>
+      <td>{{data.state}}</td>
+      <td>管理
+        <i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
+      <ng-template #operationTemplate>
+
+        <div class="user-management-operation">
+          <div>
+            <span  ><i nz-icon nzType="setting" nzTheme="outline"  (click)="management()"></i>计划管理</span>
+          </div>
+          <div><span ><i nz-icon nzType="setting" nzTheme="outline"  (click)="management()"></i>文件管理</span></div>
+
+        </div>
+      </ng-template>
+    </tr>
+    </tbody>
+  </nz-table>
+
+</div>

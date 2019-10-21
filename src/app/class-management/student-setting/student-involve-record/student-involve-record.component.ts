@@ -22,7 +22,7 @@ export class StudentInvolveRecordComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.classroomId = this.routerInfo.snapshot.params['id'];
+    this.classroomId = location.pathname.split('/')[3];
     this.recordList = [
       {
         imgUrl: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',

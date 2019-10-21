@@ -1,0 +1,17 @@
+<div class="container">
+  <h2>创建小组</h2>
+  <nz-divider></nz-divider>
+  <h3>小组名称</h3>
+  <div nz-row>
+    <input style="width: 715px;" class="name-containing-input" nz-input placeholder="输入小组名称" [(ngModel)]="inputValue" nz-col nzSpan="22" />
+  </div>
+  <div class="introduction-edit-area" nz-row>
+    <h3>小组介绍:</h3>
+    <quill-editor nz-col nzSpan="22" style="height: 240px;" [(ngModel)]="content"></quill-editor>
+  </div>
+  <div>
+    <button style="margin-top: 10%;" nz-button nzType="primary">创建</button>
+  </div>
+</div>
+
+

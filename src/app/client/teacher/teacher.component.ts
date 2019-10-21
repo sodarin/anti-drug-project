@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-teacher',
@@ -6,25 +7,30 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges
   styleUrls: ['./teacher.component.less']
 })
 export class TeacherComponent implements OnInit {
-
   data = [{
+    id:0,
     title: 'Title 1',
     isshow:true
   },
     {
+      id:1,
       title: 'Title 2',
       isshow:true
     },
-    {
+    {id:2,
       title: 'Title 3',
       isshow:true
     },
-    {
+    {id:3,
       title: 'Title 4',
+      isshow:true
+    },
+    {id:4,
+      title: 'Title 5',
       isshow:true
     }]
 
-  constructor() {
+  constructor(private router:Router) {
   }
 
   ngOnInit() {
@@ -52,5 +58,8 @@ export class TeacherComponent implements OnInit {
   //     this._message.error(error1.error)
   //   })
   // }
+  navigateByUrl(url: string) {
+    this.router.navigateByUrl(url);
+  }
 
 }

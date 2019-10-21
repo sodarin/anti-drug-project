@@ -1,1 +1,52 @@
-<p>result-table works!</p>
+<div class="setting-page">
+  <div class="page-header">
+    <h2>{{title}}</h2>
+  </div>
+  <nz-divider></nz-divider>
+  <div class="page-content">
+    <div class="filter-area">
+      <input class="name-containing-input" nz-input placeholder="请输入用户名" [(ngModel)]="name" />
+      <nz-divider nzType="vertical"></nz-divider>
+      <nz-select class="select-control" [(ngModel)]="paperStatus" nzAllowClear="false" nzPlaceHolder="课程状态">
+        <nz-option nzValue="all" nzLabel="全部"></nz-option>
+        <nz-option nzValue="finished" nzLabel="已批阅"></nz-option>
+        <nz-option nzValue="reviewing" nzLabel="未批阅"></nz-option>
+        <nz-option nzValue="doing" nzLabel="进行中"></nz-option>
+      </nz-select>
+      <nz-divider nzType="vertical"></nz-divider>
+      <button (click)="filterStudent()" nz-button nzType="primary" class="search-button"><i nz-icon nzType="search"></i>搜索</button>
+    </div>
+    <nz-divider></nz-divider>
+    <nz-table #involeListTable
+              [nzData]="studentList"
+              [nzTotal]="total"
+              [nzLoading]="loading"
+              [nzPageSize]="8"
+              [(nzPageIndex)]="pageIndex"
+              (nzPageIndexChange)="searchData()">
+      <thead>
+        <tr>
+          <th>姓名</th>
+          <th>成绩</th>
+          <th>提交时间</th>
+          <th>状态</th>
+          <th>批阅人</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of involeListTable.nzData">
+          <td>{{data.name}}</td>
+          <td>{{data.score}}/100.0</td>
+          <td>{{data.handinTime}}</td>
+          <td>{{data.status}}</td>
+          <td>{{data.approvedPeople}}</td>
+          <td><span style="cursor: pointer;">查看结果</span></td>
+        </tr>
+      </tbody>
+    </nz-table>
+
+  </div>
+</div>
+
+

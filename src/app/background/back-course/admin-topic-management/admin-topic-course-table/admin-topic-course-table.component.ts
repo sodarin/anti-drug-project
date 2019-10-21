@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AdminTopicCourseService} from '../../../../service/admin-topic-course/admin-topic-course.service';
-import {NzMessageService, NzModalService} from "ng-zorro-antd";
+import {NzMessageService, NzModalService, NzNotificationService} from 'ng-zorro-antd';
 import {UserInfoViewModalComponent} from '../../../../core/modal/user-info-view-modal/user-info-view-modal.component';
 
 @Component({
@@ -10,11 +10,11 @@ import {UserInfoViewModalComponent} from '../../../../core/modal/user-info-view-
 })
 export class AdminTopicCourseTableComponent implements OnInit {
 
-  postType: string;
-  attribute: string;
-  title: string;
-  keyWord: string;
-  creator: string;
+  postType: string = '';
+  attribute: string = '';
+  title: string = 'title';
+  keyWord: string = '';
+  creator: string = '';
 
   dataList = [];
   displayData = [];
@@ -23,7 +23,13 @@ export class AdminTopicCourseTableComponent implements OnInit {
   totalPage: number;
   pageIndex: number = 1;
 
-  filterOptions: {};
+  filterOptions = {
+    postType: '',
+    attribute: '',
+    title: '',
+    creator: '',
+    keyWord: '',
+  };
   checkOption = [];
 
   // 全选功能
@@ -35,7 +41,7 @@ export class AdminTopicCourseTableComponent implements OnInit {
 
   constructor(
     private adminTopicCourseService$: AdminTopicCourseService,
-    private _message: NzMessageService,
+    private _notification: NzNotificationService,
     private _modalService: NzModalService
   ) { }
 
@@ -53,15 +59,25 @@ export class AdminTopicCourseTableComponent implements OnInit {
       creator: this.creator,
       keyWord: this.keyWord,
     };
-    this.adminTopicCourseService$.filterPostList(1, 10, this.filterOptions).subscribe(result => {
+    this.pageIndex = 1;
+    this.adminTopicCourseService$.getPostList(1, 10, this.filterOptions).subscribe(result => {
       this.loading = false;
-      this.total = result[0].total;
+      this.total = result.data.total;
       this.totalPage = Math.ceil(this.total / 10);
-      this.dataList = result;
+      this.dataList = result.data.data;
       this.displayData = this.dataList;
+      this.displayData.forEach(item => {
+        this.mapOfEllipsis[item.id] = true;
+        this.mapOfCheckedId[item.id] = false
+      });
+      this.isAllDisplayDataChecked = false;
+      this.isIndeterminate = false;
     }, error1 => {
       this.loading = false;
-      this._message.error(error1.error)
+      this._notification.create(
+        'error',
+        '发生错误！',
+        `${error1.error}`)
     })
   }
 
@@ -75,27 +91,47 @@ export class AdminTopicCourseTableComponent implements OnInit {
         deleteIdList.push(item.id)
     });
     this.isOperating = true;
-    // setTimeout(() => {
-    //   this.dataList.forEach(item => (this.mapOfCheckedId[item.id] = false));
-    //   this.refreshStatus();
-    //   this.isOperating = false;
-    // }, 1000);
+    this.adminTopicCourseService$.deleteCourseThreadInBatch(deleteIdList).subscribe(result => {
+      this.isOperating = false;
+      if (this.isAllDisplayDataChecked && this.pageIndex === this.totalPage) {
+        this.pageIndex --;
+      }
+      this.searchData();
+      this._notification.create(
+        'success',
+        '删除成功！',
+        ''
+      )
+    }, error1 => {
+      this.isOperating = false;
+      this._notification.create(
+        'error',
+        '发生错误！',
+        `${error1.error}`
+      )
+    })
   }
   searchData(pageIndex: number = this.pageIndex) {
     this.displayData = [];
     this.loading = true;
-    this.adminTopicCourseService$.getPostList(pageIndex, 10).subscribe(result => {
+    this.adminTopicCourseService$.getPostList(pageIndex, 10, this.filterOptions).subscribe(result => {
       this.loading = false;
-      this.total = result[0].totalNews;
+      this.total = result.data.total;
       this.totalPage = Math.ceil(this.total / 10);
-      this.dataList = result;
+      this.dataList = result.data.data;
       this.displayData = this.dataList;
       this.displayData.forEach(item => {
-        this.mapOfEllipsis[item.id] = true
-      })
+        this.mapOfEllipsis[item.id] = true;
+        this.mapOfCheckedId[item.id] = false
+      });
+      this.isAllDisplayDataChecked = false;
+      this.isIndeterminate = false;
     }, error1 => {
       this.loading = false;
-      this._message.error(error1.error)
+      this._notification.create(
+        'error',
+        '发生错误！',
+        `${error1.error}`)
     })
   }
 
@@ -136,20 +172,133 @@ export class AdminTopicCourseTableComponent implements OnInit {
   }
 
   // 加精
-  setElaborate(id: string, data: any) {
+  setElaborate(item: any, data: any) {
+    if (data) {
+      this._modalService.confirm({
+        nzTitle: '是否设置为精品话题？',
+        nzOnOk: () => {
+          this.adminTopicCourseService$.setCourseThreadElite(item.id).subscribe(result => {
+            this.searchData();
+            this._notification.create(
+              'success',
+              '设置成功！',
+              ''
+            )
+          }, error1 => {
+            this.searchData();
+            this._notification.create(
+              'error',
+              '发生错误！',
+              `${error1.error}`
+            )
+          })
+        },
+        nzOnCancel: () => {
+          this.searchData()
+        }
+      })
+    } else {
+      this._modalService.confirm({
+        nzTitle: '是否取消加精？',
+        nzOnOk: () => {
+          this.adminTopicCourseService$.cancelCourseThreadElite(item.id).subscribe(result => {
+            this.searchData();
+            this._notification.create(
+              'success',
+              '取消成功！',
+              ''
+            )
+          }, error1 => {
+            this.searchData();
+            this._notification.create(
+              'error',
+              '发生错误！',
+              `${error1.error}`
+            )
+          })
+        },
+        nzOnCancel: () => {
+          this.searchData()
+        }
+      })
+    }
 
   }
 
   // 置顶
-  setTop(id: string, data: any) {
-
+  setTop(item: any, data: any) {
+    if (data) {
+      this._modalService.confirm({
+        nzTitle: '是否置顶该话题？',
+        nzOnOk: () => {
+          this.adminTopicCourseService$.setCourseThreadTop(item.id).subscribe(result => {
+            this.searchData();
+            this._notification.create(
+              'success',
+              '设置置顶成功',
+              ''
+            )
+          }, error1 => {
+            this.searchData();
+            this._notification.create(
+              'error',
+              '发生错误！',
+              `${error1.error}`
+            )
+          })
+        },
+        nzOnCancel: () => {
+          this.searchData()
+        }
+      })
+    } else {
+      this._modalService.confirm({
+        nzTitle: '是否取消置顶该话题？',
+        nzOnOk: () => {
+          this.adminTopicCourseService$.cancelCourseThreadTop(item.id).subscribe(result => {
+            this.searchData();
+            this._notification.create(
+              'success',
+              '取消置顶成功',
+              ''
+            )
+          }, error1 => {
+            this.searchData();
+            this._notification.create(
+              'error',
+              '发生错误！',
+              `${error1.error}`
+            )
+          })
+        },
+        nzOnCancel: () => {
+          this.searchData()
+        }
+      })
+    }
   }
 
   delete(id: string): void {
     this._modalService.confirm({
       nzTitle: '是否要删除该条记录？',
       nzOnOk: () => {
-        console.log('111')
+        this.adminTopicCourseService$.deleteCourseThread(id).subscribe(result => {
+          if (this.displayData.length === 1) {
+            this.pageIndex --;
+          }
+          this.searchData();
+          this._notification.create(
+            'success',
+            '删除成功！',
+            ''
+          )
+        }, error1 => {
+          this._notification.create(
+            'error',
+            '发生错误！',
+            `${error1.error}`
+          )
+        })
       }
     })
   }

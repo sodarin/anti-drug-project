@@ -6,16 +6,11 @@
       </h2>
     </div>
   </div>
-  <nz-divider [nzText]="'标签总数： ' + total"></nz-divider>
+  <nz-divider [nzText]="'标签总数： ' + displayData.length"></nz-divider>
   <nz-table
     #tagListTable
     [nzData]="displayData"
-    [nzFrontPagination]="false"
-    [nzTotal]="total"
-    [nzLoading]="loading"
-    [nzPageSize]="10"
-    [(nzPageIndex)]="pageIndex"
-    (nzPageIndexChange)="searchData()">
+    [nzShowPagination]="false">
     <thead>
     <tr>
       <th>ID</th>
@@ -26,7 +21,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let data of tagListTable.data">
+    <tr *ngFor="let data of tagListTable.nzData">
       <td>{{data.id}}</td>
       <td>{{data.name}}</td>
 <!--      标签组id？-->
@@ -35,7 +30,7 @@
       <td><i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
       <ng-template #operationTemplate>
         <div class="user-management-operation">
-          <div><span (click)="edit(data.id)"><i nz-icon nzType="edit" nzTheme="outline"></i>编辑</span></div>
+          <div><span (click)="edit(data)"><i nz-icon nzType="edit" nzTheme="outline"></i>编辑</span></div>
           <div><span (click)="delete(data.id)"><i nz-icon nzType="delete" nzTheme="outline"></i>删除</span></div>
         </div>
       </ng-template>

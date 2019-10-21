@@ -21,14 +21,26 @@ import { QuestionCreateComponent } from './question/question-create/question-cre
 import { PlanOverviewComponent } from './plan-overview/plan-overview.component';
 import { PlanTasksComponent } from './plan-tasks/plan-tasks.component'
 import { NgxEchartsModule } from 'ngx-echarts';
-
+import { TeachingPlanManagementComponent } from './teaching-plan-management/teaching-plan-management.component';
+import { PaperMarkingComponent } from './paper-marking/paper-marking.component';
+import { TestResultTableComponent } from './paper-marking/test-result-table/test-result-table.component';
+import { StudentManagementComponent } from './student-management/student-management.component';
+import { StudentManagementTabComponent } from './student-management/student-management-tab/student-management-tab.component';
+import { FormalStudentTableComponent } from './student-management/formal-student-table/formal-student-table.component';
+import { InformalStudentTableComponent } from './student-management/informal-student-table/informal-student-table.component';
+import { StudentInvolveRecordComponent } from './student-management/student-involve-record/student-involve-record.component';
+import { StudentExitRecordComponent } from './student-management/student-exit-record/student-exit-record.component';
+import { TeacherManagementComponent } from './teacher-management/teacher-management.component';
+import { CoreModule } from '../core/core.module';
+import { PlanSettingComponent } from './plan-setting/plan-setting.component';
 @NgModule({
-  declarations: [CourseManagementComponent, BaseInfoComponent, DetailInfoComponent, CoverPhotoComponent, FileComponent, TestPaperComponent, QuestionComponent, TestPaperCreateComponent, SingleChoiceComponent, MultipleChoiceComponent, EssayComponent, IndefiniteChoiceComponent, JudgementComponent, CompletionComponent, MaterialComponent, QuestionCreateComponent, PlanOverviewComponent, PlanTasksComponent],
+  declarations: [CourseManagementComponent, BaseInfoComponent, DetailInfoComponent, CoverPhotoComponent, FileComponent, TestPaperComponent, QuestionComponent, TestPaperCreateComponent, SingleChoiceComponent, MultipleChoiceComponent, EssayComponent, IndefiniteChoiceComponent, JudgementComponent, CompletionComponent, MaterialComponent, QuestionCreateComponent, PlanOverviewComponent, PlanTasksComponent, CourseManagementComponent, BaseInfoComponent, DetailInfoComponent, CoverPhotoComponent, FileComponent, TestPaperComponent, QuestionComponent, TeachingPlanManagementComponent, PaperMarkingComponent, TestResultTableComponent, StudentManagementComponent, StudentManagementTabComponent, FormalStudentTableComponent, InformalStudentTableComponent, StudentInvolveRecordComponent, StudentExitRecordComponent, TeacherManagementComponent, PlanSettingComponent],
   imports: [
     ShareModule,
     RouterModule,
-    QuillModule, 
-    NgxEchartsModule
+    QuillModule,
+    NgxEchartsModule,
+    CoreModule
   ]
 })
 export class CourseManagementModule { }

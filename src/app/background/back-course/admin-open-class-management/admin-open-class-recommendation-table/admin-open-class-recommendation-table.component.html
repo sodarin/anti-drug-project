@@ -22,7 +22,7 @@
       <th>编号</th>
       <th>名称</th>
       <th>创建者</th>
-      <td>推荐时间</td>
+      <th>推荐时间</th>
       <th>操作</th>
     </tr>
     </thead>
@@ -30,14 +30,14 @@
     <tr *ngFor="let data of openClassListTable.data">
       <td>{{data.courseId}}</td>
       <td>
-        <span style="cursor: pointer; color: #108ee9;" (click)="navigateTo(data.courseId)">{{data.courseName}}</span><br/>
-        <span>分类：{{data.courseClassification}}</span>
+        <span style="cursor: pointer; color: #108ee9;" (click)="navigateTo(data.courseId)">{{data.title}}</span><br/>
+        <span>分类：{{data.categoryName ? data.categoryName: '- -'}}</span>
       </td>
       <td>
-        <span style="color: #108ee9;" (click)="openTeacherIntroModal(data.creatorId)">{{data.creator}}</span><br/>
-        <span>{{data.creatTime}}</span>
+        <span style="cursor: pointer; color: #108ee9;" (click)="openTeacherIntroModal(data.creatorId)">{{data.creator}}</span><br/>
+        <span>{{data.createdtime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
       </td>
-      <td>{{data.recommendTime}}</td>
+      <td>{{data.recommendTime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
       <td><i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
       <ng-template #operationTemplate>
         <div class="user-management-operation">

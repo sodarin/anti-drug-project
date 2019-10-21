@@ -9,7 +9,7 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class TutorSettingComponent implements OnInit {
 
-  classroomid: number;
+  classroomid: string;
 
   tutorList = [];
   loading: boolean = false;
@@ -19,7 +19,7 @@ export class TutorSettingComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.classroomid = this.routerInfo.snapshot.params['id'];
+    this.classroomid = location.pathname.split('/')[3];
     this.tutorList = [
       {'name': '张三'}
     ]

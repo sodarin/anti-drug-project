@@ -1,0 +1,46 @@
+<div nz-row>
+    <div nz-col nzSpan="2">
+        <b>类型:</b>
+    </div>
+    <div nz-col nzSpan="22" style="margin-top:-13px;">
+        <ul nz-menu nzMode="horizontal">
+            <li nz-menu-item *ngFor="let item of classificationtypes;let ind = index">
+                <!-- [nzSelected]="commonkey[ind]" (click)="CommonClickTag(item.name)"  -->
+                {{item}}
+            </li>
+        </ul>
+    </div>
+</div>
+<div nz-row>
+    <div nz-col nzSpan="2" style="margin-top:15px;">
+        <b>标签:</b>
+    </div>
+    <div nz-col nzSpan="22" style="margin-top:10px;">
+        <!--[nzColor]="'#108ee9'"-->
+        <nz-tag *ngFor="let item of classificationtags;let ind = index" [nzColor]="''"
+            (nzCheckedChange)="checkChange($event)" style="padding: 3px;margin: 3px;"> {{item}}</nz-tag>
+        <nz-divider style="margin: 10px;margin-left: 0;"></nz-divider>
+    </div>
+</div>
+
+<div nz-row>
+    <div nz-col nzSpan="2" style="margin-top:5px;">
+        <b>筛选:</b>
+    </div>
+    <div nz-col nzSpan="22" style="margin-top:0px;">
+        <span>时间:&nbsp;&nbsp;</span>
+        <nz-range-picker [(ngModel)]="dateRange" (ngModelChange)="onChange($event)" [nzPlaceHolder]="['开始时间','结束时间']">
+        </nz-range-picker>
+        <nz-select style="width: 120px;margin-left: 20px;" [(ngModel)]="currenttranscodingState" nzAllowClear nzPlaceHolder="转码状态">
+            <nz-option nzValue="All" nzLabel="转码状态"></nz-option>
+            <nz-option *ngFor="let item of transcodingStates;let ind = index"  nzValue="{{item}}" nzLabel="{{item}}"></nz-option>
+        </nz-select>
+        <nz-select style="width: 120px;margin-left: 20px;" [(ngModel)]="currentuseStates" nzAllowClear nzPlaceHolder="使用状态">
+            <nz-option nzValue="All" nzLabel="使用状态"></nz-option>
+            <nz-option *ngFor="let item of useStates;let ind = index"  nzValue="{{item}}" nzLabel="{{item}}"></nz-option>
+        </nz-select>
+        <nz-divider style="margin: 10px;margin-left: 0;"></nz-divider>
+    </div>
+
+</div>
+<nz-divider style="margin: 5px;margin-left: 0;"></nz-divider>

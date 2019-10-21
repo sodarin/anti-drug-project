@@ -28,22 +28,25 @@
     </thead>
     <tbody>
     <tr *ngFor="let data of courseListTable.data">
-      <td>{{data.courseOrder}}</td>
-      <td>{{data.courseName}}</td>
-      <td>{{data.creator}}</td>
-      <td>{{data.recommendationTime}}</td>
+      <td>{{data.recommendOrder}}</td>
+      <td>
+        <span style="color: #108ee9; cursor: pointer;" (click)="navigateTo('/client/course/' + data.courseId)">{{data.title}}</span><br/>
+        <span>分类：{{data.categoryName ? data.categoryName: '- -'}}</span><br />
+      </td>
+      <td>
+        <span style="cursor: pointer; color: #108ee9;" (click)="viewUserInfo(data.creatorId)">{{data.creator}}</span><br/>
+        <span style="font-size: 12px; color: rgba(0, 0, 0, .65);">{{data.createdTime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
+      </td>
+      <td>{{data.recommendTime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
       <td><i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
       <ng-template #operationTemplate>
         <div class="user-management-operation">
-          <div><span (click)="setOrder(data, orderSettingModal)"><i nz-icon nzType="ordered-list" nzTheme="outline"></i>设置序号</span></div>
-          <div><span (click)="cancelRecommendCourse(data.courseId)"><i nz-icon nzType="down-square" nzTheme="outline"></i>取消推荐</span></div>
+          <div><span (click)="setOrder(data)"><i nz-icon nzType="ordered-list" nzTheme="outline"></i>设置序号</span></div>
+          <div><span (click)="cancelRecommendCourse(data.id)"><i nz-icon nzType="down-square" nzTheme="outline"></i>取消推荐</span></div>
         </div>
       </ng-template>
     </tr>
     </tbody>
   </nz-table>
 
-  <ng-template #orderSettingModal>
-    <div><span>设置序号： </span><nz-input-number [(ngModel)]="courseOrder" [nzMin]="1" [nzStep]="1"></nz-input-number></div>
-  </ng-template>
 </div>

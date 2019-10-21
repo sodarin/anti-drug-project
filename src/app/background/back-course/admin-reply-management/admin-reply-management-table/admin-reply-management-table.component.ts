@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {CourseReplyService} from '../../../../service/course-reply/course-reply.service';
-import {NzMessageService, NzModalService} from 'ng-zorro-antd';
+import {NzMessageService, NzModalService, NzNotificationService} from 'ng-zorro-antd';
 import {UserInfoViewModalComponent} from '../../../../core/modal/user-info-view-modal/user-info-view-modal.component';
 @Component({
   selector: 'app-admin-reply-management-table',
@@ -8,9 +8,9 @@ import {UserInfoViewModalComponent} from '../../../../core/modal/user-info-view-
   styleUrls: ['./admin-reply-management-table.component.less']
 })
 export class AdminReplyManagementTableComponent implements OnInit {
-  replyname   = '';
-  keyword: string;
-  inputValue: string;
+  replyname   = 'title';
+  keyword: string = '';
+  inputValue: string = '';
   // author: string;
   dataList = [];
   displayData = [];
@@ -19,7 +19,11 @@ export class AdminReplyManagementTableComponent implements OnInit {
   totalPage: number;
   pageIndex: number = 1;
 
-  filterOptions: {};
+  filterOptions = {
+    topic: '',
+    searchParameter: '',
+    keyword: ''
+  };
   checkOption = [];
   isAllDisplayDataChecked = false;
   isOperating = false;
@@ -29,8 +33,8 @@ export class AdminReplyManagementTableComponent implements OnInit {
 
   constructor(
     private courseReplyService$: CourseReplyService,
-    private  _message: NzMessageService,
-    private  _modalService: NzModalService
+    private _notification: NzNotificationService,
+    private _modalService: NzModalService
   ) { }
 
   ngOnInit() {
@@ -46,35 +50,48 @@ export class AdminReplyManagementTableComponent implements OnInit {
       searchParameter: this.inputValue,
       keyword: this.keyword
     };
-    this.courseReplyService$.filterReplyList(1, 10, this.filterOptions).subscribe(result => {
+    this.pageIndex = 1;
+    this.courseReplyService$.getReplyList(1, 10, this.filterOptions).subscribe(result => {
       this.loading = false;
-      this.total = result[0].total;
+      this.total = result.data.total;
       this.totalPage = Math.ceil(this.total / 10);
-      this.dataList = result;
+      this.dataList = result.data.data;
       this.displayData = this.dataList;
       this.displayData.forEach(item => {
-        this.mapOfEllipsis[item.id] = true
-      })
+        this.mapOfEllipsis[item.id] = true;
+        this.mapOfCheckedId[item.id] = false
+      });
+      this.isAllDisplayDataChecked = false;
+      this.isIndeterminate = false;
     }, error1 => {
       this.loading = false;
-      this._message.error(error1.error)
+      this._notification.create(
+        'error',
+        '发生错误！',
+        `${error1.error}`)
     })
   }
   searchData(pageIndex: number = this.pageIndex) {
     this.displayData = [];
     this.loading = true;
-    this.courseReplyService$.getReplyList(pageIndex, 10).subscribe(result => {
+    this.courseReplyService$.getReplyList(pageIndex, 10, this.filterOptions).subscribe(result => {
       this.loading = false;
-      this.total = result[0].totalUser;
+      this.total = result.data.total;
       this.totalPage = Math.ceil(this.total / 10);
-      this.dataList = result;
+      this.dataList = result.data.data;
       this.displayData = this.dataList;
       this.displayData.forEach(item => {
-        this.mapOfEllipsis[item.id] = true
-      })
+        this.mapOfEllipsis[item.id] = true;
+        this.mapOfCheckedId[item.id] = false
+      });
+      this.isAllDisplayDataChecked = false;
+      this.isIndeterminate = false;
     }, error1 => {
       this.loading = false;
-      this._message.error(error1.error)
+      this._notification.create(
+        'error',
+        '发生错误！',
+        `${error1.error}`)
     })
 }
   checkAll(value: boolean): void {
@@ -84,12 +101,17 @@ export class AdminReplyManagementTableComponent implements OnInit {
 
   refreshStatus(): void {
     this.isAllDisplayDataChecked = this.displayData
-      .filter(item => !item.disabled)
       .every(item => this.mapOfCheckedId[item.id]);
     this.isIndeterminate =
       this.displayData.some(item => this.mapOfCheckedId[item.id]) &&
       !this.isAllDisplayDataChecked;
    }
+
+
+  navigateTo(url: string) {
+    window.open(url, '_blank')
+  }
+
 
   // 导航至问答页面，在新窗口打开
   turnToDetailPage(id: string) {
@@ -122,23 +144,57 @@ export class AdminReplyManagementTableComponent implements OnInit {
       if (this.mapOfCheckedId[item.id])
         deleteList.push(item.id)
     });
-    // setTimeout(() => {
-    //   this.dataList.forEach(item => (this.mapOfCheckedId[item.id] = false));
-    //   this.refreshStatus();
-    //   this.isOperating = false;
-    // }, 1000);
+    this.courseReplyService$.deleteQuestionList(deleteList).subscribe(result => {
+      this.isOperating = false;
+      if (this.isAllDisplayDataChecked && this.pageIndex === this.totalPage) {
+        this.pageIndex --;
+      }
+      this.searchData();
+      this._notification.create(
+        'success',
+        '删除成功！',
+        ''
+      )
+    }, error1 => {
+      this.isOperating = false;
+      this._notification.create(
+        'error',
+        '发生错误！',
+        `${error1.error}`
+      )
+    })
   }
   // 提醒教师操作
   noticeTeacher(id: string){
-
+    this.courseReplyService$.remindTeacher(id).subscribe(result => {
+      this._notification.success(
+        '推送通知发送成功！',
+        ''
+      )
+    }, error1 => {
+      this._notification.error(
+        '发生错误！',
+        `${error1.error}`
+      )
+    })
   }
   // 删除单条数据
   deleteReply(id: string){
 
-    // setTimeout(() => {
-    //   this.dataList.forEach(item => (this.mapOfCheckedId[item.id] = false));
-    //   this.refreshStatus();
-    //   this.isOperating = false;
-    // }, 1000);
+    this.courseReplyService$.deleteQuestion(id).subscribe(result => {
+      if (this.displayData.length === 1) {
+        this.pageIndex --;
+      }
+      this.searchData();
+      this._notification.success(
+        '成功删除！',
+        ''
+      )
+    }, error1 => {
+      this._notification.error(
+        '发生错误！',
+        `${error1.error}`
+      )
+    })
   }
 }

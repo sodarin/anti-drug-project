@@ -14,7 +14,7 @@ export class CourseManagementComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
-    this.location = this.location;
+    this.location = location
   }
   navigateByUrl(url: string) {
     this.router.navigateByUrl(url);

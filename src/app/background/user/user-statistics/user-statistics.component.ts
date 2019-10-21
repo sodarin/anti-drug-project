@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {UserStatisticsService} from '../../../service/user-statistics/user-statistics.service';
-import {NzMessageService} from 'ng-zorro-antd';
+import {NzMessageService, NzNotificationService} from 'ng-zorro-antd';
 import {saveAs} from 'file-saver';
 
 @Component({
@@ -10,7 +10,7 @@ import {saveAs} from 'file-saver';
 })
 export class UserStatisticsComponent implements OnInit {
 
-  usernameInput: string;
+  usernameInput: string = '';
 
   dateRange = [];
 
@@ -21,34 +21,43 @@ export class UserStatisticsComponent implements OnInit {
   totalPage: number;
   pageIndex: number = 1;
 
-  filterOptions = {};
+  filterOptions = {
+    starTime: 0,
+    endTime: 0,
+    searchParameter: ''
+  };
 
   constructor(
     private userStatisticsService$: UserStatisticsService,
-    private _message: NzMessageService
+    private _notification: NzNotificationService
   ) { }
 
   ngOnInit() {
+    this.searchData()
   }
 
-  searchData(pageIndex: number = this.pageIndex) {
+  searchData(filterOptions = this.filterOptions, pageIndex: number = this.pageIndex) {
     this.displayData = [];
     this.loading = true;
-    this.userStatisticsService$.getUserStatisticTable(pageIndex, 10).subscribe(result => {
+    this.userStatisticsService$.getUserStatisticTable(pageIndex, 10, filterOptions).subscribe(result => {
       this.loading = false;
-      this.total = result[0].total? result[0].total: 0;
       this.totalPage = Math.ceil(this.total / 10);
       this.dataList = result;
       this.displayData = this.dataList;
     }, error1 => {
       this.loading = false;
-      this._message.error(error1.error)
+      this._notification.create(
+        'error',
+        `${error1.error}`,
+        ''
+      )
     })
   }
 
   search() {
     let startTime = 0;
     let endTime = new Date().getTime() / 1000;
+    this.pageIndex = 1;
     if (this.dateRange.length == 2) {
       startTime = Math.floor(new Date(this.dateRange[0]).getTime() / 1000);
       endTime = Math.floor(new Date(this.dateRange[1]).getTime() / 1000)
@@ -60,6 +69,19 @@ export class UserStatisticsComponent implements OnInit {
       endTime: endTime,
       searchParameter: this.usernameInput
     };
+    this.userStatisticsService$.getUserStatisticTable( 1, 10, this.filterOptions).subscribe(result => {
+      this.loading = false;
+      this.totalPage = Math.ceil(this.total / 10);
+      this.dataList = result;
+      this.displayData = this.dataList;
+    }, error1 => {
+      this.loading = false;
+      this._notification.create(
+        'error',
+        `${error1.error}`,
+        ''
+      )
+    })
   }
 
   exportDta() {

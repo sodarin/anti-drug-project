@@ -9,7 +9,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 })
 export class ClassInfoManagementComponent implements OnInit {
 
-  classroomId: number;
+  classroomId: string;
 
   classInfoEditForm: FormGroup;
 
@@ -25,7 +25,7 @@ export class ClassInfoManagementComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.classroomId = this.routerInfo.snapshot.params['id'];
+    this.classroomId = location.pathname.split('/')[3];
     this.tagOptions = [
       {label: '班级', value: 'class'},
       {label: '课程', value: 'course'},

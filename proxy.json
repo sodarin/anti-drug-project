@@ -5,6 +5,18 @@
     "logLevel": "debug",
     "changeOrigin": true
   },
+  "/login": {
+    "target": "http://202.199.13.65:9005",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/classroom": {
+    "target": "http://202.199.13.113:9001",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
   "/course": {
     "target": "http://202.199.13.65:9002",
     "secure": false,
@@ -17,14 +29,14 @@
     "logLevel": "debug",
     "changeOrigin": true
   },
-  "/tagGroup": {
-    "target": "http://172.28.150.67:8001",
+  "/groupBack": {
+    "target": "http://202.199.13.65:9010",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
-  "/login": {
-    "target": "http://39.106.90.140:8002",
+  "/groupGate": {
+    "target": "http://202.199.13.65:9010",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true

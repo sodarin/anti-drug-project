@@ -33,6 +33,9 @@ import { LoginPasswdEditModelComponent } from './core/modal/login-passwd-edit-mo
 import { SecurityProblemEditModalComponent } from './core/modal/security-problem-edit-modal/security-problem-edit-modal.component';
 import { CourseManagementModule } from './course-management/course-management.module'
 import { NgxEchartsModule } from 'ngx-echarts';
+import { PaperScoreStatisticsComponent } from './core/modal/paper-score-statistics/paper-score-statistics.component';
+import { TeachingPlanAddingModalComponent } from './core/modal/teaching-plan-adding-modal/teaching-plan-adding-modal.component';
+
 registerLocaleData(zh);
 @NgModule({
   declarations: [
@@ -76,7 +79,9 @@ registerLocaleData(zh);
     NewsEditModalComponent,
     ProgramaEditModalComponent,
     AnnouncementEditModalComponent,
-    AddingCourseModalComponent
+    AddingCourseModalComponent,
+    PaperScoreStatisticsComponent,
+    TeachingPlanAddingModalComponent
   ],
   bootstrap: [AppComponent]
 })

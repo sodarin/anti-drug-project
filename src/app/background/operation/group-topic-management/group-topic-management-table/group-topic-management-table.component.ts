@@ -1,9 +1,9 @@
 import {Component, OnInit, TemplateRef} from '@angular/core';
 import {GroupTopicManagementTableService} from '../../../../service/group-topic-management-table/group-topic-management-table.service';
-import {NzMessageService, NzModalService} from 'ng-zorro-antd';
-import {UserInfoViewModalComponent} from "../../../../core/modal/user-info-view-modal/user-info-view-modal.component";
+import {NzModalService, NzNotificationService} from 'ng-zorro-antd';
 import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UserInfoViewModalComponent} from '../../../../core/modal/user-info-view-modal/user-info-view-modal.component';
 
 
 @Component({
@@ -13,9 +13,9 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 })
 
 export class GroupTopicManagementTableComponent implements OnInit {
-  selectedStateFilterValue   = 'open';
-  groupName: string;
-  leader: string;
+  selectedStateFilterValue = '';
+  groupName: string = '';
+  leader: string = '';
 
   dataList = [];
   displayData = [];
@@ -24,7 +24,11 @@ export class GroupTopicManagementTableComponent implements OnInit {
   totalPage: number;
   pageIndex: number = 1;
 
-  filterOptions: {};
+  filterOptions = {
+    state: '',
+    groupName: '',
+    leader: ''
+  };
   checkOption = [];
   topicTableListTable: any;
 
@@ -32,7 +36,7 @@ export class GroupTopicManagementTableComponent implements OnInit {
   introductionContent: string = '';
   constructor(
     private groupTopicManagementTableService$: GroupTopicManagementTableService,
-    private  _message: NzMessageService,
+    private  _notification: NzNotificationService,
     private  _modalService: NzModalService,
     private router: Router,
     private fb: FormBuilder
@@ -46,6 +50,10 @@ export class GroupTopicManagementTableComponent implements OnInit {
   }
   // 搜索
 
+  navigateTo(url: string) {
+    window.open(url, '_blank')
+  }
+
   filterTopicTable() {
     this.displayData = [];
     this.loading = true;
@@ -54,34 +62,47 @@ export class GroupTopicManagementTableComponent implements OnInit {
       groupName: this.groupName,
       leader: this.leader
     };
-    this.groupTopicManagementTableService$.filterTopicTableList(1, 10, this.filterOptions).subscribe(result => {
+    this.pageIndex = 1;
+    this.groupTopicManagementTableService$.getTopicTableList(1, 10, this.filterOptions).subscribe(result => {
       this.loading = false;
-      this.total = result[0].total;
+      this.total = result.data.total;
       this.totalPage = Math.ceil(this.total / 10);
-      this.dataList = result;
+      this.dataList = result.data.data;
       this.displayData = this.dataList;
     }, error1 => {
       this.loading = false;
-      this._message.error(error1.error)
+      this._notification.error(
+        '发生错误！',
+        `${error1.error}`)
     })
   }
   searchData(pageIndex: number = this.pageIndex) {
     this.displayData = [];
     this.loading = true;
-    this.groupTopicManagementTableService$.getTopicTableList(pageIndex, 10).subscribe(result => {
+    this.groupTopicManagementTableService$.getTopicTableList(pageIndex, 10, this.filterOptions).subscribe(result => {
       this.loading = false;
-      this.total = result[0].totalUser;
+      this.total = result.data.total;
       this.totalPage = Math.ceil(this.total / 10);
-      this.dataList = result;
+      this.dataList = result.data.data;
       this.displayData = this.dataList;
     }, error1 => {
       this.loading = false;
-      this._message.error(error1.error)
+      this._notification.error(
+        '发生错误！',
+        `${error1.error}`)
     })
   }
-  // 查看小组
-  viewGroup(id: any ){
-    window.open(``, '_blank')
+
+  viewUserInfo(id: string) {
+    const modal = this._modalService.create({
+      nzTitle: '个人详细信息',
+      nzContent: UserInfoViewModalComponent,
+      nzComponentParams: {
+        userId: id
+      },
+      nzWidth: 600,
+      nzFooter: null
+    })
   }
 
   createNewGroup(template: TemplateRef<{}>) {
@@ -94,7 +115,22 @@ export class GroupTopicManagementTableComponent implements OnInit {
         let shouldBeClosed = false;
         this.newGroupForm.markAllAsTouched();
         this.newGroupForm.controls.groupName.updateValueAndValidity();
-        return shouldBeClosed
+        if (!this.newGroupForm.controls.groupName.errors) {
+          this.groupTopicManagementTableService$.createNewGroup(this.newGroupForm.controls.groupName.value, this.introductionContent).subscribe(result => {
+            this.searchData();
+            this._notification.success(
+              '创建成功！',
+              ''
+            );
+          }, error1 => {
+            this._notification.error(
+              '发生错误！',
+              `${error1.error}`
+            )
+          })
+        } else {
+          return shouldBeClosed
+        }
       }
     })
   }
@@ -102,7 +138,20 @@ export class GroupTopicManagementTableComponent implements OnInit {
   openGroup(id: string) {
     this._modalService.confirm({
       nzTitle: '是否要开启小组？',
-      nzOnOk: () => console.log('1111')
+      nzOnOk: () => {
+        this.groupTopicManagementTableService$.openGroup(id).subscribe(result => {
+          this.searchData();
+          this._notification.success(
+            '开启成功！',
+            ''
+          )
+        }, error1 => {
+          this._notification.error(
+            '发生错误！',
+            `${error1.error}`
+          )
+        })
+      }
     })
   }
 
@@ -110,7 +159,20 @@ export class GroupTopicManagementTableComponent implements OnInit {
   closeGroup(id: any){
     this._modalService.confirm({
       nzTitle: '是否要关闭小组？',
-      nzOnOk: () => console.log('1111')
+      nzOnOk: () => {
+        this.groupTopicManagementTableService$.closeGroup(id).subscribe(result => {
+          this.searchData();
+          this._notification.success(
+            '关闭成功！',
+            ''
+          )
+        }, error1 => {
+          this._notification.error(
+            '发生错误！',
+            `${error1.error}`
+          )
+        })
+      }
     })
   }
   // 转移小组

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {ClientClassManagementService} from '../../service/client-class-management/client-class-management.service';
+import {NzNotificationService} from 'ng-zorro-antd';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-management-dashboard',
@@ -7,16 +10,58 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ManagementDashboardComponent implements OnInit {
 
-  isSetIntro: boolean = true;
-  isSetImage: boolean = true;
+  classroomId: string;
+
+  introduction: string;
+
+  classroom: any;
 
   commentList = [];
 
   commentLoading: boolean = false;
 
-  constructor() { }
+  constructor(
+    private classroomManagement$: ClientClassManagementService,
+    private _notification: NzNotificationService
+  ) { }
 
   ngOnInit() {
+    this.classroomId = location.pathname.split('/')[3];
+    this.getClassroomDetail();
+    this.getReviewList()
+  }
+
+  getClassroomDetail() {
+    this.classroomManagement$.getClassroomDetail(this.classroomId).subscribe(result => {
+      this.classroom = result.data;
+    }, error1 => {
+      this._notification.error(
+        '发生错误！',
+        `${error1.error}`
+      )
+    })
+  }
+
+  getIntroduction() {
+    this.classroomManagement$.getIntroduction(this.classroomId).subscribe(result => {
+      this.introduction = result.data;
+    }, error1 => {
+      this._notification.error(
+        '发生错误！',
+        `${error1.error}`
+      )
+    })
+  }
+
+  getReviewList() {
+    this.classroomManagement$.getClassroomReview(this.classroomId, 1, 5).subscribe(result => {
+      this.commentList = result.data;
+    }, error1 => {
+      this._notification.error(
+        '发生错误！',
+        `${error1.error}`
+      )
+    })
   }
 
 }
