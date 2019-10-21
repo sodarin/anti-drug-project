@@ -25,10 +25,10 @@
     </thead>
     <tbody>
     <tr *ngFor="let data of promotedTeacherListTable.data">
-      <td *ngIf="data.promoted == 1">{{data.promotedSeq}}</td>
-      <td *ngIf="data.promoted == 1">{{data.nickName}}</td>
-      <td *ngIf="data.promoted == 1">{{data.promotedTimeString}}</td>
-      <td *ngIf="data.promoted == 1"><i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
+      <td>{{data.promotedSeq}}</td>
+      <td>{{data.nickName}}</td>
+      <td>{{data.promotedTimeString}}</td>
+      <td><i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
       <ng-template #operationTemplate>
         <div class="user-management-operation">
           <div><span (click)="setRecommend(data.id)"><i nz-icon nzType="edit" nzTheme="outline"></i>设置序号</span></div>

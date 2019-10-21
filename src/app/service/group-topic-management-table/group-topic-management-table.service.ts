@@ -8,18 +8,26 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 export class GroupTopicManagementTableService {
 
   constructor(private _http: HttpClient) { }
-  getTopicTableList(targetPage: number, pageSize: number): Observable<any> {
-    return this._http.post(`/group/getIndexGroup`, {
-      pageSize: pageSize,
-      pageNum: targetPage,
+  getTopicTableList(targetPage: number, pageSize: number, filterOptions: any): Observable<any> {
+    if (filterOptions.state == '' && filterOptions.groupName == '' && filterOptions.leader == '') {
+      return this._http.get(`/groupBack/getIndexGroup?pageNum=${targetPage}&pageSize=${pageSize}`)
+    } else {
+      return this._http.get(`/groupBack/getIndexGroup?pageNum=${targetPage}&pageSize=${pageSize}&groupStatus=${filterOptions.state}&groupOwnerName=${filterOptions.leader}&groupTitle=${filterOptions.groupName}`)
+    }
+  }
+
+  createNewGroup(title: string, about: string): Observable<any> {
+    return this._http.post(`/groupGate/addNewGroup`, {
+      title: title,
+      about: about
     })
   }
-  filterTopicTableList(targetPage: number, pageSize: number, filterOptions: any): Observable<any> {
-    return this._http.post(`/group/getIndexGroup`, {
-      pageSize: pageSize,
-      pageNum: targetPage,
-      state: filterOptions.state,
-      searchParameter: filterOptions.searchParameter,
-    })
-}
+
+  closeGroup(id: string): Observable<any> {
+    return this._http.put(`/groupBack/closeGroup?id=${id}`, {})
+  }
+
+  openGroup(id: string): Observable<any> {
+    return this._http.put(`/groupBack/openGroup?id=${id}`, {})
+  }
 }

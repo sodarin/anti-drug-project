@@ -1,6 +1,6 @@
 import {Component, OnInit, TemplateRef} from '@angular/core';
 import {UserManagementService} from '../../../../service/user-management/user-management.service';
-import {NzMessageService, NzModalService, UploadFile} from 'ng-zorro-antd';
+import {NzMessageService, NzModalService, NzNotificationService, UploadFile} from 'ng-zorro-antd';
 import {UserInfoViewModalComponent} from '../../../../core/modal/user-info-view-modal/user-info-view-modal.component';
 import {UserInfoEditModalComponent} from '../../../../core/modal/user-info-edit-modal/user-info-edit-modal.component';
 import {Observable, Observer} from 'rxjs';
@@ -32,7 +32,14 @@ export class UserManagementTableComponent implements OnInit {
   selectedUserId: string;
   userInfoPageVisible: boolean;
 
-  filterOptions: {};
+  filterOptions = {
+    searchTimeType: '',
+    starTime: 0,
+    endTime: 0,
+    role: '',
+    searchType: '',
+    searchParameter: ''
+  };
   checkOption = [];
 
   avatarUrl: string;
@@ -44,7 +51,7 @@ export class UserManagementTableComponent implements OnInit {
 
   constructor(
     private userManagementService$: UserManagementService,
-    private _message: NzMessageService,
+    private _notification: NzNotificationService,
     private _modalService: NzModalService,
     private fb: FormBuilder
   ) {
@@ -62,7 +69,8 @@ export class UserManagementTableComponent implements OnInit {
   //搜索用户
   filterUser() {
     let startTime = 0;
-    let endTime = new Date().getTime() / 1000;
+    let endTime = Math.floor(new Date().getTime() / 1000);
+    this.pageIndex = 1;
     if (this.dateRange.length == 2) {
       startTime = Math.floor(new Date(this.dateRange[0]).getTime() / 1000);
       endTime = Math.floor(new Date(this.dateRange[1]).getTime() / 1000)
@@ -77,23 +85,28 @@ export class UserManagementTableComponent implements OnInit {
       searchType: this.selectedNameContaining,
       searchParameter: this.inputValue
     };
-    this.userManagementService$.filterUserList(1, 10, this.filterOptions).subscribe(result => {
+    this.userManagementService$.getUserList(1, 10, this.filterOptions).subscribe(result => {
       this.loading = false;
       this.total = result.data[0].totalUser ? result.data[0].totalUser: 0;
       this.totalPage = Math.ceil(this.total / 10);
       this.dataList = result.data;
       this.displayData = this.dataList;
     }, error1 => {
-      this.loading=false
-      this._message.error(error1.error)
+      this.loading=false;
+      this._notification.create(
+        'error',
+        '错误！',
+        `${error1.error}`,
+        {nzDuration: 1000}
+      )
     })
   }
 
   //获取用户列表
-  searchData(pageIndex: number = this.pageIndex) {
+  searchData(filterOptions = this.filterOptions, pageIndex: number = this.pageIndex) {
     this.displayData = [];
     this.loading = true;
-    this.userManagementService$.getUserList(pageIndex, 10).subscribe(result => {
+    this.userManagementService$.getUserList(pageIndex, 10, filterOptions).subscribe(result => {
       this.loading = false;
       this.total = result.data[0].totalUser ? result.data[0].totalUser: 0;
       this.totalPage = Math.ceil(this.total / 10);
@@ -101,7 +114,12 @@ export class UserManagementTableComponent implements OnInit {
       this.displayData = this.dataList;
     }, error1 => {
       this.loading = false;
-      this._message.error(error1.message)
+      this._notification.create(
+        'error',
+        '错误！',
+        `${error1.error}`,
+        {nzDuration: 1000}
+      )
     })
   }
 
@@ -149,7 +167,7 @@ export class UserManagementTableComponent implements OnInit {
   //修改用户组
   showUserRoleGroupModal(data: any, template: TemplateRef<{}>) {
     this.userManagementService$.getAllUserRoles().subscribe( result => {
-      result.forEach(item => {
+      result.data.forEach(item => {
         this.checkOption.push({
           label: item.name,
           value: item.code,
@@ -180,8 +198,18 @@ export class UserManagementTableComponent implements OnInit {
                 item.roles = updateRoleList
             });
             this.displayData = tempList;
-            this._message.success("修改成功")
-          }, error1 => this._message.error(error1.error))
+            this._notification.create(
+              'success',
+              '修改成功！',
+              '',
+              {nzDuration: 1000}
+            )
+          }, error1 => this._notification.create(
+            'error',
+            '错误！',
+            `${error1.error}`,
+            {nzDuration: 1000}
+          ))
         }
       });
       modal.afterClose.subscribe( () => {
@@ -204,7 +232,12 @@ export class UserManagementTableComponent implements OnInit {
     return new Observable((observer: Observer<boolean>) => {
       const isLt2M = file.size / 1024 / 1024 < 2;
       if (!isLt2M) {
-        this._message.error('图片大小不能超过2M！');
+        this._notification.create(
+          'error',
+          '错误！',
+          '图片不能大于2M',
+          {nzDuration: 1000}
+        );
         observer.complete();
         return;
       }
@@ -231,7 +264,12 @@ export class UserManagementTableComponent implements OnInit {
         });
         break;
       case 'error':
-        this._message.error('网络错误');
+        this._notification.create(
+          'error',
+          '错误！',
+          '网络错误',
+          {nzDuration: 1000}
+        )
         this.loading = false;
         break;
     }
@@ -255,8 +293,18 @@ export class UserManagementTableComponent implements OnInit {
             }
           });
           this.displayData = tempList;
-          this._message.success("修改成功！")
-        }, error1 => this._message.error(error1.error))
+          this._notification.create(
+            'success',
+            '修改成功！',
+            '',
+            {nzDuration: 1000}
+          )
+        }, error1 => this._notification.create(
+          'error',
+          '错误！',
+          `${error1.error}`,
+          {nzDuration: 1000}
+        ))
       }
     })
   }
@@ -273,8 +321,9 @@ export class UserManagementTableComponent implements OnInit {
       nzOnOk: () => {
         if (!(this.modifyPasswordForm.controls.password.errors || this.modifyPasswordForm.controls.confirmPassword.errors)) {
           this.userManagementService$.updatePassword(this.modifyPasswordForm.controls.password.value, data.userId).subscribe( result => {
-            this._message.success("修改成功！")
-          }, error1 => this._message.error(error1.error))
+            this._notification.create('success', '修改成功！', '', {nzDuration: 1000})
+          }, error1 => this._notification.create('error', '错误！', `${error1.error}`, {nzDuration: 1000}
+          ))
         }
       }
     })

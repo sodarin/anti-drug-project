@@ -9,7 +9,7 @@
     <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="programa">所属栏目</nz-form-label>
     <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="所属栏目不能为空">
       <nz-select nz-input formControlName="programa" id="programa">
-        <nz-option *ngFor="let option of listOfProgramma" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+        <nz-option *ngFor="let option of listOfProgramma" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
       </nz-select>
     </nz-form-control>
   </nz-form-item>
@@ -20,7 +20,7 @@
         nzMode="multiple"
         nzPlaceHolder="请选择标签"
         formControlName="tag">
-        <nz-option *ngFor="let option of listOfTag" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+        <nz-option *ngFor="let option of listOfTag" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
       </nz-select>
     </nz-form-control>
   </nz-form-item>

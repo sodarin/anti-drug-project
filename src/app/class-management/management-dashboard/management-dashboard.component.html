@@ -6,14 +6,14 @@
         <nz-divider></nz-divider>
         <div class="list-block">
           <span class="header">简介</span>
-          <i *ngIf="isSetIntro" nz-icon nzType="check-circle" nzTheme="twotone"></i>
-          <i *ngIf="!isSetIntro" nz-icon nzType="close-circle" nzTheme="twotone"></i>
+          <i *ngIf="introduction" nz-icon nzType="check-circle" nzTheme="twotone"></i>
+          <i *ngIf="!introduction" nz-icon nzType="close-circle" nzTheme="twotone"></i>
         </div>
         <nz-divider></nz-divider>
         <div class="list-block">
           <span class="header">图片</span>
-          <i *ngIf="isSetImage" nz-icon nzType="check-circle" nzTheme="twotone"></i>
-          <i *ngIf="!isSetImage" nz-icon nzType="close-circle" nzTheme="twotone"></i>
+          <i *ngIf="classroom?.largepicture !== ''" nz-icon nzType="check-circle" nzTheme="twotone"></i>
+          <i *ngIf="classroom?.largepicture == ''" nz-icon nzType="close-circle" nzTheme="twotone"></i>
         </div>
       </div>
     </div>
@@ -23,7 +23,7 @@
         <nz-divider></nz-divider>
         <div class="list-block">
           <span class="header">课程数</span>
-          <nz-tag [nzColor]="'#108ee9'"><a href="https://github.com/NG-ZORRO/ng-zorro-antd">1</a></nz-tag>
+          <nz-tag [nzColor]="'#108ee9'"><a href="https://github.com/NG-ZORRO/ng-zorro-antd">{{classroom?.coursenum}}</a></nz-tag>
         </div>
         <nz-divider></nz-divider>
         <div class="list-block">
@@ -38,7 +38,7 @@
         <nz-divider></nz-divider>
         <div class="list-block">
           <span class="header">学员数</span>
-          <nz-tag [nzColor]="'#108ee9'"><a href="https://github.com/NG-ZORRO/ng-zorro-antd">25</a></nz-tag>
+          <nz-tag [nzColor]="'#108ee9'"><a href="https://github.com/NG-ZORRO/ng-zorro-antd">{{classroom?.studentnum}}</a></nz-tag>
         </div>
         <nz-divider></nz-divider>
         <div class="list-block">

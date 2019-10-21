@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import {NzNotificationService} from 'ng-zorro-antd';
+import {OpenresourceService} from '../../service/openresource/openresource.service';
 
 @Component({
   selector: 'app-openresource',
@@ -9,50 +11,31 @@ import {Router} from '@angular/router';
 export class OpenresourceComponent implements OnInit {
 
 
-  constructor(private router: Router) {
+  displayData = [];
+
+  constructor(private router: Router,
+              private openService$: OpenresourceService,
+              private _notification: NzNotificationService) {
   }
 
-  ngOnInit() {
+  ngOnInit() {this.searchData()
   }
-  data2=[
-    {
-      title:"禁毒微电影",
-      description:"《觉醒》",
-      value1:"112",
-      value2:"93",
-      cover:'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png'
-    },
-    {
-      title:"禁毒微电影",
-      description:"《觉醒》",
-      value1:"113",
-      value2:"93",
-      cover:'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png'
-    },
-    {
-      title:"禁毒微电影",
-      description:"《觉醒》",
-      value1:"112",
-      value2:"93",
-      cover:'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png'
-    },
-    {
-      title:"禁毒微电影",
-      description:"《觉醒》",
-      value1:"112",
-      value2:"93",
-      cover:'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png'
-    },
-    {
-      title:"禁毒微电影",
-      description:"《觉醒》",
-      value1:"112",
-      value2:"93",
-      cover:'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png'
-    }
 
-  ]
-  navigateByUrl(url) {
+  navigateByUrl(url)
+  {
     this.router.navigateByUrl(url);
+  }
+
+  searchData()
+  {
+    this.openService$.getOpenCourseList().subscribe(result => {
+      this.displayData = result
+    }, error1 => {
+      this._notification.create(
+        'error',
+        '发生错误！',
+        `${error1.error}`
+      )
+    })
   }
 }

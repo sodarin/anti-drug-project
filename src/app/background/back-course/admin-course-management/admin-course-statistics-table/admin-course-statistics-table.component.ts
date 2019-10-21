@@ -115,29 +115,29 @@ export class AdminCourseStatisticsTableComponent implements OnInit {
   searchData(pageIndex: number = this.pageIndex) {
     this.displayData = [];
     this.loading = true;
-    this.adminCourseService$.getStatisticsList(pageIndex, 10).subscribe( result => {
-      this.loading = false;
-      this.totalCourse = result[0].totalCourse ? result[0].totalCourse: 0;
-      this.dataList = result;
-      this.displayData = this.dataList
-    }, error1 => {
-      this.loading = false;
-      this._message.error(error1.error)
-    })
+    // this.adminCourseService$.getStatisticsList(pageIndex, 10).subscribe( result => {
+    //   this.loading = false;
+    //   this.totalCourse = result[0].totalCourse ? result[0].totalCourse: 0;
+    //   this.dataList = result;
+    //   this.displayData = this.dataList
+    // }, error1 => {
+    //   this.loading = false;
+    //   this._message.error(error1.error)
+    // })
   }
 
   checkTask(id: string, template: TemplateRef<{}>) {
     this.taskList = [];
-    this.adminCourseService$.getTaskListByCourseId(id).subscribe(result => {
-      this.taskList = result;
-      this._modal.create({
-        nzTitle: '查看课程任务',
-        nzContent: template,
-        nzFooter: null
-      })
-    }, error1 => {
-      this._message.error(error1.error)
-    })
+    // this.adminCourseService$.getTaskListByCourseId(id).subscribe(result => {
+    //   this.taskList = result;
+    //   this._modal.create({
+    //     nzTitle: '查看课程任务',
+    //     nzContent: template,
+    //     nzFooter: null
+    //   })
+    // }, error1 => {
+    //   this._message.error(error1.error)
+    // })
   }
 
 

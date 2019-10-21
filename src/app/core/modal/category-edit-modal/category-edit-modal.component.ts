@@ -11,7 +11,7 @@ import {NzMessageService, NzModalRef} from 'ng-zorro-antd';
 export class CategoryEditModalComponent implements OnInit {
 
   @Input()
-  id: string;
+  item: any;
 
   @Input()
   isNewCategory: boolean;
@@ -26,14 +26,12 @@ export class CategoryEditModalComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (!this.isNewCategory && this.id) {
-      this.categoryService$.getCategoryDetail(this.id).subscribe(result => {
-        this.categoryForm = this.fb.group({
-          name: [result.name, Validators.required],
-          encode: [result.encode, Validators.required],
-          desc: [result.desc, Validators.required]
-        })
-      }, error1 => this._message.error(error1.error))
+    if (!this.isNewCategory && this.item) {
+      this.categoryForm = this.fb.group({
+        name: [this.item.name, Validators.required],
+        encode: [this.item.code, Validators.required],
+        desc: [this.item.desc]
+      })
     } else {
       this.categoryForm = this.fb.group({
         name: ['', Validators.required],
@@ -48,16 +46,14 @@ export class CategoryEditModalComponent implements OnInit {
     this.categoryForm.markAllAsTouched();
     this.categoryForm.controls.name.updateValueAndValidity();
     this.categoryForm.controls.encode.updateValueAndValidity();
-    // if (!this.categoryForm.errors) {
-    //   this.categoryService$.editCategory(this.userCreatingForm.controls.username.value, this.userCreatingForm.controls.password.value, roleString).subscribe(result => {
-    //     shouldBeClosed = true;
-    //     this._message.success("新增用户成功！");
-    //   }, error1 => {
-    //     this._message.error(error1.error);
-    //     shouldBeClosed = false;
-    //   })
-    //
-    // }
+    if (!this.categoryForm.controls.name.errors && !this.categoryForm.controls.encode.errors) {
+      let result = {
+        name: this.categoryForm.controls.name.value,
+        code: this.categoryForm.controls.encode.value,
+        description: this.categoryForm.controls.desc.value
+      };
+      this._modal.destroy(result)
+    }
     return shouldBeClosed
   }
 

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {NzMessageService, NzModalRef} from 'ng-zorro-antd';
+import {NzMessageService, NzModalRef, NzNotificationService} from 'ng-zorro-antd';
 import {UserManagementService} from '../../../service/user-management/user-management.service';
 
 @Component({
@@ -19,7 +19,7 @@ export class UserInfoViewModalComponent implements OnInit {
   constructor(
     private _modal: NzModalRef,
     private userManagementService$: UserManagementService,
-    private _message: NzMessageService
+    private _notification: NzNotificationService
   ) { }
 
   ngOnInit() {
@@ -27,7 +27,15 @@ export class UserInfoViewModalComponent implements OnInit {
       this.userInfo = result;
       document.getElementById('introduction').innerHTML = this.userInfo.about
 
-    }, error1 => this._message.error(error1.error))
+    }, error1 => this._notification.create(
+      'error',
+      '发生错误！',
+      `${error1.error}`))
+  }
+
+  navigateTo(url: string) {
+    console.log(url)
+    window.open(url,'_blank')
   }
 
 

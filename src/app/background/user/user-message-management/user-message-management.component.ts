@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {NzMessageService, NzModalService} from 'ng-zorro-antd';
+import {NzMessageService, NzModalService, NzNotificationService} from 'ng-zorro-antd';
 import {UserMessageManagementService} from '../../../service/userMessageManagement/user-message-management.service';
+import {UserInfoViewModalComponent} from '../../../core/modal/user-info-view-modal/user-info-view-modal.component';
 @Component({
   selector: 'app-user-message-management',
   templateUrl: './user-message-management.component.html',
@@ -19,7 +20,12 @@ export class UserMessageManagementComponent implements OnInit {
   totalPage: number;
   pageIndex: number = 1;
 
-  filterOptions = {};
+  filterOptions = {
+    starTime: 0,
+    endTime: 0,
+    sendName: '',
+    KEY: '',
+  };
   isAllDisplayDataChecked = false;
   isOperating = false;
   isIndeterminate = false;
@@ -30,7 +36,8 @@ export class UserMessageManagementComponent implements OnInit {
   mapOfEllipsis: { [key: string]: boolean } = {};
   constructor(
     private userMessageManagementService$: UserMessageManagementService,
-    private _message: NzMessageService,
+    private _notification: NzNotificationService,
+    private _modalService: NzModalService
   ) {
   }
   ngOnInit() {
@@ -40,26 +47,32 @@ export class UserMessageManagementComponent implements OnInit {
   searchData(pageIndex: number = this.pageIndex) {
     this.displayData = [];
     this.loading = true;
-    this.userMessageManagementService$.getMessageList(pageIndex, 10).subscribe(result => {
+    this.userMessageManagementService$.getMessageList(pageIndex, 10, this.filterOptions).subscribe(result => {
       this.loading = false;
-      this.total = result[0].total? result[0].total: 0;
+      this.total = result.data[0].totalMessages? result.data[0].totalMessages: 0;
       this.totalPage = Math.ceil(this.total / 10);
-      this.dataList = result;
+      this.dataList = result.data;
       this.displayData = this.dataList;
       this.displayData.forEach(item => {
-        this.mapOfEllipsis[item.id] = true;
+        this.mapOfEllipsis[item.messageId] = true;
+        this.mapOfCheckedId[item.messageId] = false
       })
     }, error1 => {
       this.loading = false;
-      this._message.error(error1.error)
+      this._notification.create(
+        'error',
+        '发生错误！',
+        `${error1.error}`)
     });
+    this.isAllDisplayDataChecked = false;
+    this.isIndeterminate = false;
   }
   filterRecord() {
     let startTime = 0;
-    let endTime = new Date().getTime() / 1000;
+    let endTime: number = Math.floor(new Date().getTime() / 1000);
     if (this.dateRange.length == 2) {
-      startTime = new Date(this.dateRange[0]).getTime() / 1000;
-      endTime = new Date(this.dateRange[1]).getTime() / 1000;
+      startTime = Math.floor(new Date(this.dateRange[0]).getTime() / 1000);
+      endTime = Math.floor(new Date(this.dateRange[1]).getTime() / 1000);
     }
     this.displayData = [];
     this.loading = true;
@@ -69,38 +82,82 @@ export class UserMessageManagementComponent implements OnInit {
       sendName: this.inputSendName,
       KEY: this.inputKey,
     };
-    this.userMessageManagementService$.filterUserList(1, 10, this.filterOptions).subscribe(result => {
+    this.userMessageManagementService$.getMessageList(1, 10, this.filterOptions).subscribe(result => {
       this.loading = false;
-      this.total = result[0].total? result[0].total: 0;
+      this.total = result.data[0].totalMessages? result.data[0].totalMessages: 0;
       this.totalPage = Math.ceil(this.total / 10);
-      this.dataList = result;
+      this.dataList = result.data;
       this.displayData = this.dataList;
-    }, error1 => this._message.error(error1.error))
+      this.displayData.forEach(item => {
+        this.mapOfEllipsis[item.messageId] = true;
+        this.mapOfCheckedId[item.messageId] = false
+      })
+    }, error1 => {
+      this.loading = false;
+      this._notification.create(
+        'error',
+        '发生错误！',
+        `${error1.error}`)
+    });
+    this.isAllDisplayDataChecked = false;
+    this.isIndeterminate = false;
   }
   checkAll(value: boolean): void {
-    this.displayData.forEach(item => (this.mapOfCheckedId[item.id] = value));
+    this.displayData.forEach(item => (this.mapOfCheckedId[item.messageId] = value));
     this.refreshStatus();
   }
 
   refreshStatus(): void {
     this.isAllDisplayDataChecked = this.displayData
-      .every(item => this.mapOfCheckedId[item.id]);
+      .every(item => this.mapOfCheckedId[item.messageId]);
     this.isIndeterminate =
-      this.displayData.some(item => this.mapOfCheckedId[item.id]) &&
+      this.displayData.some(item => this.mapOfCheckedId[item.messageId]) &&
       !this.isAllDisplayDataChecked;
-    this.numberOfChecked = this.dataList.filter(item => this.mapOfCheckedId[item.id]).length;
+    this.numberOfChecked = this.dataList.filter(item => this.mapOfCheckedId[item.messageId]).length;
   }
   deleteData(): void {
     // 删除数据操作
     this.isOperating = true;
-    // setTimeout(() => {
-    //   this.dataList.forEach(item => (this.mapOfCheckedId[item.id] = false));
-    //   this.refreshStatus();
-    //   this.isOperating = false;
-    // }, 1000);
+    let idList = [];
+    this.displayData.forEach(item => {
+      if (this.mapOfCheckedId[item.messageId]) {
+        idList.push(item.messageId)
+      }
+    });
+    this.userMessageManagementService$.deleteMessage(idList).subscribe(result => {
+      this.isOperating = false;
+      if (this.isAllDisplayDataChecked && this.pageIndex === this.totalPage) {
+        this.pageIndex --;
+      }
+      this.searchData();
+      this._notification.create(
+        'success',
+        '删除成功！',
+        ''
+      )
+    }, error1 => {
+      this.isOperating = false;
+      this._notification.create(
+        'error',
+        '发生错误！',
+        `${error1.error}`
+      )
+    });
   }
 
   unfoldOrFoldContent(id: string) {
     this.mapOfEllipsis[id] = !this.mapOfEllipsis[id];
+  }
+
+  showPersonalInfo(id: string) {
+    const modal = this._modalService.create({
+      nzTitle: '个人详细信息',
+      nzContent: UserInfoViewModalComponent,
+      nzComponentParams: {
+        userId: id
+      },
+      nzWidth: 600,
+      nzFooter: null
+    })
   }
 }

@@ -3,7 +3,7 @@
     <div class="header">
       <img class="header-image" [src]="classroom?.imgUrl">
       <div class="header-info">
-        <div>{{'虹桥中学（二年级一班）毒品预防教育'}}<nz-tag [nzColor]="'#108ee9'">{{'已发布'}}</nz-tag></div>
+        <div>{{classroom?.title}}<nz-tag style="margin-left: 5px;" [nzColor]="'#108ee9'">{{classroom?.status}}</nz-tag></div>
         <button nzSize="small" nz-button nzType="primary">返回班级主页</button>
       </div>
     </div>

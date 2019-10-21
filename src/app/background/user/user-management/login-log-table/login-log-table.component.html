@@ -25,45 +25,45 @@
         <th>生日</th>
         <th>登录时间IP</th>
         <th>登录地点</th>
-        <th>查看记录</th>
+<!--        <th>查看记录</th>-->
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let data of loginLogTable.data">
-        <td>{{data.nickname}}</td>
+        <td>{{data.userName}}</td>
         <td>{{data.birthday}}</td>
-        <td>{{data.loginTime}}<br/>
+        <td>{{data.loginTime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}<br/>
           <span>{{data.loginIp}}</span></td>
         <td>{{data.loginIpArea}}</td>
-        <td><i (click)="checkLoginLog(data.id, personalLoginLogTable)" nz-tooltip nzTitle="查看" nz-icon nzType="eye" nzTheme="outline"></i></td>
+<!--        <td><i (click)="checkLoginLog(data.id, personalLoginLogTable)" nz-tooltip nzTitle="查看" nz-icon nzType="eye" nzTheme="outline"></i></td>-->
       </tr>
     </tbody>
   </nz-table>
 
 
-  <ng-template #personalLoginLogTable>
-    <nz-table
-      #logDetailTable
-      [nzData]="logList"
-      [nzFrontPagination]="false"
-      [nzTotal]="logListTotal"
-      [nzPageSize]="8"
-      [(nzPageIndex)]="modalPageIndex"
-      (nzPageIndexChange)="turnToNewPage()">
-      <thead>
-        <tr>
-          <th>登录时间</th>
-          <th>登录IP</th>
-          <th>登录地点</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let data of logDetailTable.data">
-          <td>{{data.loginTime}}</td>
-          <td>{{data.loginIp}}</td>
-          <td>{{data.loginArea}}</td>
-        </tr>
-      </tbody>
-    </nz-table>
-  </ng-template>
+<!--  <ng-template #personalLoginLogTable>-->
+<!--    <nz-table-->
+<!--      #logDetailTable-->
+<!--      [nzData]="logList"-->
+<!--      [nzFrontPagination]="false"-->
+<!--      [nzTotal]="logListTotal"-->
+<!--      [nzPageSize]="8"-->
+<!--      [(nzPageIndex)]="modalPageIndex"-->
+<!--      (nzPageIndexChange)="searchData()">-->
+<!--      <thead>-->
+<!--        <tr>-->
+<!--          <th>登录时间</th>-->
+<!--          <th>登录IP</th>-->
+<!--          <th>登录地点</th>-->
+<!--        </tr>-->
+<!--      </thead>-->
+<!--      <tbody>-->
+<!--        <tr *ngFor="let data of logDetailTable.data">-->
+<!--          <td>{{data.loginTime}}</td>-->
+<!--          <td>{{data.loginIp}}</td>-->
+<!--          <td>{{data.loginArea}}</td>-->
+<!--        </tr>-->
+<!--      </tbody>-->
+<!--    </nz-table>-->
+<!--  </ng-template>-->
 </div>

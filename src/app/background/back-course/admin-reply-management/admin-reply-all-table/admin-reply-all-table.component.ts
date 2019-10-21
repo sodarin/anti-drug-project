@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {CourseReplyAllService} from '../../../../service/course-reply-all/course-reply-all.service';
-import {NzMessageService, NzModalService} from 'ng-zorro-antd';
+import {NzMessageService, NzModalService, NzNotificationService} from 'ng-zorro-antd';
 import {UserInfoViewModalComponent} from '../../../../core/modal/user-info-view-modal/user-info-view-modal.component';
+import {CourseReplyService} from '../../../../service/course-reply/course-reply.service';
 
 @Component({
   selector: 'app-admin-reply-all-table',
@@ -9,9 +10,9 @@ import {UserInfoViewModalComponent} from '../../../../core/modal/user-info-view-
   styleUrls: ['./admin-reply-all-table.component.less']
 })
 export class AdminReplyAllTableComponent implements OnInit {
-  replyname   = '';
-  inputValue: string;
-  keyword: string;
+  replyname   = 'title';
+  inputValue: string = '';
+  keyword: string = '';
   // author: string;
   dataList = [];
   displayData = [];
@@ -20,7 +21,11 @@ export class AdminReplyAllTableComponent implements OnInit {
   totalPage: number;
   pageIndex: number = 1;
 
-  filterOptions: {};
+  filterOptions = {
+    searchType: '',
+    searchParameter: '',
+    author: ''
+  };
   checkOption = [];
   isAllDisplayDataChecked = false;
   isOperating = false;
@@ -29,8 +34,8 @@ export class AdminReplyAllTableComponent implements OnInit {
   mapOfEllipsis: { [key: string]: boolean } = {};
 
   constructor(
-    private courseReplyAllService$: CourseReplyAllService,
-    private  _message: NzMessageService,
+    private courseReplyAllService$: CourseReplyService,
+    private  _notification: NzNotificationService,
     private  _modalService: NzModalService
   ) { }
 
@@ -47,35 +52,46 @@ export class AdminReplyAllTableComponent implements OnInit {
       searchParameter: this.keyword,
       author: this.inputValue
     };
-    this.courseReplyAllService$.filterReplyAllList(1, 10, this.filterOptions).subscribe(result => {
+    this.pageIndex = 1;
+    this.courseReplyAllService$.getNotReplyList(1, 10, this.filterOptions).subscribe(result => {
       this.loading = false;
-      this.total = result[0].total;
+      this.total = result.data.total;
       this.totalPage = Math.ceil(this.total / 10);
-      this.dataList = result;
+      this.dataList = result.data.data;
       this.displayData = this.dataList;
       this.displayData.forEach(item => {
-        this.mapOfEllipsis[item.id] = true
-      })
+        this.mapOfEllipsis[item.id] = true;
+        this.mapOfCheckedId[item.id] = false
+      });
+      this.isAllDisplayDataChecked = false;
+      this.isIndeterminate = false;
     }, error1 => {
       this.loading = false;
-      this._message.error(error1.error)
+      this._notification.error(
+        '发生错误！',
+        `${error1.error}`)
     })
   }
   searchData(pageIndex: number = this.pageIndex) {
     this.displayData = [];
     this.loading = true;
-    this.courseReplyAllService$.getReplyAllList(pageIndex, 10).subscribe(result => {
+    this.courseReplyAllService$.getNotReplyList(pageIndex, 10, this.filterOptions).subscribe(result => {
       this.loading = false;
-      this.total = result[0].totalUser;
+      this.total = result.data.total;
       this.totalPage = Math.ceil(this.total / 10);
-      this.dataList = result;
+      this.dataList = result.data.data;
       this.displayData = this.dataList;
       this.displayData.forEach(item => {
-        this.mapOfEllipsis[item.id] = true
-      })
+        this.mapOfEllipsis[item.id] = true;
+        this.mapOfCheckedId[item.id] = false
+      });
+      this.isAllDisplayDataChecked = false;
+      this.isIndeterminate = false;
     }, error1 => {
       this.loading = false;
-      this._message.error(error1.error)
+      this._notification.error(
+        '发生错误！',
+        `${error1.error}`)
     })
   }
   checkAll(value: boolean): void {
@@ -85,12 +101,16 @@ export class AdminReplyAllTableComponent implements OnInit {
 
   refreshStatus(): void {
     this.isAllDisplayDataChecked = this.displayData
-      .filter(item => !item.disabled)
       .every(item => this.mapOfCheckedId[item.id]);
     this.isIndeterminate =
       this.displayData.some(item => this.mapOfCheckedId[item.id]) &&
       !this.isAllDisplayDataChecked;
   }
+
+  navigateTo(url: string) {
+    window.open(url, '_blank')
+  }
+
 
   // 导航至问答页面，在新窗口打开
   turnToDetailPage(id: string) {
@@ -121,15 +141,43 @@ export class AdminReplyAllTableComponent implements OnInit {
     this.displayData.forEach(item => {
       if (this.mapOfCheckedId[item.id])
         deleteList.push(item.id)
+    });
+    this.courseReplyAllService$.deleteQuestionList(deleteList).subscribe(result => {
+      this.isOperating = false;
+      if (this.isAllDisplayDataChecked && this.pageIndex === this.totalPage) {
+        this.pageIndex --;
+      }
+      this.searchData();
+      this._notification.create(
+        'success',
+        '删除成功！',
+        ''
+      )
+    }, error1 => {
+      this.isOperating = false;
+      this._notification.create(
+        'error',
+        '发生错误！',
+        `${error1.error}`
+      )
     })
-    // setTimeout(() => {
-    //   this.dataList.forEach(item => (this.mapOfCheckedId[item.id] = false));
-    //   this.refreshStatus();
-    //   this.isOperating = false;
-    // }, 1000);
   }
   // 删除操作
   deleteReply(id: string){
-
+    this.courseReplyAllService$.deleteQuestion(id).subscribe(result => {
+      if (this.displayData.length === 1) {
+        this.pageIndex --;
+      }
+      this.searchData();
+      this._notification.success(
+        '成功删除！',
+        ''
+      )
+    }, error1 => {
+      this._notification.error(
+        '发生错误！',
+        `${error1.error}`
+      )
+    })
   }
 }

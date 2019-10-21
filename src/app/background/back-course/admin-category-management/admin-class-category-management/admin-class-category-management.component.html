@@ -8,12 +8,7 @@
   <nz-table
     #categoryListTable
     [nzData]="displayData"
-    [nzFrontPagination]="false"
-    [nzTotal]="total"
-    [nzLoading]="loading"
-    [nzPageSize]="10"
-    [(nzPageIndex)]="pageIndex"
-    (nzPageIndexChange)="searchData()">
+    [nzShowPagination]="false">
     <thead>
     <tr>
       <th>名称</th>
@@ -22,18 +17,27 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let data of categoryListTable.data">
-      <td>{{data.name}}</td>
-      <td>{{data.code}}</td>
-      <td><i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
-      <ng-template #operationTemplate>
-        <div class="user-management-operation">
-          <div><span (click)="edit(data.id)"><i nz-icon nzType="edit" nzTheme="outline"></i>编辑</span></div>
-          <div><span (click)="createChildren(data.id)"><i nz-icon nzType="plus-circle" nzTheme="outline"></i>添加子分类</span></div>
-          <div><span (click)="delete(data.id)"><i nz-icon nzType="delete" nzTheme="outline"></i>删除分类</span></div>
-        </div>
-      </ng-template>
-    </tr>
+    <ng-container *ngFor="let data of categoryListTable.nzData">
+      <ng-container *ngFor="let item of mapOfExpandedData[data.id]">
+        <tr *ngIf="(item.parent && item.parent.expand) || !item.parent">
+          <td
+            [nzIndentSize]="item.level * 20"
+            [nzShowExpand]="item.children.length !== 0"
+            [(nzExpand)]="item.expand"
+            (nzExpandChange)="collapse(mapOfExpandedData[data.id], item, $event)"
+          >{{item.name}}</td>
+          <td>{{item.code}}</td>
+          <td><i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
+          <ng-template #operationTemplate>
+            <div class="user-management-operation">
+              <div><span (click)="edit(item)"><i nz-icon nzType="edit" nzTheme="outline"></i>编辑</span></div>
+              <div><span (click)="createChildren(item)"><i nz-icon nzType="plus-circle" nzTheme="outline"></i>添加子分类</span></div>
+              <div><span (click)="delete(item.id)"><i nz-icon nzType="delete" nzTheme="outline"></i>删除分类</span></div>
+            </div>
+          </ng-template>
+        </tr>
+      </ng-container>
+    </ng-container>
     </tbody>
   </nz-table>
 </div>

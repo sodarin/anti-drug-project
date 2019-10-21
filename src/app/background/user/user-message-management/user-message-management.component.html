@@ -22,6 +22,7 @@
     [nzLoading]="loading"
     [nzPageSize]="10"
     [(nzPageIndex)]="pageIndex"
+    (nzPageIndexChange)="searchData()"
 >
     <thead>
     <tr>
@@ -41,16 +42,16 @@
     <tr *ngFor="let data of ListTable.data">
       <td
         nzShowCheckbox
-        [(nzChecked)]="mapOfCheckedId[data.id]"
+        [(nzChecked)]="mapOfCheckedId[data.messageId]"
         (nzCheckedChange)="refreshStatus()"
       ></td>
-      <td>{{data.sendName}}</td>
-      <td>{{data.receiveName}}</td>
-      <td class="content-column" (click)="unfoldOrFoldContent(data.id)">
-        <span class="is-ellipsis" *ngIf="mapOfEllipsis[data.id]">{{data.Mcontent}}</span>
-        <span class="not-ellipsis" *ngIf="!mapOfEllipsis[data.id]">{{data.Mcontent}}</span>
+      <td style="cursor: pointer;" (click)="showPersonalInfo(data.fromId)">{{data.fromNickName}}</td>
+      <td style="cursor: pointer;" (click)="showPersonalInfo(data.toId)">{{data.toldNickName}}</td>
+      <td class="content-column" (click)="unfoldOrFoldContent(data.messageId)">
+        <span class="is-ellipsis" *ngIf="mapOfEllipsis[data.messageId]">{{data.content}}</span>
+        <span class="not-ellipsis" *ngIf="!mapOfEllipsis[data.messageId]">{{data.content}}</span>
       </td>
-      <td>{{data.sendTime}}</td>
+      <td>{{data.createdTimeString}}</td>
     </tr>
     </tbody>
   </nz-table>

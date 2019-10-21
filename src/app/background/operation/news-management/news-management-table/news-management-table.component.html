@@ -10,25 +10,22 @@
   <div class="filter-condition">
     <div class="news-filter">
       <nz-select class="select-control" [(ngModel)]="selectedProgramaValue">
-        <nz-option nzValue="" nzLabel="全部栏目"></nz-option>
-        <nz-option nzValue="PROGRAMA_RULE" nzLabel="禁毒法规"></nz-option>
-        <nz-option nzValue="PROGRAMA_NEWS" nzLabel="禁毒新闻"></nz-option>
-        <nz-option nzValue="PROGRAMA_EXAMPLE" nzLabel="经典案例"></nz-option>
+        <nz-option *ngFor="let option of listOfProgramma" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
       </nz-select>
       <input class="name-containing-input" nz-input placeholder="标题关键字" [(ngModel)]="inputValue" />
       <nz-divider nzType="vertical"></nz-divider>
       <nz-select class="select-control" [(ngModel)]="selectedAttributeValue">
-        <nz-option nzValue="" nzLabel="全部"></nz-option>
-        <nz-option nzValue="ATTRIBUTE_HEADLINE" nzLabel="头条"></nz-option>
-        <nz-option nzValue="ATTRIBUTE_RECOMMEND" nzLabel="推荐"></nz-option>
-        <nz-option nzValue="ATTRIBUTE_TOP" nzLabel="置顶"></nz-option>
+        <nz-option [nzValue]="0" nzLabel="全部"></nz-option>
+        <nz-option [nzValue]="1" nzLabel="头条"></nz-option>
+        <nz-option [nzValue]="3" nzLabel="推荐"></nz-option>
+        <nz-option [nzValue]="2" nzLabel="置顶"></nz-option>
       </nz-select>
       <nz-divider nzType="vertical"></nz-divider>
       <nz-select class="select-control" [(ngModel)]="selectedStateValue">
         <nz-option nzValue="" nzLabel="全部状态"></nz-option>
-        <nz-option nzValue="STATE_ALREADY" nzLabel="已发布"></nz-option>
-        <nz-option nzValue="STATE_NOT" nzLabel="未发布"></nz-option>
-        <nz-option nzValue="STATE_RECYCLE" nzLabel="回收站"></nz-option>
+        <nz-option nzValue="published" nzLabel="已发布"></nz-option>
+        <nz-option nzValue="unpublished" nzLabel="未发布"></nz-option>
+        <nz-option nzValue="trash" nzLabel="回收站"></nz-option>
       </nz-select>
       <button (click)="filterNews()" nz-button nzType="primary" class="search-button"><i nz-icon nzType="search"></i>搜索</button>
       <nz-divider nzType="vertical"></nz-divider>
@@ -69,26 +66,26 @@
         [(nzChecked)]="mapOfCheckedId[data.id]"
         (nzCheckedChange)="refreshStatus()"
       ></td>
-      <td>{{data.ID}}<br/>
+      <td>{{data.id}}<br/>
       <td>{{data.title}}<br/>
       <td>{{data.progama}}<br/>
-      <td>{{data.updateTime}}<br/>
-      <td><nz-tag nzMode="checkable" [nzChecked]="true" (nzCheckedChange)="checkChange($event)">头</nz-tag>
-      <nz-tag nzMode="checkable" [nzChecked]="true" (nzCheckedChange)="checkChange($event)">荐</nz-tag>
-      <nz-tag nzMode="checkable" [nzChecked]="true" (nzCheckedChange)="checkChange($event)">顶</nz-tag>
+      <td>{{data.updatedTime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}<br/>
+      <td><nz-tag nzMode="checkable" [nzChecked]="data.featured == 1" (nzCheckedChange)="setFeatured(data.id, $event)">头</nz-tag>
+      <nz-tag nzMode="checkable" [nzChecked]="data.promoted == 1" (nzCheckedChange)="setPromoted(data.id, $event)">荐</nz-tag>
+      <nz-tag nzMode="checkable" [nzChecked]="data.sticky == 1" (nzCheckedChange)="setSticky(data.id, $event)">顶</nz-tag>
       <br/>
-      <td>{{data.state}}<br/>
+      <td>{{data.status == 'published'? '已发布': (data.status == 'trash'? '回收站': '未发布')}}<br/>
       <td><i class="more-operation" nz-popover nzTitle="更多操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
       <ng-template #operationTemplate>
         <div class="news-management-operation">
-          <div><span (click)="edit(data.newsId)"><i nz-icon nzType="edit" nzTheme="outline"></i>编辑</span></div>
+          <div><span (click)="edit(data)"><i nz-icon nzType="edit" nzTheme="outline"></i>编辑</span></div>
           <div>
-            <span *ngIf="data.state === '已发布'" (click)="cancelNews(data.newsId)"><i nz-icon nzType="close-circle" nzTheme="outline"></i>取消发布</span>
-            <span *ngIf="data.state != '已发布'" (click)="publishNews(data.newsId)"><i nz-icon nzType="check-circle"></i>发布</span>
+            <span *ngIf="data.status === 'published'" (click)="cancelNews(data.id)"><i nz-icon nzType="close-circle" nzTheme="outline"></i>取消发布</span>
+            <span *ngIf="data.status != 'published'" (click)="publishNews(data.id)"><i nz-icon nzType="check-circle"></i>发布</span>
           </div>
           <div>
-            <span *ngIf="data.state === '回收站'" (click)="delete(data.newsId)"><i nz-icon nzType="delete"></i>永久删除</span>
-            <span (click)="recycleNews(data.newsId)"><i nz-icon nzType="rest" nzTheme="outline"></i>移至回收站</span>
+            <span *ngIf="data.status === 'trash'" (click)="delete(data.id)"><i nz-icon nzType="delete"></i>永久删除</span>
+            <span *ngIf="data.status !== 'trash'" ((click)="recycleNews(data.id)"><i nz-icon nzType="rest" nzTheme="outline"></i>移至回收站</span>
           </div>
         </div>
       </ng-template>

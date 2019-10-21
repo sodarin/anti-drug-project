@@ -1,6 +1,8 @@
 <nz-descriptions nzBordered nzSize="small" [nzColumn]="{xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1}">
   <nz-descriptions-item nzTitle="用户名">
-    <span>{{userInfo?.data.nickname}}</span><a>个人主页</a>
+    <div style="display: flex; flex-direction: row; justify-content: space-between">
+      <span>{{userInfo?.data.nickname}}</span><a (click)="navigateTo('/client/userpage/' + userId)">个人主页</a>
+    </div>
   </nz-descriptions-item>
   <nz-descriptions-item nzTitle="生日">
     {{userInfo?.data.birthday ? userInfo?.data.birthday: '暂无'}}

@@ -11,10 +11,12 @@ export class OnlineUserManagementService {
     private _http: HttpClient
   ) { }
 
-  getOnlineUserList(targetPage: number, pageSize: number, filterOption: [] = null): Observable<any> {
-    return this._http.post(`/user/xxx`, {
-      pageSize: pageSize,
-      pageNum: targetPage
-    })
+  getOnlineUserList(targetPage: number, pageSize: number, filterOptions: string): Observable<any> {
+    if (filterOptions == '') {
+      return this._http.get(`/login/getOnlineUser?pageNum=${targetPage}&pageSize=${pageSize}`)
+    } else {
+      return this._http.get(`/login/getOnlineUser?pageNum=${targetPage}&pageSize=${pageSize}&username=${filterOptions}`)
+    }
+
   }
 }

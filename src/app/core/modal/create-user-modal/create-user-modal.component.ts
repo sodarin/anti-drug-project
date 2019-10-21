@@ -26,7 +26,7 @@ export class CreateUserModalComponent implements OnInit {
       confirmPassword: ['', [Validators.required, this.confirmationValidator]]
     });
     this.userManagementService$.getAllUserRoles().subscribe( result => {
-      result.forEach(item => {
+      result.data.forEach(item => {
         this.checkOption.push({
           label: item.name,
           value: item.code,

@@ -17,25 +17,16 @@
     (nzPageIndexChange)="searchData()">
     <thead>
       <tr>
-        <th nzShowFilter
-            [nzFilterMultiple]="false"
-            [nzFilters]="listOfUserRange"
-            (nzFilterChange)="filter($event)">用户名</th>
-        <th>设备</th>
-        <th>客户端</th>
-        <th>操作系统</th>
+        <th>用户名</th>
         <th>IP</th>
         <th>最后访问时间</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let data of onlineUserTable.data">
-        <td>{{data.nickname}}</td>
-        <td>{{data.equipment}}</td>
-        <td>{{data.client}}</td>
-        <td>{{data.operatingSystem}}</td>
-        <td>{{data.ip}}</td>
-        <td>{{data.lastVisitingTime}}</td>
+        <td>{{data.username}}</td>
+        <td>{{data.loginIp}}</td>
+        <td>{{data.activeTime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
       </tr>
     </tbody>
   </nz-table>

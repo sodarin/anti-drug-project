@@ -103,10 +103,10 @@ const routes: Routes = [
         ]},
       { path: 'courselist', component: CourselistComponent},
       { path: 'teacher', component: TeacherComponent},
-      { path: 'userpage', component: UserPageComponent},
+      { path: 'userpage/:id', component: UserPageComponent},
       { path: 'classlist', component: ClasslistComponent },
       { path: 'openresource', component: OpenresourceComponent},
-      { path: 'openresourcedetail', component: OpenresourcedetailComponent },
+      { path: 'openresourcedetail/:id', component: OpenresourcedetailComponent },
       {path: 'groupmainlist', component: GroupmainlistComponent},
       {path: 'groupcreate', component: GroupcreateComponent},
       {path: 'groupmainlist/:id', component: GrouplistComponent, children: [
@@ -122,6 +122,7 @@ const routes: Routes = [
       { path: 'newstag', component: NewsTagModalComponent},
       {
         path: 'classroom/:id', component: ClassManagementComponent, children: [
+          { path: '', redirectTo: 'manage', pathMatch: 'full' },
           { path: 'manage', component: ManagementDashboardComponent },
           { path: 'basicinfo', component: ClassInfoManagementComponent },
           { path: 'headteacher', component: HeadTeacherSettingComponent },

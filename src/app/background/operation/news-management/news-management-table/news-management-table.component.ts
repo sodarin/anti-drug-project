@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 // @ts-ignore
 import {NewsManagementService} from '../../../../service/news-management/news-management.service';
-import {NzMessageService, NzModalService} from 'ng-zorro-antd';
+import {NzMessageService, NzModalService, NzNotificationService} from 'ng-zorro-antd';
 import {NewsEditModalComponent} from '../../../../core/modal/news-edit-modal/news-edit-modal.component';
+
 
 
 
@@ -13,10 +14,10 @@ import {NewsEditModalComponent} from '../../../../core/modal/news-edit-modal/new
 })
 export class NewsManagementTableComponent implements OnInit {
 
-  selectedProgramaValue: string = '';
-  selectedAttributeValue: string = '';
+  selectedProgramaValue: number = 0;
+  selectedAttributeValue: number = 0;
   selectedStateValue: string = '';
-  inputValue: string;
+  inputValue: string = '';
 
   dataList = [];
   displayData = [];
@@ -25,8 +26,15 @@ export class NewsManagementTableComponent implements OnInit {
   totalPage: number;
   pageIndex: number = 1;
 
+  listOfProgramma = [];
 
-  filterOptions: {};
+
+  filterOptions = {
+    searchPrograma: 0,
+    searchParameter: '',
+    searchAttribute: 0,
+    searchState: '',
+  };
   checkOption = [];
 
   // 全选功能
@@ -38,12 +46,25 @@ export class NewsManagementTableComponent implements OnInit {
 
   constructor(
     private newsManagementService$: NewsManagementService,
-    private _message: NzMessageService,
+    private _notification: NzNotificationService,
     private _modalService: NzModalService
   ) { }
 
   ngOnInit() {
+    this.getCategory();
     this.searchData()
+  }
+
+  getCategory() {
+    this.newsManagementService$.getCategoryList().subscribe(result => {
+      this.listOfProgramma = result;
+      this.listOfProgramma.push({id: 0, name: '全部栏目'})
+    }, error1 => {
+      this._notification.error(
+        '发生错误！',
+        '获取小组列表失败.'
+      )
+    })
   }
 
   // 新建资讯
@@ -54,6 +75,22 @@ export class NewsManagementTableComponent implements OnInit {
       nzWidth: 600,
       nzOnOk: instance => instance.submit(),
       nzOnCancel: instance => instance.destroy()
+    });
+    modal.afterClose.subscribe(result => {
+      if (result) {
+        this.newsManagementService$.createNewNews(result.programa, result.body, result.isFeatured, result.isPromoted, result.isSticky, result.title, result.tag).subscribe(result => {
+          this.searchData();
+          this._notification.success(
+            '创建成功！',
+            ''
+          )
+        }, error1 => {
+          this._notification.error(
+            '发生错误！',
+            `${error1.error}`
+          )
+        })
+      }
     })
   }
 
@@ -67,29 +104,44 @@ export class NewsManagementTableComponent implements OnInit {
       searchAttribute: this.selectedAttributeValue,
       searchState: this.selectedStateValue,
     };
-    this.newsManagementService$.filterNewsList(1, 10, this.filterOptions).subscribe(result => {
+    this.pageIndex = 1;
+    this.newsManagementService$.getNewsList(1, 10, this.filterOptions).subscribe(result => {
       this.loading = false;
-      this.total = result[0].total;
+      this.total = result.data.total;
       this.totalPage = Math.ceil(this.total / 10);
-      this.dataList = result;
+      this.dataList = result.data.articleList;
       this.displayData = this.dataList;
+      this.displayData.forEach(item => {
+        this.mapOfCheckedId[item.id] = false
+      });
+      this.isAllDisplayDataChecked = false;
+      this.isIndeterminate = false;
     }, error1 => {
       this.loading = false;
-      this._message.error(error1.error)
+      this._notification.error(
+        '发生错误！',
+        `${error1.error}`)
     })
   }
   searchData(pageIndex: number = this.pageIndex) {
     this.displayData = [];
     this.loading = true;
-    this.newsManagementService$.getNewsList(pageIndex, 10).subscribe(result => {
+    this.newsManagementService$.getNewsList(pageIndex, 10, this.filterOptions).subscribe(result => {
       this.loading = false;
-      this.total = result[0].totalNews;
+      this.total = result.data.total;
       this.totalPage = Math.ceil(this.total / 10);
-      this.dataList = result;
+      this.dataList = result.data.articleList;
       this.displayData = this.dataList;
+      this.displayData.forEach(item => {
+        this.mapOfCheckedId[item.id] = false
+      });
+      this.isAllDisplayDataChecked = false;
+      this.isIndeterminate = false;
     }, error1 => {
       this.loading = false;
-      this._message.error(error1.error)
+      this._notification.error(
+        '发生错误！',
+        `${error1.error}`)
     })
   }
 
@@ -109,27 +161,214 @@ export class NewsManagementTableComponent implements OnInit {
   operateData(): void {
     // 删除数据操作
     this.isOperating = true;
-    setTimeout(() => {
-      this.dataList.forEach(item => (this.mapOfCheckedId[item.id] = false));
-      this.refreshStatus();
+    let deleteList = [];
+    this.displayData.forEach(item => {
+      if (this.mapOfCheckedId[item.id])
+        deleteList.push(item.id)
+    });
+    this.newsManagementService$.deleteAritcles(deleteList).subscribe(result => {
       this.isOperating = false;
-    }, 1000);
+      if (this.isAllDisplayDataChecked && this.pageIndex === this.totalPage) {
+        this.pageIndex --;
+      }
+      this.searchData();
+      this._notification.create(
+        'success',
+        '删除成功！',
+        ''
+      )
+    }, error1 => {
+      this.isOperating = false;
+      this._notification.create(
+        'error',
+        '发生错误！',
+        `${error1.error}`
+      )
+    })
   }
 
-  checkChange(data: any) {
-
+  setFeatured(id: string, data: any) {
+    if (data) {
+      this._modalService.confirm({
+        nzTitle: '是否设置为头条？',
+        nzOnOk: () => {
+          this.newsManagementService$.updateFeatured(id, 1).subscribe(result => {
+            this.searchData();
+            this._notification.create(
+              'success',
+              '设置成功！',
+              ''
+            )
+          }, error1 => {
+            this.searchData();
+            this._notification.create(
+              'error',
+              '发生错误！',
+              `${error1.error}`
+            )
+          })
+        },
+        nzOnCancel: () => {
+          this.searchData()
+        }
+      })
+    } else {
+      this._modalService.confirm({
+        nzTitle: '是否取消头条？',
+        nzOnOk: () => {
+          this.newsManagementService$.updateFeatured(id, 0).subscribe(result => {
+            this.searchData();
+            this._notification.create(
+              'success',
+              '取消成功！',
+              ''
+            )
+          }, error1 => {
+            this.searchData();
+            this._notification.create(
+              'error',
+              '发生错误！',
+              `${error1.error}`
+            )
+          })
+        },
+        nzOnCancel: () => {
+          this.searchData()
+        }
+      })
+    }
   }
 
-  edit(id: string) {
+  setPromoted(id: string, data: any) {
+    if (data) {
+      this._modalService.confirm({
+        nzTitle: '是否设为推荐？',
+        nzOnOk: () => {
+          this.newsManagementService$.updatePromoted(id, 1).subscribe(result => {
+            this.searchData();
+            this._notification.create(
+              'success',
+              '设置成功！',
+              ''
+            )
+          }, error1 => {
+            this.searchData();
+            this._notification.create(
+              'error',
+              '发生错误！',
+              `${error1.error}`
+            )
+          })
+        },
+        nzOnCancel: () => {
+          this.searchData()
+        }
+      })
+    } else {
+      this._modalService.confirm({
+        nzTitle: '是否取消推荐？',
+        nzOnOk: () => {
+          this.newsManagementService$.updatePromoted(id, 0).subscribe(result => {
+            this.searchData();
+            this._notification.create(
+              'success',
+              '取消成功！',
+              ''
+            )
+          }, error1 => {
+            this.searchData();
+            this._notification.create(
+              'error',
+              '发生错误！',
+              `${error1.error}`
+            )
+          })
+        },
+        nzOnCancel: () => {
+          this.searchData()
+        }
+      })
+    }
+  }
+
+  setSticky(id: string, data: any) {
+    if (data) {
+      this._modalService.confirm({
+        nzTitle: '是否设为置顶？',
+        nzOnOk: () => {
+          this.newsManagementService$.updateSticky(id, 1).subscribe(result => {
+            this.searchData();
+            this._notification.create(
+              'success',
+              '设置成功！',
+              ''
+            )
+          }, error1 => {
+            this.searchData();
+            this._notification.create(
+              'error',
+              '发生错误！',
+              `${error1.error}`
+            )
+          })
+        },
+        nzOnCancel: () => {
+          this.searchData()
+        }
+      })
+    } else {
+      this._modalService.confirm({
+        nzTitle: '是否取消置顶？',
+        nzOnOk: () => {
+          this.newsManagementService$.updateSticky(id, 0).subscribe(result => {
+            this.searchData();
+            this._notification.create(
+              'success',
+              '取消成功！',
+              ''
+            )
+          }, error1 => {
+            this.searchData();
+            this._notification.create(
+              'error',
+              '发生错误！',
+              `${error1.error}`
+            )
+          })
+        },
+        nzOnCancel: () => {
+          this.searchData()
+        }
+      })
+    }
+  }
+
+  edit(item: any) {
     const modal = this._modalService.create({
-      nzTitle: '新建资讯',
+      nzTitle: '修改资讯',
       nzContent: NewsEditModalComponent,
       nzComponentParams: {
-        id: id
+        item: item
       },
       nzWidth: 600,
       nzOnOk: instance => instance.submit(),
       nzOnCancel: instance => instance.destroy()
+    });
+    modal.afterClose.subscribe(result => {
+      if (result) {
+        this.newsManagementService$.updateNews(item.id, result.programa, result.body, result.isFeatured, result.isPromoted, result.isSticky, result.title, result.tag).subscribe(result => {
+          this.searchData();
+          this._notification.success(
+            '修改成功！',
+            ''
+          )
+        }, error1 => {
+          this._notification.error(
+            '发生错误！',
+            `${error1.error}`
+          )
+        })
+      }
     })
   }
 
@@ -153,7 +392,25 @@ export class NewsManagementTableComponent implements OnInit {
   delete(id: string) {
     this._modalService.confirm({
       nzTitle: '是否要删除该条资讯？',
-      nzOnOk: () => console.log('111')
+      nzOnOk: () => {
+        let deleteList = [];
+        deleteList.push(id);
+        this.newsManagementService$.deleteAritcles(deleteList).subscribe(result => {
+          if (this.displayData.length == 1) {
+            this.pageIndex -- ;
+          }
+          this.searchData();
+          this._notification.success(
+            '删除成功！',
+            ''
+          )
+        }, error1 => {
+          this._notification.error(
+            '发生错误！',
+            `${error1.error}`
+          )
+        })
+      }
     })
   }
 

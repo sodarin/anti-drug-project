@@ -4,14 +4,14 @@
     <nz-divider nzType="vertical"></nz-divider>
     <nz-select class="select-control" [(ngModel)]="courseStatus" nzAllowClear="false" nzPlaceHolder="课程状态">
       <nz-option nzValue="" nzLabel="全部状态"></nz-option>
-      <nz-option nzValue="-1" nzLabel="未发布"></nz-option>
-      <nz-option nzValue="1" nzLabel="已发布"></nz-option>
-      <nz-option nzValue="0" nzLabel="已关闭"></nz-option>
+      <nz-option nzValue="draft" nzLabel="未发布"></nz-option>
+      <nz-option nzValue="published" nzLabel="已发布"></nz-option>
+      <nz-option nzValue="closed" nzLabel="已关闭"></nz-option>
     </nz-select>
     <nz-divider nzType="vertical"></nz-divider>
-    <nz-select class="select-control" nzAllowClear="false" [(ngModel)]="courseType" nzPlaceHolder="课程类型">
-      <nz-option nzValue="0" nzLabel="普通课程"></nz-option>
-      <nz-option nzValue="1" nzLabel="班级课程"></nz-option>
+    <nz-select class="select-control" nzAllowClear="false" [(ngModel)]="courseType" nzPlaceHolder="课程类型" (ngModelChange)="filterCourse()">
+      <nz-option nzValue="normal" nzLabel="普通课程"></nz-option>
+      <nz-option nzValue="class" nzLabel="班级课程"></nz-option>
     </nz-select>
   </div>
   <div class="input-filter">
@@ -20,7 +20,7 @@
     <input class="name-containing-input" nz-input placeholder="请输入创建者名字" [(ngModel)]="creator" />
     <button (click)="filterCourse()" nz-button nzType="primary" class="search-button"><i nz-icon nzType="search"></i>搜索</button>
     <nz-divider nzType="vertical"></nz-divider>
-    <button nz-button nzType="danger" class="create-button"><i nz-icon nzType="plus"></i>新增课程</button>
+    <button nz-button nzType="danger" (click)="createNewCourse(courseCreatingModal)" class="create-button"><i nz-icon nzType="plus"></i>新增课程</button>
   </div>
   <nz-divider [nzText]="'课程总数：' + totalCourse"></nz-divider>
   <nz-table
@@ -36,10 +36,10 @@
       <tr>
         <th>编号</th>
         <th>名称</th>
-        <th *ngIf="courseType == '0'">计划数</th>
+        <th *ngIf="courseType == 'normal'">计划数</th>
         <th>课程状态</th>
-        <th *ngIf="courseType == '1'">所在班级</th>
-        <th *ngIf="courseType == '0'">学员数</th>
+        <th *ngIf="courseType == 'class'">所在班级</th>
+        <th *ngIf="courseType == 'normal'">学员数</th>
         <th>创建者/时间</th>
         <th>连载状态</th>
         <th>操作</th>
@@ -47,33 +47,62 @@
     </thead>
     <tbody>
       <tr *ngFor="let data of courseListTable.data">
-        <td>{{data.courseId}}</td>
-        <td>{{data.courseName}}</td>
-        <td *ngIf="courseType == '0'">{{data.planNum}}</td>
-        <td>{{data.courseStatus}}</td>
-        <td *ngIf="courseType == '1'">{{data.courseClass}}</td>
-        <td *ngIf="courseType == '0'">{{data.stuNum}}</td>
+        <td>{{data.id}}</td>
         <td>
-          <span>{{data.creator}}</span><br/>
-          <span>{{data.creatTime}}</span>
+          <span style="color: #108ee9; cursor: pointer;" (click)="navigateTo('/client/course/' + data.id)">{{data.title}}</span><br/>
+          <span>分类：{{data.categoryName ? data.categoryName: '- -'}}</span><br />
+          <span *ngIf="data.recommended !== 0"><nz-tag [nzColor]="'#108ee9'">荐:{{data.recommendTime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}/序号:{{data.recommendOrder}}</nz-tag></span>
         </td>
-        <td>{{data.serialStatus}}</td>
+        <td *ngIf="courseType == 'normal'">{{data.planNum}}</td>
+        <td><span [ngStyle]="{color: data.status == 'published'? 'green': 'red'}">{{data.status == 'published'? '已发布': (data.status == 'closed'? '已关闭': '未发布')}}</span></td>
+        <td *ngIf="courseType == 'class'">{{data.courseClass}}</td>
+        <td *ngIf="courseType == 'normal'">{{data.studentNum}}</td>
+        <td>
+          <span style="cursor: pointer; color: #108ee9;" (click)="viewUserInfo(data.creatorId)">{{data.creator}}</span><br/>
+          <span style="font-size: 12px; color: rgba(0, 0, 0, .65);">{{data.createdTime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
+        </td>
+        <td>{{data.serializeMode == 'none'? '非连载课程': (data.serializeMode == 'serialized'? '已完结': '更新中')}}</td>
         <td><i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
         <ng-template #operationTemplate>
           <div class="user-management-operation">
+            <div><span (click)="navigateTo('/client/course/' + data.id)"><i nz-icon nzType="book" nzTheme="outline"></i>管理课程</span></div>
             <div>
-              <span *ngIf="data.recommend==0" (click)="showRecommendCourseModal(data.courseId)"><i nz-icon nzType="up-square" nzTheme="outline"></i>推荐课程</span>
-              <span *ngIf="data.recommend==1" (click)="cancelRecommendCourse(data.courseId)"><i nz-icon nzType="down-square" nzTheme="outline"></i>取消推荐</span>
+              <span *ngIf="data.recommended==0" (click)="showRecommendCourseModal(data.id)"><i nz-icon nzType="up-square" nzTheme="outline"></i>推荐课程</span>
+              <span *ngIf="data.recommended==1" (click)="cancelRecommendCourse(data.id)"><i nz-icon nzType="down-square" nzTheme="outline"></i>取消推荐</span>
             </div>
             <div><span (click)="copyCourse(data)"><i nz-icon nzType="copy" nzTheme="outline"></i>复制课程</span></div>
             <div>
-              <span *ngIf="data.courseStatus == '已关闭' || data.courseStatus == '未发布'" (click)="publishCourse(data.courseId)"><i nz-icon nzType="check-circle" nzTheme="outline"></i>发布课程</span>
-              <span *ngIf="data.courseStatus == '已发布'" (click)="closeCourse(data.courseId)"><i nz-icon nzType="stop" nzTheme="outline"></i>关闭课程</span>
+              <span *ngIf="data.status !== 'published'" (click)="publishCourse(data.id)"><i nz-icon nzType="check-circle" nzTheme="outline"></i>发布课程</span>
+              <span *ngIf="data.status == 'published'" (click)="closeCourse(data.id)"><i nz-icon nzType="stop" nzTheme="outline"></i>关闭课程</span>
             </div>
-            <div><span (click)="deleteCourse(data.courseId)"><i nz-icon nzType="delete" nzTheme="outline"></i>删除课程</span></div>
+            <div><span (click)="deleteCourse(data.id)"><i nz-icon nzType="delete" nzTheme="outline"></i>删除课程</span></div>
           </div>
         </ng-template>
       </tr>
     </tbody>
   </nz-table>
+
+  <ng-template #courseCreatingModal>
+    <form nz-form [formGroup]="newCourseForm">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="title" nzRequired>课程名称</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="请输入课程名称！">
+          <input
+            nz-input
+            id="title"
+            formControlName="title"
+          />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="courseType">课程类型</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-radio-group formControlName="courseType" id="courseType">
+            <label nz-radio [nzValue]="'normal'">普通课程</label>
+            <label nz-radio [nzValue]="'open'">公开课</label>
+          </nz-radio-group>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-template>
 </div>

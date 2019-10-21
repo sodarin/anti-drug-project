@@ -4,9 +4,9 @@
     <nz-divider nzType="vertical"></nz-divider>
     <nz-select class="select-control" [(ngModel)]="courseStatus" nzAllowClear="false" nzPlaceHolder="课程状态">
       <nz-option nzValue="" nzLabel="全部状态"></nz-option>
-      <nz-option nzValue="-1" nzLabel="未发布"></nz-option>
-      <nz-option nzValue="1" nzLabel="已发布"></nz-option>
-      <nz-option nzValue="0" nzLabel="已关闭"></nz-option>
+      <nz-option nzValue="draft" nzLabel="未发布"></nz-option>
+      <nz-option nzValue="published" nzLabel="已发布"></nz-option>
+      <nz-option nzValue="closed" nzLabel="已关闭"></nz-option>
     </nz-select>
   </div>
   <div class="input-filter">
@@ -36,25 +36,29 @@
     </thead>
     <tbody>
     <tr *ngFor="let data of openClassListTable.data">
-      <td>{{data.courseId}}</td>
+      <td>{{data.id}}</td>
       <td>
-        <span style="cursor: pointer; color: #108ee9;" (click)="navigateTo(data.courseId)">{{data.courseName}}</span><br/>
-        <span>分类：{{data.courseClassification}} <nz-tag [nzColor]="'#108ee9'">荐:{{data.promotedTime}}/序号:{{data.promotedSeq}}</nz-tag>></span>
+        <span style="cursor: pointer; color: #108ee9;" (click)="navigateTo('/client/openresourcedetail/' + data.id)">{{data.title}}</span><br/>
+        <span>分类：{{data.categoryName ? data.categoryName: '- -'}} <nz-tag [nzColor]="'#108ee9'" *ngIf="data.recommended !== 0">荐:{{data.recommendTime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}/序号:{{data.recommendOrder}}</nz-tag></span>
       </td>
-      <td>{{data.courseStatus}}</td>
+      <td><span [ngStyle]="{color: data.status == 'published'? 'green': 'red'}">{{data.status == 'published'? '已发布': (data.status == 'closed'? '已关闭': '未发布')}}</span></td>
       <td>
-        <span style="color: #108ee9;" (click)="openTeacherIntroModal(data.creatorId)">{{data.creator}}</span><br/>
-        <span>{{data.creatTime}}</span>
+        <span style="cursor: pointer; color: #108ee9;" (click)="openTeacherIntroModal(data.creatorId)">{{data.creator}}</span><br/>
+        <span>{{data.createdTime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
       </td>
       <td><i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
       <ng-template #operationTemplate>
         <div class="user-management-operation">
-          <div><span><i nz-icon nzType="book" nzTheme="outline"></i>管理课程</span></div>
+          <div><span (click)="navigateTo('/client/course/' + data.id)"><i nz-icon nzType="book" nzTheme="outline"></i>管理课程</span></div>
           <div>
-            <span *ngIf="data.recommend==0" (click)="showRecommendCourseModal(data.courseId)"><i nz-icon nzType="up-square" nzTheme="outline"></i>推荐课程</span>
-            <span *ngIf="data.recommend==1" (click)="cancelRecommendCourse(data.courseId)"><i nz-icon nzType="down-square" nzTheme="outline"></i>取消推荐</span>
+            <span *ngIf="data.recommended==0" (click)="showRecommendCourseModal(data.id)"><i nz-icon nzType="up-square" nzTheme="outline"></i>推荐课程</span>
+            <span *ngIf="data.recommended==1" (click)="cancelRecommendCourse(data.id)"><i nz-icon nzType="down-square" nzTheme="outline"></i>取消推荐</span>
           </div>
-          <div><span (click)="closeCourse(data.courseId)"><i nz-icon nzType="stop" nzTheme="outline"></i>删除课程</span></div>
+          <div>
+            <span *ngIf="data.status !== 'published'" (click)="publishCourse(data.id)"><i nz-icon nzType="check-circle" nzTheme="outline"></i>发布课程</span>
+            <span *ngIf="data.status == 'published'" (click)="closeCourse(data.id)"><i nz-icon nzType="stop" nzTheme="outline"></i>关闭课程</span>
+          </div>
+          <div><span (click)="deleteCourse(data.id)"><i nz-icon nzType="delete" nzTheme="outline"></i>删除课程</span></div>
         </div>
       </ng-template>
     </tr>

@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {UserManagementService} from '../../../service/user-management/user-management.service';
-import {NzMessageService, NzModalRef} from 'ng-zorro-antd';
+import {NzMessageService, NzModalRef, NzNotificationService} from 'ng-zorro-antd';
 import {TagManagementService} from '../../../service/tag-management/tag-management.service';
 
 @Component({
@@ -11,28 +11,35 @@ import {TagManagementService} from '../../../service/tag-management/tag-manageme
 export class TagInfoEditComponent implements OnInit {
 
   @Input()
-  id: string;
+  item: any;
   name: string;
 
   constructor(
     private TagManagementService$: TagManagementService,
     private _modal: NzModalRef,
-    private _message: NzMessageService
+    private _notification: NzNotificationService
   ) {}
 
   ngOnInit() {
 
-    this.TagManagementService$.getTagDetailById(this.id).subscribe(result => {
-      this.name=result.name;
-    })
+    this.name = this.item.name;
   }
 
   submit() {
-    this.TagManagementService$.updateTagDetail(
-      this.id, this.name
-    ).subscribe( result => {
-      this._message.success("修改成功！");
-    }, error1 => this._message.error(error1.error))
+    if (this.name !== '') {
+      let info = {
+        id: this.item.id,
+        name: this.name
+      };
+      this._modal.destroy(info)
+    } else {
+      this._notification.error(
+        '发生错误！',
+        '名称不能为空!'
+      );
+      return false;
+    }
+
   }
 
   destroy() {

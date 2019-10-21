@@ -10,24 +10,25 @@ export class UserManagementService {
   constructor(private _http: HttpClient) {
   }
 
-  getUserList(targetPage: number, pageSize: number): Observable<any> {
-    return this._http.post(`/user/getIndexUser`, {
-      pageSize: pageSize,
-      pageNum: targetPage,
-    });
-  }
+  getUserList(targetPage: number, pageSize: number, filterOptions: any): Observable<any> {
+    if (filterOptions.searchType == '' && filterOptions.searchParameter == '' && filterOptions.searchTimeType == '' && filterOptions.starTime == '' && filterOptions.role == 0) {
+      return this._http.post(`/user/getIndexUser`, {
+        pageSize: pageSize,
+        pageNum: targetPage,
+      });
+    } else {
+      return this._http.post(`/user/getIndexUser`, {
+        pageSize: pageSize,
+        pageNum: targetPage,
+        searchType: filterOptions.searchType,
+        searchParameter: filterOptions.searchParameter,
+        searchTimeType: filterOptions.searchTimeType,
+        starTime: filterOptions.starTime,
+        endTime: filterOptions.endTime,
+        role: filterOptions.role
+      });
+    }
 
-  filterUserList(targetPage: number, pageSize: number, filterOptions: any): Observable<any> {
-    return this._http.post(`/user/getIndexUser`, {
-      pageSize: pageSize,
-      pageNum: targetPage,
-      searchType: filterOptions.searchType,
-      searchParameter: filterOptions.searchParameter,
-      searchTimeType: filterOptions.searchTimeType,
-      starTime: filterOptions.starTime,
-      endTime: filterOptions.endTime,
-      role: filterOptions.role
-    });
   }
 
   getUserDetailById(userId: string): Observable<any> {
@@ -68,7 +69,7 @@ export class UserManagementService {
   }
 
   updatePassword(password: string, userId: string): Observable<any> {
-    return this._http.put(`/user/updatePassword`, {
+    return this._http.put(`/user/updateUserPassword`, {
       password: password,
       userId: userId
     });

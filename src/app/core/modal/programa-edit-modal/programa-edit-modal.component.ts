@@ -12,7 +12,7 @@ import {error} from 'selenium-webdriver';
 export class ProgramaEditModalComponent implements OnInit {
 
   @Input()
-  id: string;
+  item: any;
 
   programaEditForm: FormGroup;
   programaOptions = [];
@@ -22,31 +22,47 @@ export class ProgramaEditModalComponent implements OnInit {
     private _modal: NzModalRef,
     private newsManagementService$: NewsManagementService,
     private _message: NzMessageService
-  ) { }
+  ) {
+    this.programaEditForm = this.fb.group({
+      name: ['', Validators.required],
+      encode: ['', Validators.required],
+      programa: ['']
+    })
+  }
 
   ngOnInit() {
-    if (this.id) {
-      this.newsManagementService$.getNewsDetail(this.id).subscribe(result => {
+    this.newsManagementService$.getCategoryList().subscribe(result => {
+      this.programaOptions = result;
+    });
+    if (this.item) {
         this.programaEditForm = this.fb.group({
-          name: [result.name, Validators.required],
-          encode: [result.encode, Validators.required],
-          programa: [result.programa]
+          name: [this.item.name, Validators.required],
+          encode: [this.item.code, Validators.required],
+          programa: [this.item.categoryid]
         })
-      }, error1 => this._message.error(error1.error))
     }  else {
       this.programaEditForm = this.fb.group({
         name: ['', Validators.required],
         encode: ['', Validators.required],
-        programa: [[]]
+        programa: ['']
       })
     }
   }
 
   submit() {
     let shouldBeClosed = false;
-    this.programaEditForm.markAllAsTouched();
+    this.programaEditForm.controls.name.markAsDirty();
+    this.programaEditForm.controls.encode.markAsDirty();
     this.programaEditForm.controls.name.updateValueAndValidity();
     this.programaEditForm.controls.encode.updateValueAndValidity();
+    if (!this.programaEditForm.controls.name.errors && !this.programaEditForm.controls.encode.errors) {
+      let result = {
+        name: this.programaEditForm.controls.name.value,
+        code: this.programaEditForm.controls.encode.value,
+        categoryid: this.programaEditForm.controls.programa.value
+      };
+      this._modal.destroy(result)
+    }
     return shouldBeClosed
   }
 

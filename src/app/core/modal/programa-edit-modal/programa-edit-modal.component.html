@@ -17,7 +17,7 @@
       <nz-select
         nzPlaceHolder="请选择栏目"
         formControlName="programa">
-        <nz-option *ngFor="let option of programaOptions" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+        <nz-option *ngFor="let option of programaOptions" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
       </nz-select>
     </nz-form-control>
   </nz-form-item>
