@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { addDays, differenceInMilliseconds } from 'date-fns';
-import {ActivatedRoute, Router} from '@angular/router';
-import {OpenresourceService} from '../../service/openresource/openresource.service';
-import {NzNotificationService} from 'ng-zorro-antd';
-import {OpenresourcedetailService} from '../../service/openresourcedetail/openresourcedetail.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { OpenresourceService } from '../../service/openresource/openresource.service';
+import { NzNotificationService } from 'ng-zorro-antd';
+import { OpenresourcedetailService } from '../../service/openresourcedetail/openresourcedetail.service';
 @Component({
   selector: 'app-openresourcedetail',
   templateUrl: './openresourcedetail.component.html',
@@ -11,45 +11,44 @@ import {OpenresourcedetailService} from '../../service/openresourcedetail/openre
 })
 export class OpenresourcedetailComponent implements OnInit {
   displayData: any;
-  teacherData;any;
-  movietitle:any;
-  HitNum:any;
-  PostNum:any;
+  teacherData; any;
+  movietitle: any;
+  HitNum: any;
+  PostNum: any;
   courseId: string;
-  LikeNum:number;
-  SubTitle:string;
-  teacherID:any;
-  teachernickname:string;
-  teachertitle:string;
-  SmallPicture:string;
-  Teacherid:string;
-  teacherlargeAvatar:string;
-  FansNum:number;
-  FollowedNum:number;
+  LikeNum: number;
+  SubTitle: string;
+  teacherID: any;
+  teachernickname: string;
+  teachertitle: string;
+  SmallPicture: string;
+  Teacherid: string;
+  teacherlargeAvatar: string;
+  FansNum: number;
+  FollowedNum: number;
   constructor(private router: Router,
-              private opendetailService$: OpenresourcedetailService,
-              private openService$:   OpenresourceService,
-              private _notification: NzNotificationService,
-              private routerInfo: ActivatedRoute) { }
+    private opendetailService$: OpenresourcedetailService,
+    private openService$: OpenresourceService,
+    private _notification: NzNotificationService,
+    private routerInfo: ActivatedRoute) { }
 
   ngOnInit() {
     this.courseId = this.routerInfo.snapshot.params['id'];
     this.GetData()
 
   }
-  GetData()
-  {
+  GetData() {
     this.opendetailService$.getOpenCourseDetailInfor(this.courseId).subscribe(result => {
       this.displayData = result
-      this.movietitle=this.displayData.title
-      this.HitNum=this.displayData.hitNum
-      this.PostNum=this.displayData.postNum
-      this.LikeNum=this.displayData.likeNum
-      this.SubTitle=this.displayData.subtitle
-      this.teachernickname=this.displayData.teacher_nickname
-      this.teachertitle=this.displayData.teacher_title
-      this.SmallPicture=this.displayData.smallPicture
-      this.Teacherid=this.displayData.teacher_id
+      this.movietitle = this.displayData.title
+      this.HitNum = this.displayData.hitNum
+      this.PostNum = this.displayData.postNum
+      this.LikeNum = this.displayData.likeNum
+      this.SubTitle = this.displayData.subtitle
+      this.teachernickname = this.displayData.teacher_nickname
+      this.teachertitle = this.displayData.teacher_title
+      this.SmallPicture = this.displayData.smallPicture
+      this.Teacherid = this.displayData.teacher_id
       this.getTeacherData()
     }, error1 => {
       this._notification.create(
@@ -59,11 +58,11 @@ export class OpenresourcedetailComponent implements OnInit {
       )
     })
   }
-  getTeacherData(){
-    this.opendetailService$.getTeacherInfor(this.Teacherid).subscribe(result =>{
-      this.teacherData=result
-      this.FansNum=this.teacherData.data.fansNum
-      this.FollowedNum=this.teacherData.data.followedNum
+  getTeacherData() {
+    this.opendetailService$.getTeacherInfor(this.Teacherid).subscribe(result => {
+      this.teacherData = result
+      this.FansNum = this.teacherData.data.fansNum
+      this.FollowedNum = this.teacherData.data.followedNum
     }, error1 => {
       this._notification.create(
         'error',
