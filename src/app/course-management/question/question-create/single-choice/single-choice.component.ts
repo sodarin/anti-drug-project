@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Router } from '@angular/router'
+import { QuestionCreateService } from 'src/app/service/question-create/question-create.service';
+import { NzNotificationService } from 'ng-zorro-antd';
+
 @Component({
   selector: 'app-single-choice',
   templateUrl: './single-choice.component.html',
@@ -52,8 +55,11 @@ export class SingleChoiceComponent implements OnInit {
     if (this.listOfChoiceControl.length > 2) {
       const index = this.listOfChoiceControl.indexOf(i);
       this.listOfChoiceControl.splice(index, 1);
-      console.log(this.listOfChoiceControl);
       this.validateForm.removeControl(i.controlInstance);
+      this.listOfChoiceControl.forEach((item, i) => {
+        this.listOfChoiceControl[i].id = i;
+        this.listOfChoiceControl[i].controlInstance = `选项${String.fromCharCode(i + 65)}`;
+      })
     }
   }
 
@@ -62,14 +68,29 @@ export class SingleChoiceComponent implements OnInit {
   }
 
   submitForm(): void {
+    let check: boolean = true;
     for (const i in this.validateForm.controls) {
       this.validateForm.controls[i].markAsDirty();
       this.validateForm.controls[i].updateValueAndValidity();
+      if (this.validateForm.controls.error) {
+        check = false;
+      }
     }
-    console.log(this.validateForm.value);
+    if (check) {
+      this._questionCreateService.createQuestion({}).subscribe(result => {
+        this._nzNotificationService.create('success', '添加成功!', `${result}`);
+      }, err => {
+        this._nzNotificationService.create('error', '添加失败!', `${err}`);
+      })
+    }
   }
 
-  constructor(private fb: FormBuilder, private message: NzMessageService, private router: Router) { }
+  constructor(
+    private fb: FormBuilder,
+    private message: NzMessageService,
+    private _questionCreateService: QuestionCreateService,
+    private _nzNotificationService: NzNotificationService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({

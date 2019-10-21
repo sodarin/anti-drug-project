@@ -41,22 +41,21 @@
           <quill-editor formControlName="stem" id="stem"></quill-editor>
         </nz-form-control>
       </nz-form-item>
-      <nz-form-item *ngFor="let control of listOfChoiceControl;let i = index">
-        <nz-form-label [nzSpan]="lblLength" [nzNoColon]="colonVisible" nzRequired>{{control.controlInstance}}
-        </nz-form-label>
-        <nz-form-control [nzSpan]="conLength" nzErrorTip="请输入选项内容">
-          <quill-editor [attr.id]="control.id" [formControlName]="control.controlInstance">
-          </quill-editor>
-          <nz-form-control nzErrorTip="请选择正确答案">
-            <i nz-icon nzType="minus-circle-o" class="dynamic-delete-button" (click)="removeField(control, $event)"></i>
-            <!-- <nz-switch [nzCheckedChildren]="checkedTemplate" [nzUnCheckedChildren]="unCheckedTemplate">
-          </nz-switch><label class="tips">正确答案</label>
-          <ng-template #checkedTemplate><i nz-icon nzType="check"></i></ng-template>
-          <ng-template #unCheckedTemplate><i nz-icon nzType="close"></i></ng-template> -->
-            <label nz-radio formControlName="answer">正确答案</label>
+      <nz-radio-group formControlName="answer">
+        <nz-form-item *ngFor="let control of listOfChoiceControl;let i = index">
+          <nz-form-label [nzSpan]="lblLength" [nzNoColon]="colonVisible" nzRequired>{{control.controlInstance}}
+          </nz-form-label>
+          <nz-form-control [nzSpan]="conLength" nzErrorTip="请输入选项内容">
+            <quill-editor [attr.id]="control.id" [formControlName]="control.controlInstance">
+            </quill-editor>
+            <nz-form-control nzErrorTip="请选择正确答案">
+              <i nz-icon nzType="minus-circle-o" class="dynamic-delete-button"
+                (click)="removeField(control, $event)"></i>
+              <label nz-radio [nzValue]="control.controlInstance">正确答案</label>
+            </nz-form-control>
           </nz-form-control>
-        </nz-form-control>
-      </nz-form-item>
+        </nz-form-item>
+      </nz-radio-group>
       <nz-form-item>
         <nz-form-control nzOffset="18">
           <button nz-button nzType="dashed" class="add-button" (click)="addField($event)">
