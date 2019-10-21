@@ -11,7 +11,7 @@ import { NzNotificationService } from 'ng-zorro-antd';
 export class BaseInfoComponent implements OnInit {
   promptVisable: boolean = false;
   isLoading: boolean = false;
-  listOfTag: Object = [];
+  listOfTag: Object = [{ id: 1, name: "互联网" }, { id: 2, name: "禁毒" }];
   listOfCategories: any[] = [];
   validateForm: FormGroup;
 
