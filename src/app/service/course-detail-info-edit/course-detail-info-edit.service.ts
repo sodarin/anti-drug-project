@@ -10,7 +10,7 @@ export class CourseDetailInfoEditService {
   constructor(private _http: HttpClient) { }
 
   setDetailInfo(config: any): Observable<any> {
-    const api = 'course/setDatailInfo';
+    const api = '/course/setDetailInfo';
     return this._http.put(api, config);
   }
 }

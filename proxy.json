@@ -6,13 +6,13 @@
     "changeOrigin": true
   },
   "/course": {
-    "target": "http://202.199.13.224:9002",
+    "target": "http://202.199.13.65:9002",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
   "/info": {
-    "target": "http://202.199.13.113:9004",
+    "target": "http://202.199.13.113:9005",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true

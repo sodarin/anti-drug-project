@@ -28,9 +28,11 @@ export class BaseInfoComponent implements OnInit {
       this._courseBaseInfoEditService.setBaseInfo(baseInfo).subscribe(result => {
         this.isLoading = false;
         this.promptVisable = true;
+        this._nzNotificationService.create('success', '保存成功', `${result}`);
       }, error => {
         this.isLoading = false;
         this.promptVisable = false;
+        this._nzNotificationService.create('error', '保存失败', `${error}`);
       })
     }
 
