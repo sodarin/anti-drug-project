@@ -69,12 +69,14 @@ import {MyClassComponent} from "../client/mine-management/my-class/my-class.comp
 import {MyLiveComponent} from "../client/mine-management/my-live/my-live.component";
 import {CreateCourseComponent} from "../client/mine-management/teaching-course/create-course/create-course.component";
 import {MyLiveCourseComponent} from "../client/mine-management/my-course/my-live-course/my-live-course.component";
-
+import { FocusDetailComponent } from '../core/focus-detail/focus-detail.component';
+import { FansComponent } from "../core/fans/fans.component";
 
 
 
 const routes: Routes = [
   { path: '', redirectTo: '/client', pathMatch: 'full' },
+ 
   {
     path: 'client', component: FrontDeskComponent, children: [
       { path: '', component: ClientComponent },
@@ -104,6 +106,12 @@ const routes: Routes = [
       { path: 'courselist', component: CourselistComponent},
       { path: 'teacher', component: TeacherComponent},
       { path: 'userpage/:id', component: UserPageComponent},
+      { path: 'userpage/:id', component: UserPageComponent,children:[
+        {path: 'focus', component: FocusDetailComponent},
+        {path: 'fans', component: FansComponent},
+        {path: 'focus', component: FocusDetailComponent,outlet:'r2'},
+        {path: 'fans', component: FansComponent,outlet:'r2'},
+      ]},
       { path: 'classlist', component: ClasslistComponent },
       { path: 'openresource', component: OpenresourceComponent},
       { path: 'openresourcedetail/:id', component: OpenresourcedetailComponent },

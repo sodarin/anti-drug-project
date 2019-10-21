@@ -1,0 +1,43 @@
+<div style="text-align: center" class="computer-style">
+        <nz-list  [nzDataSource]="data" style="margin:30px" [nzRenderItem]="item"
+            [nzGrid]="{ gutter: 24, xs: 24, sm: 12, md: 12, lg: 8, xl: 6 }">
+     <ng-template #item let-item>
+       <nz-list-item [nzContent]="nzContent">
+         <ng-template #nzContent>
+           <nz-card nzHoverable style="width:240px;height:350px;margin: 30px" [nzCover]="coverTemplate">
+             <nz-card-meta [nzTitle]="titleTemplate"></nz-card-meta>          
+           </nz-card>
+           <ng-template #coverTemplate>
+             <nz-avatar [nzSize]="100" style="text-align:center;margin:60px auto;" nzIcon="user"></nz-avatar>
+           </ng-template>
+           <ng-template  #titleTemplate>
+             <h3 *ngIf="this.item.isshow">{{item.name}}</h3>
+           </ng-template>     
+         </ng-template>
+       </nz-list-item>
+     </ng-template>
+    </nz-list>
+    
+</div>
+<div style="text-align: center" class="mobile-style">
+    <nz-list  [nzDataSource]="data" style="margin:30px" [nzRenderItem]="item1"
+        [nzGrid]="{ gutter: 24, xs: 24, sm: 12, md: 12, lg: 8, xl: 6 }">
+    <ng-template #item1 let-item>
+      <nz-list-item [nzContent]="nzContent">
+        <ng-template #nzContent>
+          <nz-card nzHoverable style="width:140px;height:200px;margin:5px" [nzCover]="coverTemplate">
+            <nz-card-meta [nzTitle]="titleTemplate"></nz-card-meta>          
+          </nz-card>
+          <ng-template #coverTemplate>
+            <nz-avatar [nzSize]="70" style="text-align:center;margin:30px auto;" nzIcon="user"></nz-avatar>
+          </ng-template>
+          <ng-template  #titleTemplate>
+            <h4 *ngIf="this.item.isshow">{{item.name}}</h4>
+          </ng-template>     
+        </ng-template>
+      </nz-list-item>
+    </ng-template>
+    </nz-list>
+
+</div>
+    

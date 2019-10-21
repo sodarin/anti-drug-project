@@ -1,5 +1,4 @@
 <div class="computer-style">
-
   <div style="background-image: url('/assets/img/background.jpg');height:200px">
     <div nz-row>
       <div nz-col nzSpan="8">
@@ -25,28 +24,191 @@
   <div style="text-align: center">
     <nz-tabset style="width: auto">
       <nz-tab nzTitle="个人介绍">
-
+        这个人很懒，什么都没有留下。
       </nz-tab>
       <nz-tab *ngIf="this.type=='teacher'" nzTitle="在教课程">
-        Content of Tab Pane 2
+        <nz-list [nzDataSource]="courses" style="margin:30px" 
+        [nzRenderItem]="item" [nzGrid]="{ gutter: 24, xs: 24, sm: 12, md: 12, lg: 8, xl: 6 }">
+          <ng-template #item let-item>
+            <nz-list-item [nzContent]="nzContent">
+              <ng-template #nzContent>
+                <nz-card [nzCover]="coverTemplate" nzHoverable >
+                  <nz-card-meta [nzTitle]="titleTemplate"></nz-card-meta>
+                  <div>
+                    <span style="float: left;">
+                        <span><i nz-icon nzType="team" nzTheme="outline"></i>{{item.student_num}}</span>
+                        <span style="margin-left: 10px;"><i nz-icon nzType="message" nzTheme="outline"></i>{{item.comment}}</span>
+                    </span>
+                  <span style="float: right;">
+                          <span>{{item.price}}</span>
+                      </span>          
+                  </div>    
+                </nz-card>
+                
+                <ng-template #titleTemplate>
+                    <a *ngIf="this.item.isshow" style="color: black;">
+                      {{item.title}}
+                    </a>   
+                  <nz-tag [nzColor]="'#f50'" *ngIf="this.item.status=='已完结'">{{item.status}}</nz-tag>
+                  <nz-tag [nzColor]="'#87d068'" *ngIf="this.item.status=='更新中'">{{item.status}}</nz-tag>             
+                </ng-template>
+              <ng-template #coverTemplate>
+               
+                <img style="padding:10px;vertical-align: middle" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
+              </ng-template>
+              
+              </ng-template>
+            </nz-list-item>
+          </ng-template>
+        </nz-list>
       </nz-tab>
       <nz-tab *ngIf="this.type=='teacher'" nzTitle="在教班级">
-        Content of Tab Pane 3
+        <nz-list [nzDataSource]="classes" style="margin:30px" 
+        [nzRenderItem]="item1" [nzGrid]="{ gutter: 24, xs: 24, sm: 12, md: 12, lg: 8, xl: 6 }">
+          <ng-template #item1 let-item>
+            <nz-list-item [nzContent]="nzContent">
+              <ng-template #nzContent>
+                <nz-card [nzCover]="coverTemplate" nzHoverable >
+                  <nz-card-meta [nzTitle]="titleTemplate"></nz-card-meta>
+                </nz-card>
+                <ng-template #titleTemplate>
+                    <a *ngIf="this.item.isshow" style="color: black;">
+                      {{item.title}}
+                    </a>                            
+                </ng-template>
+              <ng-template #coverTemplate>               
+                <img src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png" />
+              </ng-template>
+              
+              </ng-template>
+            </nz-list-item>
+          </ng-template>
+        </nz-list>
       </nz-tab>
       <nz-tab nzTitle="在学课程">
-        Content of Tab Pane 3
+        <nz-list [nzDataSource]="courses" style="margin:30px" 
+        [nzRenderItem]="item" [nzGrid]="{ gutter: 24, xs: 24, sm: 12, md: 12, lg: 8, xl: 6 }">
+          <ng-template #item let-item>
+            <nz-list-item [nzContent]="nzContent">
+              <ng-template #nzContent>
+                <nz-card [nzCover]="coverTemplate" nzHoverable >
+                  <nz-card-meta [nzTitle]="titleTemplate"></nz-card-meta>
+                  <div>
+                    <span style="float: left;">
+                        <span><i nz-icon nzType="team" nzTheme="outline"></i>{{item.student_num}}</span>
+                        <span style="margin-left: 10px;"><i nz-icon nzType="message" nzTheme="outline"></i>{{item.comment}}</span>
+                    </span>
+                  <span style="float: right;">
+                          <span>{{item.price}}</span>
+                      </span>          
+                  </div>    
+                </nz-card>
+                
+                <ng-template #titleTemplate>
+                    <a *ngIf="this.item.isshow" style="color: black;">
+                      {{item.title}}
+                    </a>   
+                  <nz-tag [nzColor]="'#f50'" *ngIf="this.item.status=='已完结'">{{item.status}}</nz-tag>
+                  <nz-tag [nzColor]="'#87d068'" *ngIf="this.item.status=='更新中'">{{item.status}}</nz-tag>             
+                </ng-template>
+              <ng-template #coverTemplate>
+               
+                <img style="padding:10px;vertical-align: middle" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
+              </ng-template>
+              
+              </ng-template>
+            </nz-list-item>
+          </ng-template>
+        </nz-list>
       </nz-tab>
       <nz-tab nzTitle="在学班级">
-        Content of Tab Pane 3
+        <nz-list [nzDataSource]="classes" style="margin:30px" 
+        [nzRenderItem]="item1" [nzGrid]="{ gutter: 24, xs: 24, sm: 12, md: 12, lg: 8, xl: 6 }">
+          <ng-template #item1 let-item>
+            <nz-list-item [nzContent]="nzContent">
+              <ng-template #nzContent>
+                <nz-card [nzCover]="coverTemplate" nzHoverable >
+                  <nz-card-meta [nzTitle]="titleTemplate"></nz-card-meta>
+                </nz-card>
+                <ng-template #titleTemplate>
+                    <a *ngIf="this.item.isshow" style="color: black;">
+                      {{item.title}}
+                    </a>                            
+                </ng-template>
+              <ng-template #coverTemplate>               
+                <img src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png" />
+              </ng-template>
+              
+              </ng-template>
+            </nz-list-item>
+          </ng-template>
+        </nz-list>
       </nz-tab>
       <nz-tab nzTitle="收藏课程">
-        Content of Tab Pane 3
+        <nz-list [nzDataSource]="stars" style="margin:30px" 
+        [nzRenderItem]="item" [nzGrid]="{ gutter: 24, xs: 24, sm: 12, md: 12, lg: 8, xl: 6 }">
+          <ng-template #item let-item>
+            <nz-list-item [nzContent]="nzContent">
+              <ng-template #nzContent>
+                <nz-card [nzCover]="coverTemplate" nzHoverable >
+                  <nz-card-meta [nzTitle]="titleTemplate"></nz-card-meta>
+                      <div>
+                        <span style="float: left;">
+                            <span><i nz-icon nzType="team" nzTheme="outline"></i>{{item.student_num}}</span>
+                            <span style="margin-left: 10px;"><i nz-icon nzType="message" nzTheme="outline"></i>{{item.comment}}</span>
+                        </span>
+                      <span style="float: right;">
+                              <span>{{item.price}}</span>
+                          </span>          
+                        </div>    
+                  
+                </nz-card>
+                <ng-template #titleTemplate>
+                    <a *ngIf="this.item.isshow" style="color: black;">
+                      {{item.title}}
+                    </a>   
+                  <nz-tag [nzColor]="'#f50'" *ngIf="this.item.status=='已完结'">{{item.status}}</nz-tag>
+                  <nz-tag [nzColor]="'#87d068'" *ngIf="this.item.status=='更新中'">{{item.status}}</nz-tag>             
+                </ng-template>
+              <ng-template #coverTemplate>           
+                <img style="padding:10px;vertical-align: middle" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
+              </ng-template>
+              
+              </ng-template>
+            </nz-list-item>
+          </ng-template>
+        </nz-list>
       </nz-tab>
       <nz-tab nzTitle="加入小组">
-        Content of Tab Pane 3
+        <nz-list [nzDataSource]="groups" style="margin:30px" 
+        [nzRenderItem]="item2" [nzGrid]="{ gutter: 24, xs: 24, sm: 12, md: 12, lg: 8, xl: 6 }">
+          <ng-template #item2 let-item>
+            <nz-list-item [nzContent]="nzContent">
+              <ng-template #nzContent>
+                <nz-card [nzCover]="coverTemplate" nzHoverable >
+                  <nz-card-meta [nzTitle]="titleTemplate"></nz-card-meta>
+                </nz-card>
+                <ng-template #titleTemplate>
+                    <a *ngIf="this.item.isshow" style="color: black;">
+                      {{item.title}}
+                    </a>                            
+                </ng-template>
+              <ng-template #coverTemplate>               
+                <img src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png" />
+              </ng-template>
+              
+              </ng-template>
+            </nz-list-item>
+          </ng-template>
+        </nz-list>
       </nz-tab>
       <nz-tab nzTitle="关注/粉丝">
-        Content of Tab Pane 3
+        <nav>
+          <a routerLink="/client/userpage/{{userID}}/focus">关注</a>&nbsp;  
+          <a routerLink="/client/userpage/{{userID}}/fans">粉丝</a>                
+        </nav>     
+        <router-outlet></router-outlet>
+
       </nz-tab>
 
     </nz-tabset>
@@ -72,28 +234,200 @@
   <div style="text-align: center">
     <nz-tabset style="height:auto;width: 90%" nzTabPosition="left">
       <nz-tab nzTitle="个人介绍">
-
+        这个人很懒，什么都没有留下。
       </nz-tab>
       <nz-tab *ngIf="this.type=='teacher'" nzTitle="在教课程">
-        Content of Tab Pane 2
+        <nz-list [nzDataSource]="courses" style="margin:15px" 
+        [nzRenderItem]="item_m" [nzGrid]="{ gutter: 24, xs: 24, sm: 12, md: 12, lg: 8, xl: 6 }">
+          <ng-template #item_m let-item>
+            <nz-list-item [nzContent]="nzContent">
+              <ng-template #nzContent>
+                <nz-card [nzCover]="coverTemplate" nzHoverable >
+                  <nz-card-meta [nzTitle]="titleTemplate"></nz-card-meta>
+                  <div>
+                    <span style="float: left;">
+                        <span><i nz-icon nzType="team" nzTheme="outline"></i>{{item.student_num}}</span>
+                        <span style="margin-left: 4px;"><i nz-icon nzType="message" nzTheme="outline"></i>{{item.comment}}</span>
+                    </span>
+                  <span style="float: right;">
+                          <span>{{item.price}}</span>
+                      </span>          
+                  </div>    
+                </nz-card>
+                
+                <ng-template #titleTemplate>
+                    <a *ngIf="this.item.isshow" style="color: black;">
+                      {{item.title}}
+                    </a>  
+                  <div>
+                    <nz-tag [nzColor]="'#f50'" *ngIf="this.item.status=='已完结'">{{item.status}}</nz-tag>
+                    <nz-tag [nzColor]="'#87d068'" *ngIf="this.item.status=='更新中'">{{item.status}}</nz-tag>      
+                  </div> 
+                         
+                </ng-template>
+              <ng-template #coverTemplate>
+               
+                <img style="padding:10px;vertical-align: middle" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
+              </ng-template>
+              
+              </ng-template>
+            </nz-list-item>
+          </ng-template>
+        </nz-list>
       </nz-tab>
       <nz-tab *ngIf="this.type=='teacher'" nzTitle="在教班级">
-        Content of Tab Pane 3
+        <nz-list [nzDataSource]="classes" style="margin:15px" 
+        [nzRenderItem]="item1" [nzGrid]="{ gutter: 24, xs: 24, sm: 12, md: 12, lg: 8, xl: 6 }">
+          <ng-template #item1 let-item>
+            <nz-list-item [nzContent]="nzContent">
+              <ng-template #nzContent>
+                <nz-card [nzCover]="coverTemplate" nzHoverable >
+                  <nz-card-meta [nzTitle]="titleTemplate"></nz-card-meta>
+                </nz-card>
+                <ng-template #titleTemplate>
+                    <a *ngIf="this.item.isshow" style="color: black;">
+                      {{item.title}}
+                    </a>                            
+                </ng-template>
+              <ng-template #coverTemplate>               
+                <img src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png" />
+              </ng-template>
+              
+              </ng-template>
+            </nz-list-item>
+          </ng-template>
+        </nz-list>
       </nz-tab>
       <nz-tab nzTitle="在学课程">
-        Content of Tab Pane 3
+        <nz-list [nzDataSource]="courses" style="margin:15px" 
+        [nzRenderItem]="item_m" [nzGrid]="{ gutter: 24, xs: 24, sm: 12, md: 12, lg: 8, xl: 6 }">
+          <ng-template #item_m let-item>
+            <nz-list-item [nzContent]="nzContent">
+              <ng-template #nzContent>
+                <nz-card [nzCover]="coverTemplate" nzHoverable >
+                  <nz-card-meta [nzTitle]="titleTemplate"></nz-card-meta>
+                  <div>
+                    <span style="float: left;">
+                        <span><i nz-icon nzType="team" nzTheme="outline"></i>{{item.student_num}}</span>
+                        <span style="margin-left: 4px;"><i nz-icon nzType="message" nzTheme="outline"></i>{{item.comment}}</span>
+                    </span>
+                  <span style="float: right;">
+                          <span>{{item.price}}</span>
+                      </span>          
+                  </div>    
+                </nz-card>
+                
+                <ng-template #titleTemplate>
+                    <a *ngIf="this.item.isshow" style="color: black;">
+                      {{item.title}}
+                    </a>  
+                  <div>
+                    <nz-tag [nzColor]="'#f50'" *ngIf="this.item.status=='已完结'">{{item.status}}</nz-tag>
+                    <nz-tag [nzColor]="'#87d068'" *ngIf="this.item.status=='更新中'">{{item.status}}</nz-tag>      
+                  </div> 
+                         
+                </ng-template>
+              <ng-template #coverTemplate>
+               
+                <img style="padding:10px;vertical-align: middle" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
+              </ng-template>
+              
+              </ng-template>
+            </nz-list-item>
+          </ng-template>
+        </nz-list>
       </nz-tab>
       <nz-tab nzTitle="在学班级">
-        Content of Tab Pane 3
+        <nz-list [nzDataSource]="classes" style="margin:15px" 
+        [nzRenderItem]="item1" [nzGrid]="{ gutter: 24, xs: 24, sm: 12, md: 12, lg: 8, xl: 6 }">
+          <ng-template #item1 let-item>
+            <nz-list-item [nzContent]="nzContent">
+              <ng-template #nzContent>
+                <nz-card [nzCover]="coverTemplate" nzHoverable >
+                  <nz-card-meta [nzTitle]="titleTemplate"></nz-card-meta>
+                </nz-card>
+                <ng-template #titleTemplate>
+                    <a *ngIf="this.item.isshow" style="color: black;">
+                      {{item.title}}
+                    </a>                            
+                </ng-template>
+              <ng-template #coverTemplate>               
+                <img src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png" />
+              </ng-template>
+              
+              </ng-template>
+            </nz-list-item>
+          </ng-template>
+        </nz-list>
       </nz-tab>
       <nz-tab nzTitle="收藏课程">
-        Content of Tab Pane 3
+        <nz-list [nzDataSource]="stars" style="margin:15px" 
+        [nzRenderItem]="item_m" [nzGrid]="{ gutter: 24, xs: 24, sm: 12, md: 12, lg: 8, xl: 6 }">
+          <ng-template #item_m let-item>
+            <nz-list-item [nzContent]="nzContent">
+              <ng-template #nzContent>
+                <nz-card [nzCover]="coverTemplate" nzHoverable >
+                  <nz-card-meta [nzTitle]="titleTemplate"></nz-card-meta>
+                  <div>
+                    <span style="float: left;">
+                        <span><i nz-icon nzType="team" nzTheme="outline"></i>{{item.student_num}}</span>
+                        <span style="margin-left: 4px;"><i nz-icon nzType="message" nzTheme="outline"></i>{{item.comment}}</span>
+                    </span>
+                  <span style="float: right;">
+                          <span>{{item.price}}</span>
+                      </span>          
+                  </div>    
+                </nz-card>
+                
+                <ng-template #titleTemplate>
+                    <a *ngIf="this.item.isshow" style="color: black;">
+                      {{item.title}}
+                    </a>  
+                  <div>
+                    <nz-tag [nzColor]="'#f50'" *ngIf="this.item.status=='已完结'">{{item.status}}</nz-tag>
+                    <nz-tag [nzColor]="'#87d068'" *ngIf="this.item.status=='更新中'">{{item.status}}</nz-tag>      
+                  </div> 
+                         
+                </ng-template>
+              <ng-template #coverTemplate>
+               
+                <img style="padding:10px;vertical-align: middle" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
+              </ng-template>
+              
+              </ng-template>
+            </nz-list-item>
+          </ng-template>
+        </nz-list>
       </nz-tab>
       <nz-tab nzTitle="加入小组">
-        Content of Tab Pane 3
+        <nz-list [nzDataSource]="groups" style="margin:15px" 
+        [nzRenderItem]="item2" [nzGrid]="{ gutter: 24, xs: 24, sm: 12, md: 12, lg: 8, xl: 6 }">
+          <ng-template #item2 let-item>
+            <nz-list-item [nzContent]="nzContent">
+              <ng-template #nzContent>
+                <nz-card [nzCover]="coverTemplate" nzHoverable >
+                  <nz-card-meta [nzTitle]="titleTemplate"></nz-card-meta>
+                </nz-card>
+                <ng-template #titleTemplate>
+                    <a *ngIf="this.item.isshow" style="color: black;">
+                      {{item.title}}
+                    </a>                            
+                </ng-template>
+              <ng-template #coverTemplate>               
+                <img src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png" />
+              </ng-template>
+              
+              </ng-template>
+            </nz-list-item>
+          </ng-template>
+        </nz-list>
       </nz-tab>
       <nz-tab nzTitle="关注/粉丝">
-        Content of Tab Pane 3
+        <nav>
+          <a [routerLink]="[{ outlets: { r2: ['focus'] } }]">关注</a>&nbsp;  
+          <a [routerLink]="[{ outlets: { r2: ['fans'] } }]">粉丝</a>                
+        </nav>     
+        <router-outlet name="r2"></router-outlet>
       </nz-tab>
 
     </nz-tabset>
