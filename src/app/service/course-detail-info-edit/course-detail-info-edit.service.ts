@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,6 +11,13 @@ export class CourseDetailInfoEditService {
 
   setDetailInfo(config: any): Observable<any> {
     const api = '/course/setDetailInfo';
-    return this._http.put(api, config);
+    const httpParams = new HttpParams()
+      .set("courseId", config.courseId)
+      .set("audiences", config.audiences)
+      .set("goals", config.goals)
+      .set("summary", config.summary)
+    return this._http.put(api, {}, {
+      params: httpParams
+    });
   }
 }

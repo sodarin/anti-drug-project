@@ -18,9 +18,27 @@ export class CourseBaseInfoEditService {
     });
   }
 
+  getCourseInfo(courseId: string): Observable<any> {
+    const api = '/course/getCourseInfo';
+    const httpParams = new HttpParams()
+      .set("courseId", courseId);
+    return this._http.get(api, {
+      params: httpParams
+    });
+  }
+
   setBaseInfo(config: any): Observable<any> {
     const api = '/course/setBaseInfo';
-    return this._http.put(api, config)
+    const httpParams = new HttpParams()
+      .set("categoryId", config.categoryId)
+      .set("courseId", config.courseId)
+      .set("serializeMode", config.serializeMode)
+      .set("subtitle", config.subtitle)
+      .set("tags", config.tags)
+      .set("title", config.title)
+    return this._http.put(api, {}, {
+      params: httpParams
+    })
   }
 
   getAllTags() {

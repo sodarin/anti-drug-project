@@ -6,7 +6,7 @@
     "changeOrigin": true
   },
   "/login": {
-    "target": "http://202.199.13.65:9005",
+    "target": "http://202.199.13.88:9005",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
@@ -18,25 +18,25 @@
     "changeOrigin": true
   },
   "/course": {
-    "target": "http://202.199.13.65:9002",
+    "target": "http://202.199.13.88:9002",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
   "/info": {
-    "target": "http://202.199.13.113:9005",
+    "target": "http://202.199.13.113:8001",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
   "/groupBack": {
-    "target": "http://202.199.13.65:9010",
+    "target": "http://202.199.13.88:9010",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
   "/groupGate": {
-    "target": "http://202.199.13.65:9010",
+    "target": "http://202.199.13.88:9010",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true

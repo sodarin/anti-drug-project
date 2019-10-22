@@ -3,6 +3,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NzNotificationService } from 'ng-zorro-antd';
 import { CourseDetailInfoEditService } from 'src/app/service/course-detail-info-edit/course-detail-info-edit.service';
+import { CourseManagementUtilService } from 'src/app/service/course-management-util/course-management-util.service';
 
 @Component({
   selector: 'app-detail-info',
@@ -12,9 +13,11 @@ import { CourseDetailInfoEditService } from 'src/app/service/course-detail-info-
 export class DetailInfoComponent implements OnInit {
   validateForm: FormGroup;
   goals: any[] = ["均分90", "达到及格线"];
-  audiences: any[] = ["优等生", "竞赛选手"]
+  audiences: any[] = ["优等生", "竞赛选手"];
   promptVisable: boolean = false;
   isLoading: boolean = false;
+  location: Location;
+  courseId: string;
 
   //临时变量
   goal: string = '';
@@ -22,16 +25,21 @@ export class DetailInfoComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private _nzNotificationService: NzNotificationService,
-    private _courseDetailInfoEditService: CourseDetailInfoEditService
+    private _courseDetailInfoEditService: CourseDetailInfoEditService,
+    private _courseManagementUtilService: CourseManagementUtilService
   ) { }
 
   ngOnInit() {
+    this.location = location;
     this.validateForm = this.fb.group({
       courseId: [null, [Validators.nullValidator]],
       summary: [null, [Validators.nullValidator]],
       goals: [null, [Validators.nullValidator]],
       audiences: [null, [Validators.nullValidator]]
     });
+
+    this.courseId = this._courseManagementUtilService.setCourseIdFrom(this.location);
+
   }
 
   submitForm(): void {
@@ -41,11 +49,13 @@ export class DetailInfoComponent implements OnInit {
       this.validateForm.controls[i].updateValueAndValidity();
     }
     let detailInfo: any = {
-      courseId: 1,
+      courseId: this.courseId,
       summary: this.validateForm.controls.summary.value,
-      goals: this.goals,
-      audiences: this.audiences
+      goals: this.goals.join('|'),
+      audiences: this.audiences.join('|')
     }
+    console.log(detailInfo);
+
     this._courseDetailInfoEditService.setDetailInfo(detailInfo).subscribe(result => {
       this.promptVisable = true;
       this.isLoading = false;
