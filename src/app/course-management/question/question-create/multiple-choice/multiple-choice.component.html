@@ -1,7 +1,7 @@
 <div>
   <nz-breadcrumb>
     <nz-breadcrumb-item>
-      <a (click)="navigateByUrl('/client/course/question')">题目管理</a>
+      <a (click)="navigateByUrl('/client/course/'+courseId+'/question')">题目管理</a>
     </nz-breadcrumb-item>
     <nz-breadcrumb-item>
       添加题目
@@ -15,9 +15,9 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="lblLength" [nzNoColon]="colonVisible">从属</nz-form-label>
         <nz-form-control [nzSpan]="conLength" nzExtra="可以针对本课程、某个教学计划或者某个学习任务出题">
-          <nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="Choose">
-            <nz-option nzValue="按课程" nzLabel="按课程"></nz-option>
-            <nz-option nzValue="默认教学计划" nzLabel="默认教学计划"></nz-option>
+          <nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="Choose" formControlName="targetID">
+            <nz-option nzValue="1" nzLabel="按课程"></nz-option>
+            <nz-option nzValue="2" nzLabel="默认教学计划"></nz-option>
           </nz-select>
           <nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="Choose" *ngIf="selectVisible">
             <nz-option nzValue="请选择" nzLabel="请选择"></nz-option>
@@ -28,39 +28,34 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="lblLength" [nzNoColon]="colonVisible">难度</nz-form-label>
         <nz-form-control [nzSpan]="conLength">
-          <nz-radio-group>
-            <label nz-radio nzValue="随机生成">简单</label>
-            <label nz-radio nzValue="按难易程度">一般</label>
-            <label nz-radio nzValue="按难易程度">困难</label>
+          <nz-radio-group formControlName="difficulty">
+            <label nz-radio nzValue="simple">简单</label>
+            <label nz-radio nzValue="normal">一般</label>
+            <label nz-radio nzValue="difficult">困难</label>
           </nz-radio-group>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label [nzSpan]="lblLength" [nzNoColon]="colonVisible" nzRequired nzfor="stem">题干</nz-form-label>
         <nz-form-control [nzSpan]="conLength" nzErrorTip="请输入题干">
-          <quill-editor formControlName="stem" id="stem"></quill-editor>
+          <quill-editor formControlName="stem"></quill-editor>
         </nz-form-control>
       </nz-form-item>
-      <nz-form-item *ngFor="let control of listOfChoiceControl;let i = index">
-        <nz-form-label [nzSpan]="lblLength" [nzNoColon]="colonVisible" nzRequired>{{control.controlInstance}}
-        </nz-form-label>
-        <nz-form-control [nzSpan]="conLength" nzErrorTip="请输入选项内容">
-          <quill-editor [attr.id]="control.id" [formControlName]="control.controlInstance">
-          </quill-editor>
-
-          <i nz-icon nzType="minus-circle-o" class="dynamic-delete-button" (click)="removeField(control, $event)"></i>
-          <nz-switch [(ngModel)]="control.isSelected" name="isSelected" [nzCheckedChildren]="checkedTemplate"
-            [nzUnCheckedChildren]="unCheckedTemplate" (ngModelChange)="checkIsSelected(control.isSelected)"
-            [ngModelOptions]="{standalone: true}">
-          </nz-switch><label class="tips">正确答案</label>
-          <ng-template #checkedTemplate><i nz-icon nzType="check"></i></ng-template>
-          <ng-template #unCheckedTemplate><i nz-icon nzType="close"></i></ng-template>
-
-        </nz-form-control>
-      </nz-form-item>
+      <nz-checkbox-wrapper (nzOnChange)="answerChange($event)">
+        <nz-form-item *ngFor="let control of listOfChoiceControl;let i = index">
+          <nz-form-label [nzSpan]="lblLength" [nzNoColon]="colonVisible" nzRequired>{{control.title}}
+          </nz-form-label>
+          <nz-form-control [nzSpan]="conLength" nzErrorTip="请输入选项内容">
+            <quill-editor [formControlName]="control.uuid">
+            </quill-editor>
+            <i nz-icon nzType="minus-circle-o" class="dynamic-delete-button" (click)="removeField(control, $event)"></i>
+            <label nz-checkbox [nzValue]="''+control.id">正确答案</label>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-checkbox-wrapper>
       <nz-form-item>
         <nz-form-control nzOffset="18">
-          <button nz-button nzType="dashed" class="add-button" (click)="addField($event)">
+          <button nz-button type="button" nzType="dashed" class="add-button" (click)="addField($event)">
             <i nz-icon nzType="plus"></i>
             新增选项
           </button>
@@ -73,20 +68,21 @@
       <nz-form-item *ngIf="isCollapse">
         <nz-form-label [nzSpan]="lblLength" [nzNoColon]="colonVisible">解析</nz-form-label>
         <nz-form-control [nzSpan]="conLength">
-          <quill-editor></quill-editor>
+          <quill-editor formControlName="analysis"></quill-editor>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item *ngIf="isCollapse">
         <nz-form-label [nzSpan]="lblLength" [nzNoColon]="colonVisible">分值</nz-form-label>
         <nz-form-control [nzSpan]="conLength">
-          <input type="text" nz-input style="width: 120px;" value="2">
+          <input type="text" nz-input style="width: 120px;" formControlName="score">
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-control nzOffset="3" [nzSpan]="conLength">
           <button nz-button nzType="primary" class="spacing">保存并继续添加</button>
           <button nz-button nzType="primary">保存</button>
-          <button nz-button nzType="link">返回</button>
+          <button nz-button type="button" nzType="link"
+            (click)="navigateByUrl('/client/course/'+courseId+'/question')">返回</button>
         </nz-form-control>
       </nz-form-item>
     </form>

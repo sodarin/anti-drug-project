@@ -18,7 +18,7 @@ export class CourseBaseInfoEditService {
     });
   }
 
-  getCourseInfo(courseId: string): Observable<any> {
+  getCourseInfo(courseId: any): Observable<any> {
     const api = '/course/getCourseInfo';
     const httpParams = new HttpParams()
       .set("courseId", courseId);

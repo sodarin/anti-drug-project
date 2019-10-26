@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Router } from '@angular/router'
+import { QuestionCreateService } from 'src/app/service/question-create/question-create.service';
+import { NzNotificationService } from 'ng-zorro-antd';
+import { CourseBaseInfoEditService } from 'src/app/service/course-base-info-edit/course-base-info-edit.service';
+import { CourseManagementUtilService } from 'src/app/service/course-management-util/course-management-util.service';
 @Component({
   selector: 'app-indefinite-choice',
   templateUrl: './indefinite-choice.component.html',
@@ -21,9 +25,15 @@ export class IndefiniteChoiceComponent implements OnInit {
   colonVisible: boolean = false;
 
   validateForm: FormGroup;
-  listOfChoiceControl: Array<{ id: number; controlInstance: string; isSelected: boolean }> = [];
-  //答案数量
+  listOfChoiceControl: Array<{ id: number; title: string; uuid: string }> = [];
+
+  //答案的数量
   answerCount: number = 0;
+
+  categoryId: any;
+  courseId: any;
+
+  answer: Array<string> = [];
 
 
 
@@ -35,60 +45,116 @@ export class IndefiniteChoiceComponent implements OnInit {
 
     const control = {
       id,
-      controlInstance: `选项${String.fromCharCode(id + 65)}`,
-      isSelected: false
+      title: `选项${String.fromCharCode(id + 65)}`,
+      isSelected: false,
+      uuid: this._questionCreateService.getId(),
     };
     const index = this.listOfChoiceControl.push(control);
-    console.log(this.listOfChoiceControl[this.listOfChoiceControl.length - 1]);
     this.validateForm.addControl(
-      this.listOfChoiceControl[index - 1].controlInstance,
+      this.listOfChoiceControl[index - 1].uuid,
       new FormControl(null, Validators.required)
     );
   }
 
-  removeField(i: { id: number; controlInstance: string; isSelected: boolean }, e: MouseEvent): void {
+  removeField(i: { id: number; title: string; isSelected: boolean; uuid: string }, e: MouseEvent): void {
     e.preventDefault();
     if (this.listOfChoiceControl.length > 2) {
       const index = this.listOfChoiceControl.indexOf(i);
       this.listOfChoiceControl.splice(index, 1);
-      console.log(this.listOfChoiceControl);
-      this.validateForm.removeControl(i.controlInstance);
+      this.validateForm.removeControl(i.uuid);
     } else {
       this.message.create('error', '选项最少2个!');
     }
   }
 
-  checkIsSelected(value: boolean) {
-    let count: number = this.answerCount;
-    this.answerCount = (value) ? count + 1 : count - 1;
-  }
-
-  getFormControl(name: string): AbstractControl {
-    return this.validateForm.controls[name];
-  }
 
   submitForm(): void {
-    if (this.answerCount < 1) {
-      this.message.create('error', '至少选择一个答案!');
-      return;
-    }
+    let check: boolean = true;
     for (const i in this.validateForm.controls) {
       this.validateForm.controls[i].markAsDirty();
       this.validateForm.controls[i].updateValueAndValidity();
+      if (this.validateForm.controls.error || this.validateForm.hasError('required'))
+        check = false;
+    }
+    if (this.answer.length < 1) {
+      this.message.create('error', '至少选择1个答案!'); return;
+    }
+    if (check) {
+      this.getMetas();
+      this.validateForm.patchValue({
+        courseId: this.courseId,
+        categoryId: this.categoryId,
+        answer: JSON.stringify(this.answer)
+      });
+      this._questionCreateService.createQuestion(this.validateForm.value).subscribe(result => {
+        this._nzNotificationService.create('success', '添加成功!', ``);
+      }, err => {
+        this._nzNotificationService.create('error', '添加失败!', ``);
+      });
     }
     console.log(this.validateForm.value);
   }
 
-  constructor(private fb: FormBuilder, private message: NzMessageService, private router: Router) { }
+
+  constructor(
+    private fb: FormBuilder,
+    private message: NzMessageService,
+    private _questionCreateService: QuestionCreateService,
+    private _nzNotificationService: NzNotificationService,
+    private _courseBaseInfoEditService: CourseBaseInfoEditService,
+    private _courseManagementUtilService: CourseManagementUtilService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
-      stem: [null, [Validators.required]]
+      type: ['choice', []],
+      stem: [null, [Validators.required]],
+      score: [2, [Validators.min(0)]],
+      answer: [null, [Validators.required]],
+      analysis: [null, []],
+      metas: [null, []],
+      categoryId: [1, []],
+      difficulty: ['normal', []],
+      targetID: [null, []],
+      courseSetId: [105, []],
+      courseId: [105, []]
     });
     this.addField();
     this.addField();
+    this.addField();
+    this.addField();
+    this.courseId = this._courseManagementUtilService.setCourseIdFrom(location);
+    this.getCourseInfo();
   }
+
+
   navigateByUrl(url: string) {
     this.router.navigateByUrl(url);
+  }
+
+
+  getMetas() {
+    let choices = [];
+    this.listOfChoiceControl.forEach((item) => {
+      let tmp = this.validateForm.get(item.uuid).value;
+      if (tmp != null || tmp != '') {
+        let content = this._questionCreateService.getMeta(tmp);
+        choices.push(content);
+      }
+    })
+    this.validateForm.patchValue({
+      metas: `{choice:${JSON.stringify(choices)}}`
+    })
+  }
+
+  getCourseInfo() {
+    this._courseBaseInfoEditService.getCourseInfo(this.courseId).subscribe(res => {
+      this.categoryId = res.data.baseData.categoryid;
+    });
+  }
+
+  answerChange(value: string[]) {
+    console.log(value);
+    this.answer = value;
   }
 }

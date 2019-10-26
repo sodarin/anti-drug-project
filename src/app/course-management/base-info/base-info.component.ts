@@ -17,9 +17,17 @@ export class BaseInfoComponent implements OnInit {
   listOfCategories: any[] = [];
   validateForm: FormGroup;
 
+  baseInfo: any = {
+    title: "",
+    subtitle: "",
+    serializeMode: "",
+    tags: [],
+    categoryId: ""
+  }
+
   location: Location;
 
-  courseId: string;
+  courseId: any;
 
   submitForm(): void {
     this.isLoading = true;
@@ -27,21 +35,20 @@ export class BaseInfoComponent implements OnInit {
       this.validateForm.controls[i].markAsDirty();
       this.validateForm.controls[i].updateValueAndValidity();
     }
-    
+
     if (!(this.validateForm.controls.title.errors)) {
       const baseInfo = this.validateForm.value;
       let tags = this.validateForm.controls.tags.value.join('|');
       baseInfo.tags = tags;
-      console.log(baseInfo);
       baseInfo.courseId = this.courseId;
       this._courseBaseInfoEditService.setBaseInfo(baseInfo).subscribe(result => {
         this.isLoading = false;
         this.promptVisable = true;
-        this._nzNotificationService.create('success', '保存成功', `${result}`);
+        this._nzNotificationService.create('success', '保存成功', '基本信息已保存');
       }, error => {
         this.isLoading = false;
         this.promptVisable = false;
-        this._nzNotificationService.create('error', '保存失败', `${error}`);
+        this._nzNotificationService.create('error', '保存失败', '');
       })
     }
 
@@ -57,31 +64,43 @@ export class BaseInfoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.location = location;
     this.validateForm = this.fb.group({
       title: [null, [Validators.required]],
       subtitle: [null, [Validators.nullValidator]],
-      serializeMode: ['非连载教程', [Validators.nullValidator]],
-      tags: [null, [Validators.nullValidator]],
+      serializeMode: [null, [Validators.nullValidator]],
+      tags: [['2'], [Validators.nullValidator]],
       categoryId: [null, [Validators.nullValidator]]
     });
+    this.location = location;
+    this.courseId = this._courseManagementUtilService.setCourseIdFrom(this.location);
     this.getAllTags();
     this.getAllCategories();
-    this.courseId=this._courseManagementUtilService.setCourseIdFrom(this.location)
+    this.getCourseInfo();
   }
 
   getAllCategories() {
     this._courseBaseInfoEditService.getAllCategories().subscribe(result => {
       this.listOfCategories = result.data;
-      
     })
   }
 
   getAllTags() {
     this._courseBaseInfoEditService.getAllTags().subscribe(result => {
       this.listOfTag = result;
-      
     })
+  }
+
+  getCourseInfo() {
+    this._courseBaseInfoEditService.getCourseInfo(this.courseId).subscribe(res => {
+      this.validateForm.patchValue({
+        title: res.data.baseData.title,
+        subtitle: res.data.baseData.subtitle,
+        serializeMode: res.data.baseData.serializemode,
+        tags: [].concat(res.data.baseData.tags.substr(1).split('|')),
+        categoryId: res.data.baseData.categoryid
+      })
+    })
+
   }
 
 

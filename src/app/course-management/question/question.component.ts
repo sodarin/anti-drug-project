@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NzEmptyService } from 'ng-zorro-antd';
 import { Router } from '@angular/router'
+import { CourseManagementUtilService } from 'src/app/service/course-management-util/course-management-util.service';
 
 @Component({
   selector: 'app-question',
@@ -19,11 +20,18 @@ export class QuestionComponent implements OnInit {
   selectedCourse: string = "按课程";
   selectVisible: boolean = false;
 
+  courseId: any;
 
-  constructor(private nzEmptyService: NzEmptyService, private router: Router) { }
+
+  constructor(
+    private _courseManagementUtilService: CourseManagementUtilService,
+    private nzEmptyService: NzEmptyService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.nzEmptyService.resetDefault();
+    this.courseId = this._courseManagementUtilService.setCourseIdFrom(location);
   }
 
   courseChange(value: string) {

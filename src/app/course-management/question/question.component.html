@@ -3,27 +3,27 @@
     <h1>题目管理</h1>
     <div style="display: inline-block">
       <button nz-button nzType="primary" class="header-button"
-        (click)="navigateByUrl('/client/course/question_create/single_choice')"><i nz-icon nzType="plus"
+        (click)="navigateByUrl('/client/course/'+courseId+'/question_create/single_choice')"><i nz-icon nzType="plus"
           nzTheme="outline"></i>单选题</button>
       <button nz-button nzType="primary" class="header-button"
-        (click)="navigateByUrl('/client/course/question_create/multiple_choice')"><i nz-icon nzType="plus"
+        (click)="navigateByUrl('/client/course/'+courseId+'/question_create/multiple_choice')"><i nz-icon nzType="plus"
           nzTheme="outline"></i>多选题</button>
       <button nz-button nzType="primary" class="header-button"
-        (click)="navigateByUrl('/client/course/question_create/essay')"><i nz-icon nzType="plus"
+        (click)="navigateByUrl('/client/course/'+courseId+'/question_create/essay')" disabled><i nz-icon nzType="plus"
           nzTheme="outline"></i>问答题</button>
       <button nz-button nz-dropdown [nzDropdownMenu]="operationsMenu" nzPlacement="bottomRight">
         <i nz-icon nzType="caret-down" nzTheme="outline"></i>
       </button>
       <nz-dropdown-menu #operationsMenu="nzDropdownMenu">
         <ul nz-menu nzSelectable>
-          <li nz-menu-item (click)="navigateByUrl('/client/course/question_create/indefinite_choice')"><i nz-icon
-              nzType="plus" nzTheme="outline"></i>不定项选择题</li>
-          <li nz-menu-item (click)="navigateByUrl('/client/course/question_create/judgement')"><i nz-icon nzType="plus"
-              nzTheme="outline"></i>判断题</li>
-          <li nz-menu-item (click)="navigateByUrl('/client/course/question_create/completion')"><i nz-icon nzType="plus"
-              nzTheme="outline"></i>填空题</li>
-          <li nz-menu-item (click)="navigateByUrl('/client/course/question_create/material')"><i nz-icon nzType="plus"
-              nzTheme="outline"></i>材料题</li>
+          <li nz-menu-item (click)="navigateByUrl('/client/course/'+courseId+'/question_create/indefinite_choice')"><i
+              nz-icon nzType="plus" nzTheme="outline"></i>不定项选择题</li>
+          <li nz-menu-item (click)="navigateByUrl('/client/course/'+courseId+'/question_create/judgement')">
+            <i nz-icon nzType="plus" nzTheme="outline"></i>判断题</li>
+          <li nz-menu-item (click)="navigateByUrl('/client/course/'+courseId+'/question_create/completion')" nzDisabled>
+            <i nz-icon nzType="plus" nzTheme="outline"></i>填空题</li>
+          <li nz-menu-item (click)="navigateByUrl('/client/course/'+courseId+'/question_create/material')" nzDisabled><i
+              nz-icon nzType="plus" nzTheme="outline"></i>材料题</li>
         </ul>
       </nz-dropdown-menu>
     </div>
@@ -48,10 +48,10 @@
       <thead>
         <tr>
           <th nzShowCheckbox></th>
-          <th width="45%">名称</th>
-          <th width="15%">状态</th>
-          <th>题目统计</th>
-          <th width="15%">时间限制</th>
+          <th width="45%">题干</th>
+          <th width="15%">类型</th>
+          <th>最后更新</th>
+          <th width="15%">操作</th>
         </tr>
       </thead>
       <tbody>

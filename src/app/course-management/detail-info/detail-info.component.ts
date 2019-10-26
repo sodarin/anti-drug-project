@@ -4,6 +4,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { NzNotificationService } from 'ng-zorro-antd';
 import { CourseDetailInfoEditService } from 'src/app/service/course-detail-info-edit/course-detail-info-edit.service';
 import { CourseManagementUtilService } from 'src/app/service/course-management-util/course-management-util.service';
+import { CourseBaseInfoEditService } from 'src/app/service/course-base-info-edit/course-base-info-edit.service';
 
 @Component({
   selector: 'app-detail-info',
@@ -12,12 +13,12 @@ import { CourseManagementUtilService } from 'src/app/service/course-management-u
 })
 export class DetailInfoComponent implements OnInit {
   validateForm: FormGroup;
-  goals: any[] = ["均分90", "达到及格线"];
-  audiences: any[] = ["优等生", "竞赛选手"];
+  goals: any[] = [];
+  audiences: any[] = [];
   promptVisable: boolean = false;
   isLoading: boolean = false;
   location: Location;
-  courseId: string;
+  courseId: any;
 
   //临时变量
   goal: string = '';
@@ -25,21 +26,33 @@ export class DetailInfoComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private _nzNotificationService: NzNotificationService,
+    private _courseBaseInfoEditService: CourseBaseInfoEditService,
     private _courseDetailInfoEditService: CourseDetailInfoEditService,
     private _courseManagementUtilService: CourseManagementUtilService
   ) { }
 
   ngOnInit() {
     this.location = location;
+    this.courseId = this._courseManagementUtilService.setCourseIdFrom(this.location);
     this.validateForm = this.fb.group({
       courseId: [null, [Validators.nullValidator]],
       summary: [null, [Validators.nullValidator]],
       goals: [null, [Validators.nullValidator]],
       audiences: [null, [Validators.nullValidator]]
     });
+    this.getCourseInfo();
+  }
 
-    this.courseId = this._courseManagementUtilService.setCourseIdFrom(this.location);
-
+  getCourseInfo() {
+    this._courseBaseInfoEditService.getCourseInfo(this.courseId).subscribe(res => {
+      this.goals = (res.data.baseData.goals != '') ? res.data.baseData.goals.split('|') : [];
+      this.audiences = (res.data.baseData.audiences != '') ? res.data.baseData.audiences.split('|') : [];
+      this.validateForm.patchValue({
+        summary: res.data.baseData.summary,
+        goals: this.goals,
+        audiences: this.audiences
+      })
+    })
   }
 
   submitForm(): void {
@@ -75,11 +88,14 @@ export class DetailInfoComponent implements OnInit {
 
 
   addItem(key: string) {
-    if (key == '') return;
-    if (key == 'goal')
+    if (key == 'goal') {
+      if (this.goal == '') return;
       this.goals.push(this.goal);
-    else
+    }
+    else {
+      if (this.audience == '') return;
       this.audiences.push(this.audience);
+    }
   }
   removeItem(value: string, key: string) {
     if (key == 'goal')
@@ -96,7 +112,6 @@ export class DetailInfoComponent implements OnInit {
           return true;
         }
       });
-
   }
 
 }
