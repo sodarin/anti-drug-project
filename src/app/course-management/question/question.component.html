@@ -33,13 +33,6 @@
     <nz-select nzPlaceHolder="按题型" style="width:15%;" class="form-item" [(ngModel)]="selectedQuestionTypes">
       <nz-option *ngFor="let item of listOfQuestionTypes" [nzValue]="item" [nzLabel]="item"></nz-option>
     </nz-select>
-    <nz-select nzPlaceHolder="按课程" style="width:17%;" class="form-item" [(ngModel)]="selectedCourse"
-      (ngModelChange)="courseChange($event)">
-      <nz-option *ngFor="let item of listOfCourses" [nzValue]="item" [nzLabel]="item"></nz-option>
-    </nz-select>
-    <nz-select nzPlaceHolder="请选择" style="width:15%;" class="form-item" *ngIf="selectVisible">
-      <nz-option *ngFor="let item of result" [nzValue]="item" [nzLabel]="item"></nz-option>
-    </nz-select>
     <input type="text" nz-input placeHolder="关键字" style="width:20%;" class="form-item">
     <button nz-button class="form-item" nzType="primary">搜索</button>
   </div>

@@ -38,6 +38,10 @@ export class IndefiniteChoiceComponent implements OnInit {
 
 
   addField(e?: MouseEvent): void {
+    if (this.listOfChoiceControl.length == 10) {
+      this.message.create('error', '选项最多10个!');
+      return;
+    }
     if (e) {
       e.preventDefault();
     }
@@ -68,13 +72,14 @@ export class IndefiniteChoiceComponent implements OnInit {
   }
 
 
-  submitForm(): void {
+  submitForm(command: string = 'back'): void {
     let check: boolean = true;
     for (const i in this.validateForm.controls) {
       this.validateForm.controls[i].markAsDirty();
       this.validateForm.controls[i].updateValueAndValidity();
-      if (this.validateForm.controls.error || this.validateForm.hasError('required'))
+      if (this.validateForm.controls[i].hasError('required')) {
         check = false;
+      }
     }
     if (this.answer.length < 1) {
       this.message.create('error', '至少选择1个答案!'); return;
@@ -93,6 +98,24 @@ export class IndefiniteChoiceComponent implements OnInit {
       });
     }
     console.log(this.validateForm.value);
+
+    if (check || command == "continue") {
+      this.validateForm.reset({
+        type: ['choice', []],
+        stem: [null, [Validators.required]],
+        score: [2, [Validators.min(0)]],
+        answer: [null, [Validators.required]],
+        analysis: [null, []],
+        metas: [null, []],
+        categoryId: [1, []],
+        difficulty: ['normal', []],
+        targetID: [null, []],
+        courseSetId: [105, []],
+        courseId: [105, []]
+      })
+    } else if (check) {
+      this.navigateByUrl(`client/course/${this.courseId}/question`);
+    }
   }
 
 

@@ -9,6 +9,10 @@ export class QuestionCreateService {
 
   constructor(private _http: HttpClient) { }
 
+  getCourseQuestionList(courseId: any):Observable<any> {
+    const api = `/course/getCourseQuestionList?courseId=${courseId}`;
+    return this._http.get(api);
+  }
 
   createQuestion(config: any): Observable<any> {
     const api = "/course/createQuestion";

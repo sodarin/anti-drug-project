@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NzEmptyService } from 'ng-zorro-antd';
 import { Router } from '@angular/router'
 import { CourseManagementUtilService } from 'src/app/service/course-management-util/course-management-util.service';
+import { QuestionCreateService } from 'src/app/service/question-create/question-create.service';
 
 @Component({
   selector: 'app-question',
@@ -22,9 +23,11 @@ export class QuestionComponent implements OnInit {
 
   courseId: any;
 
+  questionList: any = [];
 
   constructor(
     private _courseManagementUtilService: CourseManagementUtilService,
+    private _questionCreateService: QuestionCreateService,
     private nzEmptyService: NzEmptyService,
     private router: Router
   ) { }
@@ -32,18 +35,20 @@ export class QuestionComponent implements OnInit {
   ngOnInit() {
     this.nzEmptyService.resetDefault();
     this.courseId = this._courseManagementUtilService.setCourseIdFrom(location);
-  }
+    this.getCourseQuestionList();
 
-  courseChange(value: string) {
-    if (this.selectedCourse != '按课程') {
-      this.selectVisible = true;
-    } else {
-      this.selectVisible = false;
-    }
   }
 
   navigateByUrl(url: string) {
     this.router.navigateByUrl(url);
+  }
+  getCourseQuestionList() {
+    this._questionCreateService.getCourseQuestionList(this.courseId).subscribe(res => {
+      this.questionList = res.data.data;
+      console.log(this.questionList);
+      this.count = res.data.total;
+    });
+
   }
 
 }

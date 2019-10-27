@@ -15,7 +15,7 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="lblLength" [nzNoColon]="colonVisible">从属</nz-form-label>
         <nz-form-control [nzSpan]="conLength" nzExtra="可以针对本课程、某个教学计划或者某个学习任务出题">
-          <nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="Choose" formControlName="targetID">
+          <nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="请选择从属" formControlName="targetID">
             <nz-option nzValue="1" nzLabel="按课程"></nz-option>
             <nz-option nzValue="2" nzLabel="默认教学计划"></nz-option>
           </nz-select>
@@ -79,8 +79,8 @@
       </nz-form-item>
       <nz-form-item>
         <nz-form-control nzOffset="3" [nzSpan]="conLength">
-          <button nz-button nzType="primary" class="spacing">保存并继续添加</button>
-          <button nz-button nzType="primary">保存</button>
+          <button nz-button nzType="primary" class="spacing" (click)="submitForm('continue')">保存并继续添加</button>
+          <button nz-button nzType="primary" (click)="submitForm()">保存</button>
           <button nz-button type="button" nzType="link"
             (click)="navigateByUrl('/client/course/'+courseId+'/question')">返回</button>
         </nz-form-control>

@@ -72,13 +72,14 @@ export class SingleChoiceComponent implements OnInit {
   }
 
 
-  submitForm(): void {
+  submitForm(command: string = 'back'): void {
     let check: boolean = true;
     for (const i in this.validateForm.controls) {
       this.validateForm.controls[i].markAsDirty();
       this.validateForm.controls[i].updateValueAndValidity();
-      if (this.validateForm.controls.error)
+      if (this.validateForm.controls[i].hasError('required')) {
         check = false;
+      }
     }
     if (this.validateForm.controls.answer.errors)
       this.message.create('error', '至少选择一个答案');
@@ -92,9 +93,25 @@ export class SingleChoiceComponent implements OnInit {
         this._nzNotificationService.create('success', '添加成功!', ``);
       }, err => {
         this._nzNotificationService.create('error', '添加失败!', ``);
-      })
+      });
     }
 
+    if (check || command == "continue") {
+      this.validateForm.reset({
+        type: ['choice', []],
+        stem: [null, [Validators.required]],
+        score: [2, [Validators.min(0)]],
+        answer: [null, [Validators.required]],
+        analysis: [null, []],
+        metas: [null, []],
+        categoryId: [1, []],
+        difficulty: ['normal', []],
+        targetID: [null, []],
+        courseSetId: [105, []],
+        courseId: [105, []]
+      })
+    } else if (check)
+      this.navigateByUrl(`client/course/${this.courseId}/question`);
   }
 
   constructor(

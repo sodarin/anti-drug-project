@@ -8,7 +8,7 @@
   </div>
   <nz-divider></nz-divider>
   <div class="content">
-    <nz-table #rowSelectionTable nzShowSizeChanger [nzData]="listOfFiles">
+    <nz-table #rowSelectionTable nzShowSizeChanger [nzData]="">
       <thead>
         <tr>
           <th nzShowCheckbox [nzIndeterminate]="isIndeterminate" (nzCheckedChange)="checkAll($event)"></th>
@@ -35,37 +35,19 @@
 </div>
 
 <nz-modal [(nzVisible)]="isVisible" nzTitle="上传文件" (nzOnCancel)="isVisible=false" (nzOnOk)="isVisible=false">
-  <nz-table #basicTable [nzData]="listOfTmps" style="width: 100%">
-    <thead>
-      <tr>
-        <th width="40%">文件名</th>
-        <th>大小</th>
-        <th>状态</th>
-        <th>操作</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let data of basicTable.data">
-        <td>{{ data.name }}</td>
-        <td>{{ data.age }}</td>
-        <td>{{ data.address }}</td>
-        <td>
-          <a>Action 一 {{ data.name }}</a>
-          <nz-divider nzType="vertical"></nz-divider>
-          <a>Delete</a>
-        </td>
-      </tr>
-    </tbody>
-  </nz-table>
-  <div class="table-operation">
-    <div style="float: right;">
-      <nz-upload style="display: inline-block;" [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload">
-        <button nz-button><span>添加文件</span></button>
-      </nz-upload>
-      <button nz-button [nzType]="'primary'" [nzLoading]="uploading" [disabled]="fileList.length == 0"
-        style="margin-left: 5px">
-        {{ uploading ? '上传中...' : '开始上传' }}
-      </button>
-    </div>
+  <nz-upload nzType="drag" [nzMultiple]="true" [nzLimit]="5" [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload">
+    <p class="ant-upload-drag-icon">
+      <i nz-icon nzType="inbox"></i>
+    </p>
+    <p class="ant-upload-text">可以通过<span class="warn">点击</span>或<span class="warn">拖拽</span>的方式上传</p>
+    <p class="ant-upload-hint">
+      支持多文件上传(单次最多5个))
+    </p>
+  </nz-upload>
+  <div class="upload-button">
+    <button nz-button [nzType]="'primary'" [nzLoading]="uploading" (click)="handleUpload()"
+      [disabled]="fileList.length == 0" style="margin-top: 16px">
+      {{ uploading ? '上传中' : '开始上传' }}
+    </button>
   </div>
 </nz-modal>
