@@ -101,7 +101,7 @@ export class MultipleChoiceComponent implements OnInit {
     console.log(this.validateForm.value);
     if (check || command == "continue") {
       this.validateForm.reset({
-        type: ['choice', []],
+        type: ['multiple_choice', []],
         stem: [null, [Validators.required]],
         score: [2, [Validators.min(0)]],
         answer: [null, [Validators.required]],

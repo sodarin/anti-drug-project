@@ -30,37 +30,61 @@
   </div>
   <nz-divider></nz-divider>
   <div class="select-group">
-    <nz-select nzPlaceHolder="按题型" style="width:15%;" class="form-item" [(ngModel)]="selectedQuestionTypes">
-      <nz-option *ngFor="let item of listOfQuestionTypes" [nzValue]="item" [nzLabel]="item"></nz-option>
+    <nz-select nzPlaceHolder="请选择题型" style="width:15%;" class="form-item" [(ngModel)]="type" nzAllowClear>
+      <nz-option *ngFor="let item of listOfQuestionTypes" [nzValue]="item.value" [nzLabel]="item.label"></nz-option>
     </nz-select>
-    <input type="text" nz-input placeHolder="关键字" style="width:20%;" class="form-item">
-    <button nz-button class="form-item" nzType="primary">搜索</button>
+    <input type="text" nz-input placeHolder="请输入关键字" style="width:20%;" class="form-item" [(ngModel)]="keyWord">
+    <button nz-button class="form-item" nzType="primary" (click)="searchData()">搜索</button>
   </div>
   <div class="content">
-    <nz-table #rowSelectionTable nzShowSizeChanger>
+    <nz-table #questionListTable [nzData]="questionList" [nzTotal]="total" [nzLoading]="loading" [nzPageSize]="10"
+      [(nzPageIndex)]="pageIndex" [nzFrontPagination]="false" (nzPageIndexChange)="searchData()">
       <thead>
         <tr>
           <th nzShowCheckbox></th>
-          <th width="45%">题干</th>
+          <th width="35%">题干</th>
           <th width="15%">类型</th>
           <th>最后更新</th>
-          <th width="15%">操作</th>
+          <th width="20%">操作</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let data of rowSelectionTable.data">
+        <tr *ngFor="let data of questionListTable.data">
           <td nzShowCheckbox></td>
-          <td>{{ data.name }}</td>
-          <td>{{ data.age }}</td>
-          <td>{{ data.address }}</td>
+          <td [innerHTML]="data.stem"></td>
+          <td>{{ data.type }}</td>
+          <td>{{ data.updatedTime | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+          <td><a nz-popover [nzPopoverTitle]="popoverTitle" [nzPopoverContent]="popoverContent">预览</a>
+            <ng-template #popoverTitle>
+              <span [innerHTML]="data.stem"></span>
+            </ng-template>
+            <ng-template #popoverContent>
+              <div class="question-body">
+                <div>
+                  <nz-tag [nzColor]="'blue'">分值:</nz-tag>{{data.score==null?'无':data.score}}
+                </div>
+              </div>
+              <div class="question-answer">
+                <nz-tag [nzColor]="'blue'">正确答案:</nz-tag>{{data.answer==null?'无':data.answer}}
+              </div>
+              <div class="question-analysis">
+                <nz-tag [nzColor]="'blue'">解析:</nz-tag> {{data.analysis==null?'无解析':data.analysis}}
+              </div>
+            </ng-template>
+            <nz-divider nzType="vertical"></nz-divider>
+            <a>编辑</a>
+            <nz-divider nzType="vertical"></nz-divider>
+            <a (click)="confirmDelete(data.id)">删除</a>
+          </td>
         </tr>
       </tbody>
     </nz-table>
+
+
   </div>
 
   <div>
-    <label nz-checkbox>全选</label>
-    <button nz-button nzType="danger" nzSize="small"><i nz-icon nzType="delete" nzTheme="outline"></i>删除</button>
-    <span class="pull-right color-grey">共{{count}}题</span>
+    <button nz-button nzType="danger"><i nz-icon nzType="delete" nzTheme="outline"></i>删除</button>
+    <span class="pull-right color-grey">共{{total}}题</span>
   </div>
 </div>
