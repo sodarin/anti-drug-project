@@ -31,6 +31,11 @@ export class QuestionCreateService {
     return this._http.delete(api);
   }
 
+  deleteQuestionList(questionIds: any) {
+    let api = `/course/deleteQuestionList?questionIds=${questionIds}`;
+    return this._http.delete(api)
+  }
+
   //选项的转化
   strToUnicode(value: string): string {
     if (value) {

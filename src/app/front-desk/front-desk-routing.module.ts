@@ -187,10 +187,10 @@ const routes: Routes = [
             path: 'question_create', component: QuestionCreateComponent, children: [
               { path: '', redirectTo: 'single_choice', pathMatch: 'full' },
               { path: 'single_choice', component: SingleChoiceComponent },
-              { path: 'multiple_choice', component: MultipleChoiceComponent },
+              { path: 'mutiple_choice', component: MultipleChoiceComponent },
               { path: 'essay', component: EssayComponent },
-              { path: 'indefinite_choice', component: IndefiniteChoiceComponent },
-              { path: 'judgement', component: JudgementComponent },
+              { path: 'choice', component: IndefiniteChoiceComponent },
+              { path: 'determine', component: JudgementComponent },
               { path: 'completion', component: CompletionComponent },
               { path: 'material', component: MaterialComponent }
             ]

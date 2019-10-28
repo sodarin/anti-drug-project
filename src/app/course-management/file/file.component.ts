@@ -4,6 +4,7 @@ import { UploadFile } from 'ng-zorro-antd/upload';
 import { filter } from 'rxjs/operators';
 import { HttpResponse, HttpRequest, HttpClient } from '@angular/common/http';
 import { CourseManagementUtilService } from 'src/app/service/course-management-util/course-management-util.service';
+import { CourseFileService } from 'src/app/service/course-file/course-file.service';
 
 @Component({
   selector: 'app-file',
@@ -13,6 +14,11 @@ import { CourseManagementUtilService } from 'src/app/service/course-management-u
 export class FileComponent implements OnInit {
 
   fileList: UploadFile[] = [];
+
+  fileUploadedList: any = [];
+  total: number = 0;
+  loading: boolean = true;
+  pageIndex: any = 1;
 
   isAllDisplayDataChecked = false;
   isOperating = false;
@@ -31,6 +37,7 @@ export class FileComponent implements OnInit {
 
   constructor(
     private _courseManagementUtilService: CourseManagementUtilService,
+    private _courseFileService: CourseFileService,
     private nzEmptyService: NzEmptyService,
     private msg: NzMessageService,
     private http: HttpClient
@@ -41,26 +48,16 @@ export class FileComponent implements OnInit {
   ngOnInit() {
     this.nzEmptyService.resetDefault();
     this.courseId = this._courseManagementUtilService.setCourseIdFrom(location);
+    this.getCourseFileList();
   }
 
-  currentPageDataChange($event: any[]): void {
-    this.listOfDisplayData = $event;
-    this.refreshStatus();
-  }
-
-  refreshStatus(): void {
-    this.isAllDisplayDataChecked = this.listOfDisplayData
-      .filter(item => !item.disabled)
-      .every(item => this.mapOfCheckedId[item.id]);
-    this.isIndeterminate =
-      this.listOfDisplayData.filter(item => !item.disabled).some(item => this.mapOfCheckedId[item.id]) &&
-      !this.isAllDisplayDataChecked;
-    this.numberOfChecked = this.listOfAllData.filter(item => this.mapOfCheckedId[item.id]).length;
-  }
-
-  checkAll(value: boolean): void {
-    this.listOfDisplayData.filter(item => !item.disabled).forEach(item => (this.mapOfCheckedId[item.id] = value));
-    this.refreshStatus();
+  getCourseFileList(pageIndex: number = this.pageIndex, pageSize: number = 10) {
+    this.loading = true;
+    this._courseFileService.getCourseFileList(this.courseId, pageIndex, pageSize).subscribe(res => {
+      this.fileUploadedList = res.data.data;
+      this.total = res.data.total;
+      this.loading = false;
+    })
   }
 
   beforeUpload = (file: UploadFile): boolean => {

@@ -13,7 +13,7 @@ export class QuestionComponent implements OnInit {
 
   listOfQuestionTypes: any[] = [
     { label: "单选题", value: "single_choice" },
-    { label: "多选题", value: "multiple_choice" },
+    { label: "多选题", value: "mutiple_choice" },
     { label: "不定项选择题", value: "choice" },
     { label: "判断题", value: "determine" }
   ]
@@ -30,6 +30,19 @@ export class QuestionComponent implements OnInit {
 
   loading: boolean = true;
   pageIndex: any = 1;
+  questionIds: Array<number> = [];
+
+  isAllChecked: boolean = false;
+  mapOfCheckedId: { [key: string]: boolean } = {}
+  checkAll(value: boolean) {
+    this.questionList.forEach((item: { id: string | number; }) => (this.mapOfCheckedId[item.id] = value));
+  }
+
+  check(questionId: number) {
+    if (this.mapOfCheckedId[questionId]) this.questionIds.push(questionId)
+    else this.questionIds.forEach((item, i) => { if (item == questionId) this.questionIds.splice(i, 1) })
+    console.log(this.questionIds);
+  }
 
   constructor(
     private _courseManagementUtilService: CourseManagementUtilService,
@@ -68,7 +81,19 @@ export class QuestionComponent implements OnInit {
       nzContent: '<b style="color: red;">此题目将不会出现在本课程中</b>',
       nzOkText: '确定',
       nzOkType: 'danger',
-      nzOnOk: () => this.delete(questionId),
+      nzOnOk: () => this.deleteQuestion(questionId),
+      nzCancelText: '取消',
+      nzOnCancel: () => console.log('Cancel')
+    });
+  }
+
+  confirmDeleteList() {
+    this.modalService.confirm({
+      nzTitle: '真的要删除这些题目吗?',
+      nzContent: '<b style="color: red;">此题目将不会出现在本课程中</b>',
+      nzOkText: '确定',
+      nzOkType: 'danger',
+      nzOnOk: () => this.deleteQuestionList(),
       nzCancelText: '取消',
       nzOnCancel: () => console.log('Cancel')
     });
@@ -76,8 +101,17 @@ export class QuestionComponent implements OnInit {
 
 
 
-  delete(questionId: number = 1) {
+  deleteQuestion(questionId: number = 1) {
     this._questionCreateService.deleteQuestion(questionId).subscribe(res => {
+      this._nzNotificationService.success('删除成功!', '');
+      this.searchData();
+    }, err => {
+      this._nzNotificationService.error('删除失败!', '');
+    })
+  }
+
+  deleteQuestionList(questionIds: Array<number> = this.questionIds) {
+    this._questionCreateService.deleteQuestionList(questionIds).subscribe(res => {
       this._nzNotificationService.success('删除成功!', '');
       this.searchData();
     }, err => {

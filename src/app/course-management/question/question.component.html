@@ -6,7 +6,7 @@
         (click)="navigateByUrl('/client/course/'+courseId+'/question_create/single_choice')"><i nz-icon nzType="plus"
           nzTheme="outline"></i>单选题</button>
       <button nz-button nzType="primary" class="header-button"
-        (click)="navigateByUrl('/client/course/'+courseId+'/question_create/multiple_choice')"><i nz-icon nzType="plus"
+        (click)="navigateByUrl('/client/course/'+courseId+'/question_create/mutiple_choice')"><i nz-icon nzType="plus"
           nzTheme="outline"></i>多选题</button>
       <button nz-button nzType="primary" class="header-button"
         (click)="navigateByUrl('/client/course/'+courseId+'/question_create/essay')" disabled><i nz-icon nzType="plus"
@@ -16,9 +16,9 @@
       </button>
       <nz-dropdown-menu #operationsMenu="nzDropdownMenu">
         <ul nz-menu nzSelectable>
-          <li nz-menu-item (click)="navigateByUrl('/client/course/'+courseId+'/question_create/indefinite_choice')"><i
-              nz-icon nzType="plus" nzTheme="outline"></i>不定项选择题</li>
-          <li nz-menu-item (click)="navigateByUrl('/client/course/'+courseId+'/question_create/judgement')">
+          <li nz-menu-item (click)="navigateByUrl('/client/course/'+courseId+'/question_create/choice')"><i nz-icon
+              nzType="plus" nzTheme="outline"></i>不定项选择题</li>
+          <li nz-menu-item (click)="navigateByUrl('/client/course/'+courseId+'/question_create/determine')">
             <i nz-icon nzType="plus" nzTheme="outline"></i>判断题</li>
           <li nz-menu-item (click)="navigateByUrl('/client/course/'+courseId+'/question_create/completion')" nzDisabled>
             <i nz-icon nzType="plus" nzTheme="outline"></i>填空题</li>
@@ -41,7 +41,7 @@
       [(nzPageIndex)]="pageIndex" [nzFrontPagination]="false" (nzPageIndexChange)="searchData()">
       <thead>
         <tr>
-          <th nzShowCheckbox></th>
+          <th nzShowCheckbox [(nzChecked)]="isAllChecked" (nzCheckedChange)="checkAll($event)"></th>
           <th width="35%">题干</th>
           <th width="15%">类型</th>
           <th>最后更新</th>
@@ -50,7 +50,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let data of questionListTable.data">
-          <td nzShowCheckbox></td>
+          <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="check(data.id)"></td>
           <td [innerHTML]="data.stem"></td>
           <td>{{ data.type }}</td>
           <td>{{ data.updatedTime | date:'yyyy-MM-dd HH:mm:ss' }}</td>
@@ -79,12 +79,10 @@
         </tr>
       </tbody>
     </nz-table>
-
-
   </div>
-
   <div>
-    <button nz-button nzType="danger"><i nz-icon nzType="delete" nzTheme="outline"></i>删除</button>
+    <button nz-button nzType="danger" (click)="confirmDeleteList()"><i nz-icon nzType="delete"
+        nzTheme="outline"></i>删除</button>
     <span class="pull-right color-grey">共{{total}}题</span>
   </div>
 </div>
