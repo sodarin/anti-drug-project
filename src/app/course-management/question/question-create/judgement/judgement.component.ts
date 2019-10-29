@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router'
+import { Router, ActivatedRoute } from '@angular/router'
 import { NzMessageService, NzNotificationService } from 'ng-zorro-antd';
 import { QuestionCreateService } from 'src/app/service/question-create/question-create.service';
 import { CourseBaseInfoEditService } from 'src/app/service/course-base-info-edit/course-base-info-edit.service';
@@ -28,6 +28,9 @@ export class JudgementComponent implements OnInit {
 
   courseId: any = 105;
   categoryId: any;
+
+  questionId: number;
+
 
   submitForm(command: string = 'back'): void {
     let check: boolean = true;
@@ -76,6 +79,7 @@ export class JudgementComponent implements OnInit {
     private _nzNotificationService: NzNotificationService,
     private _courseBaseInfoEditService: CourseBaseInfoEditService,
     private _courseManagementUtilService: CourseManagementUtilService,
+    private routerInfo: ActivatedRoute,
     private router: Router
   ) { }
 
@@ -93,7 +97,26 @@ export class JudgementComponent implements OnInit {
       courseSetId: [105, []],
       courseId: [105, []]
     });
-
+    this.routerInfo.params.subscribe(res => {
+      this.questionId = res.id;
+    })
+    if (this.questionId != null) {
+      this._questionCreateService.getQuestionInfo(this.questionId).subscribe(res => {
+        this.validateForm.patchValue({
+          type: res.data.type,
+          stem: res.data.stem,
+          score: res.data.score,
+          answer: res.data.answer[0],
+          analysis: res.data.analysis,
+          metas: '',
+          categoryId: res.data.categoryId,
+          difficulty: res.data.difficulty,
+          targetID: res.data.targetID,
+          courseSetId: res.data.courseSetId,
+          courseId: res.data.courseId
+        })
+      })
+    }
     this.courseId = this._courseManagementUtilService.setCourseIdFrom(location);
     this.getCourseInfo();
   }

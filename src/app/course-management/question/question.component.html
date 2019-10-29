@@ -72,7 +72,7 @@
               </div>
             </ng-template>
             <nz-divider nzType="vertical"></nz-divider>
-            <a>编辑</a>
+            <a (click)="navigateByUrl('/client/course/'+courseId+'/question_create/'+data.type+'/'+data.id)">编辑 </a>
             <nz-divider nzType="vertical"></nz-divider>
             <a (click)="confirmDelete(data.id)">删除</a>
           </td>

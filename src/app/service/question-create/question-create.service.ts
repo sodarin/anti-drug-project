@@ -20,10 +20,18 @@ export class QuestionCreateService {
 
     return this._http.get(api, { params: httpParams });
   }
-
+  getQuestionInfo(questionId: number):Observable<any> {
+    const api = `/course/getQuestionInfo?questionId=${questionId}`
+    return this._http.get(api);
+  }
   createQuestion(config: any): Observable<any> {
     const api = "/course/createQuestion";
     return this._http.post(api, config);
+  }
+
+  editQuestion(config: any): Observable<any> {
+    const api = "/course/XXX";
+    return this._http.put(api, config)
   }
 
   deleteQuestion(questionId: number) {

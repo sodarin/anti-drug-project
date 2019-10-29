@@ -187,6 +187,7 @@ const routes: Routes = [
             path: 'question_create', component: QuestionCreateComponent, children: [
               { path: '', redirectTo: 'single_choice', pathMatch: 'full' },
               { path: 'single_choice', component: SingleChoiceComponent },
+              { path: 'single_choice/:id', component: SingleChoiceComponent },
               { path: 'mutiple_choice', component: MultipleChoiceComponent },
               { path: 'essay', component: EssayComponent },
               { path: 'choice', component: IndefiniteChoiceComponent },
