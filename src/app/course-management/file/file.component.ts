@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NzEmptyService, NzMessageService } from 'ng-zorro-antd';
+import { NzEmptyService, NzMessageService, NzNotificationService } from 'ng-zorro-antd';
 import { UploadFile } from 'ng-zorro-antd/upload';
 import { filter } from 'rxjs/operators';
 import { HttpResponse, HttpRequest, HttpClient } from '@angular/common/http';
@@ -26,17 +26,32 @@ export class FileComponent implements OnInit {
   listOfDisplayData: any[] = [];
   listOfAllData: any[] = [];
 
-  mapOfCheckedId: { [key: string]: boolean } = {};
-  numberOfChecked = 0;
 
   isVisible: boolean = false;
-
   uploading: boolean = false;
-
   courseId: any;
+
+  isAllChecked: boolean = false;
+  mapOfCheckedId: { [key: string]: boolean } = {}
+  fileIds: number[] = [];
+
+  checkAll(value: boolean) {
+    this.fileUploadedList.forEach((item: { id: string | number; }) => (this.mapOfCheckedId[item.id] = value));
+    if (value) {
+      this.fileUploadedList.forEach((item) => { this.fileIds.push(item.fileId) })
+    } else this.fileIds = [];
+    console.log(this.fileIds);
+  }
+
+  check(fileId: number) {
+    if (this.mapOfCheckedId[fileId]) this.fileIds.push(fileId)
+    else this.fileIds.forEach((item, i) => { if (item == fileId) this.fileIds.splice(i, 1) })
+    console.log(this.fileIds);
+  }
 
   constructor(
     private _courseManagementUtilService: CourseManagementUtilService,
+    private _nzNotificationService: NzNotificationService,
     private _courseFileService: CourseFileService,
     private nzEmptyService: NzEmptyService,
     private msg: NzMessageService,
@@ -58,6 +73,24 @@ export class FileComponent implements OnInit {
       this.total = res.data.total;
       this.loading = false;
     })
+  }
+
+  deleteUpload(fileId: number = 0) {
+    this._courseFileService.deleteUpload(fileId).subscribe(res => {
+      this._nzNotificationService.success('删除成功!', '');
+      this.getCourseFileList();
+    }, err => {
+      this._nzNotificationService.error('删除失败!', `${err.message}`)
+    })
+  }
+
+  deleteUploadList(fileIds: Array<number> = this.fileIds) {
+    this._courseFileService.deleteUploadList(fileIds).subscribe(res => {
+      this._nzNotificationService.success('删除成功!', '');
+      this.getCourseFileList();
+    }, err => {
+      this._nzNotificationService.error('删除失败!', `${err.message}`)
+    });
   }
 
   beforeUpload = (file: UploadFile): boolean => {
@@ -84,6 +117,7 @@ export class FileComponent implements OnInit {
     } else {
       this.msg.success('上传成功!');
       this.fileList = [];
+      this.getCourseFileList();
     }
     this.uploading = false;
   }

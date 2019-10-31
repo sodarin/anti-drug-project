@@ -106,17 +106,21 @@ export class SingleChoiceComponent implements OnInit {
       this.message.create('error', '至少选择一个答案');
     if (check || this.validateForm.controls.error) {
       this.getMetas();
+      this.getAnswer();
       this.validateForm.patchValue({
         courseId: this.courseId,
         categoryId: this.categoryId
       })
+
       if (this.questionId == null) {
+        console.log("添加");
         this._questionCreateService.createQuestion(this.validateForm.value).subscribe(result => {
           this._nzNotificationService.create('success', '添加成功!', ``);
         }, err => {
           this._nzNotificationService.create('error', '添加失败!', ``);
         });
       } else {
+        console.log("修改");
         this.validateForm.addControl('questionId', new FormControl(this.questionId, Validators.nullValidator))
         this._questionCreateService.editQuestion(this.validateForm.value).subscribe(result => {
           this._nzNotificationService.create('success', '修改成功!', ``);
@@ -124,25 +128,29 @@ export class SingleChoiceComponent implements OnInit {
           this._nzNotificationService.create('error', '修改失败!', ``);
         })
       }
+      console.log(this.validateForm.value);
     }
 
-    if (check && command == "continue") {
-      this.validateForm.reset({
-        type: ['choice', []],
-        stem: [null, [Validators.required]],
-        score: [2, [Validators.min(0)]],
-        answer: [null, [Validators.required]],
-        analysis: [null, []],
-        metas: [null, []],
-        categoryId: [1, []],
-        difficulty: ['normal', []],
-        targetID: [null, []],
-        courseSetId: [105, []],
-        courseId: [105, []],
-        questionId: [null, []]
+    if (check && command === "continue") {
+      console.log(command);
+      this.validateForm.patchValue({
+        type: 'single_choice',
+        stem: null,
+        score: 2,
+        answer: null,
+        analysis: null,
+        metas: null,
+        categoryId: 1,
+        difficulty: 'normal',
+        targetID: null,
+        courseSetId: 105,
+        courseId: 105,
+        questionId: null
       })
-    } else if (check && command == "back")
+    } else if (check && command == "back") {
+      console.log('back');
       this.navigateByUrl(`client/course/${this.courseId}/question`);
+    }
   }
 
   constructor(
@@ -170,17 +178,15 @@ export class SingleChoiceComponent implements OnInit {
       courseId: [105, []]
     });
     this.routerInfo.params.subscribe(res => {
-      this.questionId = res.id;     
+      this.questionId = res.id;
     })
     if (this.questionId != null) {
       this._questionCreateService.getQuestionInfo(this.questionId).subscribe(res => {
         this.validateForm.patchValue({
-          type: res.data.type,
           stem: res.data.stem,
           score: res.data.score,
           answer: res.data.answer[0],
           analysis: res.data.analysis,
-          metas: '',
           categoryId: res.data.categoryId,
           difficulty: res.data.difficulty,
           targetID: res.data.targetID,
@@ -211,12 +217,21 @@ export class SingleChoiceComponent implements OnInit {
     this.listOfChoiceControl.forEach((item) => {
       let tmp = this.validateForm.get(item.uuid).value;
       if (tmp != null || tmp != '') {
-        let content = this._questionCreateService.getMeta(tmp);
+        let content = tmp;
         choices.push(content);
       }
     })
     this.validateForm.patchValue({
-      metas: `{choice:${JSON.stringify(choices)}}`
+      metas: `{\"choices\":${JSON.stringify(choices)}}`
+    })
+  }
+
+  getAnswer() {
+    let answer = [];
+    let tmp = `${this.validateForm.controls.answer.value}`;
+    answer.push(tmp);
+    this.validateForm.patchValue({
+      answer: JSON.stringify(answer)
     })
   }
 

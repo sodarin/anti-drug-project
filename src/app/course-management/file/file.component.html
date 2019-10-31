@@ -12,7 +12,7 @@
       [(nzPageIndex)]="pageIndex" [nzFrontPagination]="false" (nzPageIndexChange)="getCourseFileList()">
       <thead>
         <tr>
-          <th nzShowCheckbox></th>
+          <th nzShowCheckbox [(nzChecked)]="isAllChecked" (nzCheckedChange)="checkAll($event)"></th>
           <th width="30%">文件名</th>
           <th>类型</th>
           <th>大小</th>
@@ -22,12 +22,12 @@
       </thead>
       <tbody>
         <tr *ngFor="let data of fileListTable.data">
-          <td nzShowCheckbox></td>
+          <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.fileId]" (nzCheckedChange)="check(data.fileId)"></td>
           <td>{{ data.fileName }}</td>
           <td>{{ data.fileType==null?'未知':data.fileType }}</td>
           <td>{{ data.fileSize / 1000 > 1 ? data.fileSize/1000+'KB' : data.fileSize+'B' }}</td>
           <td>{{ data.createdTime | date:'yyyy-MM-dd HH:mm:ss' }}</td>
-          <td><a>删除</a></td>
+          <td><a (click)="deleteUpload(data.fileId)">删除</a></td>
         </tr>
       </tbody>
     </nz-table>
@@ -35,7 +35,8 @@
   <div class="pull-right">
     <div class="color-grey">共{{total}}题</div>
   </div>
-  <button nz-button nzType="danger" nzSize="small"><i nz-icon nzType="delete" nzTheme="outline"></i>删除</button>
+  <button nz-button nzType="danger" nzSize="small" (click)="deleteUploadList()"><i nz-icon nzType="delete"
+      nzTheme="outline"></i>删除</button>
 </div>
 
 <nz-modal [(nzVisible)]="isVisible" nzTitle="上传文件" (nzOnCancel)="isVisible=false" (nzOnOk)="isVisible=false">

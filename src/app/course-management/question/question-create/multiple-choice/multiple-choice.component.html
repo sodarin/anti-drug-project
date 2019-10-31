@@ -19,7 +19,7 @@
             <nz-option nzValue="1" nzLabel="按课程"></nz-option>
             <nz-option nzValue="2" nzLabel="默认教学计划"></nz-option>
           </nz-select>
-         
+
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
@@ -46,7 +46,7 @@
             <quill-editor [formControlName]="control.uuid">
             </quill-editor>
             <i nz-icon nzType="minus-circle-o" class="dynamic-delete-button" (click)="removeField(control, $event)"></i>
-            <label nz-checkbox [nzValue]="''+control.id">正确答案</label>
+            <label nz-checkbox [nzValue]="control.id" [nzChecked]="check(control.id)">正确答案</label>
           </nz-form-control>
         </nz-form-item>
       </nz-checkbox-wrapper>
@@ -76,8 +76,9 @@
       </nz-form-item>
       <nz-form-item>
         <nz-form-control nzOffset="3" [nzSpan]="conLength">
-          <button nz-button nzType="primary" class="spacing" (click)="submitForm('continue')">保存并继续添加</button>
-          <button nz-button nzType="primary" (click)="submitForm()">保存</button>
+          <button nz-button type="button" nzType="primary" class="spacing"
+            (click)="submitForm('continue')">保存并继续添加</button>
+          <button nz-button type="button" nzType="primary" (click)="submitForm()">保存</button>
           <button nz-button type="button" nzType="link"
             (click)="navigateByUrl('/client/course/'+courseId+'/question')">返回</button>
         </nz-form-control>

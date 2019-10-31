@@ -19,4 +19,14 @@ export class CourseFileService {
       params: httpParams
     })
   }
+
+  deleteUpload(fileId: number) {
+    const api = `/material/deleteUpload?fileId=${fileId}`;
+    return this._http.post(api, {});
+  }
+
+  deleteUploadList(fileIds: Array<number>): Observable<any> {
+    const api = `/material/deleteUploadList?fileIds=${fileIds}`
+    return this._http.post(api, {});
+  }
 }

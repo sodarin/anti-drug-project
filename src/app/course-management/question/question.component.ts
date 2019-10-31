@@ -34,6 +34,7 @@ export class QuestionComponent implements OnInit {
 
   isAllChecked: boolean = false;
   mapOfCheckedId: { [key: string]: boolean } = {}
+  
   checkAll(value: boolean) {
     this.questionList.forEach((item: { id: string | number; }) => (this.mapOfCheckedId[item.id] = value));
   }

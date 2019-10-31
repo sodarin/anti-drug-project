@@ -41,33 +41,48 @@ export class JudgementComponent implements OnInit {
         check = false;
       }
     }
-    if (check) {
+    if (check || this.validateForm.controls.error) {
+      this.getAnswer();
       this.validateForm.patchValue({
         courseId: this.courseId,
         categoryId: this.categoryId
       })
-      this._questionCreateService.createQuestion(this.validateForm.value).subscribe(result => {
-        this._nzNotificationService.create('success', '添加成功!', ``);
-      }, err => {
-        this._nzNotificationService.create('error', '添加失败!', ``);
-      })
+      if (this.questionId == null) {
+        console.log("添加");
+        this._questionCreateService.createQuestion(this.validateForm.value).subscribe(result => {
+          this._nzNotificationService.create('success', '添加成功!', ``);
+        }, err => {
+          this._nzNotificationService.create('error', '添加失败!', ``);
+        });
+      } else {
+        console.log("修改");
+        this.validateForm.addControl('questionId', new FormControl(this.questionId, Validators.nullValidator))
+        this._questionCreateService.editQuestion(this.validateForm.value).subscribe(result => {
+          this._nzNotificationService.create('success', '修改成功!', ``);
+        }, err => {
+          this._nzNotificationService.create('error', '修改失败!', ``);
+        })
+      }
+      console.log(this.validateForm.value);
     }
-    console.log(this.validateForm.value);
-    if (check || command == "continue") {
-      this.validateForm.reset({
-        type: ['choice', []],
-        stem: [null, [Validators.required]],
-        score: [2, [Validators.min(0)]],
-        answer: [null, [Validators.required]],
-        analysis: [null, []],
-        metas: [null, []],
-        categoryId: [1, []],
-        difficulty: ['normal', []],
-        targetID: [null, []],
-        courseSetId: [105, []],
-        courseId: [105, []]
+    if (check && command === "continue") {
+      console.log(command);
+      this.validateForm.patchValue({
+        type: 'determine',
+        stem: null,
+        score: 2,
+        answer: null,
+        analysis: null,
+        metas: null,
+        categoryId: 1,
+        difficulty: 'normal',
+        targetID: null,
+        courseSetId: 105,
+        courseId: 105,
+        questionId: null
       })
-    } else if (check) {
+    } else if (check && command == "back") {
+      console.log('back');
       this.navigateByUrl(`client/course/${this.courseId}/question`);
     }
 
@@ -88,7 +103,7 @@ export class JudgementComponent implements OnInit {
       type: ['determine', []],
       stem: [null, [Validators.required]],
       score: [2, [Validators.min(0)]],
-      answer: [null, [Validators.required]],
+      answer: [1, [Validators.required]],
       analysis: [null, []],
       metas: [null, []],
       categoryId: [1, []],
@@ -103,12 +118,10 @@ export class JudgementComponent implements OnInit {
     if (this.questionId != null) {
       this._questionCreateService.getQuestionInfo(this.questionId).subscribe(res => {
         this.validateForm.patchValue({
-          type: res.data.type,
           stem: res.data.stem,
           score: res.data.score,
           answer: res.data.answer[0],
           analysis: res.data.analysis,
-          metas: '',
           categoryId: res.data.categoryId,
           difficulty: res.data.difficulty,
           targetID: res.data.targetID,
@@ -122,6 +135,15 @@ export class JudgementComponent implements OnInit {
   }
   navigateByUrl(url: string) {
     this.router.navigateByUrl(url);
+  }
+
+  getAnswer() {
+    let answer = [];
+    let tmp = `${this.validateForm.controls.answer.value}`;
+    answer.push(tmp);
+    this.validateForm.patchValue({
+      answer: JSON.stringify(answer)
+    })
   }
 
   getCourseInfo() {

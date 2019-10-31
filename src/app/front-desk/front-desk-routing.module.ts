@@ -189,9 +189,12 @@ const routes: Routes = [
               { path: 'single_choice', component: SingleChoiceComponent },
               { path: 'single_choice/:id', component: SingleChoiceComponent },
               { path: 'mutiple_choice', component: MultipleChoiceComponent },
+              { path: 'mutiple_choice/:id', component: MultipleChoiceComponent },
               { path: 'essay', component: EssayComponent },
               { path: 'choice', component: IndefiniteChoiceComponent },
+              { path: 'choice/:id', component: IndefiniteChoiceComponent },
               { path: 'determine', component: JudgementComponent },
+              { path: 'determine/:id', component: JudgementComponent },
               { path: 'completion', component: CompletionComponent },
               { path: 'material', component: MaterialComponent }
             ]

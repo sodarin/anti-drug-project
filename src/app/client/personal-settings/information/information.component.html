@@ -6,8 +6,8 @@
     <div nz-row>
       <nz-form-item>
         <nz-form-control>
-          <nz-upload class="avatar-uploader" nzAction="头像修改的地址" nzName="avatar" nzListType="picture-card"
-            [nzShowUploadList]="false">
+          <nz-upload class="avatar-uploader" nzAction="/material/uploadUserAvatar?userId=1"
+            (nzChange)="handleChange($event)" nzName="avatar" [nzShowUploadList]="false">
             <ng-container *ngIf="!user.mediumAvatar">
               <i class="upload-icon" nz-icon></i>
               <div class="ant-upload-text">Upload</div>

@@ -33,7 +33,7 @@ export class IndefiniteChoiceComponent implements OnInit {
   categoryId: any;
   courseId: any;
 
-  answer: Array<string> = [];
+  answer: Array<number> = [];
 
   questionId: number;
 
@@ -82,12 +82,18 @@ export class IndefiniteChoiceComponent implements OnInit {
 
   removeField(i: { id: number; title: string; isSelected: boolean; uuid: string }, e: MouseEvent): void {
     e.preventDefault();
+    if (this.listOfChoiceControl.length == 2) {
+      this.message.create('error', '选项最少2个!');
+      return;
+    }
     if (this.listOfChoiceControl.length > 2) {
       const index = this.listOfChoiceControl.indexOf(i);
       this.listOfChoiceControl.splice(index, 1);
       this.validateForm.removeControl(i.uuid);
-    } else {
-      this.message.create('error', '选项最少2个!');
+      this.listOfChoiceControl.forEach((item, i) => {
+        this.listOfChoiceControl[i].id = i;
+        this.listOfChoiceControl[i].title = `选项${String.fromCharCode(i + 65)}`;
+      })
     }
   }
 
@@ -102,9 +108,10 @@ export class IndefiniteChoiceComponent implements OnInit {
       }
     }
     if (this.answer.length < 1) {
-      this.message.create('error', '至少选择1个答案!'); return;
+      this.message.create('error', '至少选择1个答案!'); 
+      return;
     }
-    if (check) {
+    if (check || !this.validateForm.controls.error) {
       this.getMetas();
       this.validateForm.patchValue({
         courseId: this.courseId,
@@ -112,12 +119,14 @@ export class IndefiniteChoiceComponent implements OnInit {
         answer: JSON.stringify(this.answer)
       });
       if (this.questionId == null) {
+        console.log("添加");
         this._questionCreateService.createQuestion(this.validateForm.value).subscribe(result => {
           this._nzNotificationService.create('success', '添加成功!', ``);
         }, err => {
           this._nzNotificationService.create('error', '添加失败!', ``);
         });
       } else {
+        console.log("修改");
         this.validateForm.addControl('questionId', new FormControl(this.questionId, Validators.nullValidator))
         this._questionCreateService.editQuestion(this.validateForm.value).subscribe(result => {
           this._nzNotificationService.create('success', '修改成功!', ``);
@@ -128,21 +137,23 @@ export class IndefiniteChoiceComponent implements OnInit {
     }
     console.log(this.validateForm.value);
 
-    if (check || command == "continue") {
-      this.validateForm.reset({
-        type: ['choice', []],
-        stem: [null, [Validators.required]],
-        score: [2, [Validators.min(0)]],
-        answer: [null, [Validators.required]],
-        analysis: [null, []],
-        metas: [null, []],
-        categoryId: [1, []],
-        difficulty: ['normal', []],
-        targetID: [null, []],
-        courseSetId: [105, []],
-        courseId: [105, []]
+    if (check || command === "continue") {
+      console.log(command);
+      this.validateForm.patchValue({
+        type: 'choice',
+        stem: null,
+        score: 2,
+        answer: null,
+        analysis: null,
+        metas: null,
+        categoryId: 1,
+        difficulty: 'normal',
+        targetID: null,
+        courseSetId: 105,
+        courseId: 105,
       })
-    } else if (check) {
+    } else if (check && command == "back") {
+      console.log('back');
       this.navigateByUrl(`client/course/${this.courseId}/question`);
     }
   }
@@ -182,12 +193,10 @@ export class IndefiniteChoiceComponent implements OnInit {
           this.patchField(item);
         })
         this.validateForm.patchValue({
-          type: res.data.type,
           stem: res.data.stem,
           score: res.data.score,
           answer: res.data.answer,
           analysis: res.data.analysis,
-          metas: '',
           categoryId: res.data.categoryId,
           difficulty: res.data.difficulty,
           targetID: res.data.targetID,
@@ -217,12 +226,12 @@ export class IndefiniteChoiceComponent implements OnInit {
     this.listOfChoiceControl.forEach((item) => {
       let tmp = this.validateForm.get(item.uuid).value;
       if (tmp != null || tmp != '') {
-        let content = this._questionCreateService.getMeta(tmp);
+        let content = tmp;
         choices.push(content);
       }
     })
     this.validateForm.patchValue({
-      metas: `{choice:${JSON.stringify(choices)}}`
+      metas: `{\"choices\":${JSON.stringify(choices)}}`
     })
   }
 
@@ -232,7 +241,7 @@ export class IndefiniteChoiceComponent implements OnInit {
     });
   }
 
-  answerChange(value: string[]) {
+  answerChange(value: number[]) {
     console.log(value);
     this.answer = value;
   }

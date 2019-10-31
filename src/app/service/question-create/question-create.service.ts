@@ -20,7 +20,7 @@ export class QuestionCreateService {
 
     return this._http.get(api, { params: httpParams });
   }
-  getQuestionInfo(questionId: number):Observable<any> {
+  getQuestionInfo(questionId: number): Observable<any> {
     const api = `/course/getQuestionInfo?questionId=${questionId}`
     return this._http.get(api);
   }
@@ -30,7 +30,7 @@ export class QuestionCreateService {
   }
 
   editQuestion(config: any): Observable<any> {
-    const api = "/course/XXX";
+    const api = "/course/editQuestion";
     return this._http.put(api, config)
   }
 
@@ -45,17 +45,13 @@ export class QuestionCreateService {
   }
 
   //选项的转化
-  strToUnicode(value: string): string {
-    if (value) {
-
-      let unicodeTmp = [];
-      for (let i = 0; i < value.length; i++) {
-        unicodeTmp.push('\\u' + value.charCodeAt(0).toString(16));
-      }
-      return unicodeTmp.join('');
-    } else {
-      return '';
+  strToUnicode(data: string = '汉字'):string {
+    if (data === '') return '';
+    let str = '';
+    for (let i = 0; i < data.length; i++) {
+      str += "\\u" + parseInt(data[i].charCodeAt(0).toString(), 10).toString(16);
     }
+    return str;
   }
 
   //匹配p标签中的信息
@@ -70,7 +66,7 @@ export class QuestionCreateService {
 
   //内容两端添加上p标签
   makeWarpedByTagP(value: string): string {
-    return value == '' ? '' : `<p>${value}</p>\\r\\n`;
+    return value == '' ? '' : `<p>${value}<\/p>\r\n`;
   }
 
   getMeta(value: string): string {

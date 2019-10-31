@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserInfoEditModalComponent } from '../../../core/modal/user-info-edit-modal/user-info-edit-modal.component';
 import { PersonInfoEditService } from '../../../service/person-info-edit/person-info-edit.service'
 import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { UploadChangeParam, NzMessageService } from 'ng-zorro-antd';
 @Component({
   selector: 'app-information',
   templateUrl: './information.component.html',
@@ -30,16 +31,30 @@ export class InformationComponent implements OnInit {
   };
 
   introduction: string = '';
-  constructor(private personInfoEditService: PersonInfoEditService, private notification: NzNotificationService) { }
+  constructor(
+    private personInfoEditService: PersonInfoEditService,
+    private notification: NzNotificationService,
+    private msg: NzMessageService
+  ) { }
 
   editPersonalInfo() {
     this.personInfoEditService.updateUserDetail(this.user).subscribe(result => {
-      this.notification.create(
-        'success',
-        '添加成功',
-        ''
-      );
+      this.notification.success('修改成功', '');
+    }, err => {
+      this.notification.error('修改失败', '');
     })
+  }
+
+  handleChange({ file, fileList }: UploadChangeParam): void {
+    const status = file.status;
+    if (status !== 'uploading') {
+      console.log(file, fileList);
+    }
+    if (status === 'done') {
+      this.msg.success(`${file.name}修改头像成功!`);
+    } else if (status === 'error') {
+      this.msg.error(`${file.name}修改头像失败!`);
+    }
   }
 
   ngOnInit() {
