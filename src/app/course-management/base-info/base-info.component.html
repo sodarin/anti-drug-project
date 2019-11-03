@@ -19,7 +19,7 @@
         <nz-form-label nzSpan="3">标签:</nz-form-label>
         <nz-form-control nzSpan="21" nzExtra="用于按标签搜索课程、相关课程的提取等，由网校管理员后台统一管理">
           <nz-select style="width: 100%" nzMode="multiple" nzPlaceHolder="请选择标签" formControlName="tags">
-            <nz-option *ngFor="let option of listOfTag" [nzLabel]="option.name" [nzValue]="option.id">
+            <nz-option *ngFor="let option of listOfTag" [nzLabel]="option.name" [nzValue]="option.id+''">
             </nz-option>
           </nz-select>
         </nz-form-control>

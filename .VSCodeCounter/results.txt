@@ -1,13 +1,13 @@
-Date : 2019-10-29 15:05:49
+Date : 2019-11-01 11:39:49
 Directory : d:\vscode\angular\anti-drug-project\anti-drug-project\src\app\course-management
-Total : 117 files,  5317 codes, 49 comments, 813 blanks, all 6179 lines
+Total : 117 files,  5409 codes, 49 comments, 823 blanks, all 6281 lines
 
 Languages
 +------------+------------+------------+------------+------------+------------+
 | language   | files      | code       | comment    | blank      | total      |
 +------------+------------+------------+------------+------------+------------+
-| TypeScript |         59 |      2,715 |         35 |        539 |      3,289 |
-| HTML       |         29 |      1,582 |         14 |         51 |      1,647 |
+| TypeScript |         59 |      2,804 |         35 |        549 |      3,388 |
+| HTML       |         29 |      1,585 |         14 |         51 |      1,650 |
 | Less       |         29 |      1,020 |          0 |        223 |      1,243 |
 +------------+------------+------------+------------+------------+------------+
 
@@ -15,21 +15,21 @@ Directories
 +------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
 | path                                                                               | files      | code       | comment    | blank      | total      |
 +------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
-| .                                                                                  |        117 |      5,317 |         49 |        813 |      6,179 |
-| question                                                                           |         36 |      2,102 |         33 |        293 |      2,428 |
-| question\question-create                                                           |         32 |      1,852 |         33 |        249 |      2,134 |
+| .                                                                                  |        117 |      5,409 |         49 |        823 |      6,281 |
+| question                                                                           |         36 |      2,162 |         33 |        300 |      2,495 |
+| question\question-create                                                           |         32 |      1,912 |         33 |        255 |      2,200 |
 | student-management                                                                 |         24 |        738 |          0 |        130 |        868 |
 | test-paper                                                                         |          8 |        383 |          0 |         66 |        449 |
-| question\question-create\single-choice                                             |          4 |        352 |          5 |         38 |        395 |
-| question\question-create\multiple-choice                                           |          4 |        351 |          6 |         42 |        399 |
-| question\question-create\indefinite-choice                                         |          4 |        350 |          6 |         42 |        398 |
+| question\question-create\multiple-choice                                           |          4 |        367 |          6 |         45 |        418 |
+| question\question-create\single-choice                                             |          4 |        365 |          5 |         40 |        410 |
+| question\question-create\indefinite-choice                                         |          4 |        360 |          6 |         42 |        408 |
 | plan-overview                                                                      |          4 |        301 |          0 |         29 |        330 |
 | paper-marking                                                                      |          8 |        271 |          0 |         45 |        316 |
 | test-paper\test-paper-create                                                       |          4 |        270 |          0 |         44 |        314 |
-| question\question-create\judgement                                                 |          4 |        247 |          4 |         30 |        281 |
+| question\question-create\judgement                                                 |          4 |        268 |          4 |         31 |        303 |
 | detail-info                                                                        |          4 |        246 |          1 |         32 |        279 |
 | student-management\formal-student-table                                            |          4 |        241 |          0 |         33 |        274 |
-| file                                                                               |          4 |        199 |          0 |         40 |        239 |
+| file                                                                               |          4 |        231 |          0 |         43 |        274 |
 | plan-setting                                                                       |          4 |        198 |         14 |         39 |        251 |
 | base-info                                                                          |          4 |        180 |          0 |         27 |        207 |
 | question\question-create\essay                                                     |          4 |        168 |          4 |         27 |        199 |
@@ -67,10 +67,10 @@ Files
 | detail-info\detail-info.component.less                                             | Less       |         56 |          0 |         13 |         69 |
 | detail-info\detail-info.component.spec.ts                                          | TypeScript |         20 |          0 |          6 |         26 |
 | detail-info\detail-info.component.ts                                               | TypeScript |        105 |          1 |         12 |        118 |
-| file\file.component.html                                                           | HTML       |         56 |          0 |          2 |         58 |
+| file\file.component.html                                                           | HTML       |         57 |          0 |          2 |         59 |
 | file\file.component.less                                                           | Less       |         48 |          0 |         15 |         63 |
 | file\file.component.spec.ts                                                        | TypeScript |         20 |          0 |          6 |         26 |
-| file\file.component.ts                                                             | TypeScript |         75 |          0 |         17 |         92 |
+| file\file.component.ts                                                             | TypeScript |        106 |          0 |         20 |        126 |
 | paper-marking\paper-marking.component.html                                         | HTML       |         53 |          0 |          1 |         54 |
 | paper-marking\paper-marking.component.less                                         | Less       |         30 |          0 |          2 |         32 |
 | paper-marking\paper-marking.component.spec.ts                                      | TypeScript |         20 |          0 |          6 |         26 |
@@ -99,22 +99,22 @@ Files
 | question\question-create\essay\essay.component.less                                | Less       |         35 |          0 |         10 |         45 |
 | question\question-create\essay\essay.component.spec.ts                             | TypeScript |         20 |          0 |          6 |         26 |
 | question\question-create\essay\essay.component.ts                                  | TypeScript |         37 |          4 |         10 |         51 |
-| question\question-create\indefinite-choice\indefinite-choice.component.html        | HTML       |         86 |          0 |          1 |         87 |
+| question\question-create\indefinite-choice\indefinite-choice.component.html        | HTML       |         87 |          0 |          1 |         88 |
 | question\question-create\indefinite-choice\indefinite-choice.component.less        | Less       |         35 |          0 |         10 |         45 |
 | question\question-create\indefinite-choice\indefinite-choice.component.spec.ts     | TypeScript |         20 |          0 |          6 |         26 |
-| question\question-create\indefinite-choice\indefinite-choice.component.ts          | TypeScript |        209 |          6 |         25 |        240 |
+| question\question-create\indefinite-choice\indefinite-choice.component.ts          | TypeScript |        218 |          6 |         25 |        249 |
 | question\question-create\judgement\judgement.component.html                        | HTML       |         76 |          0 |          1 |         77 |
 | question\question-create\judgement\judgement.component.less                        | Less       |         35 |          0 |         10 |         45 |
 | question\question-create\judgement\judgement.component.spec.ts                     | TypeScript |         20 |          0 |          6 |         26 |
-| question\question-create\judgement\judgement.component.ts                          | TypeScript |        116 |          4 |         13 |        133 |
+| question\question-create\judgement\judgement.component.ts                          | TypeScript |        137 |          4 |         14 |        155 |
 | question\question-create\material\material.component.html                          | HTML       |         69 |          0 |          1 |         70 |
 | question\question-create\material\material.component.less                          | Less       |         38 |          0 |         11 |         49 |
 | question\question-create\material\material.component.spec.ts                       | TypeScript |         20 |          0 |          6 |         26 |
 | question\question-create\material\material.component.ts                            | TypeScript |         36 |          4 |          9 |         49 |
-| question\question-create\multiple-choice\multiple-choice.component.html            | HTML       |         86 |          0 |          2 |         88 |
+| question\question-create\multiple-choice\multiple-choice.component.html            | HTML       |         87 |          0 |          2 |         89 |
 | question\question-create\multiple-choice\multiple-choice.component.less            | Less       |         35 |          0 |         10 |         45 |
 | question\question-create\multiple-choice\multiple-choice.component.spec.ts         | TypeScript |         20 |          0 |          6 |         26 |
-| question\question-create\multiple-choice\multiple-choice.component.ts              | TypeScript |        210 |          6 |         24 |        240 |
+| question\question-create\multiple-choice\multiple-choice.component.ts              | TypeScript |        225 |          6 |         27 |        258 |
 | question\question-create\question-create.component.html                            | HTML       |          5 |          0 |          1 |          6 |
 | question\question-create\question-create.component.less                            | Less       |         13 |          0 |          3 |         16 |
 | question\question-create\question-create.component.spec.ts                         | TypeScript |         20 |          0 |          6 |         26 |
@@ -122,11 +122,11 @@ Files
 | question\question-create\single-choice\single-choice.component.html                | HTML       |         91 |          0 |          2 |         93 |
 | question\question-create\single-choice\single-choice.component.less                | Less       |         35 |          0 |         10 |         45 |
 | question\question-create\single-choice\single-choice.component.spec.ts             | TypeScript |         20 |          0 |          6 |         26 |
-| question\question-create\single-choice\single-choice.component.ts                  | TypeScript |        206 |          5 |         20 |        231 |
+| question\question-create\single-choice\single-choice.component.ts                  | TypeScript |        219 |          5 |         22 |        246 |
 | question\question.component.html                                                   | HTML       |         88 |          0 |          1 |         89 |
 | question\question.component.less                                                   | Less       |         44 |          0 |         12 |         56 |
 | question\question.component.spec.ts                                                | TypeScript |         20 |          0 |          6 |         26 |
-| question\question.component.ts                                                     | TypeScript |         98 |          0 |         25 |        123 |
+| question\question.component.ts                                                     | TypeScript |         98 |          0 |         26 |        124 |
 | student-management\formal-student-table\formal-student-table.component.html        | HTML       |         69 |          0 |          4 |         73 |
 | student-management\formal-student-table\formal-student-table.component.less        | Less       |         22 |          0 |          3 |         25 |
 | student-management\formal-student-table\formal-student-table.component.spec.ts     | TypeScript |         20 |          0 |          6 |         26 |
@@ -167,5 +167,5 @@ Files
 | test-paper\test-paper.component.less                                               | Less       |         26 |          0 |          6 |         32 |
 | test-paper\test-paper.component.spec.ts                                            | TypeScript |         20 |          0 |          6 |         26 |
 | test-paper\test-paper.component.ts                                                 | TypeScript |         21 |          0 |          8 |         29 |
-| Total                                                                              |            |      5,317 |         49 |        813 |      6,179 |
+| Total                                                                              |            |      5,409 |         49 |        823 |      6,281 |
 +------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+

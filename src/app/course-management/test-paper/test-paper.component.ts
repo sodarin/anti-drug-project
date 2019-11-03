@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router'
 import { NzEmptyService } from 'ng-zorro-antd';
+import { CourseManagementUtilService } from 'src/app/service/course-management-util/course-management-util.service';
 
 @Component({
   selector: 'app-test-paper',
@@ -10,14 +11,22 @@ import { NzEmptyService } from 'ng-zorro-antd';
 export class TestPaperComponent implements OnInit {
 
   @ViewChild('customTpl', { static: true }) customTpl: TemplateRef<any>;
-  
-  constructor(private router: Router, private nzEmptyService: NzEmptyService) { this.nzEmptyService.setDefaultContent(this.customTpl);}
 
-  ngOnInit() {
+  courseId: any;
+  constructor(
+    private router: Router,
+    private nzEmptyService: NzEmptyService,
+    private _courseManagementUtilService: CourseManagementUtilService
+  ) {
     this.nzEmptyService.setDefaultContent(this.customTpl);
   }
 
-  check(){
+  ngOnInit() {
+    this.nzEmptyService.setDefaultContent(this.customTpl);
+    this.courseId = this._courseManagementUtilService.setCourseIdFrom(location);
+  }
+
+  check() {
     this.nzEmptyService.setDefaultContent(this.customTpl);
   }
 

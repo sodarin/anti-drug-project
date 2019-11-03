@@ -65,7 +65,8 @@
       </nz-form-item>
       <nz-form-item>
         <nz-form-control nzOffset="3" [nzSpan]="conLength">
-          <button nz-button nzType="primary" class="spacing" (click)="submitForm('continue')">保存并继续添加</button>
+          <button nz-button nzType="primary" class="spacing" (click)="submitForm('continue')"
+            [disabled]="btnDisable">保存并继续添加</button>
           <button nz-button nzType="primary" (click)="submitForm()">保存</button>
           <button nz-button type="button" nzType="link"
             (click)="navigateByUrl('/client/course/'+courseId+'/question')">返回</button>

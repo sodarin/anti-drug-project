@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UserInfoEditModalComponent } from '../../../core/modal/user-info-edit-modal/user-info-edit-modal.component';
 import { PersonInfoEditService } from '../../../service/person-info-edit/person-info-edit.service'
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { UploadChangeParam, NzMessageService } from 'ng-zorro-antd';
+import { UploadChangeParam, NzMessageService, UploadXHRArgs } from 'ng-zorro-antd';
+import { HttpEventType, HttpResponse, HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-information',
   templateUrl: './information.component.html',
@@ -19,7 +20,7 @@ export class InformationComponent implements OnInit {
     gender: "",
     id: 0,
     job: "",
-    mediumAvatar: "",
+    mediumAvatar: null,
     nickName: "",
     qq: "",
     signature: "",
@@ -30,10 +31,13 @@ export class InformationComponent implements OnInit {
     weixin: ""
   };
 
+  loading: boolean = false;
+
   introduction: string = '';
   constructor(
     private personInfoEditService: PersonInfoEditService,
     private notification: NzNotificationService,
+    private _http: HttpClient,
     private msg: NzMessageService
   ) { }
 
@@ -45,17 +49,26 @@ export class InformationComponent implements OnInit {
     })
   }
 
-  handleChange({ file, fileList }: UploadChangeParam): void {
-    const status = file.status;
-    if (status !== 'uploading') {
-      console.log(file, fileList);
-    }
-    if (status === 'done') {
-      this.msg.success(`${file.name}修改头像成功!`);
-    } else if (status === 'error') {
-      this.msg.error(`${file.name}修改头像失败!`);
-    }
-  }
+  customReq = (item: UploadXHRArgs) => {
+    this.loading = true;
+    const formData = new FormData();
+    formData.append('file', item.file as any);
+    return this._http.post(item.action, formData).subscribe(
+      (event: any) => {
+        console.log(event);
+        console.log(HttpEventType);
+        if (event.message === 'SUCCESS') {
+          item.onSuccess!(event.body, item.file!, event);
+        } else if (event instanceof HttpResponse) {
+          item.onSuccess!(event.body, item.file!, event);
+        }
+        this.loading = false;
+      },
+      err => {
+        item.onError!(err, item.file!);
+      }
+    );
+  };
 
   ngOnInit() {
     this.personInfoEditService.getPersonDetail(1).subscribe(result => {

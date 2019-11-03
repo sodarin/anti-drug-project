@@ -31,6 +31,7 @@ export class JudgementComponent implements OnInit {
 
   questionId: number;
 
+  btnDisable: boolean = false;
 
   submitForm(command: string = 'back'): void {
     let check: boolean = true;
@@ -108,7 +109,7 @@ export class JudgementComponent implements OnInit {
       metas: [null, []],
       categoryId: [1, []],
       difficulty: ['normal', []],
-      targetID: [null, []],
+      targetID: [1, []],
       courseSetId: [105, []],
       courseId: [105, []]
     });
@@ -116,6 +117,7 @@ export class JudgementComponent implements OnInit {
       this.questionId = res.id;
     })
     if (this.questionId != null) {
+      this.btnDisable = true;
       this._questionCreateService.getQuestionInfo(this.questionId).subscribe(res => {
         this.validateForm.patchValue({
           stem: res.data.stem,

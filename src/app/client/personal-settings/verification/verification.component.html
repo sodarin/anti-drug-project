@@ -46,16 +46,16 @@
     <div nz-col [nzSpan]="12">
       <nz-form-item>
         <nz-form-control nzErrorTip="请上传身份证正面照">
-          <nz-upload class="avatar-uploader" nzAction="身份证修改的api" nzName="avatar" nzListType="picture-card"
-            [nzShowUploadList]="false">
+          <nz-upload class="avatar-uploader" nzAction="/material/uploadUserFaceIdCard?userId=1"
+            nzListType="picture-card" [nzShowUploadList]="false">
             <div class="card-upload">
               <ng-container *ngIf="!cardFrontUrl">
                 <i [nzType]="'idcard'" nz-icon class="card-icon"></i>
                 <p>上传身份证正面照</p>
               </ng-container>
-              <img *ngIf="cardFrontUrl" [src]="cardFrontUrl" class="avatar" />
+              <img *ngIf="faceimg" [src]="faceimg" class="avatar" />
             </div>
-            <input type="hidden" formControlName="cardFrontUrl">
+            <input type="hidden" formControlName="faceimg">
           </nz-upload>
         </nz-form-control>
         <p>请上传jpg, gif, png格式的图片, 建议图片大小不超过2MB</p>
@@ -64,16 +64,16 @@
     <div nz-col [nzSpan]="12">
       <nz-form-item>
         <nz-form-control nzErrorTip="请上传身份证背面照">
-          <nz-upload class="avatar-uploader" nzAction="身份证修改的api" nzName="avatar" nzListType="picture-card"
-            [nzShowUploadList]="false">
+          <nz-upload class="avatar-uploader" nzAction="/material/uploadUserBackIdCard?userId=1"
+            nzListType="picture-card" [nzShowUploadList]="false">
             <div class="card-upload">
               <ng-container *ngIf="!cardFrontUrl">
                 <i [nzType]="'idcard'" nz-icon class="card-icon"></i>
                 <p>上传身份证反面照</p>
               </ng-container>
-              <img *ngIf="cardFrontUrl" [src]="cardFrontUrl" class="avatar" />
+              <img *ngIf="backimg" [src]="backimg" class="avatar" />
             </div>
-            <input type="hidden" formControlName="cardBackUrl">
+            <input type="hidden" formControlName="backimg">
           </nz-upload>
         </nz-form-control>
         <p>请上传jpg, gif, png格式的图片, 建议图片大小不超过2MB</p>

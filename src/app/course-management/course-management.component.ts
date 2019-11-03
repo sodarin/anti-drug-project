@@ -14,18 +14,25 @@ export class CourseManagementComponent implements OnInit {
   title: string;
   status: string;
   teachersName = [];
+  imgUrl: string = '';
+
+  api: string = 'http://202.199.13.114:9013';
 
   constructor(
     private router: Router,
     private routerInfo: ActivatedRoute,
-    private _courseBaseInfoEditService: CourseBaseInfoEditService) { }
-
-  ngOnInit() {
+    private _courseBaseInfoEditService: CourseBaseInfoEditService) {
     this.location = location
     this.routerInfo.params.subscribe(res => {
       this.courseId = res.id;
     });
-    this.getCourseInfo();
+    this._courseBaseInfoEditService.imgChange.subscribe(result => {
+      this.getCourseInfo();
+    })
+  }
+
+  ngOnInit() {
+
   }
   navigateByUrl(url: string) {
     this.router.navigateByUrl(url);
@@ -35,6 +42,7 @@ export class CourseManagementComponent implements OnInit {
     this._courseBaseInfoEditService.getCourseInfo(this.courseId).subscribe(res => {
       this.title = res.data.baseData.title;
       this.status = res.data.baseData.status;
+      this.imgUrl = res.data.baseData.cover
       this.teachersName = res.data.teachersName;
     })
   }

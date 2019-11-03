@@ -33,9 +33,11 @@ export class MultipleChoiceComponent implements OnInit {
   categoryId: any;
   courseId: any;
 
-  answer: Array<number> = [];
+  answer: Array<any> = [];
 
   questionId: number;
+
+  btnDisable: boolean = false;
 
 
   addField(e?: MouseEvent): void {
@@ -51,7 +53,6 @@ export class MultipleChoiceComponent implements OnInit {
     const control = {
       id,
       title: `选项${String.fromCharCode(id + 65)}`,
-      isSelected: false,
       uuid: this._questionCreateService.getId(),
     };
     const index = this.listOfChoiceControl.push(control);
@@ -189,11 +190,13 @@ export class MultipleChoiceComponent implements OnInit {
       this.questionId = res.id;
     })
     if (this.questionId != null) {
+      this.btnDisable = true;
       this._questionCreateService.getQuestionInfo(this.questionId).subscribe(res => {
         let choices: any[] = res.data.choices;
         choices.forEach(item => {
           this.patchField(item);
         })
+        this.answer = this.answer.concat(res.data.answer)
         this.validateForm.patchValue({
           stem: res.data.stem,
           score: res.data.score,
@@ -250,9 +253,11 @@ export class MultipleChoiceComponent implements OnInit {
   }
 
   check(id: number) {
-    this.answer.forEach(item => {
-      if (item == id) return true;
-    });
+    for (let i = 0; i < this.answer.length; i++) {
+      if (this.answer[i] == id) {
+        return true;
+      }
+    }
     return false;
   }
 }

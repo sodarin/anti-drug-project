@@ -33,6 +33,8 @@ export class SingleChoiceComponent implements OnInit {
 
   questionId: number;
 
+  btnDisable: boolean = false;
+
 
   addField(e?: MouseEvent): void {
     if (this.listOfChoiceControl.length == 10) {
@@ -181,6 +183,7 @@ export class SingleChoiceComponent implements OnInit {
       this.questionId = res.id;
     })
     if (this.questionId != null) {
+      this.btnDisable= true;
       this._questionCreateService.getQuestionInfo(this.questionId).subscribe(res => {
         this.validateForm.patchValue({
           stem: res.data.stem,

@@ -2,8 +2,8 @@
   <div class="header">
     <h1>试卷管理</h1>
     <div>
-      <button nz-button nzType="primary" (click)="navigateByUrl('/client/course/testpapercreate')"><i nz-icon
-          nzType="plus" nzTheme="outline"></i>创建试卷</button>
+      <button nz-button nzType="primary" (click)="navigateByUrl('/client/course/'+courseId+'/testpapercreate')"><i
+          nz-icon nzType="plus" nzTheme="outline"></i>创建试卷</button>
     </div>
   </div>
   <nz-divider></nz-divider>
@@ -41,7 +41,7 @@
 <ng-template #customTpl let-name>
   <nz-empty [nzNotFoundContent]="contentTpl">
     <ng-template #contentTpl>
-      <span> 还没有试卷,点击右上角按钮, <a (click)="navigateByUrl('/client/course/testpapercreate')">创建一个新试卷</a></span>
+      <span> 还没有试卷,点击右上角按钮, <a (click)="navigateByUrl('/client/course/'+courseId+'/testpapercreate')">创建一个新试卷</a></span>
     </ng-template>
   </nz-empty>
 </ng-template>

@@ -38,8 +38,9 @@ export class BaseInfoComponent implements OnInit {
 
     if (!(this.validateForm.controls.title.errors)) {
       const baseInfo = this.validateForm.value;
-      let tags = this.validateForm.controls.tags.value.join('|');
-      baseInfo.tags = tags;
+      let tags = '|';
+      tags = tags + this.validateForm.controls.tags.value.join('|');
+      baseInfo.tags = tags + "|";
       baseInfo.courseId = this.courseId;
       this._courseBaseInfoEditService.setBaseInfo(baseInfo).subscribe(result => {
         this.isLoading = false;
@@ -68,14 +69,14 @@ export class BaseInfoComponent implements OnInit {
       title: [null, [Validators.required]],
       subtitle: [null, [Validators.nullValidator]],
       serializeMode: [null, [Validators.nullValidator]],
-      tags: [['2'], [Validators.nullValidator]],
+      tags: [[""], [Validators.nullValidator]],
       categoryId: [null, [Validators.nullValidator]]
     });
     this.location = location;
     this.courseId = this._courseManagementUtilService.setCourseIdFrom(this.location);
     this.getAllTags();
     this.getAllCategories();
-    this.getCourseInfo();
+
   }
 
   getAllCategories() {
@@ -87,6 +88,7 @@ export class BaseInfoComponent implements OnInit {
   getAllTags() {
     this._courseBaseInfoEditService.getAllTags().subscribe(result => {
       this.listOfTag = result;
+      this.getCourseInfo();
     })
   }
 
@@ -96,10 +98,11 @@ export class BaseInfoComponent implements OnInit {
         title: res.data.baseData.title,
         subtitle: res.data.baseData.subtitle,
         serializeMode: res.data.baseData.serializemode,
-        tags: [].concat(res.data.baseData.tags.substr(1).split('|')),
+        tags: [].concat(res.data.baseData.tags.substr(1, res.data.baseData.tags.length - 2).split('|')),
         categoryId: res.data.baseData.categoryid
       })
     })
+
 
   }
 

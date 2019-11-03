@@ -1,10 +1,10 @@
 # Details
 
-Date : 2019-10-29 15:05:49
+Date : 2019-11-01 11:39:49
 
 Directory d:\vscode\angular\anti-drug-project\anti-drug-project\src\app\course-management
 
-Total : 117 files,  5317 codes, 49 comments, 813 blanks, all 6179 lines
+Total : 117 files,  5409 codes, 49 comments, 823 blanks, all 6281 lines
 
 [summary](results.md)
 
@@ -28,10 +28,10 @@ Total : 117 files,  5317 codes, 49 comments, 813 blanks, all 6179 lines
 | [detail-info\detail-info.component.less](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/detail-info/detail-info.component.less) | Less | 56 | 0 | 13 | 69 |
 | [detail-info\detail-info.component.spec.ts](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/detail-info/detail-info.component.spec.ts) | TypeScript | 20 | 0 | 6 | 26 |
 | [detail-info\detail-info.component.ts](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/detail-info/detail-info.component.ts) | TypeScript | 105 | 1 | 12 | 118 |
-| [file\file.component.html](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/file/file.component.html) | HTML | 56 | 0 | 2 | 58 |
+| [file\file.component.html](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/file/file.component.html) | HTML | 57 | 0 | 2 | 59 |
 | [file\file.component.less](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/file/file.component.less) | Less | 48 | 0 | 15 | 63 |
 | [file\file.component.spec.ts](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/file/file.component.spec.ts) | TypeScript | 20 | 0 | 6 | 26 |
-| [file\file.component.ts](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/file/file.component.ts) | TypeScript | 75 | 0 | 17 | 92 |
+| [file\file.component.ts](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/file/file.component.ts) | TypeScript | 106 | 0 | 20 | 126 |
 | [paper-marking\paper-marking.component.html](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/paper-marking/paper-marking.component.html) | HTML | 53 | 0 | 1 | 54 |
 | [paper-marking\paper-marking.component.less](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/paper-marking/paper-marking.component.less) | Less | 30 | 0 | 2 | 32 |
 | [paper-marking\paper-marking.component.spec.ts](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/paper-marking/paper-marking.component.spec.ts) | TypeScript | 20 | 0 | 6 | 26 |
@@ -60,22 +60,22 @@ Total : 117 files,  5317 codes, 49 comments, 813 blanks, all 6179 lines
 | [question\question-create\essay\essay.component.less](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/question/question-create/essay/essay.component.less) | Less | 35 | 0 | 10 | 45 |
 | [question\question-create\essay\essay.component.spec.ts](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/question/question-create/essay/essay.component.spec.ts) | TypeScript | 20 | 0 | 6 | 26 |
 | [question\question-create\essay\essay.component.ts](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/question/question-create/essay/essay.component.ts) | TypeScript | 37 | 4 | 10 | 51 |
-| [question\question-create\indefinite-choice\indefinite-choice.component.html](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/question/question-create/indefinite-choice/indefinite-choice.component.html) | HTML | 86 | 0 | 1 | 87 |
+| [question\question-create\indefinite-choice\indefinite-choice.component.html](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/question/question-create/indefinite-choice/indefinite-choice.component.html) | HTML | 87 | 0 | 1 | 88 |
 | [question\question-create\indefinite-choice\indefinite-choice.component.less](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/question/question-create/indefinite-choice/indefinite-choice.component.less) | Less | 35 | 0 | 10 | 45 |
 | [question\question-create\indefinite-choice\indefinite-choice.component.spec.ts](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/question/question-create/indefinite-choice/indefinite-choice.component.spec.ts) | TypeScript | 20 | 0 | 6 | 26 |
-| [question\question-create\indefinite-choice\indefinite-choice.component.ts](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/question/question-create/indefinite-choice/indefinite-choice.component.ts) | TypeScript | 209 | 6 | 25 | 240 |
+| [question\question-create\indefinite-choice\indefinite-choice.component.ts](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/question/question-create/indefinite-choice/indefinite-choice.component.ts) | TypeScript | 218 | 6 | 25 | 249 |
 | [question\question-create\judgement\judgement.component.html](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/question/question-create/judgement/judgement.component.html) | HTML | 76 | 0 | 1 | 77 |
 | [question\question-create\judgement\judgement.component.less](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/question/question-create/judgement/judgement.component.less) | Less | 35 | 0 | 10 | 45 |
 | [question\question-create\judgement\judgement.component.spec.ts](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/question/question-create/judgement/judgement.component.spec.ts) | TypeScript | 20 | 0 | 6 | 26 |
-| [question\question-create\judgement\judgement.component.ts](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/question/question-create/judgement/judgement.component.ts) | TypeScript | 116 | 4 | 13 | 133 |
+| [question\question-create\judgement\judgement.component.ts](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/question/question-create/judgement/judgement.component.ts) | TypeScript | 137 | 4 | 14 | 155 |
 | [question\question-create\material\material.component.html](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/question/question-create/material/material.component.html) | HTML | 69 | 0 | 1 | 70 |
 | [question\question-create\material\material.component.less](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/question/question-create/material/material.component.less) | Less | 38 | 0 | 11 | 49 |
 | [question\question-create\material\material.component.spec.ts](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/question/question-create/material/material.component.spec.ts) | TypeScript | 20 | 0 | 6 | 26 |
 | [question\question-create\material\material.component.ts](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/question/question-create/material/material.component.ts) | TypeScript | 36 | 4 | 9 | 49 |
-| [question\question-create\multiple-choice\multiple-choice.component.html](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/question/question-create/multiple-choice/multiple-choice.component.html) | HTML | 86 | 0 | 2 | 88 |
+| [question\question-create\multiple-choice\multiple-choice.component.html](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/question/question-create/multiple-choice/multiple-choice.component.html) | HTML | 87 | 0 | 2 | 89 |
 | [question\question-create\multiple-choice\multiple-choice.component.less](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/question/question-create/multiple-choice/multiple-choice.component.less) | Less | 35 | 0 | 10 | 45 |
 | [question\question-create\multiple-choice\multiple-choice.component.spec.ts](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/question/question-create/multiple-choice/multiple-choice.component.spec.ts) | TypeScript | 20 | 0 | 6 | 26 |
-| [question\question-create\multiple-choice\multiple-choice.component.ts](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/question/question-create/multiple-choice/multiple-choice.component.ts) | TypeScript | 210 | 6 | 24 | 240 |
+| [question\question-create\multiple-choice\multiple-choice.component.ts](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/question/question-create/multiple-choice/multiple-choice.component.ts) | TypeScript | 225 | 6 | 27 | 258 |
 | [question\question-create\question-create.component.html](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/question/question-create/question-create.component.html) | HTML | 5 | 0 | 1 | 6 |
 | [question\question-create\question-create.component.less](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/question/question-create/question-create.component.less) | Less | 13 | 0 | 3 | 16 |
 | [question\question-create\question-create.component.spec.ts](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/question/question-create/question-create.component.spec.ts) | TypeScript | 20 | 0 | 6 | 26 |
@@ -83,11 +83,11 @@ Total : 117 files,  5317 codes, 49 comments, 813 blanks, all 6179 lines
 | [question\question-create\single-choice\single-choice.component.html](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/question/question-create/single-choice/single-choice.component.html) | HTML | 91 | 0 | 2 | 93 |
 | [question\question-create\single-choice\single-choice.component.less](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/question/question-create/single-choice/single-choice.component.less) | Less | 35 | 0 | 10 | 45 |
 | [question\question-create\single-choice\single-choice.component.spec.ts](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/question/question-create/single-choice/single-choice.component.spec.ts) | TypeScript | 20 | 0 | 6 | 26 |
-| [question\question-create\single-choice\single-choice.component.ts](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/question/question-create/single-choice/single-choice.component.ts) | TypeScript | 206 | 5 | 20 | 231 |
+| [question\question-create\single-choice\single-choice.component.ts](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/question/question-create/single-choice/single-choice.component.ts) | TypeScript | 219 | 5 | 22 | 246 |
 | [question\question.component.html](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/question/question.component.html) | HTML | 88 | 0 | 1 | 89 |
 | [question\question.component.less](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/question/question.component.less) | Less | 44 | 0 | 12 | 56 |
 | [question\question.component.spec.ts](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/question/question.component.spec.ts) | TypeScript | 20 | 0 | 6 | 26 |
-| [question\question.component.ts](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/question/question.component.ts) | TypeScript | 98 | 0 | 25 | 123 |
+| [question\question.component.ts](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/question/question.component.ts) | TypeScript | 98 | 0 | 26 | 124 |
 | [student-management\formal-student-table\formal-student-table.component.html](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/student-management/formal-student-table/formal-student-table.component.html) | HTML | 69 | 0 | 4 | 73 |
 | [student-management\formal-student-table\formal-student-table.component.less](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/student-management/formal-student-table/formal-student-table.component.less) | Less | 22 | 0 | 3 | 25 |
 | [student-management\formal-student-table\formal-student-table.component.spec.ts](file:///d%3A/vscode/angular/anti-drug-project/anti-drug-project/src/app/course-management/student-management/formal-student-table/formal-student-table.component.spec.ts) | TypeScript | 20 | 0 | 6 | 26 |
