@@ -6,12 +6,20 @@ import { HttpResponse, HttpRequest, HttpClient } from '@angular/common/http';
 import { CourseManagementUtilService } from 'src/app/service/course-management-util/course-management-util.service';
 import { CourseFileService } from 'src/app/service/course-file/course-file.service';
 
+enum FILETYPE {
+  image = '图片',
+  video = '视频',
+  office = '文档',
+  other = '其他'
+}
 @Component({
   selector: 'app-file',
   templateUrl: './file.component.html',
   styleUrls: ['./file.component.less']
 })
 export class FileComponent implements OnInit {
+
+  filetype = FILETYPE;
 
   fileList: UploadFile[] = [];
 

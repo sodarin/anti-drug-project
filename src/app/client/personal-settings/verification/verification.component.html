@@ -47,9 +47,9 @@
       <nz-form-item>
         <nz-form-control nzErrorTip="请上传身份证正面照">
           <nz-upload class="avatar-uploader" nzAction="/material/uploadUserFaceIdCard?userId=1"
-            nzListType="picture-card" [nzShowUploadList]="false">
+            nzListType="picture-card" [nzShowUploadList]="false" [nzCustomRequest]="faceimgReq">
             <div class="card-upload">
-              <ng-container *ngIf="!cardFrontUrl">
+              <ng-container *ngIf="!faceimg">
                 <i [nzType]="'idcard'" nz-icon class="card-icon"></i>
                 <p>上传身份证正面照</p>
               </ng-container>
@@ -65,9 +65,9 @@
       <nz-form-item>
         <nz-form-control nzErrorTip="请上传身份证背面照">
           <nz-upload class="avatar-uploader" nzAction="/material/uploadUserBackIdCard?userId=1"
-            nzListType="picture-card" [nzShowUploadList]="false">
+            nzListType="picture-card" [nzShowUploadList]="false" [nzCustomRequest]="backimgReq">
             <div class="card-upload">
-              <ng-container *ngIf="!cardFrontUrl">
+              <ng-container *ngIf="!backimg">
                 <i [nzType]="'idcard'" nz-icon class="card-icon"></i>
                 <p>上传身份证反面照</p>
               </ng-container>

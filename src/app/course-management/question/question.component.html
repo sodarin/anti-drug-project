@@ -52,7 +52,7 @@
         <tr *ngFor="let data of questionListTable.data">
           <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="check(data.id)"></td>
           <td [innerHTML]="data.stem"></td>
-          <td>{{ data.type }}</td>
+          <td>{{ questiontype[data.type] }}</td>
           <td>{{ data.updatedTime * 1000 | date:'yyyy-MM-dd HH:mm:ss' }}</td>
           <td><a nz-popover [nzPopoverTitle]="popoverTitle" [nzPopoverContent]="popoverContent">预览</a>
             <ng-template #popoverTitle>

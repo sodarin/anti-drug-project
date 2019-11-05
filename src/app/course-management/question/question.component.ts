@@ -4,6 +4,12 @@ import { Router } from '@angular/router'
 import { CourseManagementUtilService } from 'src/app/service/course-management-util/course-management-util.service';
 import { QuestionCreateService } from 'src/app/service/question-create/question-create.service';
 
+enum QUSTIONTYPE {
+  single_choice = '单选题',
+  mutiple_choice = '多选题',
+  choice = '不定项选择题',
+  determine = '判断题'
+}
 @Component({
   selector: 'app-question',
   templateUrl: './question.component.html',
@@ -17,6 +23,8 @@ export class QuestionComponent implements OnInit {
     { label: "不定项选择题", value: "choice" },
     { label: "判断题", value: "determine" }
   ]
+
+  questiontype = QUSTIONTYPE;
 
 
   total: number = 0;
@@ -34,7 +42,7 @@ export class QuestionComponent implements OnInit {
 
   isAllChecked: boolean = false;
   mapOfCheckedId: { [key: string]: boolean } = {}
-  
+
   checkAll(value: boolean) {
     this.questionList.forEach((item: { id: string | number; }) => (this.mapOfCheckedId[item.id] = value));
   }

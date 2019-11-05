@@ -24,9 +24,11 @@
         <tr *ngFor="let data of fileListTable.data">
           <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.fileId]" (nzCheckedChange)="check(data.fileId)"></td>
           <td>{{ data.fileName }}</td>
-          <td>{{ data.fileType==null?'未知':data.fileType }}</td>
+          <td>
+            <nz-tag [nzColor]="'#2db7f5'">{{ filetype[data.fileType] }}</nz-tag>
+          </td>
           <td>{{ data.fileSize / 1000 > 1 ? data.fileSize/1000+'KB' : data.fileSize+'B' }}</td>
-          <td>{{ data.createdTime | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+          <td>{{ data.createdTime*1000 | date:'yyyy-MM-dd HH:mm:ss' }}</td>
           <td><a (click)="deleteUpload(data.fileId)">删除</a></td>
         </tr>
       </tbody>
