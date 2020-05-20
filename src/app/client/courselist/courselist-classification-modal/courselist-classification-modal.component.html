@@ -1,0 +1,30 @@
+<nz-layout>
+        <nz-layout>
+                <nz-sider [nzWidth]="100">
+                        <span>所在分类 :</span>
+                </nz-sider>
+                <nz-content>
+                        <nz-breadcrumb nzSeparator=">">
+                                <nz-breadcrumb-item *ngFor="let item of breadlist">
+                                        {{item}}
+                                </nz-breadcrumb-item>
+                        </nz-breadcrumb>
+                </nz-content>
+        </nz-layout>
+        <nz-content>
+                <nz-divider nzDashed="true"></nz-divider>
+        </nz-content>
+        <ng-container #tagtree></ng-container>       
+        <nz-layout>
+                <nz-sider [nzWidth]="100">
+                        <span></span>
+                </nz-sider>
+                <nz-content>
+                        <ul nz-menu nzMode="horizontal">
+                                <li nz-menu-item *ngFor="let item of common;let ind = index" [nzSelected] = "commonkey[ind]"  (click)="CommonClickTag(item.name)">
+                                        {{item.name}}
+                                </li>
+                        </ul>
+                </nz-content>
+        </nz-layout>
+</nz-layout>

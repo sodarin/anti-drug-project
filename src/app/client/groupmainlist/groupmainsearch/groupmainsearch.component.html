@@ -1,0 +1,37 @@
+<h2>所有小组</h2>
+<nz-divider></nz-divider>
+<nz-list
+  class="demo-loadmore-list"
+  [nzDataSource]="searchGroupList"
+  [nzItemLayout]="'horizontal'"
+  [nzRenderItem]="itemsearch"
+>
+
+
+  <ng-template #itemsearch let-itemsearch>
+    <nz-list-item
+    >
+      <nz-skeleton [nzAvatar]="false" [nzActive]="true" [nzTitle]="false"   [nzLoading]="itemsearch.loading">
+        <nz-list-item-meta
+          [nzTitle]="nzTitle"
+          [nzAvatar]="nzAvater"
+          [nzDescription]="nzDescription"
+
+        >
+          <ng-template #nzTitle>
+            <a (click)="navigateByUrl('/client/groupmainlist/' + itemsearch.groupId)" >{{itemsearch.groupTitle}} </a>
+          </ng-template>
+          <ng-template #nzAvater>
+            <nz-avatar [nzShape]="'square'" [nzSize]="64" nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png">  </nz-avatar>
+          </ng-template>
+          <ng-template #nzDescription>
+                    <span >
+                      <b> <i nz-icon nzType="team" ></i>{{itemsearch.groupMemberNum}}</b>
+                     <b> <i nz-icon nzType="message" ></i>{{itemsearch.groupThreadNum}}</b>
+                    </span>
+          </ng-template>
+        </nz-list-item-meta>
+      </nz-skeleton>
+    </nz-list-item>
+  </ng-template>
+</nz-list>

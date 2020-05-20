@@ -1,0 +1,15 @@
+<div class="page">
+<div class="header">
+  <div><span style="cursor: pointer;" (click)="navigatTo('client/course/'+ courseId)" > <i nz-icon nzType="left" nzTheme="outline"></i>返回课程</span> | 任务{{taskContentList.number}}：{{taskContentList.taskTitle}}</div>
+</div>
+<div class="content" [innerHTML]="taskContentList.taskContent" >
+
+</div>
+
+<div class="footer" >
+  <button nz-button nzType="primary" (click)="getNewTask(taskContentList.nextTaskId)"   *ngIf="taskContentList.status=='finish'">
+    <i nz-icon nzType="check" nzTheme="outline"></i>下一任务</button>
+  <button nz-button   *ngIf="taskContentList.status=='start'"  nzType="default">
+    <i nz-icon nzType="check" nzTheme="outline"></i>未学完</button>
+</div>
+</div>

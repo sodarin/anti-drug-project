@@ -1,0 +1,18 @@
+<nz-content>
+  <nz-list [nzDataSource]="data" [nzRenderItem]="item" [nzItemLayout]="'horizontal'" [nzHeader]="'学员动态'"
+    [nzLoading]="loading">
+    <ng-template #item let-item>
+      <nz-list-item>
+        <nz-list-item-meta [nzTitle]="nzTitle"
+           nzDescription=" "><!--nzAvatar="{{item.avatar}}"-->
+          <ng-template #nzTitle>
+            <!--<a (click)="navigateByUrl('/client/groupmainlist/' + item.id)"></a>-->
+            <!--<a (click)="navigateByUrl('/client/groupmainlist/' + item.id)"></a>-->
+             {{item.nickname}} ·
+             {{item.courseSetTitle}}
+          </ng-template>
+        </nz-list-item-meta>
+      </nz-list-item>
+    </ng-template>
+  </nz-list>
+</nz-content>

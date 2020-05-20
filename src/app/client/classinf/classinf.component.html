@@ -1,0 +1,123 @@
+<nz-layout>
+    <nz-content class="container-content">
+        <nz-layout>
+            <nz-header class="nz-header_inner">
+                <app-classinf-header [user]="user" [classid]="classid"></app-classinf-header>
+            </nz-header>
+            <nz-layout>
+                <nz-content>
+                    <nz-layout>
+                        <!-- <nz-content class="nz-content_notice">
+                            <nz-carousel nzAutoPlay>
+                                <div nz-carousel-content class="Notice" *ngFor="let index of noticeHistory">
+                                    <b>{{ index.content }}</b>
+                                </div>
+                            </nz-carousel>
+                        </nz-content>-->
+
+                        <!--courseinf-maintagpages-->
+                        <nz-content class="nz-content_inner">
+                            <!--     <button nz-button style="position: relative;margin: 5px;min-width:120px;float: right;"
+                                nzType="primary" (click)="showNoticeconfirm()">添加公告</button>-->
+                            <nz-tabset>
+                                <nz-tab nzTitle="介绍">
+                                    <app-classinf-introduces [classid]="classid"></app-classinf-introduces>
+                                </nz-tab>
+                                <nz-tab nzTitle="课程">
+                                    <app-classinf-courses [classid]="classid"></app-classinf-courses>
+                                </nz-tab>
+                                <nz-tab nzTitle="评价">
+                                    <app-classinf-comment [classid]="classid"></app-classinf-comment>
+                                </nz-tab>
+                                <nz-tab nzTitle="话题">
+                                    <app-classinf-topic [classid]="classid">
+                                    </app-classinf-topic>
+                                </nz-tab>
+                                <nz-tab nzTitle="笔记">
+                                    <app-classinf-notes [classid]="classid"></app-classinf-notes>
+                                </nz-tab>
+                                <nz-tab nzTitle="师资">
+                                    <app-classinf-teachers [classid]="classid"></app-classinf-teachers>
+                                </nz-tab>
+                            </nz-tabset>
+                        </nz-content>
+                    </nz-layout>
+                </nz-content>
+                <nz-sider [nzWidth]="280">
+                    <nz-layout>
+                        <nz-content *ngIf="user.isJoin==true" class="nz-content_inner2">
+                            <app-signin></app-signin>
+                        </nz-content>
+                        <nz-content class="nz-content_inner">
+                            <app-classinf-headmaster [classid]="classid"></app-classinf-headmaster>
+                        </nz-content>
+                        <!--courseinf-studentlist-->
+                        <nz-content class="nz-content_inner">
+                            <app-classinf-studentlist [classid]="classid"></app-classinf-studentlist>
+                        </nz-content>
+                        <app-courseinf-studentdynamics-modal [class_or_course_id]="classid" [type]="class">
+                        </app-courseinf-studentdynamics-modal>
+                    </nz-layout>
+                </nz-sider>
+            </nz-layout>
+        </nz-layout>
+    </nz-content>
+</nz-layout>
+<!--
+<nz-modal [(nzVisible)]="NoticeVisible" nzTitle="公告管理" (nzOnCancel)="handleCancel_Notice()" (nzOnOk)="handleOk_Notice()"
+    nzOkText='确定' nzCancelText='取消' [nzMaskClosable]="false">
+    <div style="margin-top:10px;">
+        <nz-tabset [(nzSelectedIndex)]="currentNoticetag">
+            <nz-tab nzTitle="添加公告">
+                <div>
+                    <b>发布时间:</b>&nbsp;&nbsp;&nbsp;
+                    <nz-date-picker [(ngModel)]="editorstartTime_date" (ngModelChange)="onChange($event)">
+                    </nz-date-picker>
+                    &nbsp;&nbsp;&nbsp;
+                    <nz-time-picker [(ngModel)]="editorstartTime_time" [nzDefaultOpenValue]="defaultOpenValue">
+                    </nz-time-picker>
+                </div>
+                <div style="margin-top:10px;">
+                    <b>结束时间:</b>&nbsp;&nbsp;&nbsp;
+                    <nz-date-picker [(ngModel)]="editorendTime_date" (ngModelChange)="onChange($event)">
+                    </nz-date-picker>
+                    &nbsp;&nbsp;&nbsp;
+                    <nz-time-picker [(ngModel)]="editorendTime_time" [nzDefaultOpenValue]="defaultOpenValue">
+                    </nz-time-picker>
+                </div>
+                <div style="margin-top:10px;">
+                    <b>公告内容:</b>
+                    <quill-editor [styles]="{height: '250px'}" placeholder="请添加资料内容" [(ngModel)]="editorContent">
+                    </quill-editor>
+                </div>
+                <div style="margin-top:10px;">
+                    <b>给学员发送通知:</b>&nbsp;&nbsp;&nbsp;
+                    <nz-switch [(ngModel)]="send_tostudent"></nz-switch>
+                </div>
+            </nz-tab>
+            <nz-tab nzTitle="历史公告">
+                <nz-collapse>
+                    <nz-collapse-panel *ngFor="let panel of noticeHistory; let ind = index" [nzHeader]="nzTitle"
+                        [nzActive]="panel.active" [nzDisabled]="panel.disabled" [nzExtra]="extraTpl">
+                        <p style="margin:0;">
+                            {{panel.content}}
+                        </p>
+                        <ng-template #nzTitle>
+                            [{{panel.teachplan}}]&nbsp;{{panel.content}}
+                            &nbsp;&nbsp;&nbsp;{{panel.starttime}}
+                        </ng-template>
+                        <ng-template #extraTpl>
+                            <i nz-icon class="editicon" nzType="edit" nzTheme="fill"
+                                (click)="editNotice(ind)"></i>&nbsp;&nbsp;
+                            <i nz-icon class="editicon" nzType="delete" nzTheme="fill"
+                                (click)="showDeleteNoticeconfirm()"></i>
+                        </ng-template>
+                    </nz-collapse-panel>
+                </nz-collapse>
+
+            </nz-tab>
+        </nz-tabset>
+    </div>
+</nz-modal>
+
+-->

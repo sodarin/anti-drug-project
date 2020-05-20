@@ -1,0 +1,7 @@
+<ul *ngFor="let introduce of introduces">
+    <li style="list-style: none;margin-right: 10px;"><i nz-icon nzType="caret-right"
+            nzTheme="fill"></i><b>{{introduce.subtitle}}</b></li>
+    <ul>
+        <li style="list-style: none;margin-right: 10px;"  [innerHTML]="introduce.summary"></li>
+    </ul>
+</ul>

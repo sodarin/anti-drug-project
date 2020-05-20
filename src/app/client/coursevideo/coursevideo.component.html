@@ -1,0 +1,156 @@
+<nz-content style="padding-top: 15px" nzType="flex" nzJustify="center" nz-row>
+  <div nz-col nzSpan="16">
+    <nz-breadcrumb style="margin-bottom: 20px;">
+      <label style="margin-right: 10px;padding-top: 8px;" class="labelClick"
+        [routerLink]="['/client/courseinf/', courseId]">
+        <i nz-icon nzType="left" style="margin-right: 5px;padding-top: 8px;"></i>返回课程
+      </label>
+      <label style="border-left: 1px solid;border-color: darkgray; padding-left: 15px;color: darkgrey;">
+        {{ taskName }}
+      </label>
+
+      <div style="float: right;">
+        <button nz-button nzSize="size" nzType="default" class="cardButton" (click)="openCatalog()">
+          <i nz-icon nzType="menu" nzTheme="outline"></i>
+          目录
+        </button>
+        <nz-drawer [nzVisible]="catalog_visible" nzPlacement="right" nzClosable="false" nzMask="false"
+          [nzBodyStyle]="{ 'padding': '0' ,height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
+          nzWidth="16%">
+          <ul style="padding: 0px;">
+            <li *ngFor="let task of taskList" [ngClass]="{'liSelected':taskName == task.taskName}">
+              <span nz-col nzSpan="4">
+                <i nz-icon nzType="book" nzTheme="outline"></i>
+              </span>
+              <span nz-col nzSpan="20">
+                {{ task.taskName }}
+              </span>
+            </li>
+          </ul>
+          <div class="footer">
+            <button nz-button nzType="primary" nzSize="default" (click)="closeCatalog()" class="ant-btn"
+              style="margin-right: 8px;"><span>关闭</span></button>
+          </div>
+        </nz-drawer>
+
+        <button nz-button nzSize="size" nzType="default" class="cardButton" (click)="openNote()">
+          <i nz-icon nzType="edit" nzTheme="outline"></i>
+          笔记
+        </button>
+        <nz-drawer [nzVisible]="note_visible" nzPlacement="right" nzClosable="false" nzMask="false"
+          [nzBodyStyle]="{ 'padding': '0' ,height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
+          nzWidth="16%">
+          <form style="height: calc(100% - 55px)" [formGroup]="noteForm">
+
+            <quill-editor formControlName="noteContent" placeholder="请输入内容...">
+              <div quill-editor-toolbar>
+                <button class="ql-bold"></button>
+                <button class="ql-italic"></button>
+                <button class="ql-underline"></button>
+                <button class="ql-strike"></button>
+                <select class="ql-color"></select>
+                <select class="ql-background"></select>
+                <button class="ql-list" value="ordered"></button>
+
+                <select class="ql-font">
+                  <option selected></option>
+                  <option value="serif"></option>
+                  <option value="monospace"></option>
+                </select>
+                <select class="ql-size">
+                  <option value="small"></option>
+                  <option selected></option>
+                  <option value="large"></option>
+                  <option value="huge"></option>
+                </select>
+                <button class="ql-list" value="bullet"></button>
+                <select class="ql-align">
+                  <option selected></option>
+                  <option value="center"></option>
+                  <option value="right"></option>
+                  <option value="justify"></option>
+                </select>
+                <button class="ql-link"></button>
+                <button class="ql-image"></button>
+
+              </div>
+            </quill-editor>
+            <div class="footer">
+              <button nz-button nzType="default" nzSize="default" (click)="closeNote()" class="ant-btn"
+                style="margin-right: 8px;"><span>关闭</span></button>
+              <button nz-button nzType="primary" nzSize="default" (click)="noteSubmit(noteForm)" class="ant-btn"
+                style="margin-right: 8px;" [disabled]="!noteForm.valid"><span>提交</span></button>
+            </div>
+          </form>
+        </nz-drawer>
+
+        <button nz-button nzSize="size" nzType="default" class="cardButton" (click)="openQuestion()">
+          <i nz-icon nzType="question-circle" nzTheme="fill"></i>
+          问答
+        </button>
+        <nz-drawer [nzVisible]="question_visible" nzPlacement="right" nzClosable="false" nzMask="false"
+          [nzBodyStyle]="{ 'padding': '0' ,height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
+          nzWidth="16%">
+          <form style="height: calc(100% - 55px)" [formGroup]="questionForm">
+            <input nz-input placeholder="问题标题" style="border-radius: 0px;margin-bottom: 5px;"
+              formControlName="questionTitle" />
+            <quill-editor formControlName="questionContent" placeholder="请输入内容...">
+              <div quill-editor-toolbar>
+                <button class="ql-bold"></button>
+                <button class="ql-italic"></button>
+                <button class="ql-underline"></button>
+                <button class="ql-strike"></button>
+                <select class="ql-color"></select>
+                <select class="ql-background"></select>
+                <button class="ql-list" value="ordered"></button>
+
+                <select class="ql-font">
+                  <option selected></option>
+                  <option value="serif"></option>
+                  <option value="monospace"></option>
+                </select>
+                <select class="ql-size">
+                  <option value="small"></option>
+                  <option selected></option>
+                  <option value="large"></option>
+                  <option value="huge"></option>
+                </select>
+                <button class="ql-list" value="bullet"></button>
+                <select class="ql-align">
+                  <option selected></option>
+                  <option value="center"></option>
+                  <option value="right"></option>
+                  <option value="justify"></option>
+                </select>
+                <button class="ql-link"></button>
+                <button class="ql-image"></button>
+              </div>
+            </quill-editor>
+            <div class="footer">
+              <button nz-button nzType="default" nzSize="default" (click)="closeQuestion()" class="ant-btn"
+                style="margin-right: 8px;"><span>关闭</span></button>
+              <button nz-button nzType="primary" tnzSize="default" (click)="questionSubmit(questionForm)" class="ant-btn" style="margin-right: 8px;" [disabled]="!questionForm.valid">
+                <span>提交</span>
+              </button>
+            </div>
+          </form>
+
+
+        </nz-drawer>
+
+      </div>
+    </nz-breadcrumb>
+    <div class="video-content" [(ngModel)]="name" >
+      <app-video-player></app-video-player>
+    </div>
+
+    <div style="float: right;margin-bottom: 10px;">
+      <label nz-popover nzPopoverTitle="满足以下条件" nzPopoverContent="学习到最后"
+        style="border: none;box-shadow: none;margin-right: 8px;" class="labelClick">
+        <i nz-icon nzType="question-circle" nzTheme="outline"></i>
+        任务完成条件
+      </label>
+      <!-- <app-finish-video-modal [taskName]="taskName"></app-finish-video-modal> -->
+    </div>
+  </div>
+</nz-content>

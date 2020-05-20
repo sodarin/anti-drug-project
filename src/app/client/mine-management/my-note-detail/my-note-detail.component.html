@@ -1,0 +1,41 @@
+<div class="setting-page">
+  <div class="page-header">
+    <h2>我的笔记</h2>
+  </div>
+  <nz-divider></nz-divider>
+  <div class="page-content ">
+    <nz-list  [nzDataSource]="noteDetailList" [nzRenderItem]="item" [nzItemLayout]="'horizontal'" [nzLoading]="loading">
+      <ng-template #item let-item>
+        <nz-list-item >
+          <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="nzDesrc" >
+            <ng-template #nzTitle>
+              <div style="display: flex; flex-direction: row; justify-content: space-between;font-size: medium ">
+              《{{ item.courseTitle }}》的笔记
+                <div style="display:flex; margin-right: 2%">
+              <button nz-button nzSize="samll" nzType="default" (click)="navigatTo('client/mine/mynote')">返回</button>
+                </div>
+              </div>
+            </ng-template>
+          </nz-list-item-meta>
+        </nz-list-item>
+      </ng-template>
+    </nz-list>
+    <nz-collapse [nzBordered]="false">
+              <nz-collapse-panel *ngFor="let panel of noteDetailList" (dblclick)="navigatTo('client/course/'+panel.courseId+'/task/'+ panel.taskId+'/show')" [nzHeader]= "nzTitle" [nzActive]="false"  style="cursor: pointer;">
+                <ng-template #nzTitle >
+                    {{panel.taskTitle}}
+                </ng-template>
+
+                <div style="display: flex; flex-direction: row; justify-content: space-between" >
+                  {{ panel.courseTitle}}
+                  <div class="num" >
+                    共{{panel.length}}字
+                  </div>
+                </div>
+                <div [innerHTML]="panel.content"  style="cursor: pointer;" ></div>
+              </nz-collapse-panel>
+            </nz-collapse>
+
+
+  </div>
+</div>

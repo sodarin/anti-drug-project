@@ -1,0 +1,22 @@
+<nz-card style="width:100%;padding: 0%;" [nzTitle]="extraTemplate">
+        <button nz-button nzType="primary" style="width:100%;height:70px;font-size: 30px;"
+            nz-popover [nzContent]="datecontent">签到</button>
+
+        <ng-template #datecontent>
+            <nz-calendar nzCard (nzSelectChange)="onValueChange($event)"
+                (nzPanelChange)="onPanelChange($event)"></nz-calendar>
+            <div
+                style="border-style: solid;border: radius 10px;padding: 10px;border-color:lightgray;">
+                <p style="height: 20px;">签到排名：今日第1个签到</p>
+                <p style="height: 20px;">今日签到人数：1</p>
+                <p style="height: 20px;">连续签到：1天</p>
+            </div>
+        </ng-template>
+    </nz-card>
+    <ng-template #extraTemplate>
+        <div style="text-align: center;height: 70px;">
+            <i nz-icon nzType="calendar" nzTheme="outline" class="icon_big"></i>
+            <p style="font-size: 25px;font-weight: 600;">{{ CurrentDate | date: 'yyyy年MM月dd日' }}
+            </p>
+        </div>
+    </ng-template>

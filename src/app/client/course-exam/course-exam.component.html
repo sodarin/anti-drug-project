@@ -1,0 +1,214 @@
+<div class="exam-layout">
+  <div class="outer-layout">
+    <div class="header">
+      <a class="back" (click)="navigateByUrl()"><i nz-icon nzType="left" nzTheme="outline"></i>{{'返回课程'}}</a>
+      <span>{{'任务9-2: 阶段性测评'}}</span>
+    </div>
+    <div class="inner-layout">
+      <div class="main">
+        <div class="content">
+          <div class="exam-header">
+            <div class="header-up">
+              <h1 class="header-title">{{'阶段性测评'}}</h1>
+              <nz-tag [nzColor]="'#2db7f5'" class="header-status">{{'答题中'}}</nz-tag>
+            </div>
+            <div class="header-bottom">
+              <p>{{'阶段性测评'}}</p>
+            </div>
+          </div>
+          <form nz-form>
+            <div class="container">
+              <div class="container-heading">
+                <strong style="margin-right:5px;">{{'单选题'}}</strong>
+                <small>共{{10}}题,共{{50}}分</small>
+              </div>
+              <div class="container-body">
+                <div *ngFor="let question of singleChoices" class="exam-question">
+                  <div class="exam-question-body">
+                    <div class="body-up">
+                      <div class="question-seq">
+                        <div class="seq">{{1}}</div>
+                        <nz-tag style="font-size: 12px;">{{question.score}}分</nz-tag>
+                      </div>
+                      <div class="question-stem">{{question.stem}}</div>
+                    </div>
+                    <ul class="question-choices">
+                      <li *ngFor="let choice of question.metas.choices" class="question-choice-item">{{choice}}</li>
+                    </ul>
+                  </div>
+                  <div class="exam-question-footer">
+                    <div class="input-question-choice">
+                      <nz-form-control>
+                        <nz-radio-group>
+                          <label nz-radio nzValue="0">A</label>
+                          <label nz-radio nzValue="1">B</label>
+                        </nz-radio-group>
+                      </nz-form-control>
+                    </div>
+                    <div class="question-mark"><a><i nz-icon nzType="snippets" nzTheme="outline"></i>标记</a></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="container">
+              <div class="container-heading">
+                <strong style="margin-right:5px;">{{'多选题'}}</strong>
+                <small>共{{10}}题,共{{50}}分,漏选得{{20}}分</small>
+              </div>
+              <div class="container-body">
+                <div class="exam-question">
+                  <div class="exam-question-body">
+                    <div class="body-up">
+                      <div class="question-seq">
+                        <div class="seq">{{1}}</div>
+                        <nz-tag style="font-size: 12px;">{{'5.0'}}分</nz-tag>
+                      </div>
+                      <div class="question-stem">{{'年轻人吸毒的原因'}}</div>
+                    </div>
+                    <ul class="question-choices">
+                      <li class="question-choice-item">A.盲目好奇</li>
+                      <li class="question-choice-item">B.赶时髦</li>
+                    </ul>
+                  </div>
+                  <div class="exam-question-footer">
+                    <div class="input-question-choice">
+                      <nz-form-control>
+                        <nz-checkbox-wrapper>
+                          <label nz-checkbox nzValue="A">A</label>
+                          <label nz-checkbox nzValue="B">B</label>
+                        </nz-checkbox-wrapper>
+                      </nz-form-control>
+                    </div>
+                    <div class="question-mark"><a><i nz-icon nzType="snippets" nzTheme="outline"></i>标记</a></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="container">
+              <div class="container-heading">
+                <strong style="margin-right:5px;">{{'不定项选择题'}}</strong>
+                <small>共{{10}}题,共{{50}}分</small>
+              </div>
+              <div class="container-body">
+                <div class="exam-question">
+                  <div class="exam-question-body">
+                    <div class="body-up">
+                      <div class="question-seq">
+                        <div class="seq">{{1}}</div>
+                        <nz-tag style="font-size: 12px;">{{'5.0'}}分</nz-tag>
+                      </div>
+                      <div class="question-stem">{{'如何防止吸毒'}}</div>
+                    </div>
+                    <ul class="question-choices">
+                      <li class="question-choice-item">A.积极学习毒品预防知识</li>
+                      <li class="question-choice-item">B.慎重交友</li>
+                    </ul>
+                  </div>
+                  <div class="exam-question-footer">
+                    <div class="input-question-choice">
+                      <nz-form-control>
+                        <nz-radio-group>
+                          <nz-checkbox-wrapper>
+                            <label nz-checkbox nzValue="A">A</label>
+                            <label nz-checkbox nzValue="B">B</label>
+                          </nz-checkbox-wrapper>
+                        </nz-radio-group>
+                      </nz-form-control>
+                    </div>
+                    <div class="question-mark"><a><i nz-icon nzType="snippets" nzTheme="outline"></i>标记</a></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="container">
+              <div class="container-heading">
+                <strong style="margin-right:5px;">{{'判断题'}}</strong>
+                <small>共{{10}}题,共{{50}}分</small>
+              </div>
+              <div class="container-body">
+                <div class="exam-question">
+                  <div class="exam-question-body">
+                    <div class="body-up">
+                      <div class="question-seq">
+                        <div class="seq">{{1}}</div>
+                        <nz-tag style="font-size: 12px;">{{'5.0'}}分</nz-tag>
+                      </div>
+                      <div class="question-stem">{{'香烟含有尼古丁，但是不会上瘾'}}</div>
+                    </div>
+                  </div>
+                  <div class="exam-question-footer">
+                    <div class="input-question-choice">
+                      <nz-form-control>
+                        <nz-radio-group>
+                          <label nz-radio nzValue="A">正确</label>
+                          <label nz-radio nzValue="B">错误</label>
+                        </nz-radio-group>
+                      </nz-form-control>
+                    </div>
+                    <div class="question-mark"><a><i nz-icon nzType="snippets" nzTheme="outline"></i>标记</a></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="timer-container">
+          <div class="exam-timer">
+            <div style="font-size: 16px;"><br>倒计时:{{hour}}:{{minute}}:{{second}}</div>
+            <div><button nz-button nzType="primary" nzSize="large"><i nz-icon nzType="pause"
+                  nzTheme="outline"></i></button></div>
+          </div>
+          <div class="container">
+            <div class="card-heading"><span>答题卡</span>
+              <div><a><i nz-icon nzType="info-circle" nzTheme="outline" nz-popover [nzPopoverContent]="contentTmpl"
+                    nzPopoverPlacement="bottom"></i></a></div>
+            </div>
+            <ng-template #contentTmpl>
+              本次考试共16题,总分为100分,及格<br>
+              分为60分,请在15分钟内作答。
+            </ng-template>
+            <div class="exam-card">
+              <p>单选题</p>
+              <div class="questions-layout">
+                <div class="index">1</div>
+                <div class="index">2</div>
+                <div class="index">3</div>
+                <div class="index">4</div>
+                <div class="index">5</div>
+                <div class="index">6</div>
+                <div class="index">7</div>
+                <div class="index">8</div>
+                <div class="index">9</div>
+                <div class="index">10</div>
+              </div>
+              <p>多选题</p>
+              <div class="questions-layout">
+                <div class="index">1</div>
+                <div class="index">2</div>
+                <div class="index">3</div>
+                <div class="index">4</div>
+              </div>
+              <p>不定项选择题</p>
+              <div class="questions-layout">
+                <div class="index">1</div>
+                <div class="index">2</div>
+                <div class="index">3</div>
+              </div>
+              <p>判断题</p>
+              <div class="questions-layout">
+                <div class="index">1</div>
+                <div class="index">2</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer"><a class="help-info" nz-popover [nzPopoverContent]="helptTmpl" nzPopoverPlacement="top"><i
+          nz-icon nzType="question-circle" nzTheme="fill"></i>任务完成条件</a></div>
+  </div>
+  <ng-template #helptTmpl>
+    满足以下条件:<br>
+    考试分数达到60分
+  </ng-template>
+</div>

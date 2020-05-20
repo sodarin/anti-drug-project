@@ -1,0 +1,68 @@
+<nz-list [nzDataSource]="studentdata" [nzHeader]="'最新学员'" [nzRenderItem]="studentitem"
+    [nzGrid]="{ gutter: 16, xs: 6, sm: 6, md: 6, lg: 6, xl: 6 }" [nzLoading]="loading">
+    <ng-template #studentitem let-studentitem>
+        <nz-list-item>
+            <nz-list-item-meta [nzTitle]="nzTitle">
+                <ng-template #nzTitle>
+                    <a (click)="navigateByUrl('/client/userpage/'+studentitem.id)">
+                        <img class="round_icon" nz-popover [nzTitle]="titleTemplate" [nzContent]="contentTemplate"
+                            src="{{studentitem.smallavatar}}">
+                    </a>
+                </ng-template>
+            </nz-list-item-meta>
+        </nz-list-item>
+        <ng-template #titleTemplate>
+            <div class="popovercard_header">
+                <img class="round_icon" src="{{studentitem.smallavatar}}">
+                <div style="display: inline-block;padding: 0;margin-left: 10px;">
+                    <p class="popovercard_p">{{studentitem.nickname}}</p>
+                    <p class="popovercard_p"> </p>
+                </div>
+                <div style="display: inline-block;padding: 0;margin-left: 70px;">
+                    <button *ngIf="studentitem.isfollowing==false" nz-button class="popovercard_button" nzType="primary"
+                        (click)="follow_submit(studentitem.id)">关注</button>
+                    <button *ngIf="studentitem.isfollowing==true" nz-button class="popovercard_button" nzType="primary"
+                        (click)="del_follow_submit(studentitem.id)">取消关注</button>
+                    <button nz-button class="popovercard_button" (click)="showPrivateletterfirm(studentitem.id)"
+                        nzType="default">私信</button>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template #contentTemplate>
+            <div class="popovercard_content">
+                <div style="padding: 10px;min-height:50px;">
+                    <p *ngIf="studentitem.signature!=null">{{studentitem.signature}}</p>
+                    <p *ngIf="studentitem.signature==null">暂无签名</p>
+                </div>
+                <nz-divider style="margin:0;margin-bottom:10px;"></nz-divider>
+                <div>
+                    <table>
+                        <tr>
+                            <td class="popovercard_table">
+                                在学&nbsp;{{studentitem.learningNum}}</td>
+                            <nz-divider nzType="vertical" style="height: 50px;">
+                            </nz-divider>
+                            <td class="popovercard_table">关注&nbsp;{{studentitem.followNUm}}
+                            </td>
+                            <nz-divider nzType="vertical" style="height: 50px;">
+                            </nz-divider>
+                            <td class="popovercard_table">粉丝&nbsp;{{studentitem.fanNum}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </ng-template>
+    </ng-template>
+
+</nz-list>
+
+
+<nz-modal [(nzVisible)]="PrivatelettertVisible" nzTitle="发送私信" (nzOnCancel)="handleCancel_Privateletter()"
+    (nzOnOk)="handleOk_Privateletter()" nzOkText='发送' nzCancelText='取消' [nzMaskClosable]="false">
+    <div>
+        <input nz-input placeholder="请输入标题" [(ngModel)]="PrivatelettertTitle" />
+    </div>
+    <div style="margin-top:10px;">
+        <textarea rows="4" nz-input [(ngModel)]="PrivateletterContent" placeholder="请输入内容"></textarea>
+    </div>
+</nz-modal>

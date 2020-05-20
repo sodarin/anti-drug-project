@@ -1,0 +1,41 @@
+<div class="listmenu">
+        <nz-dropdown style="margin: 5px;">
+            <a nz-dropdown> 排序 <i nz-icon type="down"></i> </a>
+            <ul nz-menu nzSelectable>
+                <li nz-menu-item (click)="changeOrder_Note('New')">
+                    最新笔记
+                </li>
+                <li nz-menu-item (click)="changeOrder_Note('Praise')">
+                    点赞最多
+                </li>
+            </ul>
+        </nz-dropdown>
+    </div>
+    <nz-divider style="margin-top:5px;"></nz-divider>
+<nz-list [nzDataSource]="notes" [nzRenderItem]="notesitem"
+[nzItemLayout]="'horizontal'">
+<ng-template #notesitem let-notesitem>
+    <nz-list-item [nzActions]="[editAction, moreAction]">
+        <ng-template #editAction><i nz-icon nzType="like"
+                nzTheme="fill"></i>{{notesitem.likeNum}}</ng-template>
+        <ng-template #moreAction>
+            <!--<i nz-icon nzType="dislike"
+                nzTheme="fill"></i>（数量）-->
+        </ng-template>
+        <nz-list-item-meta [nzTitle]="nzTitle"
+            nzAvatar="{{notesitem.userSmallAvatar}}"
+            nzDescription="{{notesitem.userName}} · {{notesitem.time}} · {{notesitem.taskName}}">
+            <ng-template #nzTitle>
+                <div [innerHTML]="notesitem.content"></div>
+                <!-- <a href="https://ng.ant.design">{{ topicitem.title }}</a>-->
+            </ng-template>
+        </nz-list-item-meta>
+    </nz-list-item>
+</ng-template>
+</nz-list>
+<nz-divider></nz-divider>
+<div class="pagination">
+    <nz-pagination [(nzPageIndex)]="current_notespage" [nzTotal]="total_notes_page"
+        (nzPageIndexChange)="onPageChange_note($event)">
+    </nz-pagination>
+</div>

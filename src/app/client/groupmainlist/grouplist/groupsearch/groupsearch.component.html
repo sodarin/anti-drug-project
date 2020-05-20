@@ -1,0 +1,97 @@
+<div class="back">
+  <nz-divider></nz-divider>
+<h2 style="display: flex; flex-direction: row; justify-content: space-between" class="header">
+  <span>搜索</span>
+  <div style="display:flex; margin-right: 2%">
+    <input class="name-containing-input" nz-input placeholder="组内搜索" [(ngModel)]="leader" />
+    <button (click)="filterTopic()" nz-button nzType="primary" class="search-button"><i nz-icon nzType="search"></i>搜索</button>
+  </div>
+</h2>
+<nz-divider></nz-divider>
+<div class="search">
+  <nz-list
+  class="demo-loadmore-list"
+  [nzDataSource]="ThreadList"
+  [nzItemLayout]="'horizontal'"
+  [nzRenderItem]="itemthread"
+  [nzLoading]="loading"
+>
+
+
+  <ng-template #itemthread let-itemthread>
+    <nz-list-item
+    >
+      <nz-skeleton [nzAvatar]="false" [nzActive]="true" [nzTitle]="false"   [nzLoading]="itemthread.loading">
+        <nz-list-item-meta
+          [nzTitle]="nzTitle"
+          [nzAvatar]="nzAvater"
+          [nzDescription]="nzDescription"
+
+
+        >
+          <ng-template #nzTitle>
+            <div ><a (click)="navigateByUrl('/client/groupmainlist/' +this.groupId+'/groupthread/' + itemthread?.threadID)">{{itemthread?.threadTitle}}</a> <span *ngIf="itemthread?.isStick==1"><nz-tag nzMode="checkable" [nzChecked]="true" >置顶</nz-tag></span>
+             <span *ngIf="itemthread?.isElite==1"><nz-tag nzMode="checkable" [nzChecked]="true"  nzColor="red">精华</nz-tag></span> </div>
+          </ng-template>
+          <ng-template #nzAvater>
+            <nz-avatar [nzShape]="'square'" [nzSize]="64" [nzText]="itemthread?.postNum + '\n' + '回复'" >
+
+            </nz-avatar>
+          </ng-template>
+          <ng-template #nzDescription>
+            <span ><nz-avatar nzSize="small" nzIcon="user"
+                              nz-popover
+                              [nzPopoverTitle]="tem"
+                              [nzPopoverContent]="content"
+                              (mouseenter)="getUserDetail(itemthread.userId)"
+            >
+               <ng-template #tem>
+                    <nz-card style="width:300px;"  [nzActions]="[ actionEdit,actionShow]">
+        <nz-card-meta
+          [nzTitle]="nzTitle"
+          [nzDescription]="nzDescription"
+          [nzAvatar]="avatarTemplate"
+        ></nz-card-meta>
+      </nz-card>
+      <ng-template #nzTitle>
+        <div>{{detail?.nickName}}
+          <span *ngIf="detail?.id!=userId">
+          <span *ngIf="isfocus==false">
+                      <button nzSize="small" style="width: 40px; height: 20px; font-size: 12px; float: right;" nz-button class="onebutton" nzType="primary"  (click)="focus()" >关注</button>
+                    </span>
+                    <span *ngIf="isfocus==true">
+                      <button nzSize="small" style="width: 40px; height: 20px; font-size: 12px; float: right;" nz-button class="onebutton"  (click)="cancelfocus()" >已关注</button>
+                  </span>
+        </span></div>
+      </ng-template>
+      <ng-template #nzDescription>
+        <div>{{detail?.job}} <span *ngIf="detail?.id!=userId"><button nz-button style="width: 40px; height: 20px; font-size: 12px; float: right;" nzSize="small" nzType="primary" (click)="message()">私信</button></span></div>
+       </ng-template>
+      <ng-template #avatarTemplate>
+        <nz-avatar nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png">
+          <!--ng-template #member>
+            <nz-avatar>{{image}}</nz-avatar>
+          </ng-template-->
+        </nz-avatar>
+      </ng-template>
+      <ng-template #actionEdit>
+        <a>{{detail?.followedNum}}</a>
+        <p>关注</p>
+      </ng-template>
+                <ng-template #actionShow>
+        <a>{{detail?.fansNum}}</a>
+        <p>粉丝</p>
+      </ng-template>
+                  </ng-template>
+              <ng-template #content>
+                <a style="color: gray">{{detail?.signature}}</a>
+              </ng-template>
+            </nz-avatar><b >{{itemthread?.userName}}发起了话题 · {{itemthread?.createdTime}} · 最后回复{{itemthread?.lastPostMemberName}} · {{itemthread?.lastPostTime}}</b></span>
+          </ng-template>
+        </nz-list-item-meta>
+      </nz-skeleton>
+    </nz-list-item>
+  </ng-template>
+</nz-list>
+</div>
+</div>

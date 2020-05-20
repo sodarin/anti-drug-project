@@ -1,0 +1,86 @@
+<ng-container #commentcontainer [ngTemplateOutlet]="commentlisttemplate">
+</ng-container>
+<ng-template #commentlisttemplate>
+    <div class="listmenu">
+        <div style="position: relative;float: right;margin:5px;">
+            <button nz-button nzType="primary" (click)="write_comment()">评价/重新评价</button>
+        </div>
+    </div>
+    <nz-divider style="margin-top:5px;"></nz-divider>
+
+    <nz-list [nzDataSource]="comments" [nzRenderItem]="commentsitem" [nzItemLayout]="'horizontal'">
+        <ng-template #commentsitem let-commentsitem>
+            <nz-comment [nzAuthor]="commentsitem.nickName" [nzDatetime]="commentsitem.createdTimeString">
+               <!-- <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="commentsitem.avatar">
+                </nz-avatar>-->
+                <nz-comment-content>
+                    <div [innerHTML]="commentsitem.content"></div>
+                    <nz-rate [ngModel]="commentsitem.rating" nzDisabled></nz-rate>
+                </nz-comment-content>
+                <nz-comment-action><a (click)="write_response_comment(commentsitem.id)">回复</a></nz-comment-action>
+            </nz-comment>
+        </ng-template>
+    </nz-list>
+    <nz-divider></nz-divider>
+    <div class="pagination">
+        <nz-pagination [(nzPageIndex)]="current_comment_page" [nzTotal]="total_comment_pages"
+            (nzPageIndexChange)="onPageChange_comments($event)"></nz-pagination>
+    </div>
+</ng-template>
+
+<ng-template #writecomment>
+    <div class="editarea">
+        <span><b>请打分:</b>&nbsp;&nbsp;</span>
+        <nz-rate [(ngModel)]="commentnumber"></nz-rate>
+    </div>
+
+    <div class="editarea">
+        <quill-editor [styles]="{height: '250px'}" placeholder="请输入评价内容"
+            [(ngModel)]="editorContent"></quill-editor>
+    </div>
+
+    <div class="editarea">
+        <button nz-button style="margin: 5px;min-width:120px;float: right;"
+            nzType="primary" (click)="comment_submit()">提交</button>
+        <button nz-button style="margin: 5px;min-width:120px;float: right;"
+            nzType="default" (click)="return_comment()">返回</button>
+    </div>
+    <nz-divider></nz-divider>
+</ng-template>
+
+<ng-template #responsecommdent>
+    <h2>历史回复</h2>
+    <nz-divider></nz-divider>
+
+    <nz-list [nzDataSource]="currentCommentResponse" [nzRenderItem]="reponseitem"
+        [nzItemLayout]="'horizontal'">
+        <ng-template #reponseitem let-reponseitem>
+            <nz-list-item>
+                <nz-list-item-meta [nzTitle]="nzTitle"
+                    nzAvatar="{{reponseitem.largeAvatar}}"
+                    [nzDescription]="nzDescription">
+                    <ng-template #nzTitle>
+                        {{reponseitem.nickName}}· {{reponseitem.createdTimeString}}
+                    </ng-template>
+                    <ng-template #nzDescription>
+                            <div [innerHTML]="reponseitem.content"></div>
+                    </ng-template>
+                </nz-list-item-meta>
+            </nz-list-item>
+        </ng-template>
+    </nz-list>
+    <h2>添加回复</h2>
+    <nz-divider></nz-divider>
+    <div class="editarea">
+        <quill-editor [styles]="{height: '250px'}" placeholder="请输入回复内容"
+            [(ngModel)]="editorContent"></quill-editor>
+    </div>
+
+    <div class="editarea">
+        <button nz-button style="margin: 5px;min-width:120px;float: right;"
+            nzType="primary" (click)="comment_response_submit()">提交</button>
+        <button nz-button style="margin: 5px;min-width:120px;float: right;"
+            nzType="default" (click)="return_response_comment()">返回</button>
+    </div>
+    <nz-divider></nz-divider>
+</ng-template>

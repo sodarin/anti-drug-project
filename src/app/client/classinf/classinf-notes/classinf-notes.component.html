@@ -1,0 +1,53 @@
+<div class="listmenu">
+    <nz-dropdown style="margin: 5px;">
+        <a nz-dropdown> 排序 <i nz-icon type="down"></i> </a>
+        <ul nz-menu nzSelectable>
+            <li nz-menu-item (click)="changeOrder_Note('createdTime')">
+                最新笔记
+            </li>
+            <li nz-menu-item (click)="changeOrder_Note('updatedTime')">
+                最新更新
+            </li>
+        </ul>
+    </nz-dropdown>
+    <div style="position: relative;float: right;">
+        <nz-dropdown>
+            <button nz-button nz-dropdown><span>{{courseSetTitle}}</span> <i nz-icon type="down"></i></button>
+            <ul nz-menu>
+                <li nz-menu-item>
+                    <a (click)="changeselect_Note('','全部课程')">"全部课程"</a> <!-- -->
+                </li>
+                <li *ngFor="let item of courses" nz-menu-item>
+                    <a (click)="changeselect_Note(item.courseId,item.courseSetTitle)">{{item.courseSetTitle}}</a>
+                    <!-- (click)="write_notice()"-->
+                </li>
+            </ul>
+        </nz-dropdown>
+    </div>
+</div>
+<nz-divider style="margin-top:10px;"></nz-divider>
+<nz-list [nzDataSource]="notes" [nzRenderItem]="notesitem" [nzItemLayout]="'horizontal'">
+    <ng-template #notesitem let-notesitem>
+        <nz-list-item [nzActions]="[editAction, moreAction]">
+            <ng-template #editAction><i nz-icon nzType="like" nzTheme="fill"></i>{{notesitem.likeNum}}</ng-template>
+            <ng-template #moreAction>
+                <!--<i nz-icon nzType="dislike"
+                nzTheme="fill"></i>（数量）-->
+            </ng-template>
+            <nz-list-item-meta [nzTitle]="nzTitle"
+                nzAvatar="{{notesitem.largeAvatar}}"
+                nzDescription="{{notesitem.nickName}} · {{notesitem.createdTimeString}} · {{notesitem.title}}">
+                <ng-template #nzTitle>
+                    <div [innerHTML]="notesitem.content"></div>
+                    <!-- <a href="https://ng.ant.design">{{ topicitem.title }}</a>-->
+                </ng-template>
+            </nz-list-item-meta>
+        </nz-list-item>
+    </ng-template>
+</nz-list>
+<nz-divider></nz-divider>
+<div class="pagination">
+    <nz-pagination [(nzPageIndex)]="current_notespage" [nzTotal]="total_notes_page"
+        (nzPageIndexChange)="onPageChange($event)">
+    </nz-pagination>
+</div>

@@ -1,0 +1,19 @@
+<nz-list [nzDataSource]="materials" [nzRenderItem]="materialitem" [nzItemLayout]="'horizontal'">
+    <ng-template #materialitem let-materialitem>
+        <nz-list-item>
+            <nz-list-item-meta [nzTitle]="nzTitle"
+                nzDescription="{{materialitem.time}}"><!--{{materialitem.size}} · {{materialitem.class}} ·-->
+                <ng-template #nzTitle>
+                    <a href="materialitem.link"><b>
+                            {{materialitem.title}}</b></a>
+                </ng-template>
+            </nz-list-item-meta>
+        </nz-list-item>
+    </ng-template>
+</nz-list>
+<nz-divider></nz-divider>
+<div class="pagination">
+    <nz-pagination [(nzPageIndex)]="current_material_page" [nzTotal]="total_material_pages"
+        (nzPageIndexChange)="onPageChange_material($event)">
+    </nz-pagination>
+</div>

@@ -1,0 +1,16 @@
+<nz-list [nzDataSource]="coursefeaturedata" [nzHeader]="'课程特色'"
+[nzRenderItem]="coursefeatureitem" [nzItemLayout]="'horizontal'" [nzLoading]="loading">
+<ng-template #coursefeatureitem let-coursefeatureitem>
+    <nz-list-item>
+        <nz-list-item-meta [nzTitle]="nzTitle">
+            <ng-template #nzTitle>
+                <div class="listitem">
+                    <i nz-icon nzType="youtube" nzTheme="outline" class="icon_big"></i>
+                    <a
+                    (click)="navigateByUrl('/client/groupmainlist/' + coursefeatureitem.id)"><span>{{ coursefeatureitem.title }}</span></a>
+                </div>
+            </ng-template>
+        </nz-list-item-meta>
+    </nz-list-item>
+</ng-template>
+</nz-list>
