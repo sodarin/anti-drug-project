@@ -18,12 +18,12 @@
           [nzBodyStyle]="{ 'padding': '0' ,height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
           nzWidth="16%">
           <ul style="padding: 0px;">
-            <li *ngFor="let task of taskList" [ngClass]="{'liSelected':taskName == task.taskName}">
+            <li *ngFor="let task of taskList" [ngClass]="{'liSelected':taskName == task?.taskName}">
               <span nz-col nzSpan="4">
                 <i nz-icon nzType="book" nzTheme="outline"></i>
               </span>
               <span nz-col nzSpan="20">
-                {{ task.taskName }}
+                {{ task?.taskName }}
               </span>
             </li>
           </ul>
@@ -72,7 +72,6 @@
                 </select>
                 <button class="ql-link"></button>
                 <button class="ql-image"></button>
-
               </div>
             </quill-editor>
             <div class="footer">
@@ -129,7 +128,8 @@
             <div class="footer">
               <button nz-button nzType="default" nzSize="default" (click)="closeQuestion()" class="ant-btn"
                 style="margin-right: 8px;"><span>关闭</span></button>
-              <button nz-button nzType="primary" tnzSize="default" (click)="questionSubmit(questionForm)" class="ant-btn" style="margin-right: 8px;" [disabled]="!questionForm.valid">
+              <button nz-button nzType="primary" tnzSize="default" (click)="questionSubmit(questionForm)"
+                class="ant-btn" style="margin-right: 8px;" [disabled]="!questionForm.valid">
                 <span>提交</span>
               </button>
             </div>
@@ -140,17 +140,20 @@
 
       </div>
     </nz-breadcrumb>
-    <div class="video-content" [(ngModel)]="name" >
-      <app-video-player></app-video-player>
+    <div class="video-content">
+      <app-video-player (outer)="setVideoLearingStatus($event)"></app-video-player>
     </div>
 
-    <div style="float: right;margin-bottom: 10px;">
-      <label nz-popover nzPopoverTitle="满足以下条件" nzPopoverContent="学习到最后"
-        style="border: none;box-shadow: none;margin-right: 8px;" class="labelClick">
-        <i nz-icon nzType="question-circle" nzTheme="outline"></i>
-        任务完成条件
-      </label>
-      <!-- <app-finish-video-modal [taskName]="taskName"></app-finish-video-modal> -->
+    <div *ngIf="videoLearingStatus=='doing'||videoLearingStatus=='start'; then thenBlock else elseBlock">
     </div>
+    <ng-template #thenBlock>
+      <nz-alert nzType="info" nzMessage="任务完成条件" nzShowIcon class="myAlert" nz-popover nzPopoverTitle="满足以下条件"
+        nzPopoverContent="完整观看视频">
+      </nz-alert>
+    </ng-template>
+    <ng-template #elseBlock>
+      <nz-alert nzType="success" nzMessage="任务完成" nzShowIcon class="myAlert">
+      </nz-alert>
+    </ng-template>
   </div>
 </nz-content>

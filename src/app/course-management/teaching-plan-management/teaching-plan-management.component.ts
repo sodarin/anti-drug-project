@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {NzModalService} from 'ng-zorro-antd';
+import {NzModalService, NzNotificationService} from 'ng-zorro-antd';
 import {Router} from '@angular/router';
 import {TeachingPlanAddingModalComponent} from '../../core/modal/teaching-plan-adding-modal/teaching-plan-adding-modal.component';
+import {CourseManagementBackHalfService} from '../../service/course-management-back-half/course-management-back-half.service';
 
 @Component({
   selector: 'app-teaching-plan-management',
@@ -19,18 +20,22 @@ export class TeachingPlanManagementComponent implements OnInit {
 
   constructor(
     private _modal: NzModalService,
-    private route: Router
+    private route: Router,
+    private courseManagement$: CourseManagementBackHalfService,
+    private _notification: NzNotificationService
   ) { }
 
   ngOnInit() {
     this.courseId = location.pathname.split('/')[3];
-    this.planList.push(
-      {name: '默认教学计划', 'mode': '自由式学习', taskNum: '0', stuNum: '0', status: '已发布'},
-      {name: '默认教学计划', 'mode': '自由式学习', taskNum: '0', stuNum: '0', status: '未发布'},
-    )
+    this.searchData()
   }
 
   searchData(pageIndex: number = this.pageIndex) {
+    this.loading = true;
+    this.courseManagement$.getTeachingPlan(this.courseId).subscribe(result => {
+      this.loading = false;
+      this.planList = result.data;
+    })
 
   }
 
@@ -39,7 +44,7 @@ export class TeachingPlanManagementComponent implements OnInit {
   }
 
   copy(data: any) {
-    this._modal.create({
+    const modal = this._modal.create({
       nzTitle: '复制教学计划',
       nzContent: TeachingPlanAddingModalComponent,
       nzComponentParams: {
@@ -49,27 +54,82 @@ export class TeachingPlanManagementComponent implements OnInit {
       nzOkText: '提交',
       nzOnOk: instance => instance.submit(),
       nzOnCancel: instance => instance.destroy()
+    });
+    modal.afterClose.subscribe(result => {
+      if (result) {
+        this.courseManagement$.addTeachingPlan(result).subscribe(result => {
+          this.searchData();
+          this._notification.success(
+            '添加成功！',
+            ''
+          )
+        }, error1 => {
+          this._notification.error(
+            '添加失败！',
+            `${error1.error}`
+          )
+        })
+      }
     })
   }
 
   closePlan(id: string) {
     this._modal.confirm({
       nzTitle: '是否要关闭该计划？',
-      nzOnOk: () => console.log('111')
+      nzOnOk: () => {
+        this.courseManagement$.updatePlanStatus(id, 'closed').subscribe(result => {
+          this.searchData();
+          this._notification.success(
+            '关闭成功！',
+            ''
+          )
+        }, error1 => {
+          this._notification.error(
+            '关闭失败！',
+            `${error1.error}`
+          )
+        })
+      }
     })
   }
 
   deletePlan(id: string) {
     this._modal.confirm({
       nzTitle: '是否要删除该计划？',
-      nzOnOk: () => console.log('111')
+      nzOnOk: () => {
+        this.courseManagement$.deletePlan(id).subscribe(result => {
+          this.searchData();
+          this._notification.success(
+            '删除成功！',
+            ''
+          )
+        }, error1 => {
+          this._notification.error(
+            '删除失败！',
+            `${error1.error}`
+          )
+        })
+      }
     })
   }
 
   publishPlan(id: string) {
     this._modal.confirm({
       nzTitle: '是否要发布该计划？',
-      nzOnOk: () => console.log('111')
+      nzOnOk: () => {
+        this.courseManagement$.updatePlanStatus(id, 'published').subscribe(result => {
+          this.searchData();
+          this._notification.success(
+            '发布成功！',
+            ''
+          )
+        }, error1 => {
+          this._notification.error(
+            '发布失败！',
+            `${error1.error}`
+          )
+        })
+      }
     })
   }
 
@@ -85,6 +145,22 @@ export class TeachingPlanManagementComponent implements OnInit {
       nzOkText: '创建',
       nzOnOk: instance => instance.submit(),
       nzOnCancel: instance => instance.destroy()
+    });
+    modal.afterClose.subscribe(result => {
+      if (result) {
+        this.courseManagement$.addTeachingPlan(result).subscribe(result => {
+          this.searchData();
+          this._notification.success(
+            '添加成功！',
+            ''
+          )
+        }, error1 => {
+          this._notification.error(
+            '添加失败！',
+            `${error1.error}`
+          )
+        })
+      }
     })
   }
 

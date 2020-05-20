@@ -12,6 +12,7 @@ import { ClassInfService } from 'src/app/service/classinf-frontend/classinf-fron
 export class CourseinfStudentdynamicsModalComponent implements OnInit {
   class_or_course_id ="0";
   type = "course";
+  loading: boolean = false;
   data = [
     {
       id:'1',

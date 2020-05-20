@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {MyteachingService} from '../../../../service/myteaching/myteaching.service';
+import {NzNotificationService} from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-course-topic',
@@ -7,24 +9,39 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CourseTopicComponent implements OnInit {
 
-  constructor() { }
+  pageIndex: number;
+  topicList = [];
+  dataList = [];
+  loading = false;
+
+teacherId:string = '1';
+  constructor(
+    private _notification: NzNotificationService,
+    private MyteachingService$: MyteachingService
+  ) {
+  }
 
   ngOnInit() {
+    this.searchData()
   }
-  loading = false;
-  data = [
-    {
-      title: '创建的课程不可以删除吗',
-      descr:'来自默认教学计划 - 课程发布指南 · 2浏览',
-      num:'2',
-      source:'默认教学计划 - 课程发布指南 '
-    },
-    {
-      title: '学员可以在网校进行那些操作呢？',
-      descr:'来自默认教学计划 - 课程发布指南 · 5浏览',
-      num: '5',
-      source: '默认教学计划 - 课程发布指南 ',
-    },
 
-  ];
+  searchData(pageIndex: number = this.pageIndex) {
+    this.topicList = [];
+    this.loading = true;
+    this.MyteachingService$.getStudentDiscussionList(1, 10, this.teacherId, "courseMemberThread").subscribe(result => {
+        this.loading = false;
+        this.dataList = result.data;
+        this.topicList = this.dataList;
+      },
+      error1 => {
+        this.loading = false;
+        this._notification.create(
+          'error',
+          '发生错误',
+          `${error1.error}`
+        )
+
+      })
+
+  }
 }

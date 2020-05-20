@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import {NzNotificationService} from 'ng-zorro-antd';
+import {MyteachingService} from '../../../../service/myteaching/myteaching.service';
+import {Router} from '@angular/router';
 
 const count = 5;
 const fakeDataUrl = 'https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo';
@@ -11,37 +14,44 @@ const fakeDataUrl = 'https://randomuser.me/api/?results=5&inc=name,gender,email,
 })
 export class ExamRecordComponent implements OnInit {
 
-  initLoading = true; // bug
-  loadingMore = false;
   data: any[] = [];
-  list: Array<{ loading: boolean; name: any }> = [];
+  recordList :[];
+  dataList:[];
+  loading:boolean;
+  userId:number=1;
+  testPaperType:string = "finished";
 
-  constructor(private http: HttpClient, private msg: NzMessageService) {}
+  constructor(private http: HttpClient,
+              private msg: NzMessageService,
+              private _notification: NzNotificationService,
+              private MyteachingService$: MyteachingService,
+              private router: Router
+              ) {}
 
-  ngOnInit(): void {
-    this.getData((res: any) => {
-      this.data = res.results;
-      this.list = res.results;
-      this.initLoading = false;
-    });
+  ngOnInit(){
+  this.searchData()
   }
 
-  getData(callback: (res: any) => void): void {
-    this.http.get(fakeDataUrl).subscribe((res: any) => callback(res));
-  }
 
-  onLoadMore(): void {
-    this.loadingMore = true;
-    this.list = this.data.concat([...Array(count)].fill({}).map(() => ({ loading: true, name: {} })));
-    this.http.get(fakeDataUrl).subscribe((res: any) => {
-      this.data = this.data.concat(res.results);
-      this.list = [...this.data];
-      this.loadingMore = false;
-    });
-  }
+  searchData() {
+    this.loading = true;
+    this.recordList = [];
+    this.MyteachingService$.getMyExamList(1, 10,this.testPaperType ,this.userId).subscribe(result => {
+        this.loading = false;
+        this.dataList = result.data;
+        this.recordList = this.dataList;
+      },
+      error1 => {
+        this.loading = false;
+        this._notification.create(
+          'error',
+          '发生错误',
+          `${error1.error}`
+        )
 
-  edit(item: any): void {
-    this.msg.success(item.email);
+      })
   }
-
+  navigatTo(url: string) {
+    this.router.navigateByUrl(url)
+  }
 }

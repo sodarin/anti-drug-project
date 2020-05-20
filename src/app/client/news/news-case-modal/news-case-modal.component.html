@@ -15,7 +15,36 @@
     <div class="left-content">
 
       <div class="listview">
-        <app-news-listview-modal></app-news-listview-modal>
+        <div class="list-area">
+          <nz-list
+            [nzDataSource]="displayData"
+            [nzItemLayout]="'vertical'"
+            [nzRenderItem]="item"
+          >
+            <ng-template #item let-item>
+              <nz-list-item [nzContent]="nzContent" [nzExtra]="extra" >
+                <nz-list-item-meta [nzAvatar]="avatar" [nzTitle]="nzTitle" [nzDescription]="nzDescription" >
+                  <ng-template #nzContent>
+                    <div>{{getSimpleText(item.body)| slice:0:150}}...</div>
+                  </ng-template>
+                  <ng-template #nzDescription>
+                    <div style="cursor: pointer;" (click)="navigate(item.categoryid)">{{item.categoryname}}</div>
+                  </ng-template>
+                  <ng-template #nzTitle
+                  ><a style="cursor: pointer;" (click)="navigateByUrl('/client/newsdetails/'+item?.id)">{{ item.title }}</a></ng-template
+                  >
+                  <ng-template #avatar
+                  ><nz-avatar [nzSize]="50" [nzText]="item.publishedtime * 1000 | date: 'MM-dd'"></nz-avatar></ng-template
+                  >
+                </nz-list-item-meta>
+                <ng-template #extra>
+                </ng-template>
+              </nz-list-item>
+            </ng-template>
+
+          </nz-list>
+        </div>
+
       </div>
     </div>
 

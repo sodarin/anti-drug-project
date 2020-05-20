@@ -11,23 +11,70 @@ export class NewsService {
   constructor(private _http: HttpClient) { }
 
   getNewsList(targetPage: number, pageSize: number): Observable<any> {
-    return this._http.post(`/news/getIndexNews`, {
+    return this._http.post(`/info/articles`, {
       pageSize: pageSize,
       pageNum: targetPage,
     });
   }
   getNewsDetail(id: string): Observable<any> {
-    return this._http.get(``)
+    return this._http.get(`/info/articlebyid`)
   }
   filterNewsList(targetPage: number, pageSize: number, filterOptions: any): Observable<any> {
-    return this._http.post(`/news/getIndexNews`, {
+    return this._http.post(`/info/articles`, {
       pageSize: pageSize,
       pageNum: targetPage,
       searchPrograma: filterOptions.selectedProgramaValue,
-      searchParameter: filterOptions.searchParameter,
-      searchAttribute:  filterOptions.searchAttribute,
-      searchState: filterOptions.searchState,
     })
+  }
+
+  getTags(): Observable<any> {
+    return this._http.get(`/info/tags`)
+  }
+
+  getPromotedlist(): Observable<any> {
+    return this._http.get(`/info/promotedlist`)
+  }
+
+  getFeaturedlist(): Observable<any> {
+    return this._http.get(`/info/featuredlist`)
+  }
+
+  getArticles(): Observable<any> {
+    return this._http.get(`/info/articles`)
+  }
+  getArticlebyid(id:string): Observable<any> {
+    return this._http.get(`/info/articlebyid?id=${id}`)
+  }
+  getArtTag(id:string): Observable<any> {
+    return this._http.get(`/info/artTag?id=${id}`)
+  }
+  getArticlelist(selectedProgramaValue:number): Observable<any> {
+    return this._http.post(`/info/infoback/articlelist`,
+      {articleCategoryId:selectedProgramaValue,
+        attribute: 0,
+        keywords: "",
+        status: "published"
+      }
+    )
+  }
+  setArticleLike(setArticleLike :any): Observable<any> {
+    return this._http.post(`/info/infoback/setArticleLike`,
+      {
+        "articleId": setArticleLike.articleId,
+        "isDelete": setArticleLike.isDelete,
+        "userId": setArticleLike.userId
+      }
+    )
+  }
+  getCategoryname(id:string): Observable<any> {
+    return this._http.get(`/info/categoryname?id=${id}`)
+  }
+  getTagname(id:string): Observable<any> {
+    return this._http.get(`/info/infoback/getTagName?id=${id}`)
+  }
+
+  getArticleLike(articleId:string,userId:number): Observable<any> {
+    return this._http.get(`/info/infoback/isArticleLike?articleId=${articleId}&userId=${userId}`)
   }
 
 }

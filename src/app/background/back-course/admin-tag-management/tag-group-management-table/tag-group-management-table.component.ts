@@ -35,7 +35,7 @@ export class TagGroupManagementTableComponent implements OnInit {
   searchData(pageIndex: number = this.pageIndex) {
     this.displayData = [];
     this.loading = true;
-    this.TagGroupManagementService$.getTagGroupList(pageIndex, 10).subscribe(result => {
+    this.TagGroupManagementService$.getTagGroupList().subscribe(result => {
       this.loading = false;
       this.total = result[0].totalUser;
       this.totalPage = Math.ceil(this.total / 10);

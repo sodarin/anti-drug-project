@@ -10,14 +10,12 @@ export class GroupTopicManagementService {
   constructor(private _http: HttpClient) { }
   getTopicList(targetPage: number, pageSize: number, filterOptions: any): Observable<any> {
     if (filterOptions.state == '' && filterOptions.groupName == '' && filterOptions.keyword == '' && filterOptions.creator == '' && filterOptions.attribute == '') {
-      return this._http.post(`/groupBack/showAllThread`, {
-        pageSize: pageSize,
-        pageNum: targetPage,
-      })
+      return this._http.get(`/groupBack/showBackGroundAllThread?pageSize=${pageSize}&pageNum=${targetPage}`)
     } else {
-      return this._http.post(`/groupBack/showAllThread`, {})
+      return this._http.get(`/groupBack/showBackGroundAllThread?
+      pageSize=${pageSize}&pageNum=${targetPage}&attribute=${filterOptions.attribute}&groupName=${filterOptions.groupName}&pageNum=${targetPage}&pageSize=${pageSize}
+      &status=${filterOptions.state}&threadName=${filterOptions.keyword}&userName=${filterOptions.creator}`)
     }
-
   }
 
   closeThread(id: string): Observable<any> {
@@ -29,7 +27,7 @@ export class GroupTopicManagementService {
   }
 
   deleteInBatch(list: any): Observable<any> {
-    return this._http.delete(``)
+    return this._http.delete(`/groupBack/deleteGroupThreadList?threadIds=${list}`)
   }
 
   openThread(id: string): Observable<any> {

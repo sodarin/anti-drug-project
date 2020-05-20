@@ -68,8 +68,8 @@
       ></td>
       <td>{{data.id}}<br/>
       <td>{{data.title}}<br/>
-      <td>{{data.progama}}<br/>
-      <td>{{data.updatedTime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}<br/>
+      <td>{{data.categoryname}}<br/>
+      <td>{{data.updatedtime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}<br/>
       <td><nz-tag nzMode="checkable" [nzChecked]="data.featured == 1" (nzCheckedChange)="setFeatured(data.id, $event)">头</nz-tag>
       <nz-tag nzMode="checkable" [nzChecked]="data.promoted == 1" (nzCheckedChange)="setPromoted(data.id, $event)">荐</nz-tag>
       <nz-tag nzMode="checkable" [nzChecked]="data.sticky == 1" (nzCheckedChange)="setSticky(data.id, $event)">顶</nz-tag>
@@ -85,7 +85,7 @@
           </div>
           <div>
             <span *ngIf="data.status === 'trash'" (click)="delete(data.id)"><i nz-icon nzType="delete"></i>永久删除</span>
-            <span *ngIf="data.status !== 'trash'" ((click)="recycleNews(data.id)"><i nz-icon nzType="rest" nzTheme="outline"></i>移至回收站</span>
+            <span *ngIf="data.status !== 'trash'" (click)="recycleNews(data.id)"><i nz-icon nzType="rest" nzTheme="outline"></i>移至回收站</span>
           </div>
         </div>
       </ng-template>

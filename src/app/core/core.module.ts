@@ -14,13 +14,7 @@ import { CategoryEditModalComponent } from './modal/category-edit-modal/category
 import { NewsEditModalComponent } from './modal/news-edit-modal/news-edit-modal.component';
 import { ProgramaEditModalComponent } from './modal/programa-edit-modal/programa-edit-modal.component';
 import { AnnouncementEditModalComponent } from './modal/announcement-edit-modal/announcement-edit-modal.component';
-import {CourselistListviewModalComponent} from './courselist-component/courselist-listview-modal/courselist-listview-modal.component';
-import {CourselistClassificationModalComponent} from './courselist-component/courselist-classification-modal/courselist-classification-modal.component';
-import {CourselistSortModalComponent} from './courselist-component/courselist-sort-modal/courselist-sort-modal.component';
-import {CourselistCourseblockModalComponent} from './courselist-component/courselist-courseblock-modal/courselist-courseblock-modal.component';
 import { UserPageComponent } from './user-page/user-page.component';
-import { ClasslistClassblockComponent } from './classlist-component/classlist-classblock/classlist-classblock.component';
-import { ClasslistListviewComponent } from './classlist-component/classlist-listview/classlist-listview.component';
 import { AutocompleteInputComponent } from './class-management-component/autocomplete-input/autocomplete-input.component';
 import { AddingCourseModalComponent } from './modal/adding-course-modal/adding-course-modal.component';
 import { LoginPasswdEditModelComponent } from './modal/login-passwd-edit-model/login-passwd-edit-model.component';
@@ -38,6 +32,8 @@ import { FocusDetailComponent } from './focus-detail/focus-detail.component';
 import { CoreRoutingModule  } from "./core-routing.module";
 import { FansComponent } from './fans/fans.component';
 import {RouterModule} from '@angular/router';
+import {VideoPlayerComponent} from './video-player/video-player.component'
+
 
 @NgModule({
   declarations: [
@@ -51,13 +47,7 @@ import {RouterModule} from '@angular/router';
     TeacherRecommendModalComponent,
     TagGroupInfoEditModalComponent,
     CategoryEditModalComponent, NewsEditModalComponent, ProgramaEditModalComponent, AnnouncementEditModalComponent,
-    CourselistCourseblockModalComponent,
-    CourselistSortModalComponent,
-    CourselistClassificationModalComponent,
-    CourselistListviewModalComponent,
     UserPageComponent,
-    ClasslistClassblockComponent,
-    ClasslistListviewComponent,
     AutocompleteInputComponent,
     AddingCourseModalComponent,
     LoginPasswdEditModelComponent,
@@ -72,6 +62,7 @@ import {RouterModule} from '@angular/router';
     NewsTagModalComponent,
     FocusDetailComponent,
     FansComponent,
+    VideoPlayerComponent
   ],
   imports: [
     ShareModule,
@@ -95,11 +86,6 @@ import {RouterModule} from '@angular/router';
     NewsEditModalComponent,
     ProgramaEditModalComponent,
     AnnouncementEditModalComponent,
-    CourselistCourseblockModalComponent,
-    CourselistSortModalComponent,
-    CourselistClassificationModalComponent,
-    CourselistListviewModalComponent,
-    ClasslistListviewComponent,
     AutocompleteInputComponent,
     AddingCourseModalComponent,
     LoginPasswdEditModelComponent,
@@ -109,6 +95,9 @@ import {RouterModule} from '@angular/router';
     NewsSortModalComponent,
     NewsDetailsModalComponent,
     NewsTagModalComponent,
+    FocusDetailComponent,
+    FansComponent,
+    VideoPlayerComponent
   ]
 })
 export class CoreModule { }

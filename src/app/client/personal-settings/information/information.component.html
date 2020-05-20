@@ -6,20 +6,20 @@
     <div nz-row>
       <nz-form-item>
         <nz-form-control>
-          <nz-upload class="avatar-uploader" nzAction="头像修改的地址" nzName="avatar" nzListType="picture-card"
-            [nzShowUploadList]="false">
-            <ng-container *ngIf="!user.avatarUrl">
-              <i class="upload-icon" nz-icon></i>
+          <nz-upload class="avatar-uploader" nzAction="/material/uploadUserAvatar?userId=1" nzListType="picture-card"
+            [nzShowUploadList]="false" [nzCustomRequest]="customReq">
+            <ng-container *ngIf="!user.mediumAvatar">
+              <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
               <div class="ant-upload-text">Upload</div>
             </ng-container>
-            <img *ngIf="user.avatarUrl" [src]="user.avatarUrl" class="avatar" />
+            <img *ngIf="user.mediumAvatar" [src]="user.mediumAvatar" class="avatar" />
           </nz-upload>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <div style="padding: 40px 0px;">
           <span>用户名</span>
-          <p nz-paragraph nzEditable [(nzContent)]="user.username"></p>
+          <p nz-paragraph nzEditable [(nzContent)]="user.nickName"></p>
         </div>
       </nz-form-item>
     </div>
@@ -34,8 +34,8 @@
         <nz-form-item>
           <nz-form-label><span>真实姓名</span></nz-form-label>
           <div>
-            <nz-form-control >
-              <input type="text" nz-input />
+            <nz-form-control>
+              <input type="text" nz-input [(ngModel)]="user.trueName" name="trueName" />
             </nz-form-control>
           </div>
         </nz-form-item>
@@ -45,9 +45,9 @@
           <nz-form-label nzFor="sex"><span>性别</span></nz-form-label>
           <div>
             <nz-form-control>
-              <nz-radio-group id="sex">
-                <label nz-radio nzValue="男">男</label>
-                <label nz-radio nzValue="女">女</label>
+              <nz-radio-group id="sex" [(ngModel)]="user.gender" name="gender">
+                <label nz-radio nzValue="male">男</label>
+                <label nz-radio nzValue="female">女</label>
               </nz-radio-group>
             </nz-form-control>
           </div>
@@ -60,7 +60,7 @@
           <nz-form-label><span>头衔</span></nz-form-label>
           <div>
             <nz-form-control>
-              <input type="text" nz-input />
+              <input type="text" nz-input [(ngModel)]="user.title" name="title" />
             </nz-form-control>
           </div>
         </nz-form-item>
@@ -71,7 +71,7 @@
           <nz-form-label><span>个性签名</span></nz-form-label>
           <div>
             <nz-form-control>
-              <input type="text" nz-input />
+              <input type="text" nz-input [(ngModel)]="user.signature" name="signature" />
             </nz-form-control>
           </div>
         </nz-form-item>
@@ -83,7 +83,7 @@
         <nz-form-item>
           <nz-form-label><span>自我介绍</span></nz-form-label>
           <nz-form-control>
-            <quill-editor [(ngModel)]="introduction" [style]="{ height: '300px' }">
+            <quill-editor [(ngModel)]="user.about" name="about" [style]="{ height: '300px' }">
             </quill-editor>
           </nz-form-control>
         </nz-form-item>
@@ -95,7 +95,7 @@
           <nz-form-label><span>公司</span></nz-form-label>
           <div>
             <nz-form-control>
-              <input type="text" nz-input />
+              <input type="text" nz-input [(ngModel)]="user.company" name="company" />
             </nz-form-control>
           </div>
         </nz-form-item>
@@ -106,7 +106,7 @@
           <nz-form-label><span>职业</span></nz-form-label>
           <div>
             <nz-form-control>
-              <input type="text" nz-input />
+              <input type="text" nz-input [(ngModel)]="user.job" name="job" />
             </nz-form-control>
           </div>
         </nz-form-item>
@@ -119,7 +119,7 @@
           <nz-form-label><span>个人空间</span></nz-form-label>
           <div>
             <nz-form-control>
-              <input type="text" nz-input placeholder="http://" />
+              <input type="text" nz-input placeholder="http://" [(ngModel)]="user.site" name="site" />
             </nz-form-control>
           </div>
         </nz-form-item>
@@ -130,7 +130,7 @@
           <nz-form-label><span>微博</span></nz-form-label>
           <div>
             <nz-form-control nzValidateStatus="validating" nzValidatingTip="微博、微信、QQ信息将会展示在您的个人主页">
-              <input type="text" nz-input placeholder="http://" />
+              <input type="text" nz-input placeholder="http://" [(ngModel)]="user.weiobo" name="weibo" />
             </nz-form-control>
           </div>
         </nz-form-item>
@@ -143,7 +143,7 @@
           <nz-form-label><span>微信</span></nz-form-label>
           <div>
             <nz-form-control>
-              <input type="text" nz-input />
+              <input type="text" nz-input [(ngModel)]="user.weixin" name="weixin" />
             </nz-form-control>
           </div>
         </nz-form-item>
@@ -154,7 +154,7 @@
           <nz-form-label><span>QQ</span></nz-form-label>
           <div>
             <nz-form-control>
-              <input type="text" nz-input />
+              <input type="text" nz-input [(ngModel)]="user.qq" name="qq" />
             </nz-form-control>
           </div>
         </nz-form-item>
@@ -165,7 +165,7 @@
         <nz-form-item>
           <div>
             <nz-form-control>
-              <button nz-button nzType="primary">
+              <button nz-button nzType="primary" (click)="editPersonalInfo()">
                 <i nz-icon [nzType]="'check-circle'" [nzTheme]="'fill'"></i>保存
               </button>
             </nz-form-control>

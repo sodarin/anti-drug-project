@@ -7,8 +7,7 @@
     <nz-upload
       nzType="drag"
       [nzLimit]="1"
-      nzAction="https://jsonplaceholder.typicode.com/posts/"
-      (nzChange)="handleChange($event)"
+      [nzAction]="'/material/uploadClassCover?classId=' + classroomId + '&userId=' + userId" [nzCustomRequest]="customReq"
     >
       <p class="ant-upload-drag-icon">
         <i nz-icon nzType="picture"></i>

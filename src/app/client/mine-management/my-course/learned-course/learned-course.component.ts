@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {NzModalService} from "ng-zorro-antd";
+import {NzModalService, NzNotificationService} from 'ng-zorro-antd';
 import {ActivatedRoute} from "@angular/router";
+import {MyteachingService} from '../../../../service/myteaching/myteaching.service';
 
 @Component({
   selector: 'app-learned-course',
@@ -9,48 +10,54 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class LearnedCourseComponent implements OnInit {
 
-
+  userId:number =1;
   courseList = [];
+  dataList = [];
+  pageIndex: number;
+  total: string;
+  private loading: boolean;
+
   constructor(
     private _modal: NzModalService,
-    private routerInfo: ActivatedRoute
+    private routerInfo: ActivatedRoute,
+    private _notification: NzNotificationService,
+    private MyteachingService$:MyteachingService
   ) { }
 
   ngOnInit() {
-    this.courseList.push({
-        title: '初中第6课 看清诱惑远离陷阱',
-        descr: '学习进度',
-        num:100,
-        avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-
-      },
-      {
-        title: '初中第3课 看清毒品的危害',
-        descr: '学习进度',
-        num:100,
-        avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-      },
-      {
-        title: '初中第6课 看清诱惑远离陷阱',
-        descr: '学习进度',
-        num:100,
-        avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-
-      },
-      {
-        title: '初中第3课 看清毒品的危害',
-        descr: '学习进度',
-        num:100,
-        avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-      },
-    );
+    this.searchData()
   }
-//查看课程
-  viewCourse() {
 
+  searchData(pageIndex: number = this.pageIndex) {
+    this.courseList = [];
+    this.loading = true;
+    this.MyteachingService$.getMyCourseList(1,10,this.userId,"finished").subscribe(result=>{
+        this.loading = false;
+        this.dataList = result.data;
+        this.courseList = this.dataList;
+      },
+      error1 => {
+        this.loading = false;
+        this._notification.create(
+          'error',
+          '发生错误',
+          `${error1.error}`
+        )
+
+      })
   }
-//查看班级
-  viewClass() {
 
+  choiceColor(serializeMode:string){
+    if(serializeMode=="finished"){
+      return "green";
+    }
+    if(serializeMode=="none"){
+      return "red";
+    }else{
+      return "yellow";
+    }
+  }
+  LearnPro(learnTime: number, watchTime: number) {
+    return watchTime/learnTime;
   }
 }

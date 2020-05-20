@@ -68,10 +68,8 @@ export class MyteachingService {
 //创建课程
   postCreateCourse(title:string , type:string, userId:number): Observable<any> {
 
-    return this._http.post(`/course/createCourse`,{
-      title : title,
-      type : type,
-      userId: userId
+    return this._http.post(`/course/createCourse?title=${title}&type=${type}&userId=${userId}`,{
+
     })
   }
   //我的考试

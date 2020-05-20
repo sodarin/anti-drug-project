@@ -1,11 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, TemplateRef} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {NzMessageService, NzModalService} from "ng-zorro-antd";
+import {NzMessageService, NzModalService, NzNotificationService} from 'ng-zorro-antd';
 import {GroupfirstService} from "../../../../service/groupfirst/groupfirst.service";
-
-const count = 5;
-const fakeDataUrl = 'https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo';
-
+import {ActivatedRoute, Router} from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {GroupEditService} from '../../../../service/groupedit-edit/group-edit.service';
+import {GroupmainlistService} from '../../../../service/groupmainlist/groupmainlist.service';
+import {GrouphotService} from '../../../../service/grouphot/grouphot.service';
+import {GrouplistService} from '../../../../service/grouplist/grouplist.service';
+import {isBoolean} from 'util';
 
 @Component({
   selector: 'app-groupfirst',
@@ -13,9 +16,17 @@ const fakeDataUrl = 'https://randomuser.me/api/?results=5&inc=name,gender,email,
   styleUrls: ['./groupfirst.component.less']
 })
 export class GroupfirstComponent implements OnInit {
-  selectedStateFilterValue   = 'all';
   inputValue: string;
-  selectedAttributeFilterValue = 'new';
+  selectValue :string = '最新发帖';
+  nzValueQB=1
+  nzValueJ=0
+  nzValueQBJ:boolean = false;
+  detail:[];
+  toId:string
+  isfocus:boolean;
+  groupId:string
+
+
 
   loading: boolean = false;
   total: number = 0;
@@ -27,80 +38,188 @@ export class GroupfirstComponent implements OnInit {
     loading: boolean; name: any }> = [];
 
   filterOptions: {};
-  checkOption = [];
-  isAllDisplayDataChecked = false;
-  isOperating = false;
-  isIndeterminate = false;
-  mapOfCheckedId: { [key: string]: boolean } = {};
-  numberOfChecked = 0;
+  ThreadList:[];
+  threadCreatingForm: FormGroup;
+  title:string;
+  userId:string="1"
+  content:string;
 
   img='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
-  name='admin';
-  date='2019-8-9';
-  date1='2019-8-7';
-  study=1;
-  fans=2;
-  focuson=3;
+  userID:string
 
   constructor(
     private http: HttpClient,
     private groupfirstService$: GroupfirstService,
     private  _message: NzMessageService,
-    private  _modalService: NzModalService
+    private _notification: NzNotificationService,
+    private routeInfo: ActivatedRoute,
+    private fb: FormBuilder,
+    private groupeditEditService$:GroupEditService,
+    private groupmainlistService$:GroupmainlistService,
+    private grouphotService$:GrouphotService,
+    private _modal: NzModalService,
+    private grouplistService$:GrouplistService,
+    private route: Router,
+
   ) { }
 
   ngOnInit():void {
-    this.getData((res: any) => {
-      this.data = res.results;
-      this.list = res.results;
-      this.loading = false;
-    });
-  }
-
-  getData(callback: (res: any) => void): void {
-    this.http.get(fakeDataUrl).subscribe((res: any) => callback(res));
-  }
-
-  refreshStatus(): void {
-    this.isAllDisplayDataChecked = this.data
-      .filter(item => !item.disabled)
-      .every(item => this.mapOfCheckedId[item.id]);
-    this.isIndeterminate =
-      this.data.filter(item => !item.disabled).some(item => this.mapOfCheckedId[item.id]) &&
-      !this.isAllDisplayDataChecked;
-    this.numberOfChecked = this.list.filter(item => this.mapOfCheckedId[item.id]).length;
-  }
-
-  //下拉框
-  /*
-  filterTopic() {
-    this.data = [];
-    this.loading = true;
-    this.filterOptions = {
-      state: this.selectedStateFilterValue,
-      searchParameter: this.inputValue,
-      attribute: this.selectedAttributeFilterValue
-    };
-    this.grouplistService$.item(1, 10, this.filterOptions).subscribe(result => {
-      this.loading = false;
-      this.total = result[0].total;
-      this.totalPage = Math.ceil(this.total / 10);
-      this.list = result;
-      this.data = this.list;
-    }, error1 => this._message.error(error1.error))
-  }
-*/
-
-  // 修改置顶加精属性
-  checkChange(data: any) {
+    this.userID = this.routeInfo.snapshot.params['id'];
+    let pathList = location.pathname.split('/');
+    this.groupId = pathList[3];
+    this.checkAll();
+    this.threadCreatingForm = this.fb.group({
+      title: ['', Validators.required],
+      content: ['', Validators.required],
+    })
+    this.getReplyThread()
 
   }
-  //关注
+
+  navigateByUrl(url: string) {
+    this.route.navigateByUrl(url)
+  }
+
+    message(data: any, template: TemplateRef<{}>) {
+      this.threadCreatingForm.controls.title.setValue(data.nickName);
+      const modal = this._modal.create({
+        nzTitle: '发送私信',
+        nzContent: template,
+        nzOkText: '发送',
+        nzOnOk: () => {
+          for (let i in this.threadCreatingForm.controls) {
+            this.threadCreatingForm.controls[i].markAsDirty();
+            this.threadCreatingForm.controls[i].updateValueAndValidity()
+          }
+          if ( !this.threadCreatingForm.controls.content.errors) {
+            this.grouplistService$.sendMessage(this.threadCreatingForm.controls.content.value,this.userId,data.id).subscribe(result => {
+              this._notification.create(
+                'success',
+                '发送成功',
+                ''
+              )
+            },error1 => {
+              this._notification.create(
+                'error',
+                '发送失败',
+                `${error1.error}`
+              )
+            })
+          } else {
+            this._notification.create(
+              'error',
+              '发生错误！',
+              '请正确填写表单信息'
+            )
+          }
+        }
+      })
+      modal.afterClose.subscribe(result => {
+        this.threadCreatingForm.controls.content.setValue('')
+      })
+    }
+
+    // 修改全部和精华
+  checkAll() {
+
+    if (this.nzValueQB == 0) {
+      this.nzValueQB = 1;
+      this.nzValueJ = 0;
+      this.nzValueQBJ = false
+    }
+    this.groupfirstService$.showReply(this.nzValueQBJ,this.selectValue,this.groupId).subscribe(result=>{
+        this.ThreadList=result;
+      },error1 => {
+        this._notification.create(
+          'error',
+          '回复话题获取失败',
+          `${error1.error}`)
+      }
+    )
+  }
+
+  checkElite() {
+
+    if (this.nzValueJ == 0) {
+      this.nzValueJ = 1;
+      this.nzValueQB = 0;
+      this.nzValueQBJ = true
+    }
+    this.groupfirstService$.showReply(this.nzValueQBJ,this.selectValue,this.groupId).subscribe(result=>{
+        this.ThreadList=result;
+      },error1 => {
+        this._notification.create(
+          'error',
+          '回复话题获取失败',
+          `${error1.error}`)
+      }
+    )
+  }
+  // 关注
   focus(){
 
-  }
-  //私信
-  message(){
+    if(this.isfocus==false){
+      this.grouplistService$.followedUser(this.userId,this.toId).subscribe(result=>{
+        this._notification.create(
+          'success',
+          '关注成功',
+          ''
+        )
+      },error1 => {
+        this._notification.create(
+          'error',
+          '关注失败',
+          `${error1.error}`
+        )
+      })
+    }
 
+  }
+  //取消关注
+  cancelfocus(){
+    if(this.isfocus==true){
+      this.grouplistService$.delFollowedUser(this.userId,this.toId).subscribe(result=>{
+        this._notification.create(
+          'success',
+          '取消关注成功',
+          ''
+        )
+      },error1 => {
+        this._notification.create(
+          'error',
+          '取消关注失败',
+          `${error1.error}`
+        )
+      })
+    }
+
+  }
+
+
+  //获取话题回复列表
+  getReplyThread(){
+    this.groupfirstService$.showReply(this.nzValueQBJ,this.selectValue,this.groupId).subscribe(result=>{
+        this.ThreadList=result;
+      },error1 => {
+        this._notification.create(
+          'error',
+          '回复话题获取失败',
+          `${error1.error}`)
+      }
+    )
+  }
+  getUserDetail(id:string) {
+    this.grouplistService$.getUser(id).subscribe(result=>{
+      this.detail=result.data;
+      this.toId=id;
+      this.grouplistService$.isFocus(this.userId,this.toId).subscribe(result=>{
+        this.isfocus=result.data
+      })
+    },error1 => {
+      this._notification.create(
+        'error',
+        '成员信息获取失败',
+        `${error1.error}`)
+    })
   }
 }

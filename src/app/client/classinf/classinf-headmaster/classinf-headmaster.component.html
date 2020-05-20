@@ -4,7 +4,7 @@
     <nz-list-item>
         <img class="round_icon" style="width: 70px;height: 70px;" nz-popover
             [nzTitle]="titleTemplate" [nzContent]="contentTemplate"
-            src="{{item.smallavatar}}">
+            [src]="item.smallavatar">
         <nz-list-item-meta [nzTitle]="nzTitle"
             nzDescription="{{item.positionaltitles}}">
             <ng-template #nzTitle>
@@ -16,7 +16,7 @@
     <ng-template #titleTemplate>
         <div class="popovercard_header">
             <img class="round_icon"
-                src="{{item.smallavatar}}">
+                [src]="item.smallavatar">
             <div style="display: inline-block;padding: 0;margin-left: 10px;">
                 <p>{{item.nickname}}</p>
                 <p>{{item.positionaltitles}}</p>

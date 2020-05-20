@@ -45,6 +45,11 @@ export class ClassinfNotesComponent implements OnInit {
 
   ngOnInit() {
 
+    this.getClassNotes();
+    this.getClassCourse()
+  }
+
+  getClassNotes() {
     this.classinfservice.getclassNotes(this.classid).subscribe((res: any) => {
       this.setclassNotes(res);
     }, error => {
@@ -53,7 +58,9 @@ export class ClassinfNotesComponent implements OnInit {
         '发生错误！',
         `${error.error}`)
     })
+  }
 
+  getClassCourse() {
     this.classinfservice.getclassCourses(this.classid,0).subscribe((res: any) => {
       this.setclassCourses(res);
     }, error => {

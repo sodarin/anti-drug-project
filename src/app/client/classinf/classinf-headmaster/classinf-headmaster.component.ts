@@ -24,10 +24,14 @@ export class ClassinfHeadmasterComponent implements OnInit {
   follow: EventEmitter<string>;
   privateletter: EventEmitter<string>;
 
+  loading: boolean = false;
+
   constructor(private classinfservice: ClassInfService, private notification: NzNotificationService, private route: Router) { }
 
   ngOnInit() {
+    this.loading = true;
     this.classinfservice.getclassHeadmaster(this.classid).subscribe((res: any) => {
+      this.loading = false;
       this.setclassHeadmaster(res);
     }, error => {
       this.notification.create(

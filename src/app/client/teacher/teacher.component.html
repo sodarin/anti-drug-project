@@ -8,32 +8,33 @@
   <ng-container>
 
     <div style="text-align: center">
-      <nz-list  [nzDataSource]="data" style="margin:30px" [nzRenderItem]="item"
+      <nz-list  [nzDataSource]="displayData" style="margin:30px" [nzRenderItem]="item"
                [nzGrid]="{ gutter: 24, xs: 24, sm: 12, md: 12, lg: 8, xl: 6 }">
         <ng-template #item let-item>
           <nz-list-item [nzContent]="nzContent">
             <ng-template #nzContent>
-              <nz-card (mouseover)=show1(item) (mouseleave)="show2(item)"
-                       nzHoverable style="width:240px;height:350px;margin: 30px" [nzCover]="coverTemplate"
-                       (click)="navigateByUrl('/client/userpage/'+item.id)">
+              <nz-card (mouseover)="show1(item)" (mouseleave)="show2(item)"
+                       nzHoverable style="width:240px;height:350px;margin: 30px" [nzCover]="coverTemplate">
                 <nz-card-meta [nzTitle]="titleTemplate" [nzDescription]=descripTemplate></nz-card-meta>
                 <button nz-button nzType="primary" style="text-align: center"
-                        *ngIf="!this.item.isshow" (click)="follow(item)">关注</button>
+                *ngIf="!item.isshow" (click)="follow(item.id)">关注</button>
+                <!-- <button nz-button nzType="default" style="text-align: center"
+                        (click)="follow(item.id)">已关注</button> -->
               </nz-card>
               <ng-template #coverTemplate>
-                <nz-avatar [nzSize]="100" style="text-align:center;margin:60px auto;" nzIcon="user"></nz-avatar>
+                <nz-avatar (click)="navigateByUrl('/client/userpage/'+item.id)" [nzSize]="100" style="text-align:center;margin:60px auto;" nzIcon="user" nzSrc="{{item.largeAvatar}}"></nz-avatar>
               </ng-template>
               <ng-template  #titleTemplate>
-                <h3 *ngIf="this.item.isshow">{{item.title}}</h3>
+                <h3 *ngIf="item.isshow">{{item.nickName}}</h3>
               </ng-template>
               <ng-template #descripTemplate>
-                <div *ngIf="this.item.isshow">{{item.title}}</div>
+                <div *ngIf="item.isshow">{{item.title}}</div>
               </ng-template>
 
             </ng-template>
           </nz-list-item>
         </ng-template>
-        <nz-pagination [nzPageIndex]="1" [nzTotal]="data.length" (nzPageIndexChange)="searchData()" [nzPageSize]="12"></nz-pagination>
+        <nz-pagination [(nzPageIndex)]="pageIndex" [nzTotal]="total" (nzPageIndexChange)="changePageIndex($event)" [nzPageSize]="pageSize"></nz-pagination>
       </nz-list>
     </div>
 

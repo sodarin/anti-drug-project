@@ -5,7 +5,7 @@ import {GroupfirstService} from '../../../../service/groupfirst/groupfirst.servi
 import {GroupnowService} from '../../../../service/groupnow/groupnow.service';
 import {NzModalService, NzNotificationService} from 'ng-zorro-antd';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {GroupeditEditService} from '../../../../service/groupedit-edit/groupedit-edit.service';
+import {GroupEditService} from '../../../../service/groupedit-edit/group-edit.service';
 import {GroupmainlistService} from '../../../../service/groupmainlist/groupmainlist.service';
 import {GrouphotService} from '../../../../service/grouphot/grouphot.service';
 import {formatDistance} from 'date-fns';
@@ -16,7 +16,7 @@ import {formatDistance} from 'date-fns';
   styleUrls: ['./groupthread.component.less']
 })
 export class GroupthreadComponent implements OnInit {
-  NewMemberList:[];
+  NewMemberList = [];
   memberMessageList:any;
   detail:any;
   hotGroupList:[];
@@ -28,13 +28,13 @@ export class GroupthreadComponent implements OnInit {
   nzValueJ=1;
   only=1;
   downToUp=1;
-  owner:[];
-  RecentThreadList:[];
+  value: string;
+  owner: any;
+  RecentThreadList: any;
   threadCreatingForm: FormGroup;
   title:string;
   userId:string="1";
-  postList:[]
-  toId:string
+  toId:string;
   isfocus:boolean;
 
   data: any[] = [];
@@ -84,7 +84,7 @@ export class GroupthreadComponent implements OnInit {
               private _notification: NzNotificationService,
               private routeInfo: ActivatedRoute,
               private fb: FormBuilder,
-              private groupeditEditService$:GroupeditEditService,
+              private groupeditEditService$:GroupEditService,
               private groupmainlistService$:GroupmainlistService,
               private grouphotService$:GrouphotService,
               private _modal: NzModalService,

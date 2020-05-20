@@ -9,33 +9,34 @@ import {TestuserService} from '../../../Test/testuser.service'
   inputs: ["user","classid"],
 })
 export class ClassinfHeaderComponent implements OnInit {
-  classid = "0"
+  classid = "0";
   user: any;
-  currentclass =
-    {
-      //二维吗
-      qrcode: "../../../../assets/img/timg.jpg",
-      //时效
-      term: "None",
-      //承诺服务
-      commitmentservice: [false, false, false, false, false, false],
-
-      classroomCategory: "高中班级",
-      courseNum: 1,
-      id: 10,
-      postNum: 2,
-      recommended: 0,
-      recommendedSeq: 100,
-      recommendedTime: 0,
-      recommendedTimeString: "1970-01-01 08:00:00",
-      //service: "["event","liveAnswer","teacherAnswer","testpaperReview","homeworkReview"]",
-      smallpicture: "public://course/2019/06-25/1753288228b6372843.jpg",
-      status: "published",
-      studentNum: 56,
-      title: "沈阳市广全学校禁毒教学活动",
-      totalNum: 1,
-      ratingnum:1
-    };
+  currentclass: any ;
+    // =
+    // {
+    //   //二维吗
+    //   qrcode: "../../../../assets/img/timg.jpg",
+    //   //时效
+    //   term: "None",
+    //   //承诺服务
+    //   commitmentservice: [false, false, false, false, false, false],
+    //
+    //   classroomCategory: "高中班级",
+    //   courseNum: 1,
+    //   id: 10,
+    //   postNum: 2,
+    //   recommended: 0,
+    //   recommendedSeq: 100,
+    //   recommendedTime: 0,
+    //   recommendedTimeString: "1970-01-01 08:00:00",
+    //   //service: "["event","liveAnswer","teacherAnswer","testpaperReview","homeworkReview"]",
+    //   smallpicture: "public://course/2019/06-25/1753288228b6372843.jpg",
+    //   status: "published",
+    //   studentNum: 56,
+    //   title: "沈阳市广全学校禁毒教学活动",
+    //   totalNum: 1,
+    //   ratingnum:1
+    // };
 
 
   //页头显示用变量

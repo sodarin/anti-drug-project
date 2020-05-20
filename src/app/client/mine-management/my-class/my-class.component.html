@@ -4,6 +4,20 @@
   </div>
   <nz-divider></nz-divider>
   <div class="page-content">
-
+    <div class="drag-list"  >
+      <div *ngFor="let data of classroomList" class="drag-box" >
+        <div class="list-info">
+          <img class="img-info" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+          <div class="text-info">
+            <div class="info-header">
+              <div class="course-title" nz-tooltip [nzTitle]="data.title">{{data.title}}</div>
+              <nz-tag  style="margin-left: 15px" [nzColor]="choiceColor(data.status)"> {{data.status == 'published'? '已发布': (data.status == 'closed'? '已关闭': '未发布')}}</nz-tag>
+              <span class="empty-space" ></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <nz-divider></nz-divider>
   </div>
 </div>

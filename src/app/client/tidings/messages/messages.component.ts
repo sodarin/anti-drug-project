@@ -21,6 +21,7 @@ export class MessagesComponent implements OnInit {
     author: '我',
     avatar: '../../assets/img/userface-small.jpg'
   };
+  loading: boolean = false;
   // messages = [
   //   {
   //     name : '王大炮',
@@ -136,7 +137,9 @@ export class MessagesComponent implements OnInit {
     this.privateChatService.changeStatus.next(i+1);
   }
   serch(){
+    this.loading = true;
     this.privateChatService.getMessages('1' ,this.pageIndex,this.pageSize,1).subscribe(result =>{
+      this.loading =false;
       this.data = result.data;
       this.total = this.data[0].totalNum;
     },error1 => {

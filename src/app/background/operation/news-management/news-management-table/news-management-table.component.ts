@@ -52,7 +52,11 @@ export class NewsManagementTableComponent implements OnInit {
 
   ngOnInit() {
     this.getCategory();
-    this.searchData()
+    this.searchData();
+    // let answers: string = '["0", "1"]';
+    // console.log(JSON.parse(answers));
+    // let jsonString = JSON.stringify(answers);
+    // console.log(JSON.parse(jsonString)[0])
   }
 
   getCategory() {
@@ -109,7 +113,7 @@ export class NewsManagementTableComponent implements OnInit {
       this.loading = false;
       this.total = result.data.total;
       this.totalPage = Math.ceil(this.total / 10);
-      this.dataList = result.data.articleList;
+      this.dataList = result.data.articleVoList;
       this.displayData = this.dataList;
       this.displayData.forEach(item => {
         this.mapOfCheckedId[item.id] = false
@@ -130,7 +134,7 @@ export class NewsManagementTableComponent implements OnInit {
       this.loading = false;
       this.total = result.data.total;
       this.totalPage = Math.ceil(this.total / 10);
-      this.dataList = result.data.articleList;
+      this.dataList = result.data.articleVoList;
       this.displayData = this.dataList;
       this.displayData.forEach(item => {
         this.mapOfCheckedId[item.id] = false
@@ -376,7 +380,20 @@ export class NewsManagementTableComponent implements OnInit {
   publishNews(id: string) {
     this._modalService.confirm({
       nzTitle: '是否要发布该条资讯？',
-      nzOnOk: () => console.log('111')
+      nzOnOk: () => {
+        this.newsManagementService$.postNews(id).subscribe(result => {
+          this.searchData();
+          this._notification.success(
+            '发布成功！',
+            ''
+          )
+        }, error1 => {
+          this._notification.error(
+            '发生错误！',
+            `${error1.error}`
+          )
+        })
+      }
     })
   }
 
@@ -384,7 +401,20 @@ export class NewsManagementTableComponent implements OnInit {
   cancelNews(id: string) {
     this._modalService.confirm({
       nzTitle: '是否要将该条资讯取消发布？',
-      nzOnOk: () => console.log('111')
+      nzOnOk: () => {
+        this.newsManagementService$.cancelPostNews(id).subscribe(result => {
+          this.searchData();
+          this._notification.success(
+            '取消发布成功！',
+            ''
+          )
+        }, error1 => {
+          this._notification.error(
+            '发生错误！',
+            `${error1.error}`
+          )
+        })
+      }
     })
   }
 
@@ -418,7 +448,20 @@ export class NewsManagementTableComponent implements OnInit {
   recycleNews(id: string) {
     this._modalService.confirm({
       nzTitle: '是否要将该条资讯移入回收站？',
-      nzOnOk: () => console.log('111')
+      nzOnOk: () => {
+        this.newsManagementService$.recycleNews(id).subscribe(result => {
+          this.searchData();
+          this._notification.success(
+            '移入回收站成功！',
+            ''
+          )
+        }, error1 => {
+          this._notification.error(
+            '发生错误！',
+            `${error1.error}`
+          )
+        })
+      }
     })
   }
 

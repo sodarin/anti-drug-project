@@ -13,6 +13,7 @@ export class NotificationsComponent implements OnInit {
   pageIndex: number = 1;
   pageSize: number =8;
   total: number = 26;
+  loading: boolean = false;
 
 
   notification = [
@@ -33,7 +34,9 @@ export class NotificationsComponent implements OnInit {
   }
 
   search() {
+    this.loading = true;
     this.notificationservice.getNotifications('1',this.pageIndex, this.pageSize, 1).subscribe( result => {
+      this.loading = false;
       this.notification = result.data;
       this.total= result.data[0].jsonContents.totalNum;
     }, error1 => {

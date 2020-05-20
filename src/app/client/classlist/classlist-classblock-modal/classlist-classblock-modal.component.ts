@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ClassInf } from 'src/app/Test/classInf.module';
+
 import {
   Router,
 } from '@angular/router';

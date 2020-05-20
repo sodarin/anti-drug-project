@@ -1,12 +1,25 @@
 <div class="container">
   <h2>发表话题</h2>
   <nz-divider></nz-divider>
-  <h3>标题</h3>
-  <input style="width: 92%;" class="name-containing-input" nz-input placeholder="输入小组名称" [(ngModel)]="inputValue" />
-  <div class="introduction-edit-area" nz-row>
-    <h3 style="text-align: left; color: rgba(0, 0, 0, .85);" nz-col nzSpan="10">内容:</h3>
-    <quill-editor style="height: 240px;" nz-col nzSpan="22" [(ngModel)]="content"></quill-editor>
-  </div>
-  <button style="margin-top: 10%" nz-button nzType="primary">发布</button>
+  <form nz-form [formGroup]="threadCreatingForm">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="title">标题</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="标题不能为空！">
+        <input nz-input formControlName="title" id="title" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="content" nzRequired>内容：</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="内容不能为空！">
+        <quill-editor formControlName="content" id="content"></quill-editor>
+      </nz-form-control>
+    </nz-form-item>
+    <div nz-row>
+      <div nz-col [nzOffset]="6" [nzSm]="14" >
+        <button nz-button nzType="primary" (click)="createGroupThread()">发布</button>
+      </div>
+    </div>
+  </form>
+
 </div>
 

@@ -40,16 +40,23 @@
   </nz-list>
   <nz-divider style="margin: 10px;margin-left: 0;"></nz-divider>
   <div style="display: flex;flex-direction: row;justify-content:center;">
-    <nz-pagination [(nzPageIndex)]="currentpage" [nzTotal]="totalpage" (nzPageIndexChange)="onPageChange($event)">
+    <nz-pagination [(nzPageIndex)]="currentpage" [nzTotal]="totalpage" (nzPageIndexChange)="onPageChange()">
     </nz-pagination>
   </div>
 </div>
 
-<nz-modal [(nzVisible)]="uploadVisible" nzTitle="上传资料" (nzOnCancel)="handleCancel_upload()" (nzOnOk)="handleOk_upload()"
-  nzOkText='确定' nzCancelText='取消' nzMaskClosable="false">
-  <div class="editarea">
-    <quill-editor [styles]="{height: '250px'}" placeholder="请添加资料内容" [(ngModel)]="None"></quill-editor>
-  </div>
+<nz-modal [(nzVisible)]="uploadVisible" nzTitle="上传资料"
+  nzOkText='确定' (nzOnCancel)="handleCancel_upload()" nzCancelText='取消' nzMaskClosable="false" (nzOnOk)="handleOk_upload()" >
+  <nz-upload
+    nzType="drag"
+    [nzLimit]="1"
+    [nzAction]="'/material/uploadNormal?userId=' + userId" [nzCustomRequest]="customReq"
+  >
+    <p class="ant-upload-drag-icon">
+      <i nz-icon nzType="picture"></i>
+    </p >
+    <p class="ant-upload-text">可通过点击或拖拽上传文件</p >
+  </nz-upload>
 </nz-modal>
 
 
@@ -65,8 +72,6 @@
     <ng-template #tagPlaceHolder let-selectedList> and {{ selectedList.length }} more selected </ng-template>
   </div>
 </nz-modal>
-
-
 
 <nz-modal [(nzVisible)]="userShareVisible" nzTitle="分享资料" (nzOnCancel)="handleCancel_usershare()"
   (nzOnOk)="handleOk_usershare()" nzOkText='保存' nzCancelText='取消' nzMaskClosable="false">
@@ -86,40 +91,40 @@
   <div style="margin-top:10px;">
     <nz-tabset>
       <nz-tab nzTitle="分享用户">
-        <nz-table #basicTable [nzData]="listOfData">
-          <thead>
-            <tr>
-              <th>昵称</th>
-              <th>时间</th>
-              <th>可执行操作</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let data of myshareuser">
-              <td>将资料分享给{{ data.name }}</td>
-              <td>{{ data.date }}</td>
-              <td>
-                <a (click)="cancelShare()">取消分享</a>
-              </td>
-            </tr>
-          </tbody>
-        </nz-table>
-      </nz-tab>
-      <nz-tab nzTitle="历史纪录">
-        <nz-table #basicTable [nzData]="listOfData">
-          <thead>
-            <tr>
-              <th>操作</th>
-              <th>时间</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let data of sharehistory">
-              <td>{{ data.operation }}</td>
-              <td>{{ data.date }}</td>
-            </tr>
-          </tbody>
-        </nz-table>
+<!--        <nz-table #basicTable [nzData]="listOfData">-->
+<!--          <thead>-->
+<!--            <tr>-->
+<!--              <th>昵称</th>-->
+<!--              <th>时间</th>-->
+<!--              <th>可执行操作</th>-->
+<!--            </tr>-->
+<!--          </thead>-->
+<!--          <tbody>-->
+<!--            <tr *ngFor="let data of myshareuser">-->
+<!--              <td>将资料分享给{{ data.name }}</td>-->
+<!--              <td>{{ data.date }}</td>-->
+<!--              <td>-->
+<!--                <a (click)="cancelShare()">取消分享</a>-->
+<!--              </td>-->
+<!--            </tr>-->
+<!--          </tbody>-->
+<!--        </nz-table>-->
+<!--      </nz-tab>-->
+<!--      <nz-tab nzTitle="历史纪录">-->
+<!--        <nz-table #basicTable [nzData]="listOfData">-->
+<!--          <thead>-->
+<!--            <tr>-->
+<!--              <th>操作</th>-->
+<!--              <th>时间</th>-->
+<!--            </tr>-->
+<!--          </thead>-->
+<!--          <tbody>-->
+<!--            <tr *ngFor="let data of sharehistory">-->
+<!--              <td>{{ data.operation }}</td>-->
+<!--              <td>{{ data.date }}</td>-->
+<!--            </tr>-->
+<!--          </tbody>-->
+<!--        </nz-table>-->
       </nz-tab>
     </nz-tabset>
   </div>

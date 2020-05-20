@@ -10,6 +10,7 @@ import { NzMessageService } from 'ng-zorro-antd';
 export class FromSharingComponent implements OnInit {
 
   name: string;
+  None: any;
   dataList = [
     { id: "001", name: "Test1", date: "2020.2.4", type: "None" },
     { id: "002", name: "Test2", date: "2020.2.4", type: "None" },

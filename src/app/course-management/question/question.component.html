@@ -1,1 +1,88 @@
-<p>question works!</p>
+<div class="question-page">
+  <div class="header">
+    <h1>题目管理</h1>
+    <div style="display: inline-block">
+      <button nz-button nzType="primary" class="header-button"
+        (click)="navigateByUrl('/client/course/'+courseId+'/question_create/single_choice')"><i nz-icon nzType="plus"
+          nzTheme="outline"></i>单选题</button>
+      <button nz-button nzType="primary" class="header-button"
+        (click)="navigateByUrl('/client/course/'+courseId+'/question_create/mutiple_choice')"><i nz-icon nzType="plus"
+          nzTheme="outline"></i>多选题</button>
+      <button nz-button nzType="primary" class="header-button"
+        (click)="navigateByUrl('/client/course/'+courseId+'/question_create/essay')" disabled><i nz-icon nzType="plus"
+          nzTheme="outline"></i>问答题</button>
+      <button nz-button nz-dropdown [nzDropdownMenu]="operationsMenu" nzPlacement="bottomRight">
+        <i nz-icon nzType="caret-down" nzTheme="outline"></i>
+      </button>
+      <nz-dropdown-menu #operationsMenu="nzDropdownMenu">
+        <ul nz-menu nzSelectable>
+          <li nz-menu-item (click)="navigateByUrl('/client/course/'+courseId+'/question_create/choice')"><i nz-icon
+              nzType="plus" nzTheme="outline"></i>不定项选择题</li>
+          <li nz-menu-item (click)="navigateByUrl('/client/course/'+courseId+'/question_create/determine')">
+            <i nz-icon nzType="plus" nzTheme="outline"></i>判断题</li>
+          <li nz-menu-item (click)="navigateByUrl('/client/course/'+courseId+'/question_create/completion')" nzDisabled>
+            <i nz-icon nzType="plus" nzTheme="outline"></i>填空题</li>
+          <li nz-menu-item (click)="navigateByUrl('/client/course/'+courseId+'/question_create/material')" nzDisabled><i
+              nz-icon nzType="plus" nzTheme="outline"></i>材料题</li>
+        </ul>
+      </nz-dropdown-menu>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+  <div class="select-group">
+    <nz-select nzPlaceHolder="请选择题型" style="width:15%;" class="form-item" [(ngModel)]="type" nzAllowClear>
+      <nz-option *ngFor="let item of listOfQuestionTypes" [nzValue]="item.value" [nzLabel]="item.label"></nz-option>
+    </nz-select>
+    <input type="text" nz-input placeHolder="请输入关键字" style="width:20%;" class="form-item" [(ngModel)]="keyWord">
+    <button nz-button class="form-item" nzType="primary" (click)="searchData()">搜索</button>
+  </div>
+  <div class="content">
+    <nz-table #questionListTable [nzData]="questionList" [nzTotal]="total" [nzLoading]="loading" [nzPageSize]="10"
+      [(nzPageIndex)]="pageIndex" [nzFrontPagination]="false" (nzPageIndexChange)="searchData()">
+      <thead>
+        <tr>
+          <th nzShowCheckbox [(nzChecked)]="isAllChecked" (nzCheckedChange)="checkAll($event)"></th>
+          <th width="35%">题干</th>
+          <th width="15%">类型</th>
+          <th>最后更新</th>
+          <th width="20%">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of questionListTable.data">
+          <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="check(data.id)"></td>
+          <td [innerHTML]="data.stem"></td>
+          <td>{{ questiontype[data.type] }}</td>
+          <td>{{ data.updatedTime * 1000 | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+          <td><a nz-popover [nzPopoverTitle]="popoverTitle" [nzPopoverContent]="popoverContent">预览</a>
+            <ng-template #popoverTitle>
+              <span [innerHTML]="data.stem"></span>
+            </ng-template>
+            <ng-template #popoverContent>
+              <div class="question-body">
+                <div>
+                  <nz-tag [nzColor]="'blue'">分值:</nz-tag>{{data.score==null?'无':data.score}}
+                </div>
+              </div>
+              <div class="question-answer">
+                <nz-tag [nzColor]="'blue'">正确答案:</nz-tag>{{data.answer==null?'无':data.answer}}
+              </div>
+              <div class="question-analysis">
+                <nz-tag [nzColor]="'blue'">解析:</nz-tag> <span>{{data.analysis==null?'无解析':data.analysis}}</span>
+              </div>
+            </ng-template>
+            <nz-divider nzType="vertical"></nz-divider>
+            <a (click)="navigateByUrl('/client/course/'+courseId+'/question_create/'+data.type+'/'+data.id)">编辑 </a>
+            <nz-divider nzType="vertical"></nz-divider>
+            <a (click)="confirmDelete(data.id)">删除</a>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+  <div>
+    <button nz-button nzType="danger" (click)="confirmDeleteList()"><i nz-icon nzType="delete"
+        nzTheme="outline"></i>删除</button>
+    <span class="pull-right color-grey">共{{total}}题</span>
+  </div>
+</div>

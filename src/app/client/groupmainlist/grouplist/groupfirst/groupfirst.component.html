@@ -1,50 +1,41 @@
 <div class="filter-condition">
-  <nz-select class="select-control" [(ngModel)]="selectedStateFilterValue" nzAllowClear nzPlaceHolder="全部/精华">
-    <nz-option nzValue="all" nzLabel="全部"></nz-option>
-    <nz-option nzValue="special" nzLabel="精华"></nz-option>
-  </nz-select>
+  <button nz-button (click)="checkAll()" [nzType]="nzValueQB == 1? 'primary': 'default'">全部</button>
+  <button nz-button (click)="checkElite()" [nzType]="nzValueJ == 1? 'primary': 'default'">精华</button>
   <nz-divider nzType="vertical"></nz-divider>
-  <nz-select class="select-control" [(ngModel)]="selectedAttributeFilterValue" nzAllowClear nzPlaceHolder="排序">
-    <nz-option nzValue="new" nzLabel="最新发帖"></nz-option>
-    <nz-option nzValue="last" nzLabel="最后回复"></nz-option>
-    <nz-option nzValue="number" nzLabel="回复数"></nz-option>
+  <nz-select class="select-control" [(ngModel)]="selectValue" nzAllowClear nzPlaceHolder="排序">
+    <nz-option nzValue="最新发帖" nzLabel="最新发帖"></nz-option>
+    <nz-option nzValue="最后回复" nzLabel="最后回复"></nz-option>
+    <nz-option nzValue="回复数" nzLabel="回复数"></nz-option>
   </nz-select>
 </div>
 
 <nz-divider></nz-divider>
 <nz-list
   class="demo-loadmore-list"
-  [nzDataSource]="list"
+  [nzDataSource]="ThreadList"
   [nzItemLayout]="'horizontal'"
-  [nzRenderItem]="item"
-  [nzPagination]="pagination"
+  [nzRenderItem]="itempost"
   [nzLoading]="loading"
 >
-  <tr>
-    <th
-      [(nzChecked)]="isAllDisplayDataChecked"
-      (nzCheckedChange)="checkAll($event)"
-    ></th>
-  </tr>
 
-  <ng-template #item let-item>
+
+  <ng-template #itempost let-itempost>
     <nz-list-item
     >
-      <nz-skeleton [nzAvatar]="false" [nzActive]="true" [nzTitle]="false"   [nzLoading]="item.loading">
+      <nz-skeleton [nzAvatar]="false" [nzActive]="true" [nzTitle]="false"   [nzLoading]="itempost.loading">
         <nz-list-item-meta
           [nzTitle]="nzTitle"
           [nzAvatar]="nzAvater"
           [nzDescription]="nzDescription"
 
+
         >
-          <th      [(nzChecked)]="mapOfCheckedId[data.id]"
-                   (nzCheckedChange)="refreshStatus()"></th>
           <ng-template #nzTitle>
-            <a >{{item.name.last }} <nz-tag nzMode="checkable" [nzChecked]="true" (nzCheckedChange)="checkChange($event)">置顶</nz-tag>
-              <nz-tag nzMode="checkable" [nzChecked]="true" (nzCheckedChange)="checkChange($event)" nzColor="red">精华</nz-tag></a>
+            <div ><a (click)="navigateByUrl('/client/groupmainlist/' +this.groupId+'/groupthread/' + itempost.threadID)">{{itempost?.threadTitle }}</a> <span *ngIf="itempost?.isStick==1"><nz-tag  nzMode="checkable" [nzChecked]="true" >置顶</nz-tag></span>
+            <span *ngIf="itempost?.isElite==1"> <nz-tag  nzMode="checkable" [nzChecked]="true"  nzColor="red">精华</nz-tag></span></div>
           </ng-template>
           <ng-template #nzAvater>
-            <nz-avatar [nzShape]="'square'" [nzSize]="64" nzText="回复" >
+            <nz-avatar [nzShape]="'square'" [nzSize]="64" [nzText]="itempost?.postNum + '\n' + '回复'" >
 
             </nz-avatar>
           </ng-template>
@@ -52,9 +43,11 @@
             <span ><nz-avatar nzSize="small" nzIcon="user"
                               nz-popover
                               [nzPopoverTitle]="tem"
-                              [nzPopoverContent]="content">
+                              [nzPopoverContent]="content"
+                              (mouseenter)="getUserDetail(itempost?.userID)"
+            >
                <ng-template #tem>
-                    <nz-card style="width:300px;"  [nzActions]="[actionSetting, actionEdit,actionShow]">
+                    <nz-card style="  width:300px;"  [nzActions]="[ actionEdit,actionShow]">
         <nz-card-meta
           [nzTitle]="nzTitle"
           [nzDescription]="nzDescription"
@@ -62,10 +55,19 @@
         ></nz-card-meta>
       </nz-card>
       <ng-template #nzTitle>
-        <span>{{name}} <button class="onebutton" nzType="primary" (click)="focus()"  >关注</button></span>
+        <div>{{detail?.nickName}}
+          <span *ngIf="detail?.id!=userId">
+          <span *ngIf="isfocus==false">
+                      <button nzSize="small" style="width: 40px; height: 20px; font-size: 12px; float: right;" nz-button class="onebutton" nzType="primary"  (click)="focus()" >关注</button>
+                    </span>
+                    <span *ngIf="isfocus==true">
+                      <button nzSize="small" style="width: 40px; height: 20px; font-size: 12px; float: right;" nz-button class="onebutton" nzType="primary" (click)="cancelfocus()" >已关注</button>
+                  </span>
+            </span>
+        </div>
       </ng-template>
       <ng-template #nzDescription>
-        <span>{{name}} <button style="float:right;" nzType="primary" (click)="message()" >私信</button></span>
+        <div>{{detail?.job}} <span *ngIf="detail?.id!=userId"><button nz-button style="width: 40px; height: 20px; font-size: 12px; float: right;" nzSize="small" nzType="primary" (click)="message(detail, messageModal)">私信</button></span></div>
        </ng-template>
       <ng-template #avatarTemplate>
         <nz-avatar nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png">
@@ -74,29 +76,39 @@
           </ng-template-->
         </nz-avatar>
       </ng-template>
-      <ng-template #actionSetting>
-        <a>{{study}}</a>
-        <p>在学</p>
-      </ng-template>
       <ng-template #actionEdit>
-        <a>{{focuson}}</a>
+        <a>{{detail?.followedNum}}</a>
         <p>关注</p>
       </ng-template>
                 <ng-template #actionShow>
-        <a>{{fans}}</a>
+        <a>{{detail?.fansNum}}</a>
         <p>粉丝</p>
       </ng-template>
                   </ng-template>
               <ng-template #content>
-                <a style="color: gray">暂没有签名</a>
+                <a style="color: gray">{{detail?.signature}}</a>
               </ng-template>
-            </nz-avatar><b >发起了话题 · {{date}} · 最后回复{{name}} · {{date1}}</b></span>
+            </nz-avatar><b >{{itempost?.userName}}发起了话题 · {{itempost?.createdTime}} · 最后回复{{itempost?.lastPostUserName}} · {{itempost?.updatedTime}}</b></span>
           </ng-template>
           </nz-list-item-meta>
       </nz-skeleton>
     </nz-list-item>
   </ng-template>
-  <ng-template #pagination>
-    <nz-pagination [nzPageIndex]="1" [nzTotal]="50" (nzPageIndexChange)="loadData($event)"></nz-pagination>
-  </ng-template>
 </nz-list>
+<ng-template #messageModal>
+  <form nz-form [formGroup]="threadCreatingForm">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="title">收件人</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="标题不能为空！">
+        <input [disabled]="true" nz-input formControlName="title" id="title" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>内容</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="内容不能为空！">
+        <quill-editor formControlName="content"></quill-editor>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</ng-template>
+

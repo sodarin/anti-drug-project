@@ -1,5 +1,4 @@
 import { Component, OnInit,EventEmitter } from '@angular/core';
-import { tag } from 'src/app/Test/tag.module';
 @Component({
   selector: 'app-classification-list',
   templateUrl: './classification-list.component.html',
@@ -10,7 +9,7 @@ import { tag } from 'src/app/Test/tag.module';
 export class ClassificationListComponent implements OnInit {
 
   label:string = "";
-  list:tag[]=[];
+  list = [];
   selectkey:boolean[]=[];
   layer:number = -1;
   TagClick: EventEmitter<string[]>;

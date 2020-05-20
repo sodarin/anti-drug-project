@@ -16,6 +16,7 @@ export class GroupsearchComponent implements OnInit {
   detail:[];
   toId:string
   isfocus:boolean;
+  leader: string;
 
   searchValue: string = '';
   groupId: string;

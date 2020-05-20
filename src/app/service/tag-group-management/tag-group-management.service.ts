@@ -9,28 +9,10 @@ export class TagGroupManagementService {
 
   constructor(private _http: HttpClient) { }
 
-  getTagGroupList(targetPage: number, pageSize: number): Observable<any> {
-    return this._http.post(`/tagGroup/getIndexTagGroup`, {
-      pageSize: pageSize,
-      pageNum: targetPage,
-    })
-  }
-  filterTagGroupList(targetPage: number, pageSize: number, filterOptions: any): Observable<any> {
-    return this._http.post(`/tagGroup/getIndexTagGroup`, {
-      pageSize: pageSize,
-      pageNum: targetPage,
-      searchType: filterOptions.searchType,
-      searchParameter: filterOptions.searchParameter,
-      searchTimeType: filterOptions.searchTimeType,
-      starTime: filterOptions.starTime,
-      endTime: filterOptions.endTime,
-      role: filterOptions.role
-    })
+  getTagGroupList(): Observable<any> {
+    return this._http.get(`/info/infoback/getTagGroup`)
   }
 
-  getTagGroupDetailById(tagGroupId: string): Observable<any> {
-    return this._http.get(`/tagGroup/getTagGroupDetail?tagId=${tagGroupId}`)
-  }
 
   updateTagGroupDetail(
     tagId: string, name: string

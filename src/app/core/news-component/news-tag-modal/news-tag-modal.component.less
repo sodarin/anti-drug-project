@@ -16,7 +16,6 @@ nz-header {
 //}
 
 nz-content {
-  background: #fff;
   min-height: 120px;
   line-height: 120px;
   display: flex;
@@ -26,10 +25,13 @@ nz-content {
 
 .left-content {
   width: 60%;
+  margin-bottom: 20px;
 }
 
 .right-content {
+  margin-top: 0px;
   width: 35%;
+  margin-bottom: 80px;
 }
 
 
@@ -44,11 +46,7 @@ nz-layout:last-child {
   margin: 0;
 }
 
-.card{
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
+
 
 :host ::ng-deep .ant-card {
   height: 200px;
@@ -57,5 +55,12 @@ nz-layout:last-child {
   height: 100px;
 }
 
+.list-area {
+  background-color: #ffffff;
+  padding: 2% 2%;
+}
 
+.demo-loadmore-list {
+  min-height: 350px;
+}
 

@@ -58,13 +58,13 @@ export class AdminClassRatingManagementComponent implements OnInit {
     this.pageIndex = 1;
     this.adminReviewService$.getClassReviews(1, 10, this.filterOptions).subscribe(result => {
       this.loading = false;
-      this.total = result[0].total;
+      this.total = result.data.total;
       this.totalPage = Math.ceil(this.total / 10);
-      this.dataList = result;
+      this.dataList = result.data.backGroundClassroomReviewList;
       this.displayData = this.dataList;
       this.displayData.forEach(item => {
-        this.mapOfEllipsis[item.messageId] = true;
-        this.mapOfCheckedId[item.messageId] = false
+        this.mapOfEllipsis[item.reviewId] = true;
+        this.mapOfCheckedId[item.reviewId] = false
       });
       this.isAllDisplayDataChecked = false;
       this.isIndeterminate = false;
@@ -80,13 +80,13 @@ export class AdminClassRatingManagementComponent implements OnInit {
     this.loading = true;
     this.adminReviewService$.getClassReviews(pageIndex, 10, this.filterOptions).subscribe(result => {
       this.loading = false;
-      this.total = result[0].totalUser;
+      this.total = result.data.total;
       this.totalPage = Math.ceil(this.total / 10);
-      this.dataList = result;
+      this.dataList = result.data.backGroundClassroomReviewList;
       this.displayData = this.dataList;
       this.displayData.forEach(item => {
-        this.mapOfEllipsis[item.messageId] = true;
-        this.mapOfCheckedId[item.messageId] = false
+        this.mapOfEllipsis[item.reviewId] = true;
+        this.mapOfCheckedId[item.reviewId] = false
       });
       this.isAllDisplayDataChecked = false;
       this.isIndeterminate = false;
@@ -98,16 +98,20 @@ export class AdminClassRatingManagementComponent implements OnInit {
     })
   }
   checkAll(value: boolean): void {
-    this.displayData.forEach(item => (this.mapOfCheckedId[item.id] = value));
+    this.displayData.forEach(item => (this.mapOfCheckedId[item.reviewId] = value));
     this.refreshStatus();
   }
 
   refreshStatus(): void {
     this.isAllDisplayDataChecked = this.displayData
-      .every(item => this.mapOfCheckedId[item.id]);
+      .every(item => this.mapOfCheckedId[item.reviewId]);
     this.isIndeterminate =
-      this.displayData.some(item => this.mapOfCheckedId[item.id]) &&
+      this.displayData.some(item => this.mapOfCheckedId[item.reviewId]) &&
       !this.isAllDisplayDataChecked;
+  }
+
+  navigateTo(url: string) {
+    window.open(url, '_blank')
   }
 
   // 折叠和展开内容
@@ -133,8 +137,8 @@ export class AdminClassRatingManagementComponent implements OnInit {
     this.isOperating = true;
     let deleteList = [];
     this.displayData.forEach(item => {
-      if (this.mapOfCheckedId[item.id])
-        deleteList.push(item.id)
+      if (this.mapOfCheckedId[item.reviewId])
+        deleteList.push(item.reviewId)
     });
     this.adminReviewService$.deleteClassReviewList(deleteList).subscribe(result => {
       this.isOperating = false;

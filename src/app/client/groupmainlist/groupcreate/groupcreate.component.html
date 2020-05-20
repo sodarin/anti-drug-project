@@ -1,17 +1,26 @@
 <div class="container">
   <h2>创建小组</h2>
   <nz-divider></nz-divider>
-  <h3>小组名称</h3>
-  <div nz-row>
-    <input style="width: 715px;" class="name-containing-input" nz-input placeholder="输入小组名称" [(ngModel)]="inputValue" nz-col nzSpan="22" />
-  </div>
-  <div class="introduction-edit-area" nz-row>
-    <h3>小组介绍:</h3>
-    <quill-editor nz-col nzSpan="22" style="height: 240px;" [(ngModel)]="content"></quill-editor>
-  </div>
-  <div>
-    <button style="margin-top: 10%;" nz-button nzType="primary">创建</button>
-  </div>
+  <form nz-form [formGroup]="threadCreatingForm">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="title">小组名称：</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="标题不能为空！">
+        <input nz-input formControlName="title" id="title" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="content" nzRequired>小组介绍：</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="内容不能为空！">
+        <quill-editor formControlName="content" id="content"></quill-editor>
+      </nz-form-control>
+    </nz-form-item>
+    <div nz-row>
+      <div nz-col [nzOffset]="6" [nzSm]="14" >
+        <button nz-button nzType="primary" (click)="addNewGroup()">创建</button>
+      </div>
+    </div>
+  </form>
+
 </div>
 
 

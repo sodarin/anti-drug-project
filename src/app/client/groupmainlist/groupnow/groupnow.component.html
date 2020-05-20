@@ -1,17 +1,18 @@
 <div>
+  <h3>热门小组</h3>
   <nz-divider></nz-divider>
   <nz-list
     class="demo-loadmore-list"
-    [nzDataSource]="list"
+    [nzDataSource]="hotGroupList"
     [nzItemLayout]="'horizontal'"
-    [nzRenderItem]="item"
+    [nzRenderItem]="itemhot"
   >
 
 
-    <ng-template #item let-item>
+    <ng-template #itemhot let-itemhot>
       <nz-list-item
       >
-        <nz-skeleton [nzAvatar]="false" [nzActive]="true" [nzTitle]="false"   [nzLoading]="item.loading">
+        <nz-skeleton [nzAvatar]="false" [nzActive]="true" [nzTitle]="false"   [nzLoading]="itemhot.loading">
           <nz-list-item-meta
             [nzTitle]="nzTitle"
             [nzAvatar]="nzAvater"
@@ -19,15 +20,15 @@
 
           >
             <ng-template #nzTitle>
-              <a (click)="navigateByUrl('/client/groupmainlist/grouplist')" >{{name}} </a>
+              <a (click)="navigateByUrl('/client/groupmainlist/' + itemhot.id)" >{{itemhot.groupTitle}} </a>
             </ng-template>
             <ng-template #nzAvater>
               <nz-avatar [nzShape]="'square'" [nzSize]="64" nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png">  </nz-avatar>
             </ng-template>
             <ng-template #nzDescription>
                     <span >
-                      <b> <i nz-icon nzType="team" ></i>{{team}}</b>
-                     <b> <i nz-icon nzType="message" ></i>{{message}}</b>
+                      <b> <i nz-icon nzType="team" ></i>{{itemhot.memberNumber}}</b>
+                     <b> <i nz-icon nzType="message" ></i>{{itemhot.threadNumber}}</b>
                     </span>
             </ng-template>
           </nz-list-item-meta>
@@ -35,5 +36,103 @@
       </nz-list-item>
     </ng-template>
   </nz-list>
+  <nz-divider></nz-divider>
 
+  <h3>最近话题</h3>
+  <nz-divider></nz-divider>
+  <nz-list
+    class="demo-loadmore-list"
+    [nzDataSource]="RecentThreadList"
+    [nzItemLayout]="'horizontal'"
+    [nzRenderItem]="recentitem"
+    [nzLoading]="loading"
+
+  >
+
+
+    <ng-template #recentitem let-recentitem>
+      <nz-list-item
+      >
+        <nz-skeleton [nzAvatar]="false" [nzActive]="true" [nzTitle]="false"   [nzLoading]="recentitem.loading">
+          <nz-list-item-meta
+            [nzTitle]="nzTitle"
+            [nzAvatar]="nzAvater"
+            [nzDescription]="nzDescription"
+
+          >
+            <ng-template #nzTitle>
+              <a (click)="navigateByUrl('/client/groupmainlist/' + recentitem.groupId+'/groupthread/' + recentitem.threadId)">{{ recentitem.threadTitle }} </a>
+            </ng-template>
+            <ng-template #nzAvater>
+                <nz-avatar [nzSize]="64" [nzText]="recentitem.postNum + '\n' + '回复'" [nzShape]="'square'"></nz-avatar>
+            </ng-template>
+            <ng-template #nzDescription>
+            <span ><nz-avatar nzSize="small" nzIcon="user"
+                              (mouseenter)="getUserDetail(recentitem.userId)"
+                              nz-popover
+                              [nzPopoverTitle]="tem"
+                              [nzPopoverContent]="content"
+            >
+              <ng-template #tem>
+                    <nz-card style="width:300px;"  [nzActions]="[ actionEdit,actionShow]">
+        <nz-card-meta
+          [nzTitle]="nzTitle"
+          [nzDescription]="nzDescription"
+          [nzAvatar]="avatarTemplate"
+        ></nz-card-meta>
+      </nz-card>
+      <ng-template #nzTitle>
+        <div>{{detail?.nickName}} <span *ngIf="detail?.id !=userID">
+          <span *ngIf="isfocus==false">
+                      <button nzSize="small" style="float: right; width: 40px; height: 20px; font-size: 12px; " nz-button class="onebutton" nzType="primary" (click)="focus()" >关注</button>
+                    </span>
+                    <span *ngIf="isfocus==true">
+                      <button nzSize="small" style="float:right;width: 40px; height: 20px; font-size: 12px; " nz-button class="onebutton"    nzType="primary"  (click)="cancelfocus()" >已关注</button>
+                  </span>
+          </span>
+        </div>
+      </ng-template>
+      <ng-template #nzDescription>
+        <div>{{detail?.job}}
+          <span *ngIf="detail?.id!=userID"><button nz-button style="float: right ; width: 40px; height: 20px; font-size: 12px; " nzSize="small" nzType="primary" (click)="message(detail, messageModal)">私信</button></span>
+        </div>
+       </ng-template>
+      <ng-template #avatarTemplate>
+        <nz-avatar nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
+      </ng-template>
+      <ng-template #actionEdit>
+        <a>{{detail?.followedNum}}</a>
+        <p>关注</p>
+      </ng-template>
+                <ng-template #actionShow>
+        <a>{{detail?.fansNum}}</a>
+        <p>粉丝</p>
+      </ng-template>
+                  </ng-template>
+              <ng-template #content>
+                <a style="color: gray">{{detail?.signature}}</a>
+              </ng-template>
+            </nz-avatar><b >{{recentitem.userName}} 发起了话题 · {{recentitem.updatedTime}} · {{recentitem.groupName}}</b></span>
+            </ng-template>
+          </nz-list-item-meta>
+        </nz-skeleton>
+      </nz-list-item>
+    </ng-template>
+  </nz-list>
+  <ng-template #messageModal>
+    <form nz-form [formGroup]="threadCreatingForm">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="title">收件人</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="标题不能为空！">
+          <input [disabled]="true" nz-input formControlName="title" id="title" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="content" nzRequired>内容</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="内容不能为空！">
+          <quill-editor formControlName="content" id="content"></quill-editor>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-template>
 </div>

@@ -55,7 +55,7 @@ export class ManagementDashboardComponent implements OnInit {
 
   getReviewList() {
     this.classroomManagement$.getClassroomReview(this.classroomId, 1, 5).subscribe(result => {
-      this.commentList = result.data;
+      this.commentList = result.data.classReviewList;
     }, error1 => {
       this._notification.error(
         '发生错误！',

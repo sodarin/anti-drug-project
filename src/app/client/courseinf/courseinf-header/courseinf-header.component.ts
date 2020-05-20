@@ -10,33 +10,8 @@ import {TestuserService} from '../../../Test/testuser.service'
   outputs: ["joinCourse", "exitCourse"]
 })
 export class CourseinfHeaderComponent implements OnInit {
-  courseid = "0"
-  currentcourse= {
-    id: '001',
-    name: '首领选举(记得加确认退出框,私信框)',
-    cover: "../../../../assets/img/timg.jpg",
-    //课程数
-    course_num: 10,
-    //二维吗
-    qrcode: "../../../../assets/img/timg.jpg",
-    //课程是否完结
-    isfinish: 'true',
-    //参与数
-    participants: "10",
-    //讨论数
-    discussions: "10",
-    //热度
-    heat: "",
-    //更新日期
-    update_date: "",
-    //教学计划
-    teachingplan: "默认教学计划",
-    //时效
-    term: "永久有效",
-    //承诺服务
-    commitmentservice: [false, true, true, true],
-    serializemode:"none"
-  };
+  courseid = "0";
+  currentcourse: any;
   user: any;
   teaching_plan:any;
 
@@ -97,7 +72,6 @@ export class CourseinfHeaderComponent implements OnInit {
 
   setcurrentcourse(res: any) {
     this.currentcourse = res.data;
-    console.log(this.currentcourse.serializemode)
 
     if (this.currentcourse.cover == "") {
       this.currentcourse.cover = "../../../../assets/img/timg.jpg";

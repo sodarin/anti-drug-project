@@ -1,11 +1,11 @@
-<nz-list [nzDataSource]="courses" [nzRenderItem]="courseitem" [nzItemLayout]="'horizontal'" [nzLoading]="loading">
+<nz-list [nzDataSource]="courses" [nzRenderItem]="courseitem" [nzItemLayout]="'horizontal'">
     <ng-template #courseitem let-courseitem>
         <nz-list-item>
             <nz-list-item-meta [nzTitle]="nzTitle">
                 <ng-template #nzTitle>
                     <div class="listitem courselink">
                         <img width="200" alt="logo"
-                            src="{{courseitem.smallAvatar}}" />
+                            [src]="courseitem.smallAvatar" />
                         <div style="margin-left: 20px;">
                             <p><a (click)="navigateByUrl('/client/courseinf/'+courseitem.courseId)"><span
                                         style="font-size: 20px;">{{ courseitem.courseSetTitle }}</span></a>

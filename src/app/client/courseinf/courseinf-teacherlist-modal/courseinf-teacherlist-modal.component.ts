@@ -18,10 +18,13 @@ export class CourseinfTeacherlistModalComponent implements OnInit {
   PrivatelettertVisible = false;
   PrivatelettertTitle: string="";
   PrivateletterContent: string="";
+  loading: boolean = false;
   constructor(private courseinfservice: CourseInfService,private notification: NzNotificationService,private route: Router) { }
 
   ngOnInit() {
+    this.loading = true;
     this.courseinfservice.getCoursesTeachers(this.courseid).subscribe((res: any) => {
+      this.loading = false;
       this.setCourseTeachers(res);
     }, error => {
       this.notification.create(

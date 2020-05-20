@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from '@angular/router';
+import {NzNotificationService} from 'ng-zorro-antd';
+import {MyteachingService} from '../../../../service/myteaching/myteaching.service';
 
 @Component({
   selector: 'app-class-course',
@@ -15,32 +17,20 @@ export class ClassCourseComponent implements OnInit {
   loading: boolean = false;
   pageIndex: number = 1;
 
+  dataList = [];
+  displayData = [];
+  totalPage: number;
+
+   teacherId:string='1';
   constructor(
-    private routerInfo: ActivatedRoute
+    private _notification: NzNotificationService,
+    private MyteachingService$:MyteachingService,
+    private router: Router
   ) { }
 
   ngOnInit() {
-    this.recordList = [
-      {
-        name: '班级课程1',
-        course: '这是一个班级课程',
-        state: '已关闭',
 
-      },
-      {
-        name: '班级课程2',
-        course: '这是一个班级课程',
-        state: '已关闭',
-
-      },
-      {
-        name: '班级',
-        course: '这是一个班级课程',
-        state: '已关闭',
-
-      }
-
-    ]
+    this.searchData()
   }
 
   filterStudent() {
@@ -48,7 +38,26 @@ export class ClassCourseComponent implements OnInit {
   }
 
   searchData(pageIndex: number = this.pageIndex) {
+    this.recordList = [];
+    this.loading = true;
+    this.MyteachingService$.getCourseList(pageIndex,8,this.teacherId,"classCourse").subscribe(result=>{
+        this.loading = false;
+        this.dataList = result.data;
+        this.recordList = this.dataList;
+        this.total = this.recordList[0].totalNum;
+      },
+      error1 => {
+        this.loading = false;
+        this._notification.create(
+          'error',
+          '发生错误',
+          `${error1.error}`
+        )
 
+      })
   }
 
+  navigatTo(url: string) {
+    this.router.navigateByUrl(url)
+  }
 }

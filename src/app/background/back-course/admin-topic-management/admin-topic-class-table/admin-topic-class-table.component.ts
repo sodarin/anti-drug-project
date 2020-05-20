@@ -85,8 +85,8 @@ export class AdminTopicClassTableComponent implements OnInit {
   deleteData() {
     let deleteIdList = [];
     this.displayData.forEach(item => {
-      if (this.mapOfCheckedId[item.id])
-        deleteIdList.push(item.id)
+      if (this.mapOfCheckedId[item.threadId])
+        deleteIdList.push(item.threadId)
     });
     this.isOperating = true;
     this.adminTopicClassService$.deleteClassThreadInBatch(deleteIdList).subscribe(result => {
@@ -135,16 +135,15 @@ export class AdminTopicClassTableComponent implements OnInit {
 
   // 全选功能
   checkAll(value: boolean): void {
-    this.displayData.filter(item => !item.disabled).forEach(item => (this.mapOfCheckedId[item.id] = value));
+    this.displayData.forEach(item => (this.mapOfCheckedId[item.threadId] = value));
     this.refreshStatus();
   }
 
   refreshStatus(): void {
     this.isAllDisplayDataChecked = this.displayData
-      .filter(item => !item.disabled)
-      .every(item => this.mapOfCheckedId[item.id]);
+      .every(item => this.mapOfCheckedId[item.threadId]);
     this.isIndeterminate =
-      this.displayData.filter(item => !item.disabled).some(item => this.mapOfCheckedId[item.id]) &&
+      this.displayData.some(item => this.mapOfCheckedId[item.threadId]) &&
       !this.isAllDisplayDataChecked;
   }
   // 跳转到班级话题页面
@@ -171,10 +170,15 @@ export class AdminTopicClassTableComponent implements OnInit {
 
 
   delete(id: string): void {
+    let deleteList = [];
+    deleteList.push(id);
     this._modalService.confirm({
       nzTitle: '是否要删除该条记录？',
       nzOnOk: () => {
-        this.adminTopicClassService$.deleteClassThread(id).subscribe(result => {
+        this.adminTopicClassService$.deleteClassThreadInBatch(deleteList).subscribe(result => {
+          if (this.displayData.length == 1) {
+            this.pageIndex -- ;
+          }
           this.searchData();
           this._notification.create(
             'success',

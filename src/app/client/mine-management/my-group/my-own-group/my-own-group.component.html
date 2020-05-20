@@ -1,8 +1,8 @@
-<nz-list [nzDataSource]="MyGroupList" [nzRenderItem]="item" [nzGrid]="{ gutter: 16, span: 6 }">
+<nz-list [nzDataSource]="MyGroupList" [nzRenderItem]="item" [nzGrid]="{ gutter: 4, xs: 12, sm: 12, md: 8, lg: 8, xl: 6 }">
   <ng-template #item let-item>
     <nz-list-item [nzContent]="nzContent">
       <ng-template #nzContent>
-        <nz-card style="width: 180px;margin-top: 16px" [nzLoading]="loading" nzType="vertical" [nzCover]="coverTemplate">
+        <nz-card style="width: 180px;margin-top: 16px" [nzLoading]="loading" nzType="vertical">
           <nz-card-meta
             [nzAvatar]="avatarTemplate"
             [nzTitle] = "item.groupTitle"
@@ -22,5 +22,5 @@
   </ng-template>
 </nz-list>
 <ng-template #avatarTemplate>
-  <nz-avatar nzIcon="user"></nz-avatar>
+  <nz-avatar nzIcon="user" [nzSrc]="'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'"></nz-avatar>
 </ng-template>

@@ -31,7 +31,7 @@
             <nz-avatar nzIcon="user" nzSrc="{{item.fromSmallAvatar}}"
                        [nzSize]="50">
             </nz-avatar>
-            <a  (click)="read(item.messageId)"[routerLink]="['/client/tidings/privatechat',item.fromNickName]">
+            <a  (click)="read(item.messageId)" [routerLink]="['/client/tidings/privatechat',item.fromNickName]">
               <nz-list-item-meta
                 [nzTitle]="nzTitle"
                 nzDescription="{{item.createdTime*1000 | date:'yyyy-MM-dd HH:mm:ss'}}"

@@ -5,8 +5,8 @@
   <nz-divider></nz-divider>
   <div class="page-content">
     <div nz-row nzType="flex" nzJustify="space-around">
-      <div nz-col nzSpan="4">
-        <nz-card  nzHoverable style="width:200px; height:300px;" [nzCover]="coverTemplate" >
+      <div nz-col nzSpan="6">
+        <nz-card [ngStyle]="{'border-color': type == 'normal'? '#108ee9': 'rgba(0, 0, 0)', 'height': '300px'}" class="choice" (click)="changeType('normal')  " nzHoverable [nzCover]="coverTemplate">
           <nz-card-meta
             nzTitle="普通课程"
             nzDescription="支持视频、图文、PPT等各种形式，支持作业、笔记等多个学习工具的课程"
@@ -16,19 +16,8 @@
           <img  src="https://gss0.baidu.com/-4o3dSag_xI4khGko9WTAnF6hhy/zhidao/wh%3D600%2C800/sign=7dda12de79094b36dbc713eb93fc50e1/503d269759ee3d6d198c6bca4c166d224f4ade6d.jpg" />
         </ng-template>
       </div>
-      <div nz-col nzSpan="4">
-        <nz-card  nzHoverable style="width:200px; height:300px;" [nzCover]="coverTemplate" >
-          <nz-card-meta
-            nzTitle="直播课程"
-            nzDescription="以直播为教学形式的，支持多个学习工具的课程"
-          ></nz-card-meta>
-        </nz-card>
-        <ng-template #coverTemplate>
-          <img  src="https://gss0.baidu.com/9fo3dSag_xI4khGko9WTAnF6hhy/zhidao/wh%3D600%2C800/sign=9a16d5c53eadcbef016176009c9f02e5/a1ec08fa513d2697135ae45c5afbb2fb4316d822.jpg" />
-        </ng-template>
-      </div>
-      <div nz-col nzSpan="4">
-        <nz-card  nzHoverable style="width:200px; height:300px;" [nzCover]="coverTemplate" >
+      <div nz-col nzSpan="6">
+        <nz-card [ngStyle]="{'border-color': type == 'open'? '#108ee9': 'rgba(0, 0, 0)', 'height': '300px'}" class="choice"  (click)="changeType('open')"  nzHoverable [nzCover]="coverTemplate" >
           <nz-card-meta
             nzTitle="录播公开课"
             nzDescription="免费、无门槛观看的视频课程，主要用于营销推广"
@@ -37,27 +26,14 @@
         <ng-template #coverTemplate>
           <img  src="https://gss0.baidu.com/94o3dSag_xI4khGko9WTAnF6hhy/zhidao/wh%3D600%2C800/sign=5189a9fe34c79f3d8fb4ec368a91e129/203fb80e7bec54e7ae65f61fb6389b504fc26a22.jpg" />
         </ng-template>
-
-      </div>
-      <div nz-col nzSpan="4">
-
-        <nz-card nzHoverable  style="width:200px; height:300px;" [nzCover]="coverTemplate" >
-          <nz-card-meta
-            nzTitle="直播公开课"
-            nzDescription="免费、无门槛观看的视频课程，主要用于营销推广"
-          ></nz-card-meta>
-        </nz-card>
-        <ng-template #coverTemplate>
-          <img  src="https://gss0.baidu.com/9fo3dSag_xI4khGko9WTAnF6hhy/zhidao/wh%3D600%2C800/sign=0e38efe0202eb938ec3872f4e552a90d/730e0cf3d7ca7bcb50992b2eb1096b63f724a8d5.jpg" />
-        </ng-template>
       </div>
     </div>
-    <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <form nz-form [formGroup]="validateForm">
       <nz-form-item>
         <nz-form-label [nzSpan]="5" nzRequired nzFor="note">课程标题</nz-form-label>
 
-        <nz-form-control [nzSpan]="12" nzErrorTip="Please input your username!">
-          <input id="note" type="text" nz-input formControlName="note" />
+        <nz-form-control [nzSpan]="12" nzErrorTip="请输入课程标题!">
+          <input id="note" type="text" nz-input formControlName="title" />
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
@@ -65,8 +41,8 @@
           <button nz-button nzType="dashed">
             如何创建课程？
           </button>
-          <button nz-button nzType="primary"  (click)="CreateCourse()">创建</button>
-          <button nz-button (click)="Cancel()">取消</button>
+          <button nz-button nzType="primary" (click)="create()">创建</button>
+          <button nz-button (click)="Cancel()">返回</button>
         </nz-form-control>
       </nz-form-item>
     </form>

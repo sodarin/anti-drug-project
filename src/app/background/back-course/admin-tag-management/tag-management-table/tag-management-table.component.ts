@@ -37,7 +37,7 @@ export class TagManagementTableComponent implements OnInit {
     this.loading = true;
     this.tagManagementService$.getTagList().subscribe(result => {
       this.loading = false;
-      this.dataList = result;
+      this.dataList = result.data;
       this.displayData = this.dataList;
       console.log(this.displayData)
     }, error1 => {

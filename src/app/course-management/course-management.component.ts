@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'
+import {ActivatedRoute, Router} from '@angular/router';
+import {CourseBaseInfoEditService} from '../service/course-base-info-edit/course-base-info-edit.service';
 
 
 @Component({
@@ -9,14 +10,41 @@ import { Router } from '@angular/router'
 })
 export class CourseManagementComponent implements OnInit {
 
+  courseId: string;
   location: Location;
+  title: string;
+  status: string;
+  teachersName = [];
+  imgUrl: string = '';
 
-  constructor(private router: Router) { }
+  api: string = 'http://202.199.13.114:9013';
+
+  constructor(
+    private router: Router,
+    private routerInfo: ActivatedRoute,
+    private _courseBaseInfoEditService: CourseBaseInfoEditService) {
+    this.location = location;
+    this.routerInfo.params.subscribe(res => {
+      this.courseId = res.id;
+    });
+    this._courseBaseInfoEditService.imgChange.subscribe(result => {
+      this.getCourseInfo();
+    })
+  }
 
   ngOnInit() {
-    this.location = location
+
   }
   navigateByUrl(url: string) {
     this.router.navigateByUrl(url);
+  }
+
+  getCourseInfo() {
+    this._courseBaseInfoEditService.getCourseInfo(this.courseId).subscribe(res => {
+      this.title = res.data.baseData.title;
+      this.status = res.data.baseData.status;
+      this.imgUrl = res.data.baseData.cover;
+      this.teachersName = res.data.teachersName;
+    })
   }
 }

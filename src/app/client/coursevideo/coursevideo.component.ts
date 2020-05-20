@@ -11,27 +11,28 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 })
 export class CoursevideoComponent implements OnInit {
   courseId: string;
-  videoId: string;
   taskId: string;
-  taskName: string;
+  taskName: string='';
   catalog_visible = false;
   note_visible = false;
   question_visible = false;
   taskList: any;
+  userId: string = '1';
   noteForm: FormGroup;
   questionForm: FormGroup;
+  videoLearingStatus:string;
   constructor(private router: Router, private formBuilder: FormBuilder,
               private courseVideoService: ClientCourseVideoService, private message: NzMessageService) { }
 
   ngOnInit() {
     this.courseId = location.pathname.split('/')[3];
     this.taskId = location.pathname.split('/')[5];
-    this.videoId = location.pathname.split('/')[7];
 
     this.courseVideoService.getTaskList(this.courseId.toString()).subscribe(result => {
       this.taskList = result;
      // this.taskName="";
-      this.taskName = this.taskList[0].taskName;  // taskId不是数组下标！！
+      let index=Number(this.taskId)-1;
+      this.taskName = this.taskList[index].taskName;  // taskId不是数组下标！！
     });
     this.noteForm = this.formBuilder.group({
         noteContent: ['', Validators.required]
@@ -42,18 +43,22 @@ export class CoursevideoComponent implements OnInit {
         questionContent: ['', Validators.required]
     });
   }
+  setVideoLearingStatus(status:any):void{
+    this.videoLearingStatus=status;
+  }
   noteSubmit({value, valid}): void {
     let code; // 返回码
-    this.courseVideoService.postNote('5', '1', this.courseId, this.taskId, 'test').subscribe(result => {
-      this.createMessage(result.code);
-      if (result.code == 200){
-        this.noteForm.setValue({noteContent: ''}); // 清空
-        this.closeNote();
-      }
-    });
+    console.log(value.noteContent);
+    // this.courseVideoService.postNote(this.userId, '1', this.courseId, this.taskId, value.noteContent).subscribe(result => {
+    //   this.createMessage(result.code);
+    //   if (result.code == 200){
+    //     this.noteForm.setValue({noteContent: ''}); // 清空
+    //     this.closeNote();
+    //   }
+    // });
   }
   questionSubmit({value, valid}): void {
-    this.courseVideoService.postQuestion('5', '1', this.courseId, this.taskId, value.questionTitle, value.questionContent).subscribe(result => {
+    this.courseVideoService.postQuestion(this.userId, '1', this.courseId, this.taskId, value.questionTitle, value.questionContent).subscribe(result => {
       this.createMessage(result.code);
       if (result.code == 200){
         this.questionForm.setValue({questionTitle: '', questionContent: ''}); // 清空

@@ -1,11 +1,13 @@
 <div class="clearfix">
   <h2>当前背景</h2>
   <nz-upload
-    nzAction="https://jsonplaceholder.typicode.com/posts/"
+    nzAction="http://202.199.13.224:9013/material/uploadFile"
     nzListType="picture-card"
     [(nzFileList)]="fileList"
     [nzShowButton]="fileList.length < 1"
     [nzShowUploadList]="showUploadList"
+    [nzFileType]="'image/png,image/jpeg,image/gif,image/jpg'"
+    [nzCustomRequest]="customReq"
     [nzPreview]="handlePreview"
   >
     <i nz-icon nzType="plus"></i>

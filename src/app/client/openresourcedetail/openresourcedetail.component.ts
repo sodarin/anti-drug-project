@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { addDays, differenceInMilliseconds } from 'date-fns';
 import {ActivatedRoute, Router} from '@angular/router';
 import {OpenresourceService} from '../../service/openresource/openresource.service';
@@ -11,7 +11,7 @@ import {OpenresourcedetailService} from '../../service/openresourcedetail/openre
 })
 export class OpenresourcedetailComponent implements OnInit {
   displayData: any;
-  teacherData;any;
+  teacherData:any;
   movietitle:any;
   HitNum:any;
   PostNum:any;
@@ -59,6 +59,9 @@ export class OpenresourcedetailComponent implements OnInit {
       )
     })
   }
+
+
+
   getTeacherData(){
     this.opendetailService$.getTeacherInfor(this.Teacherid).subscribe(result =>{
       this.teacherData=result

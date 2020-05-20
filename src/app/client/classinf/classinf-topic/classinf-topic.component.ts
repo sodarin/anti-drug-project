@@ -47,11 +47,12 @@ export class ClassinfTopicComponent implements OnInit {
   topicytpe: string = "0";
   topicorder: string = "createdTime";
 
-  @ViewChild("topiccontainer", { read: ViewContainerRef, static: true }) topiccontainer: ViewContainerRef;
-  @ViewChild("topiclisttemplate", { read: TemplateRef, static: true }) topiclisttemplate: TemplateRef<any>;
-  @ViewChild("topicquestion", { read: TemplateRef, static: true }) topicquestion: TemplateRef<any>;
-  @ViewChild("publishtopic", { read: TemplateRef, static: true }) publishtopic: TemplateRef<any>;
-  @ViewChild("responsetemplate", { read: TemplateRef, static: true }) responsetemplate: TemplateRef<any>;
+  @ViewChild("topiccontainer", {read: ViewContainerRef, static: true}) topiccontainer: ViewContainerRef;
+  @ViewChild("topiclisttemplate", {read: TemplateRef, static: true}) topiclisttemplate: TemplateRef<any>;
+  @ViewChild("topicquestion", {read: TemplateRef, static: true}) topicquestion: TemplateRef<any>;
+  @ViewChild("publishtopic", {read: TemplateRef, static: true}) publishtopic: TemplateRef<any>;
+  @ViewChild("responsetemplate", {read: TemplateRef, static: true}) responsetemplate: TemplateRef<any>;
+
   constructor(private modalService: NzModalService, private classinfservice: ClassInfService, private notification: NzNotificationService) {
   }
 
@@ -80,20 +81,20 @@ export class ClassinfTopicComponent implements OnInit {
       }
     }
   }
+
   setclassTopicsResponses(res: any) {
     this.currentTopicResponse = res.data;
 
     for (var i = 0; i < this.currentTopicResponse.length; i++) {
       if (this.currentTopicResponse[i].largeAvatar == undefined) {
         this.currentTopicResponse[i].largeAvatar = "../../../../assets/img/timg2.jpg";
-      } else
-        if (this.currentTopicResponse[i].largeAvatar == "") {
-          this.currentTopicResponse[i].largeAvatar = "../../../../assets/img/timg2.jpg";
-        } else if (this.currentTopicResponse[i].largeAvatar.substr(0, 6) == "public") {
-          this.currentTopicResponse[i].largeAvatar = "../../../../assets/img/timg2.jpg";
-        } else if (this.currentTopicResponse[i].largeAvatar.substr(7, 7) == "edusoho") {
-          this.currentTopicResponse[i].largeAvatar = "../../../../assets/img/timg2.jpg";
-        }
+      } else if (this.currentTopicResponse[i].largeAvatar == "") {
+        this.currentTopicResponse[i].largeAvatar = "../../../../assets/img/timg2.jpg";
+      } else if (this.currentTopicResponse[i].largeAvatar.substr(0, 6) == "public") {
+        this.currentTopicResponse[i].largeAvatar = "../../../../assets/img/timg2.jpg";
+      } else if (this.currentTopicResponse[i].largeAvatar.substr(7, 7) == "edusoho") {
+        this.currentTopicResponse[i].largeAvatar = "../../../../assets/img/timg2.jpg";
+      }
     }
   }
 
@@ -153,9 +154,10 @@ export class ClassinfTopicComponent implements OnInit {
   }
 
   currentopicid = "0";
+
   response_submit() {
     if (this.editorContent != "") {
-      this.classinfservice.question_response_submit(this.classid,this.currentopicid ,this.editorContent).subscribe((res: any) => {
+      this.classinfservice.question_response_submit(this.classid, "0", this.currentopicid, this.editorContent).subscribe((res: any) => {
         this.notification.create(
           'success',
           '提交成功！',
@@ -179,19 +181,21 @@ export class ClassinfTopicComponent implements OnInit {
   //界面跳转-------------------------------------------------------------------------------
   return_topic() {
     //重新获取信息
-    this.currentopicid="";
+    this.currentopicid = "";
     this.onPageChange_topic();
     this.from_init();
     this.topiccontainer.clear();
     const noteslist: ViewRef = this.topiclisttemplate.createEmbeddedView(null);
     this.topiccontainer.insert(noteslist);
   }
+
   write_topic() {
     this.from_init();
     this.topiccontainer.clear();
     const item: ViewRef = this.publishtopic.createEmbeddedView(null);
     this.topiccontainer.insert(item);
   }
+
   write_question() {
     this.from_init();
     this.topiccontainer.clear();
@@ -267,6 +271,4 @@ export class ClassinfTopicComponent implements OnInit {
     })
     window.scrollTo(0, 0);
   }
-
-
 }

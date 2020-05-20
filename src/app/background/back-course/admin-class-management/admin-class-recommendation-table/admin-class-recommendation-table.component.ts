@@ -37,9 +37,11 @@ export class AdminClassRecommendationTableComponent implements OnInit {
     this.loading = true;
     this.classManagementService$.getRecommendationList(pageIndex, 10).subscribe(result => {
       this.loading = false;
-      this.total = result.data[0].total? result[0].total: 0;
+
+      this.total = result.data[0].totalNum? result.data[0].totalNum: 0;
       this.totalPage = Math.ceil(this.total / 10);
       this.dataList = result.data;
+
       this.displayData = this.dataList;
     }, error1 => {
       this.loading = false;

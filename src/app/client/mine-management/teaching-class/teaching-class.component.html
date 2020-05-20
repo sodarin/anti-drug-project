@@ -4,30 +4,31 @@
   </div>
   <nz-divider></nz-divider>
   <div class="page-content">
-    <div class="drag-list" cdkDropList (cdkDropListDropped)="drop($event)">
-      <div *ngFor="let item of courseList" class="drag-box" cdkDrag>
+    <div class="drag-list"  >
+      <div *ngFor="let data of classroomList" class="drag-box" >
         <div class="list-info">
           <img class="img-info" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
           <div class="text-info">
             <div class="info-header">
-              <div class="course-title" nz-tooltip [nzTitle]="item.title">{{item.title}}</div>
-              <nz-tag [nzColor]="'#87d068'">更新中</nz-tag>
-              <span class="empty-space"></span>
-              <i  style="cursor: pointer; font-size: 16px; line-height: 24px;"  nz-icon nzType="setting" ></i>管理班级
-
+              <div class="course-title" nz-tooltip [nzTitle]="data.title">{{data.title}}</div>
+              <nz-tag style="margin-left: 15px" [nzColor]="choiceColor(data.status)"> {{data.status == 'published'? '已发布': (data.status == 'closed'? '已关闭': '未发布')}}</nz-tag>
+              <span class="empty-space" ></span>
+              <div class="setting" (click)="navigatTo('client/classroom/'+ data.id+ '/manage' )">
+              <i  style=" font-size: 16px; line-height: 24px;"  nz-icon nzType="setting" nz-tooltip nzTooltipTitle="管理班级" ></i>
+              </div>
             </div>
-            <div class="course-describe"><span>{{item.descr}}</span></div>
+            <div class="course-describe"><span >共{{data.coursenum}}课  /  学生人数：{{data.studentnum}}</span></div>
             <div class="empty-space"></div>
             <div class="info-footer">
               <div class="course-data">
                 <div>
                   <span><b>今日新增</b></span>
                   <nz-divider nzType="vertical"></nz-divider>
-                  <span>学员：{{item.stuNum}}</span>
+                  <span>学员：{{data.todayNewStudent}}</span>
                   <nz-divider nzType="vertical"></nz-divider>
-                  <span>话题：{{item.topicNum}}</span>
+                  <span>话题：{{data.threadnum}}</span>
                   <nz-divider nzType="vertical"></nz-divider>
-                  <span>任务完成：学习{{item.taskNum}}</span>
+                  <span>任务完成学习:{{data.taskFinishNum}}</span>
                 </div>
               </div>
             </div>

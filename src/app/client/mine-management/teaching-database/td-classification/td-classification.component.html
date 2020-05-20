@@ -18,7 +18,7 @@
     <div nz-col nzSpan="22" style="margin-top:10px;">
         <!--[nzColor]="'#108ee9'"-->
         <nz-tag *ngFor="let item of classificationtags;let ind = index" [nzColor]="''"
-            (nzCheckedChange)="checkChange($event)" style="padding: 3px;margin: 3px;"> {{item}}</nz-tag>
+             style="padding: 3px;margin: 3px;"> {{item}}</nz-tag>
         <nz-divider style="margin: 10px;margin-left: 0;"></nz-divider>
     </div>
 </div>
@@ -29,7 +29,7 @@
     </div>
     <div nz-col nzSpan="22" style="margin-top:0px;">
         <span>时间:&nbsp;&nbsp;</span>
-        <nz-range-picker [(ngModel)]="dateRange" (ngModelChange)="onChange($event)" [nzPlaceHolder]="['开始时间','结束时间']">
+        <nz-range-picker [(ngModel)]="dateRange" [nzPlaceHolder]="['开始时间','结束时间']">
         </nz-range-picker>
         <nz-select style="width: 120px;margin-left: 20px;" [(ngModel)]="currenttranscodingState" nzAllowClear nzPlaceHolder="转码状态">
             <nz-option nzValue="All" nzLabel="转码状态"></nz-option>

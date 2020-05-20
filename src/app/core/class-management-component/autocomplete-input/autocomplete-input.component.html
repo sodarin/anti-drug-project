@@ -6,7 +6,7 @@
   [nzAutocomplete]="auto"
 />
 <nz-autocomplete (selectionChange)="emitValue($event)" nzBackfill #auto>
-  <nz-auto-option *ngFor="let option of options" [nzValue]="option">
-    {{ option }}
+  <nz-auto-option *ngFor="let option of options" [nzValue]="option.id" [nzLabel]="option.nickName? option.nickName: option.nickname">
+    {{option.nickName? option.nickName: option.nickname}}
   </nz-auto-option>
 </nz-autocomplete>

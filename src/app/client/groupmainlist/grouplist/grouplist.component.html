@@ -1,4 +1,4 @@
-<div class="container">
+  <div class="container">
   <header>
     <div class="top">
       <nz-card-meta class="word"
@@ -6,13 +6,13 @@
                          [nzAvatar]="nzAvater"
                          [nzDescription]="nzDescription">
         <ng-template #nzTitle>
-          <h2>{{topicname}}</h2>
+          <h2 [innerHTML]="topicList?.groupTitle"></h2>
         </ng-template>
         <ng-template #nzAvater>
-          <nz-avatar [nzShape]="'square'" [nzSize]="64" nzText="回复">  </nz-avatar>
+          <nz-avatar [nzSize]="64" nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png">  </nz-avatar>
         </ng-template>
         <ng-template #nzDescription>
-          <span >{{number}}个成员     {{topicnumber}}个话题      创建时间：{{date}}</span>
+          <span >{{topicList?.groupMemberNum}}个成员     {{topicList?.groupThreadNum}}个话题      创建时间：{{topicList?.createdTime}}</span>
         </ng-template>
       </nz-card-meta>
     </div>

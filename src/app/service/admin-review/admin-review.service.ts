@@ -31,12 +31,12 @@ export class AdminReviewService {
     if (filterOptions.rating == '' && filterOptions.author == '' && filterOptions.course == '' && filterOptions.keyword == '') {
       return this._http.get(`/classroom/background/getBackGroundReview?pageNum=${targetPage}&pageSize=${pageSize}`)
     } else {
-      return this._http.get(`/classroom/background/getBackGroundReview?pageNum=${targetPage}&pageSize=${pageSize}&classroomName=${filterOptions.course}&keyWord=${filterOptions.keyword}&rating=${filterOptions.rating}&userName=${filterOptions.author}`)
+      return this._http.get(`/classroom/background/getBackGroundReview?pageNum=${targetPage}&pageSize=${pageSize}&classroomTitle=${filterOptions.course}&content=${filterOptions.keyword}&rating=${filterOptions.rating}&nickName=${filterOptions.author}`)
     }
   }
 
 
   deleteClassReviewList(list: any): Observable<any> {
-    return this._http.delete(`/classroom/background/delBackGroundThread?deleteList=${list}`)
+    return this._http.delete(`/classroom/background/delBackGroundReview?reviewIdList=${list}`)
   }
 }

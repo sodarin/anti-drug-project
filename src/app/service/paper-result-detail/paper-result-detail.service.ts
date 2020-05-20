@@ -9,7 +9,7 @@ export class PaperResultDetailService {
 
   constructor(private _http: HttpClient) { }
 
-  getTestPaperDetail(testPaperId: number  , userId: number): Observable<any> {
+  getTestPaperDetail(testPaperId: string  , userId: string): Observable<any> {
       return this._http.get(`/user/getTestPaperDetail?&testPaperId=${testPaperId}&userId=${userId}`);
   };
 }

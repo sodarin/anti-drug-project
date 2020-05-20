@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NzModalService, NzModalRef } from 'ng-zorro-antd/modal';
-import { NzMessageService } from 'ng-zorro-antd';
+import {NzMessageService, UploadXHRArgs} from 'ng-zorro-antd';
+import {HttpClient, HttpEvent, HttpEventType, HttpResponse} from '@angular/common/http';
 @Component({
   selector: 'app-my-information',
   templateUrl: './my-information.component.html',
@@ -9,7 +10,9 @@ import { NzMessageService } from 'ng-zorro-antd';
 export class MyInformationComponent implements OnInit {
 
   name: string;
-  dataList = [
+  userId:number=1;
+  None: any;
+  dataList: any = [
     { id: "001", name: "Test1", date: "2020.2.4", type: "None" },
     { id: "002", name: "Test2", date: "2020.2.4", type: "None" },
     { id: "003", name: "Test3", date: "2020.2.4", type: "None" },
@@ -50,7 +53,10 @@ export class MyInformationComponent implements OnInit {
   currentbatch = [];
 
 
-  constructor(private modalService: NzModalService, private message: NzMessageService) { }
+  constructor(private modalService: NzModalService,
+              private message: NzMessageService,
+              private http: HttpClient,
+              ) { }
 
   ngOnInit() {
   }
@@ -72,6 +78,28 @@ export class MyInformationComponent implements OnInit {
   handleCancel_upload(): void {
     console.log('Button cancel clicked!');
     this.uploadVisible = false;
+  }customReq = (item: UploadXHRArgs) => {
+    const formData = new FormData();
+    formData.append('file', item.file as any);
+    return this.http.post(item.action, formData).subscribe(
+      // tslint:disable-next-line no-any
+      (event: any) => {
+        console.log(event);
+        console.log(HttpEventType);
+        if (event.message === 'SUCCESS') {
+          // if (event.total! > 0) {
+          //   // tslint:disable-next-line:no-any
+          //   (event as any).percent = (event.loaded / event.total!) * 100;
+          // }
+          item.onSuccess!(event.body, item.file!, event);
+        } else if (event instanceof HttpResponse) {
+          // item.onSuccess!(event.body, item.file!, event);
+        }
+      },
+      err => {
+        item.onError!(err, item.file!);
+      }
+    );
   }
 
   //批量处理

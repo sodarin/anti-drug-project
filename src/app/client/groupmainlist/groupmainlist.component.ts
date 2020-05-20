@@ -1,14 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient} from "@angular/common/http";
-import {NzMessageService, NzModalService} from "ng-zorro-antd";
+import {NzMessageService, NzModalService,NzNotificationService} from "ng-zorro-antd";
 import {GroupmainlistService} from "../../service/groupmainlist/groupmainlist.service";
-
-const count = 3;
-const fakeDataUrl = 'https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo';
-
-
-
+import {GrouplistService} from '../../service/grouplist/grouplist.service';
 
 @Component({
   selector: 'app-groupmainlist',
@@ -19,6 +14,10 @@ export class GroupmainlistComponent implements OnInit {
   data: any[] = [];
   list: Array<{ loading: boolean; name: any }> = [];
   search:string;
+  newGroupList:[];
+  joinGroupList = [];
+  memberMessageList:[];
+  groupnumber:string;
 
   filterOptions: {};
   checkOption = [];
@@ -31,6 +30,8 @@ export class GroupmainlistComponent implements OnInit {
   totalPage: number;
   pageIndex: number = 1;
   loading: boolean = false;
+  detail:any
+  Header:[]
 
   team=1;
   message=2;
@@ -38,24 +39,28 @@ export class GroupmainlistComponent implements OnInit {
   fans=2;
   focuson=3;
 
+  userId:string="1";
+
+
+
   constructor(public router:Router,
               private http: HttpClient,
               private  _message: NzMessageService,
               private groupmainlistService$:GroupmainlistService,
+              private _notification: NzNotificationService,
+              private grouplistService$:GrouplistService,
+              private routeInfo: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.getData((res: any) => {
-      this.data = res.results;
-      this.list = res.results;
-    });
-  }
-  getData(callback: (res: any) => void): void {
-    this.http.get(fakeDataUrl).subscribe((res: any) => callback(res));
+    this.getNewGroup();
+    this.getJoinGroup();
+    this.getMyGroup()
   }
 
+
   tclick(){
-    this.router.navigateByUrl("client/groupmainlist/grouplist")
+    this.router.navigateByUrl("client/groupmainlist/"+this.userId)
   }
   oclick(){
     this.router.navigateByUrl("client/groupcreate")
@@ -63,32 +68,60 @@ export class GroupmainlistComponent implements OnInit {
   // 搜索
 
   filterTopicTable() {
-    this.data = [];
-    this.loading = true;
-    this.filterOptions = {
-      search: this.search
-    };
-    this.groupmainlistService$.filterTopicTableList(1, 10, this.filterOptions).subscribe(result => {
-      this.loading = false;
-      this.list = result;
-      this.data = this.list;
+    this.router.navigateByUrl(`client/groupmainlist/groupmainsearch?search=${this.search}`)
+
+  }
+
+
+  //获取新晋小组
+  getNewGroup(){
+    this.groupmainlistService$.getNewGroup(5).subscribe(result => {
+      this.newGroupList = result.data;
     }, error1 => {
-      this.loading = false;
-      this._message.error(error1.error)
+      this._notification.create(
+        'error',
+        '新晋小组获取失败',
+        `${error1.error}`)
     })
   }
-  searchData(pageIndex: number = this.pageIndex) {
-    this.data = [];
-    this.loading = true;
-    this.groupmainlistService$.getTopicTableList(pageIndex, 10).subscribe(result => {
-      this.loading = false;
-      this.total = result[0].totalUser;
-      this.totalPage = Math.ceil(this.total / 10);
-      this.list = result;
-      this.data = this.list;
+  navigateByUrl(url: string) {
+    this.router.navigateByUrl(url)
+  }
+  //获取我加入的小组
+  getJoinGroup(){
+    this.groupmainlistService$.getJoinGroup(this.userId).subscribe(result => {
+      this.joinGroupList = result.data;
     }, error1 => {
-      this.loading = false;
-      this._message.error(error1.error)
+      this._notification.create(
+        'error',
+        '我的小组获取失败',
+        `${error1.error}`)
+    })
+  }
+
+
+
+//获取气泡框成员信息
+
+  getUserDetail(id:string) {
+    this.grouplistService$.getUser(id).subscribe(result=>{
+      this.detail=result.data;
+    },error1 => {
+      this._notification.create(
+        'error',
+        '成员信息获取失败',
+        `${error1.error}`)
+    })
+  }
+//获取我的小组
+  getMyGroup() {
+    this.grouplistService$.getUser(this.userId).subscribe(result=>{
+      this.Header=result.data
+    },error1 => {
+      this._notification.create(
+        'error',
+        '我的小组获取失败',
+        `${error1.error}`)
     })
   }
 }

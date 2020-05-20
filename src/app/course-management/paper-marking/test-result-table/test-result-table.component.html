@@ -8,7 +8,7 @@
       <input class="name-containing-input" nz-input placeholder="请输入用户名" [(ngModel)]="name" />
       <nz-divider nzType="vertical"></nz-divider>
       <nz-select class="select-control" [(ngModel)]="paperStatus" nzAllowClear="false" nzPlaceHolder="课程状态">
-        <nz-option nzValue="all" nzLabel="全部"></nz-option>
+        <nz-option nzValue="" nzLabel="全部"></nz-option>
         <nz-option nzValue="finished" nzLabel="已批阅"></nz-option>
         <nz-option nzValue="reviewing" nzLabel="未批阅"></nz-option>
         <nz-option nzValue="doing" nzLabel="进行中"></nz-option>
@@ -19,6 +19,7 @@
     <nz-divider></nz-divider>
     <nz-table #involeListTable
               [nzData]="studentList"
+              [nzFrontPagination]="false"
               [nzTotal]="total"
               [nzLoading]="loading"
               [nzPageSize]="8"
@@ -36,12 +37,12 @@
       </thead>
       <tbody>
       <tr *ngFor="let data of involeListTable.nzData">
-        <td>{{data.name}}</td>
-        <td>{{data.score}}/100.0</td>
-        <td>{{data.handinTime}}</td>
-        <td>{{data.status}}</td>
-        <td>{{data.approvedPeople}}</td>
-        <td><span style="cursor: pointer;">查看结果</span></td>
+        <td>{{data.userName}}</td>
+        <td>{{data.actualScore}}/{{data.score}}</td>
+        <td>{{data.endTime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+        <td>{{data.status == 'finished'? '已批阅': (data.status == 'reviewing'? '未批阅': '未提交')}}</td>
+        <td>{{data.checkTeacherName? data.checkTeacherName: '系统批阅'}}</td>
+        <td><span style="cursor: pointer;" (click)="checkData('/client/testpaper/' + testId + '/result/' + data.userId)">查看结果</span></td>
       </tr>
       </tbody>
     </nz-table>

@@ -7,6 +7,7 @@
   <div class="page-content">
     <nz-table #planListTable
               [nzData]="planList"
+              [nzFrontPagination]="false"
               [nzTotal]="total"
               [nzLoading]="loading"
               [nzPageSize]="8"
@@ -24,24 +25,24 @@
       </thead>
       <tbody>
       <tr *ngFor="let data of planListTable.data">
-        <td>{{data.name}}</td>
-        <td>{{data.mode}}</td>
-        <td>{{data.taskNum}}</td>
-        <td>{{data.stuNum}}</td>
-        <td>{{data.status}}</td>
+        <td>{{data.title}}</td>
+        <td>{{data.learnmode == 'freeMode'? '自由式学习': '解锁式学习'}}</td>
+        <td>{{data.tasknum}}</td>
+        <td>{{data.studentnum}}</td>
+        <td>{{data.status == 'published'? '已发布': '未发布'}}</td>
         <td><i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
         <ng-template #operationTemplate>
           <div class="user-management-operation">
             <div>
-              <span (click)="navigateTo('/client/course/1/plan_manage')"><i nz-icon nzType="edit" nzTheme="outline"></i>管理</span>
+              <span (click)="navigateTo('/client/course/'+ courseId + '/plansetting')"><i nz-icon nzType="edit" nzTheme="outline"></i>管理</span>
             </div>
             <div>
               <span (click)="copy(data)"><i nz-icon nzType="copy" nzTheme="outline"></i>复制为</span>
             </div>
             <div>
-              <span *ngIf="data.status == '已发布'" (click)="closePlan(data.planId)"><i nz-icon nzType="close" nzTheme="outline"></i>关闭</span>
-              <span style="display: block;" *ngIf="data.status !== '已发布'" (click)="deletePlan(data.planId)"><i nz-icon nzType="delete" nzTheme="outline"></i>删除</span>
-              <span style="display: block;" *ngIf="data.status !== '已发布'" (click)="publishPlan(data.planId)"><i nz-icon nzType="check-circle" nzTheme="outline"></i>发布计划</span>
+              <span *ngIf="data.status == 'published'" (click)="closePlan(data.id)"><i nz-icon nzType="close" nzTheme="outline"></i>关闭</span>
+              <span style="display: block;" *ngIf="data.status !== 'published'" (click)="deletePlan(data.id)"><i nz-icon nzType="delete" nzTheme="outline"></i>删除</span>
+              <span style="display: block;" *ngIf="data.status !== 'published'" (click)="publishPlan(data.id)"><i nz-icon nzType="check-circle" nzTheme="outline"></i>发布计划</span>
             </div>
           </div>
         </ng-template>

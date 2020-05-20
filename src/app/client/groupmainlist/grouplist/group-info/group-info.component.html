@@ -4,14 +4,14 @@
       <div class="first">
         <h2>小组介绍</h2>
         <nz-divider></nz-divider>
-        <h3>青少年心理咨询是专门解决青少年心理问题。它往往结合生理、心理、社会三大因素来分析导致青少年心理障碍的原因，主要工作为激发学习兴趣、端正学习态度、消除厌学逃学和学习障碍、协调同学关系和亲子关系、中高考心理减压、学生职业规划、高考志愿填报辅导、青春期性心理教育、不良品行纠正与健全、性格塑造、青少年神经症治疗(儿童自闭症、儿童多动症、儿童抽动症、儿童抑郁症性神经症、口吃、考试焦虑症、社交恐惧症、网络成瘾、学校适应不良综合症等青少年心理问题与心理障碍的心理治疗)。</h3>
+        <div [innerHTML]="groupIntroduction?.groupIntroduction"></div>
       </div>
       <div class="two">
         <app-grouptab></app-grouptab>
       </div>
     </div>
     <div class="right">
-      <button nz-button nzType="primary" (click)="onclick()"  ><i nz-icon nzType="message"></i>发表话题 </button>
+      <button nz-button nzType="primary" (click)="onclick()"  ><i nz-icon nzType="message"></i>发表话题</button>
       <nz-divider></nz-divider>
       <input class="name-containing-input" nz-input placeholder="组内搜索" [(ngModel)]="leader" />
       <button (click)="filterTopicTable()" nz-button nzType="primary" class="search-button"><i nz-icon nzType="search"></i>搜索</button>
@@ -21,60 +21,61 @@
           [nzTitle]="nzTitle"
           [nzDescription]="nzDescription"
           [nzAvatar]="avatarTemplate"
+
         ></nz-card-meta>
       </nz-card>
       <ng-template #nzTitle>
-        <span>  <nz-tag [nzColor]="'#54d053'">组长</nz-tag></span>
+        <div> {{Header?.userNickName}}<span *ngIf="Header?.role=='owner'"><nz-tag [nzColor]="'#54d053'">组长</nz-tag></span></div>
       </ng-template>
       <ng-template #nzDescription>
-        <button class="buttony" nz-button [nzSize]="'small'"  nzType="primary" (click)="toclick()">我的小组</button>
+        <button class="buttony" nz-button [nzSize]="'small'"  nzType="primary" (click)="toclick('/client/mine/mygroup')">我的小组</button>
       </ng-template>
       <ng-template #avatarTemplate>
         <nz-avatar nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+
                    nz-popover
                    [nzPopoverTitle]="tem"
-                   [nzPopoverContent]="content">
+                   [nzPopoverContent]="content"
+                   (mouseenter)="getUserDetail(Header?.userId)"
+                   >
           <ng-template #tem>
-            <nz-card style="width:300px;"  [nzActions]="[actionSetting, actionEdit,actionShow]">
+            <nz-card style="width:300px;"
+                     [nzActions]="[ actionEdit,actionShow]">
               <nz-card-meta
                 [nzTitle]="nzTitle"
                 [nzDescription]="nzDescription"
                 [nzAvatar]="avatarTemplate"
               ></nz-card-meta>
             </nz-card>
-            <ng-template #nzTitle>
-              <span>admin</span>
-            </ng-template>
+              <ng-template #nzTitle>
+                <span>{{detail?.nickName}}</span>
+              </ng-template>
             <ng-template #nzDescription>
-              <a>admin</a>
+              <a>{{detail?.job}}</a>
             </ng-template>
             <ng-template #avatarTemplate>
               <nz-avatar nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
             </ng-template>
-            <ng-template #actionSetting>
-              <a>1</a>
-              <p>在学</p>
-            </ng-template>
             <ng-template #actionEdit>
-              <a>2</a>
+              <a>{{detail?.followedNum}}</a>
               <p>关注</p>
             </ng-template>
             <ng-template #actionShow>
-              <a>0</a>
+              <a>{{detail?.fansNum}}</a>
               <p>粉丝</p>
             </ng-template>
           </ng-template>
           <ng-template #content>
-            <a style="color: gray">暂没有签名</a>
+            <a style="color: gray">{{detail?.signature}}</a>
           </ng-template>
         </nz-avatar>
       </ng-template>
       <ng-template #actionSetting>
-        <a>1</a>
+        <a>{{Header?.postNum}}</a>
         <p>回复</p>
       </ng-template>
       <ng-template #actionEdit>
-        <a>2 </a>
+        <a>{{Header?.threadNum}} </a>
         <p>话题</p>
       </ng-template>
 
@@ -88,21 +89,24 @@
             [nzTitle]="title"
             [nzDescription]="description"
             [nzAvatar]="avatarTemplate"
+            (mouseenter)="getUserDetail(Header?.userId)"
           ></nz-card-meta>
         </nz-card>
         <ng-template #title>
-          <a>admin</a>
+          <a>{{Header?.userNickName}}</a>
         </ng-template>
         <ng-template #description>
-          <a>admin</a>
+          <a>{{Header?.userTitle}}</a>
         </ng-template>
         <ng-template #avatarTemplate>
           <nz-avatar nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
                      nz-popover
                      [nzPopoverTitle]="tem"
-                     [nzPopoverContent]="content">
+                     [nzPopoverContent]="content"
+
+          >
             <ng-template #tem>
-              <nz-card style="width:300px;"  [nzActions]="[actionSetting, actionEdit,actionShow]">
+              <nz-card style="width:300px;"  [nzActions]="[ actionEdit,actionShow]">
                 <nz-card-meta
                   [nzTitle]="nzTitle"
                   [nzDescription]="nzDescription"
@@ -110,29 +114,25 @@
                 ></nz-card-meta>
               </nz-card>
               <ng-template #nzTitle>
-                <span>admin</span>
+                <span>{{detail?.nickName}}</span>
               </ng-template>
               <ng-template #nzDescription>
-                <a>admin</a>
+                <a>{{detail?.job}}</a>
               </ng-template>
               <ng-template #avatarTemplate>
                 <nz-avatar nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
               </ng-template>
-              <ng-template #actionSetting>
-                <a>1</a>
-                <p>在学</p>
-              </ng-template>
               <ng-template #actionEdit>
-                <a>2</a>
+                <a>{{detail?.followedNum}}</a>
                 <p>关注</p>
               </ng-template>
               <ng-template #actionShow>
-                <a>0</a>
+                <a>{{detail?.fansNum}}</a>
                 <p>粉丝</p>
               </ng-template>
             </ng-template>
             <ng-template #content>
-              <a style="color: gray">暂没有签名</a>
+              <a style="color: gray">{{detail?.signature}}</a>
             </ng-template>
           </nz-avatar>
         </ng-template>
@@ -143,50 +143,80 @@
       <div class="new-member">
         <h3>新加组员</h3>
         <nz-divider></nz-divider>
-        <nz-avatar nzIcon="user"
-                   [nzSrc]="photo"
-                   nz-popover
-                   [nzPopoverTitle]="tem"
-                   [nzPopoverContent]="content">
-          <ng-template #photo>
-            <ul *ngFor="let img of imgs">
-              <nz-avatar [nzSize]="64">{{img}}</nz-avatar>
-            </ul>
-          </ng-template>
-          <ng-template #tem>
-            <nz-card style="width:300px;"  [nzActions]="[actionSetting, actionEdit,actionShow]">
-              <nz-card-meta
-                [nzTitle]="nzTitle"
-                [nzDescription]="nzDescription"
-                [nzAvatar]="avatarTemplate"
-              ></nz-card-meta>
-            </nz-card>
-            <ng-template #nzTitle>
-              <span>admin <button nzSize="small" style="width: 40px; height: 20px; font-size: 12px; float: right;" nz-button class="onebutton" nzType="primary"  (click)="focus()" >关注</button></span>
-            </ng-template>
-            <ng-template #nzDescription>
-              <span>admin <button nz-button style="width: 40px; height: 20px; font-size: 12px; float: right;" nzSize="small" nzType="primary" (click)="message()">私信</button></span>
-            </ng-template>
-            <ng-template #avatarTemplate>
-              <nz-avatar nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
-            </ng-template>
-            <ng-template #actionSetting>
-              <a>1{{study}}</a>
-              <p>在学</p>
-            </ng-template>
-            <ng-template #actionEdit>
-              <a>2{{focuson}}</a>
-              <p>关注</p>
-            </ng-template>
-            <ng-template #actionShow>
-              <a>0{{fans}}</a>
-              <p>粉丝</p>
-            </ng-template>
-          </ng-template>
-          <ng-template #content>
-            <a style="color: gray">暂没有签名</a>
-          </ng-template>
-        </nz-avatar>
+        <div *ngIf="NewMemberList">
+          <div style="display: inline-block" *ngFor="let userSmallAvatar of NewMemberList">
+            <nz-avatar
+              [nzSrc]="photo"
+              nz-popover
+              [nzPopoverTitle]="tem"
+              [nzPopoverContent]="content"
+              (mouseenter)="getUserDetail(userSmallAvatar.userId)">
+              <ng-template #photo>
+                <nz-avatar [nzSize]="64">{{userSmallAvatar}}</nz-avatar>
+              </ng-template>
+              <ng-template #tem>
+                <nz-card style="width:300px;"  [nzActions]="[ actionEdit,actionShow]">
+                  <nz-card-meta
+                    [nzTitle]="nzTitle"
+                    [nzDescription]="nzDescription"
+                    [nzAvatar]="avatarTemplate"
+
+                  ></nz-card-meta>
+                </nz-card>
+                <ng-template #nzTitle>
+                  <div>{{detail?.nickName}}
+                    <span *ngIf="detail?.id!=userId">
+                    <span *ngIf="isfocus==false">
+                      <button nzSize="small" style="width: 40px; height: 20px; font-size: 12px; float: right;" nz-button class="onebutton" nzType="primary"  (click)="focus()" >关注</button>
+                    </span>
+                    <span *ngIf="isfocus==true">
+                      <button nzSize="small" style="width: 40px; height: 20px; font-size: 12px; float: right;" nz-button class="onebutton"   (click)="cancelfocus()" >已关注</button>
+                  </span>
+                      </span>
+                  </div>
+                </ng-template>
+                <ng-template #nzDescription>
+
+                  <div>{{detail?.job}} <span *ngIf="detail?.id!=userId"><button nz-button style="width: 40px; height: 20px; font-size: 12px; float: right;" nzSize="small" nzType="primary" (click)="message(detail, messageModal)">私信</button></span></div>
+
+                </ng-template>
+                <ng-template #avatarTemplate>
+                  <nz-avatar nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
+                </ng-template>
+                <ng-template #actionEdit>
+                  <a>{{detail?.followedNum}}</a>
+                  <p>关注</p>
+                </ng-template>
+                <ng-template #actionShow>
+                  <a>{{detail?.fansNum}}</a>
+                  <p>粉丝</p>
+                </ng-template>
+              </ng-template>
+              <ng-template #content>
+                <a style="color: gray">{{detail?.signature}}</a>
+              </ng-template>
+            </nz-avatar>
+          </div>
+        </div>
+
+        <ng-template #messageModal>
+          <form nz-form [formGroup]="threadCreatingForm">
+            <nz-form-item>
+              <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="title">收件人</nz-form-label>
+              <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="标题不能为空！">
+                <input [disabled]="true" nz-input formControlName="title" id="title" />
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="content" nzRequired>内容</nz-form-label>
+              <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="内容不能为空！">
+                <quill-editor formControlName="content" id="content"></quill-editor>
+              </nz-form-control>
+            </nz-form-item>
+          </form>
+        </ng-template>
+
+
       </div>
 
 
@@ -194,7 +224,42 @@
       <nz-divider></nz-divider>
       <div class="hot-group">
         <h3>热门小组</h3>
-        <app-groupnow></app-groupnow>
+        <nz-divider></nz-divider>
+        <nz-list
+          class="demo-loadmore-list"
+          [nzDataSource]="hotGroupList"
+          [nzItemLayout]="'horizontal'"
+          [nzRenderItem]="itemhot"
+        >
+
+
+          <ng-template #itemhot let-itemhot>
+            <nz-list-item
+            >
+              <nz-skeleton [nzAvatar]="false" [nzActive]="true" [nzTitle]="false"   [nzLoading]="itemhot.loading">
+                <nz-list-item-meta
+                  [nzTitle]="nzTitle"
+                  [nzAvatar]="nzAvater"
+                  [nzDescription]="nzDescription"
+
+                >
+                  <ng-template #nzTitle>
+                    <a (click)="navigateByUrl('/client/groupmainlist/' + itemhot.id)" >{{itemhot.groupTitle}} </a>
+                  </ng-template>
+                  <ng-template #nzAvater>
+                    <nz-avatar [nzShape]="'square'" [nzSize]="64" nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png">  </nz-avatar>
+                  </ng-template>
+                  <ng-template #nzDescription>
+                    <span >
+                      <b> <i nz-icon nzType="team" ></i>{{itemhot.memberNumber}}</b>
+                     <b> <i nz-icon nzType="message" ></i>{{itemhot.threadNumber}}</b>
+                    </span>
+                  </ng-template>
+                </nz-list-item-meta>
+              </nz-skeleton>
+            </nz-list-item>
+          </ng-template>
+        </nz-list>
       </div>
 
     </div>

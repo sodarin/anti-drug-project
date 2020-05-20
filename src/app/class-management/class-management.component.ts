@@ -23,12 +23,16 @@ export class ClassManagementComponent implements OnInit {
     private router: Router,
     private _notification: NzNotificationService,
     private classManagementService$: ClientClassManagementService
-  ) { }
-
-  ngOnInit() {
+  ) {
     this.location = location;
     this.classroomId = location.pathname.split('/')[3];
-    this.getClassroomDetail()
+    this.classManagementService$.changeStatus.subscribe(value => {
+      this.getClassroomDetail()
+    })
+  }
+
+  ngOnInit() {
+
   }
 
   getClassroomDetail() {

@@ -4,7 +4,7 @@
         <ng-template #item let-item>
             <nz-list-item>
                 <img class="round_icon" nz-popover [nzTitle]="titleTemplate" [nzContent]="contentTemplate"
-                    src="{{item.smallAvatar}}">
+                    [src]="item.smallAvatar">
                 <nz-list-item-meta [nzTitle]="nzTitle" nzDescription="{{item.title}}">
                     <ng-template #nzTitle>
                         <a  (click)="navigateByUrl('/client/userpage/'+item.id)">{{ item.nickName}}</a>
@@ -14,7 +14,7 @@
 
             <ng-template #titleTemplate>
                 <div class="popovercard_header">
-                    <img class="round_icon" src="{{item.smallAvatar}}">
+                    <img class="round_icon" [src]="item.smallAvatar">
                     <div style="display: inline-block;padding: 0;margin-left: 10px;">
                         <p>{{item.nickName}}</p>
                         <p>{{item.title}}</p>

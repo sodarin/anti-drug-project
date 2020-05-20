@@ -46,7 +46,10 @@ ul {
   color: rgba(255, 255, 255, .9);
   font-size: 16px;
 }
-
+.empty-space {
+  width: 20%;
+  flex-grow: 0;
+}
 .main-menu>li:hover {
   color: rgba(255, 255, 255) !important;
 }
@@ -89,13 +92,13 @@ ul {
 }
 
 .admin-operation {
-  display: inline-block;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   min-width: 36px;
   margin: 15px 20px 15px;
-  width: 200px;
+  width: 10%;
   line-height: 25px;
-  word-spacing: 5px;
-  letter-spacing: 5px;
   cursor: pointer;
 }
 
@@ -108,6 +111,7 @@ ul {
 .bell-style {
   color: white;
   font-size: 22px;
+  padding-top: 4px;
 }
 
 .user-center {
@@ -126,13 +130,15 @@ ul {
 .user-avatar {
   width: 80px;
   height: 80px;
-  border-radius: 40px;
-  background-color: white;
-  box-shadow: #DCDFE6 0px 0px 10px;
-  word-spacing: 10px;
-  letter-spacing: 10px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: #e7e6e6 0px 0px 3px;
 }
 
+.user-avatar:hover {
+  box-shadow: #DCDFE6 0px 0px 10px;
+  transition: all .3s ease
+}
 
 
 .center-operation {
@@ -221,4 +227,40 @@ nz-footer {
 
 :host ::ng-deep .ant-layout-footer {
   padding: 10px 20px;
+}
+
+.card-container{
+  width: 300px;
+}
+.card-container nz-tab{
+  display: flex;
+  height: 100%  ;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.list-container{
+  flex: 1;
+  width: 100%;
+}
+
+
+.card-container ::ng-deep .ant-tabs .ant-tabs-bar .ant-tabs-tab {
+  width: 130px;
+  text-align: center  ;
+}
+
+nz-list-item-meta ::ng-deep .ant-list-item-meta-description ,nz-list-item-meta div{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp:1;
+  -webkit-box-orient: vertical;
+}
+.show-all{
+  border-top: 2px solid #f6f6f6;
+  padding-top: 10px;
+  text-align: center;
+  height: 50px;
 }

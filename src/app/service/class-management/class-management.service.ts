@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 
 @Injectable({
@@ -9,6 +9,42 @@ export class ClassManagementService {
   changeStatus: Subject<number> = new BehaviorSubject<number>(1);
 
   constructor(private _http: HttpClient) {
+  }
+
+  getMessageList(targetPage: number, pageSize: number): Observable<any> {
+    return this._http.post(``, {
+      pageSize: pageSize,
+      pageNum: targetPage,
+    })
+  }
+
+  filterUserList(targetPage: number, pageSize: number, filterOptions: any): Observable<any> {
+    return this._http.post(``, {
+      pageSize: pageSize,
+      pageNum: targetPage,
+      className: filterOptions.className,
+
+    })
+  }
+
+  getMyClasses(targetPage: number, pageSize: number,userId:string): Observable<any> {
+    const httpParam = new HttpParams()
+      .set('pageNum', `${targetPage}`)
+      .set('pageSize', `${pageSize}`)
+      .set('userId',`${userId}`);
+    return this._http.get(`/user/getLearningClassroom`, {
+      params: httpParam
+    })
+  }
+
+  getTeachClasses(targetPage: number, pageSize: number,userId:string): Observable<any> {
+    const httpParam = new HttpParams()
+      .set('pageNum', `${targetPage}`)
+      .set('pageSize', `${pageSize}`)
+      .set('teacherId',`${userId}`);
+    return this._http.get(`/user/getTeachingClassroom`, {
+      params: httpParam
+    })
   }
 
   getClassroomList(targetPage: number, pageSize: number, filterOptions: any): Observable<any> {
@@ -49,4 +85,6 @@ export class ClassManagementService {
       title: title
     })
   }
+
+
 }

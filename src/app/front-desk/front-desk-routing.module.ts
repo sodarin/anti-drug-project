@@ -56,13 +56,11 @@ import {TeachingClassComponent} from "../client/mine-management/teaching-class/t
 import {StudentQAComponent} from "../client/mine-management/student-qa/student-qa.component";
 import {StudentTopicComponent} from "../client/mine-management/student-topic/student-topic.component";
 import {MinePaperMarkingComponent} from "../client/mine-management/paper-marking/paper-marking.component";
-import {HomeworkMarkingComponent} from "../client/mine-management/homework-marking/homework-marking.component";
 import {TeachingDatabaseComponent} from "../client/mine-management/teaching-database/teaching-database.component";
 import {MyCourseComponent} from "../client/mine-management/my-course/my-course.component";
 import {MyQAComponent} from "../client/mine-management/my-qa/my-qa.component";
 import {MyTopicComponent} from "../client/mine-management/my-topic/my-topic.component";
 import {MyNoteComponent} from "../client/mine-management/my-note/my-note.component";
-import {MyHomeworkComponent} from "../client/mine-management/my-homework/my-homework.component";
 import {MyExamComponent} from "../client/mine-management/my-exam/my-exam.component";
 import {MyGroupComponent} from "../client/mine-management/my-group/my-group.component";
 import {MyClassComponent} from "../client/mine-management/my-class/my-class.component";
@@ -71,6 +69,31 @@ import {CreateCourseComponent} from "../client/mine-management/teaching-course/c
 import {MyLiveCourseComponent} from "../client/mine-management/my-course/my-live-course/my-live-course.component";
 import { FocusDetailComponent } from '../core/focus-detail/focus-detail.component';
 import { FansComponent } from "../core/fans/fans.component";
+import {MyNoteDetailComponent} from '../client/mine-management/my-note-detail/my-note-detail.component';
+import {CourseTaskComponent} from '../client/course-task/course-task.component';
+import {GroupnowComponent} from '../client/groupmainlist/groupnow/groupnow.component';
+import {GroupmainsearchComponent} from '../client/groupmainlist/groupmainsearch/groupmainsearch.component';
+import {GroupsearchComponent} from '../client/groupmainlist/grouplist/groupsearch/groupsearch.component';
+import {GroupthreadComponent} from '../client/groupmainlist/grouplist/groupthread/groupthread.component';
+import {GroupthreadeditComponent} from '../client/groupmainlist/grouplist/groupthreadedit/groupthreadedit.component';
+import {TestPaperCreateComponent} from '../course-management/test-paper/test-paper-create/test-paper-create.component';
+import {QuestionCreateComponent} from '../course-management/question/question-create/question-create.component';
+import {SingleChoiceComponent} from '../course-management/question/question-create/single-choice/single-choice.component';
+import {MultipleChoiceComponent} from '../course-management/question/question-create/multiple-choice/multiple-choice.component';
+import {EssayComponent} from '../course-management/question/question-create/essay/essay.component';
+import {IndefiniteChoiceComponent} from '../course-management/question/question-create/indefinite-choice/indefinite-choice.component';
+import {JudgementComponent} from '../course-management/question/question-create/judgement/judgement.component';
+import {CompletionComponent} from '../course-management/question/question-create/completion/completion.component';
+import {MaterialComponent} from '../course-management/question/question-create/material/material.component';
+import {PlanTasksComponent} from '../course-management/plan-tasks/plan-tasks.component';
+import {PlanOverviewComponent} from '../course-management/plan-overview/plan-overview.component';
+import {TidingsComponent} from '../client/tidings/tidings.component';
+import {MessagesComponent} from '../client/tidings/messages/messages.component';
+import {NotificationsComponent} from '../client/tidings/notifications/notifications.component';
+import {PrivateChatComponent} from '../client/tidings/private-chat/private-chat.component';
+import {CourseinfComponent} from '../client/courseinf/courseinf.component';
+import {CoursevideoComponent} from '../client/coursevideo/coursevideo.component';
+import {ClassinfComponent} from '../client/classinf/classinf.component';
 
 
 
@@ -88,13 +111,12 @@ const routes: Routes = [
           {path: 'studentQA' , component:StudentQAComponent},
           {path: 'studenttopic', component:StudentTopicComponent},
           {path: 'papermarking', component:MinePaperMarkingComponent},
-          {path: 'homeworkmarking', component:HomeworkMarkingComponent},
           {path: 'teachingdatabase', component:TeachingDatabaseComponent},
           {path: 'mycourse', component:MyCourseComponent},
           {path: 'myQA', component:MyQAComponent},
           {path: 'mytopic', component:MyTopicComponent},
           {path: 'mynote', component:MyNoteComponent},
-          {path: 'myhomework', component:MyHomeworkComponent},
+          {path: 'mynoteDetail/:id',component:MyNoteDetailComponent},
           {path: 'myexam', component:MyExamComponent},
           {path: 'mygroup', component:MyGroupComponent},
           {path: 'myclass', component:MyClassComponent},
@@ -104,6 +126,9 @@ const routes: Routes = [
 
         ]},
       { path: 'courselist', component: CourselistComponent},
+      { path: 'courseinf/:id', component: CourseinfComponent },
+      { path: 'courseinf/:id/task/:taskId', component: CoursevideoComponent },
+      { path: 'classinf/:id', component: ClassinfComponent },
       { path: 'teacher', component: TeacherComponent},
       { path: 'userpage/:id', component: UserPageComponent},
       { path: 'userpage/:id', component: UserPageComponent,children:[
@@ -115,19 +140,24 @@ const routes: Routes = [
       { path: 'classlist', component: ClasslistComponent },
       { path: 'openresource', component: OpenresourceComponent},
       { path: 'openresourcedetail/:id', component: OpenresourcedetailComponent },
-      {path: 'groupmainlist', component: GroupmainlistComponent},
+      {path: 'groupmainlist', component: GroupmainlistComponent,children:[
+          {path: '', component: GroupnowComponent},
+          {path: 'groupmainsearch', component: GroupmainsearchComponent}
+        ]},
       {path: 'groupcreate', component: GroupcreateComponent},
       {path: 'groupmainlist/:id', component: GrouplistComponent, children: [
           {path: '', component: GroupInfoComponent},
-          {path: 'grouptopic', component: GrouptopicComponent},
-
+          {path: 'groupthread/grouptopic', component: GrouptopicComponent},
+          {path: 'groupsearch', component: GroupsearchComponent},
+          {path: 'groupthread/:id', component: GroupthreadComponent},
+          {path: 'groupthread/:id/groupthreadedit', component: GroupthreadeditComponent}
         ]},
       { path: 'newsall', component: NewsAllModalComponent},
       { path: 'newslaw', component: NewsLawModalComponent },
       { path: 'newsnews', component: NewsNewsModalComponent},
       { path: 'newscase', component: NewsCaseModalComponent},
-      { path: 'newsdetails', component: NewsDetailsModalComponent},
-      { path: 'newstag', component: NewsTagModalComponent},
+      { path: 'newsdetails/:id', component: NewsDetailsModalComponent},
+      { path: 'newstag/:id', component: NewsTagModalComponent},
       {
         path: 'classroom/:id', component: ClassManagementComponent, children: [
           { path: '', redirectTo: 'manage', pathMatch: 'full' },
@@ -143,7 +173,13 @@ const routes: Routes = [
           { path: 'testpaper/:paperid/resulttable', component: ResultTableComponent }
         ]},
       { path: 'testpaper/:paperid/result/:studentid', component: PaperResultDetailComponent },
-      { path: 'testpaper/:paperid/analysis', component: PaperResultAnalysisComponent},
+      { path: 'course/:courseid/analysis/:courseTaskId', component: PaperResultAnalysisComponent},
+      { path: 'tidings', component:TidingsComponent, children: [
+          { path: 'messages', component: MessagesComponent },
+          { path: 'notifications', component: NotificationsComponent },
+          { path: 'privatechat/:name', component: PrivateChatComponent },
+        ]
+      },
       {
         path: 'settings', component: PersonalSettingsComponent, children: [
           { path: '', redirectTo: 'information', pathMatch: 'full' },
@@ -160,7 +196,26 @@ const routes: Routes = [
           { path: 'cover', component: CoverPhotoComponent },
           { path: 'file', component: FileComponent },
           { path: 'testpaper', component: TestPaperComponent },
+          { path: 'testpapercreate', component: TestPaperCreateComponent },
           { path: 'question', component: QuestionComponent },
+          {
+            path: 'question_create', component: QuestionCreateComponent, children: [
+              { path: '', redirectTo: 'single_choice', pathMatch: 'full' },
+              { path: 'single_choice', component: SingleChoiceComponent },
+              { path: 'single_choice/:id', component: SingleChoiceComponent },
+              { path: 'mutiple_choice', component: MultipleChoiceComponent },
+              { path: 'mutiple_choice/:id', component: MultipleChoiceComponent },
+              { path: 'essay', component: EssayComponent },
+              { path: 'choice', component: IndefiniteChoiceComponent },
+              { path: 'choice/:id', component: IndefiniteChoiceComponent },
+              { path: 'determine', component: JudgementComponent },
+              { path: 'determine/:id', component: JudgementComponent },
+              { path: 'completion', component: CompletionComponent },
+              { path: 'material', component: MaterialComponent }
+            ]
+          },
+          { path: 'overview', component: PlanOverviewComponent },
+          { path: 'tasks', component: PlanTasksComponent },
           { path: 'teaching_plan', component: TeachingPlanManagementComponent },
           { path: 'papers', component: PaperMarkingComponent },
           { path: 'papers/:paperid/resulttable', component: TestResultTableComponent },
@@ -168,7 +223,8 @@ const routes: Routes = [
           { path: 'teachersetting', component: TeacherManagementComponent },
           { path: 'plansetting', component: PlanSettingComponent }
         ]
-      }
+      },
+      { path:'course/:id/task/:id/show',component:CourseTaskComponent}
     ]
   },
 

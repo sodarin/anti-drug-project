@@ -25,8 +25,8 @@
       <td>{{data.id}}</td>
       <td>{{data.name}}</td>
 <!--      标签组id？-->
-      <td>{{data.group}}</td>
-      <td>{{data.createdTime}}</td>
+      <td>{{data.tagGroupName}}</td>
+      <td>{{data.createdtime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
       <td><i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
       <ng-template #operationTemplate>
         <div class="user-management-operation">

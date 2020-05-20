@@ -16,19 +16,24 @@
     </thead>
     <tbody>
     <tr *ngFor="let data of recordListTable.data">
-      <td>{{data.name}}</td>
-      <td>{{data.course}}</td>
-      <td>{{data.state}}</td>
-      <td>管理
+      <td   class="question-title" (click)="navigatTo('client/course/'+ data.id )"
+      >{{data.coursesettitle}}</td>
+      <td>{{data.studentnum}}</td>
+      <td>{{data.status == 'published'? '已发布': (data.status == 'closed'? '已关闭': '未发布')}}</td>
+      <td >
         <i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
       <ng-template #operationTemplate>
 
         <div class="user-management-operation">
           <div>
-            <span  ><i nz-icon nzType="setting" nzTheme="outline"></i>计划管理</span>
+            <span class="question-title"  (click)="navigatTo('client/course/'+ data.id + '/base')">管理</span>
           </div>
-          <div><span ><i nz-icon nzType="setting" nzTheme="outline"></i>文件管理</span></div>
-
+          <div>
+            <span  class="question-title" (click)="navigatTo('/client/course/'+ data.id +'/teaching_plan')">计划管理</span>
+          </div>
+          <div>
+            <span  class="question-title" (click)="navigatTo('/client/course/'+ data.id +'/file')">文件管理</span>
+          </div>
         </div>
       </ng-template>
     </tr>
