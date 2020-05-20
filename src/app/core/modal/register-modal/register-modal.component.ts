@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-register-modal',
@@ -16,11 +16,11 @@ export class RegisterModalComponent implements OnInit {
   ngOnInit() {
     this.registerForm = this.fb.group({
       username: [null, [Validators.required]],
-      email: [null, [Validators.required]],
+      email: [null, [Validators.email, Validators.required]],
       phoneNumber: [null, [Validators.required]],
       password: [null, [Validators.required]],
-      checkPassword: [null, [Validators.required]],
-      agree: [true]
+      checkPassword: [null, [Validators.required, this.confirmationValidator]],
+      agree: [false]
     })
   }
 
@@ -33,4 +33,17 @@ export class RegisterModalComponent implements OnInit {
       console.log(this.registerForm.value);
     }
   }
+
+  updateConfirmValidator(): void {
+    Promise.resolve().then(() => this.registerForm.controls.checkPassword.updateValueAndValidity());
+  }
+
+  confirmationValidator = (control: FormControl): { [s: string]: boolean } => {
+    if (!control.value) {
+      return { required: true };
+    } else if (control.value !== this.registerForm.controls.password.value) {
+      return { confirm: true, error: true };
+    }
+    return {};
+  };
 }

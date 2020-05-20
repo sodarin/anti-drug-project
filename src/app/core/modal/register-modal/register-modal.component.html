@@ -57,7 +57,7 @@
 
   <!-- 重复密码 -->
   <nz-form-item>
-    <nz-form-control [nzErrorTip]="errorTpl">
+    <nz-form-control nzErrorTip="密码错误！">
       <nz-input-group nzPrefixIcon="lock">
         <input
           type="password"
@@ -66,16 +66,6 @@
           placeholder="请重复输入密码"
         />
       </nz-input-group>
-
-      <ng-template #errorTpl let-control>
-        <ng-container *ngIf="control.hasError('required')">
-          密码格式错误！
-        </ng-container>
-        <ng-container *ngIf="control.hasError('confirm')">
-          密码不一致！
-        </ng-container>
-      </ng-template>
-
     </nz-form-control>
   </nz-form-item>
 
@@ -86,7 +76,7 @@
         <span>同意<a>使用协议</a></span>
       </label>
       <button nz-button class="register-form-button" [nzType]="'primary'">
-        登录
+        注册
       </button>
     </nz-form-control>
   </nz-form-item>
