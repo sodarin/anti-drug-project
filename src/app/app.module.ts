@@ -34,6 +34,7 @@ import { SecurityProblemEditModalComponent } from './core/modal/security-problem
 import { CourseManagementModule } from './course-management/course-management.module'
 import {PaperScoreStatisticsComponent} from './core/modal/paper-score-statistics/paper-score-statistics.component';
 import {TeachingPlanAddingModalComponent} from './core/modal/teaching-plan-adding-modal/teaching-plan-adding-modal.component';
+import { RegisterModalComponent } from './core/modal/register-modal/register-modal.component';
 
 registerLocaleData(zh);
 @NgModule({
@@ -63,6 +64,7 @@ registerLocaleData(zh);
   ],
   entryComponents: [
     LoginModalComponent,
+    RegisterModalComponent,
     LoginPasswdEditModelComponent,
     SecurityProblemEditModalComponent,
     UserInfoViewModalComponent,
