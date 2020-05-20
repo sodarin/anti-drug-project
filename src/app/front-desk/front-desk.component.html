@@ -36,7 +36,7 @@
 
       <li nz-menu-item>新闻资讯</li>
 
-      <li nz-menu-item *ngIf="!isLogin" (click)="login()">登陆</li>
+      <li nz-menu-item *ngIf="!isLogin" (click)="login()">登录</li>
       <li nz-menu-item *ngIf="!isLogin" (click)="register()">注册</li>
 
       <li nz-submenu *ngIf="isLogin" nzTitle="管理后台">
@@ -93,7 +93,7 @@
           </li>
 
           <li nz-menu-item *ngIf="!isLogin" (click)="login()" class="menu-item">
-            登陆
+            登录
           </li>
           <li
             nz-menu-item

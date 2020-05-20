@@ -32,7 +32,8 @@ import { FocusDetailComponent } from './focus-detail/focus-detail.component';
 import { CoreRoutingModule  } from "./core-routing.module";
 import { FansComponent } from './fans/fans.component';
 import {RouterModule} from '@angular/router';
-import {VideoPlayerComponent} from './video-player/video-player.component'
+import {VideoPlayerComponent} from './video-player/video-player.component';
+import { RegisterModalComponent } from './modal/register-modal/register-modal.component'
 
 
 @NgModule({
@@ -62,7 +63,8 @@ import {VideoPlayerComponent} from './video-player/video-player.component'
     NewsTagModalComponent,
     FocusDetailComponent,
     FansComponent,
-    VideoPlayerComponent
+    VideoPlayerComponent,
+    RegisterModalComponent
   ],
   imports: [
     ShareModule,

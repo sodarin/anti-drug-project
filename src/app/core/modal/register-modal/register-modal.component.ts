@@ -2,12 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
-  selector: 'app-login-modal',
-  templateUrl: './login-modal.component.html',
-  styleUrls: ['./login-modal.component.less']
+  selector: 'app-register-modal',
+  templateUrl: './register-modal.component.html',
+  styleUrls: ['./register-modal.component.less']
 })
-export class LoginModalComponent implements OnInit {
-
+export class RegisterModalComponent implements OnInit {
   loginForm: FormGroup;
 
   constructor(
@@ -31,5 +30,4 @@ export class LoginModalComponent implements OnInit {
       console.log(this.loginForm.value);
     }
   }
-
 }

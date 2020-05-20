@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NzModalService } from 'ng-zorro-antd';
 import { LoginModalComponent } from '../core/modal/login-modal/login-modal.component';
+import { RegisterModalComponent } from '../core/modal/register-modal/register-modal.component';
 
 @Component({
   selector: 'app-front-desk',
@@ -29,6 +30,15 @@ export class FrontDeskComponent implements OnInit {
       nzFooter: null
     })
   }
+
+  register() {
+    const modal = this._modalService.create({
+      nzTitle: '注册',
+      nzContent: RegisterModalComponent,
+      nzFooter: null
+    })
+  }
+  
 
   logout() {
     // 注销相关逻辑
