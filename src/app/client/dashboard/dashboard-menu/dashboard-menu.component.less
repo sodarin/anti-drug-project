@@ -1,0 +1,59 @@
+.menu-button {
+  height: 14.2%;
+  background-color: transparent;
+  border-style: none;
+}
+
+.menu-button:hover {
+  background-color: #5c7b75;
+}
+
+.card {
+  background-color: #305850;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  width: calc(100% / 6);
+  border-radius: 5px;
+}
+.main-pic {
+  max-width: 100%;
+  border-radius: 5px;
+}
+.mobile-pic {
+  max-width: 100%;
+  border-radius: 5px;
+  display: none;
+}
+.list-button {
+  background-color: white;
+  border-style: none;
+  min-height: 100px;
+  height: 100%;
+}
+
+@media screen and (max-width: 700px) {
+  .pc-version {
+    display: none;
+  }
+  .mobile-pic {
+    display: inherit;
+  }
+}
+
+.backround-card {
+  background: #305850;
+  width: 100%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  text-align: center;
+  border-radius: 5px;
+  position: relative;
+}
+.right-content {
+  background-color: white;
+  border-radius: 5px;
+}

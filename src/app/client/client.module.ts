@@ -134,6 +134,12 @@ import {CourselistCourseblockModalComponent} from './courselist/courselist-cours
 import {CourseinfTeacherlistModalComponent} from './courseinf/courseinf-teacherlist-modal/courseinf-teacherlist-modal.component';
 import {CourseinfStudentdynamicsModalComponent} from './courseinf/courseinf-studentdynamics-modal/courseinf-studentdynamics-modal.component';
 import {CourseExamComponent} from './course-exam/course-exam.component';
+import { DashboardMenuComponent } from './dashboard/dashboard-menu/dashboard-menu.component';
+import { DashboardListComponent } from './dashboard/dashboard-list/dashboard-list.component';
+import { DashboardListCourseComponent } from './dashboard/dashboard-list/dashboard-list-course/dashboard-list-course.component';
+import { DashboardListOpenresourceComponent } from './dashboard/dashboard-list/dashboard-list-openresource/dashboard-list-openresource.component';
+import { DashboardListStudentComponent } from './dashboard/dashboard-list/dashboard-list-student/dashboard-list-student.component';
+import { DashboardListTeacherComponent } from './dashboard/dashboard-list/dashboard-list-teacher/dashboard-list-teacher.component';
 
 
 @NgModule({
@@ -196,7 +202,8 @@ import {CourseExamComponent} from './course-exam/course-exam.component';
     FavoriteCourseComponent, MyQAComponent, MyTopicComponent, MyTopicTabComponent, MyNoteComponent, MyExamComponent, MyGroupComponent,
      MyClassComponent, MyLiveComponent, CreateCourseComponent, MyLiveCourseComponent, ExamRecordComponent, QuestionRecordComponent,
     TopicRecordComponent, TopicComponent, GroupJoinComponent, MyGroupJoinComponent,TdClassificationComponent, TdCardComponent, MyNoteDetailComponent, CourseExamComponent,
-    TopicPostComponent, MyOwnGroupComponent, CourseTaskComponent, MyClassTopicComponent, MyCourseTopicComponent, GroupsearchComponent, GroupmainsearchComponent, GroupthreadComponent, GroupthreadeditComponent
+    TopicPostComponent, MyOwnGroupComponent, CourseTaskComponent, MyClassTopicComponent, MyCourseTopicComponent, GroupsearchComponent, GroupmainsearchComponent, GroupthreadComponent, GroupthreadeditComponent,
+    DashboardMenuComponent, DashboardListComponent, DashboardListCourseComponent, DashboardListOpenresourceComponent, DashboardListStudentComponent, DashboardListTeacherComponent
   ],
   imports: [
     ShareModule,

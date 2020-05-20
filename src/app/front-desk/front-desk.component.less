@@ -1,266 +1,96 @@
-.ant-layout-header {
-  background: #1E90FF;
+nz-content {
+  min-height: 590px;
 }
+
+nz-footer {
+  background-color: #ffffff;
+  text-align: center;
+  padding: 10px 5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+//header
 
 nz-header {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   width: 100%;
+  height: calc(100vw / 13);
   padding: 0;
+  background-color: rgba(240, 242, 245);
+  position: relative;
 }
 
-img {
-  height: 100%;
-  width: auto;
-  vertical-align: top;
-  margin-left: 20px;
+.background-image {
+  background: url("src/assets/img/nav-autumn.png") no-repeat;
+  height: calc(100vw / 16);
+  width: 100vw;
+  background-size: cover;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-ul {
-  flex-shrink: 1;
+.menu {
+  background-color: transparent;
+  position: absolute;
+  right: 2%;
+  top: 18%;
 }
-
-.trigger,
-.mobile-user-operation {
-  font-size: 26px;
-  line-height: 64px;
-  padding: 0 24px;
-  cursor: pointer;
-  transition: color 0.3s;
-  color: rgba(255, 255, 255, .9);
+.user-control {
+  float: right;
 }
-
-.mobile-user-operation {
-  display: none;
-  margin-right: 20px;
-}
-
-.trigger:hover {
-  color: rgba(255, 255, 255);
-}
-
-.main-menu {
-  background: #1E90FF;
-  border-bottom: none;
-  color: rgba(255, 255, 255, .9);
-  font-size: 16px;
-}
-.empty-space {
-  width: 20%;
-  flex-grow: 0;
-}
-.main-menu>li:hover {
-  color: rgba(255, 255, 255) !important;
-}
-
-:host ::ng-deep .ant-menu-submenu-title:hover {
-  color: rgba(255, 255, 255) !important;
-}
-
-.ant-menu-submenu-open,
-.ant-menu-submenu-active,
-.ant-menu-horizontal>.ant-menu-submenu-selected,
-.ant-menu-horizontal>.ant-menu-item-selected {
-  color: rgba(255, 255, 255) !important;
-}
-
-.ant-menu-horizontal>.ant-menu-item,
-.ant-menu-horizontal>.ant-menu-submenu {
-  border-bottom: none;
-}
-
-.ant-menu-horizontal>.ant-menu-item:hover,
-.ant-menu-horizontal>.ant-menu-submenu:hover,
-.ant-menu-horizontal>.ant-menu-submenu-open {
-  border-bottom: none;
-}
-
-[nz-menu] {
-  line-height: 64px;
-}
-
-
-
-.user-operation {
-  display: inline-block;
-  min-width: 36px;
-  margin: 0 20px;
-  color: rgba(255, 255, 255, .9);
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.admin-operation {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  min-width: 36px;
-  margin: 15px 20px 15px;
-  width: 10%;
-  line-height: 25px;
-  cursor: pointer;
-}
-
-.btn-server {
-  border-style: solid;
-  border-color: white;
-
-}
-
-.bell-style {
-  color: white;
-  font-size: 22px;
-  padding-top: 4px;
-}
-
-.user-center {
-  height: 200px;
-  width: 250px;
-  display: inline-block;
-  font-size: 24px;
-  padding: 20px;
-  text-align: center;
-}
-
-.pointer-perform{
-  cursor: pointer;
-}
-
-.user-avatar {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: #ffffff;
-  box-shadow: #e7e6e6 0px 0px 3px;
-}
-
-.user-avatar:hover {
-  box-shadow: #DCDFE6 0px 0px 10px;
-  transition: all .3s ease
-}
-
-
-.center-operation {
-
-  font-size: 13px;
-  color: #C0C4CC;
-}
-
-
-nz-content {
-  //background: #ffffff;
-  //margin: 20px 16px 0;
-  min-height: 590px;
-  //padding: 10px 10px;
-}
-
-.mobile-style {
-  display: none;
-}
-
-nz-footer {
-  background-color: #ffffff;
-  text-align: center;
-}
-
-@media screen and (max-width: 1230px) {
-
-  .ant-menu-item,
-  .ant-menu-submenu {
-    padding: 0 10px;
-  }
-
-  :host ::ng-deep .ant-menu-submenu-title {
-    padding: 0;
-  }
-}
-
-@media screen and (max-width: 1090px) {
-  .user-panel {
-    width: 10%;
-  }
+.menu-item {
+  float: left;
 }
 
 @media screen and (max-width: 975px) {
-  .user-panel {
-    width: 5%;
+  .menu {
+    top: 10%;
+  }
+  .menu-item {
+    display: none;
   }
 
-  .ant-menu-item,
-  .ant-menu-submenu {
-    padding: 0 2px;
+  .background-image {
+    height: calc(975px / 16);
+    width: 975px;
   }
 
-  :host ::ng-deep .anticon-caret-down {
-    margin-right: 0;
+  nz-header {
+    height: calc(975px / 13);
   }
 }
 
-@media screen and (min-width: 776px) {
+@media screen and (max-width: 400px) {
+  .menu {
+    right: 2px;
+  }
+}
+
+//sider
+
+.trigger {
+  font-size: 19px;
+  line-height: 64px;
+  padding: 0 22px;
+  cursor: pointer;
+  transition: color 0.3s;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.trigger:hover {
+  color: #1890ff;
+}
+
+@media screen and (min-width: 975px) {
   .trigger {
     display: none;
   }
 }
 
-@media screen and (max-width: 776px) {
-  .main-menu {
-    display: none;
-  }
-
-  .user-panel {
-    display: none;
-  }
-
-  .user-operation {
-    display: none;
-  }
-
-  .mobile-user-operation {
-    display: inline-block;
-  }
-
-  .mobile-style {
-    display: inline-block;
-  }
-}
-
-:host ::ng-deep .ant-layout-footer {
-  padding: 10px 20px;
-}
-
-.card-container{
-  width: 300px;
-}
-.card-container nz-tab{
-  display: flex;
-  height: 100%  ;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-
-.list-container{
-  flex: 1;
-  width: 100%;
-}
-
-
-.card-container ::ng-deep .ant-tabs .ant-tabs-bar .ant-tabs-tab {
-  width: 130px;
-  text-align: center  ;
-}
-
-nz-list-item-meta ::ng-deep .ant-list-item-meta-description ,nz-list-item-meta div{
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp:1;
-  -webkit-box-orient: vertical;
-}
-.show-all{
-  border-top: 2px solid #f6f6f6;
-  padding-top: 10px;
-  text-align: center;
-  height: 50px;
+.nzText {
+  background-color: rgba(51, 68, 84);
+  border-style: none;
+  margin: 15px 0 10px 15px;
+  width: 85%;
 }

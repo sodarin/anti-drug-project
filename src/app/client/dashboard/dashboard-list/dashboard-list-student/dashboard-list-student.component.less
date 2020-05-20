@@ -1,0 +1,95 @@
+.listview {
+  padding-left: 2%;
+  padding-right: 2%;
+}
+h1 {
+  font-size: xx-large;
+}
+
+@media screen and (max-width: 768px) {
+  h1 {
+    font-size: x-large;
+  }
+  h3 {
+    margin-left: 5%;
+    margin-right: 5%;
+    font-size: small;
+  }
+  nz-card {
+    min-height: 210px;
+  }
+}
+.list-row {
+  margin-top: 35px;
+  margin-bottom: 35px;
+  margin-left: 5%;
+  margin-right: 5%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+nz-list {
+  width: 47.5%;
+  text-align: left;
+}
+
+@media screen and (max-width: 600px) {
+  .list-row {
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  nz-list {
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+  }
+}
+
+nz-list-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  position: relative;
+  height: 60px;
+}
+
+@media screen and (max-width: 1300px) {
+  nz-rate {
+    display: none;
+  }
+
+  nz-list {
+    width: 49%;
+  }
+}
+
+.time {
+  position: absolute;
+  right: 3%;
+}
+
+.first-row {
+  font-size: x-small;
+}
+
+.num-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+nz-divider {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+p {
+  margin: 2px;
+}
