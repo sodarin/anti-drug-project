@@ -1,4 +1,5 @@
-<form nz-form [formGroup]="loginForm" (ngSubmit)="submitLoginForm()">
+<form nz-form [formGroup]="registerForm" (ngSubmit)="submitRegisterForm()">
+  <!-- 用户名 -->
   <nz-form-item>
     <nz-form-control nzErrorTip="请输入用户名！">
       <nz-input-group nzPrefixIcon="user">
@@ -11,6 +12,36 @@
       </nz-input-group>
     </nz-form-control>
   </nz-form-item>
+
+  <!-- 邮箱 -->
+  <nz-form-item>
+    <nz-form-control nzErrorTip="请输入邮箱！">
+      <nz-input-group nzPrefixIcon="mail">
+        <input
+          nz-input
+          type="text"
+          formControlName="email"
+          placeholder="请输入邮箱"
+        />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- 手机号 -->
+  <nz-form-item>
+    <nz-form-control nzErrorTip="请输入手机号！">
+      <nz-input-group nzPrefixIcon="phone" nzAddOnBefore="+86">
+        <input
+          nz-input
+          type="text"
+          formControlName="phoneNumber"
+          placeholder="请输入手机号"
+        />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- 密码 -->
   <nz-form-item>
     <nz-form-control nzErrorTip="请输入密码！">
       <nz-input-group nzPrefixIcon="lock">
@@ -23,17 +54,40 @@
       </nz-input-group>
     </nz-form-control>
   </nz-form-item>
+
+  <!-- 重复密码 -->
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]="errorTpl">
+      <nz-input-group nzPrefixIcon="lock">
+        <input
+          type="password"
+          nz-input
+          formControlName="checkPassword"
+          placeholder="请重复输入密码"
+        />
+      </nz-input-group>
+
+      <ng-template #errorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          密码格式错误！
+        </ng-container>
+        <ng-container *ngIf="control.hasError('confirm')">
+          密码不一致！
+        </ng-container>
+      </ng-template>
+
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- 按钮 -->
   <nz-form-item>
     <nz-form-control>
-      <label nz-checkbox formControlName="remember">
-        <span>7天内免登录</span>
+      <label nz-checkbox formControlName="agree">
+        <span>同意<a>使用协议</a></span>
       </label>
-      <a class="login-form-forget">忘记密码</a>
-      <button nz-button class="login-form-button" [nzType]="'primary'">
+      <button nz-button class="register-form-button" [nzType]="'primary'">
         登录
       </button>
-      没有账户？
-      <a>现在注册！</a>
     </nz-form-control>
   </nz-form-item>
 </form>

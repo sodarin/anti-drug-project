@@ -7,27 +7,30 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
   styleUrls: ['./register-modal.component.less']
 })
 export class RegisterModalComponent implements OnInit {
-  loginForm: FormGroup;
+  registerForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
   ) { }
 
   ngOnInit() {
-    this.loginForm = this.fb.group({
+    this.registerForm = this.fb.group({
       username: [null, [Validators.required]],
+      email: [null, [Validators.required]],
+      phoneNumber: [null, [Validators.required]],
       password: [null, [Validators.required]],
-      remember: [true]
+      checkPassword: [null, [Validators.required]],
+      agree: [true]
     })
   }
 
-  submitLoginForm() {
-    for (const i in this.loginForm.controls) {
-      this.loginForm.controls[i].markAsDirty();
-      this.loginForm.controls[i].updateValueAndValidity()
+  submitRegisterForm() {
+    for (const i in this.registerForm.controls) {
+      this.registerForm.controls[i].markAsDirty();
+      this.registerForm.controls[i].updateValueAndValidity()
     }
-    if (this.loginForm.valid) {
-      console.log(this.loginForm.value);
+    if (this.registerForm.valid) {
+      console.log(this.registerForm.value);
     }
   }
 }
