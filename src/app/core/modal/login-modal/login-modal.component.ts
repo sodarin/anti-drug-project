@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { RegisterModalComponent } from '../register-modal/register-modal.component';
+import { NzModalService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-login-modal',
@@ -12,6 +14,7 @@ export class LoginModalComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private _modalService: NzModalService,
   ) { }
 
   ngOnInit() {
@@ -32,4 +35,11 @@ export class LoginModalComponent implements OnInit {
     }
   }
 
+  register() {
+    const modal = this._modalService.create({
+      nzTitle: '注册',
+      nzContent: RegisterModalComponent,
+      nzFooter: null
+    })
+  }
 }
