@@ -1,1 +1,24 @@
-<p>home-page works!</p>
+<nz-list nzBordered nzHeader="最新问答">
+  <nz-list-item *ngFor="let item of data">
+    <span nz-typography><mark>[ITEM]</mark></span>
+    {{ item }}
+  </nz-list-item>
+</nz-list>
+<nz-list nzBordered nzHeader="最新评价">
+  <nz-list-item *ngFor="let item of data">
+    <span nz-typography><mark>[ITEM]</mark></span>
+    {{ item }}
+  </nz-list-item>
+</nz-list>
+<nz-list nzBordered nzHeader="最新学生">
+  <nz-list-item *ngFor="let item of data">
+    <span nz-typography><mark>[ITEM]</mark></span>
+    {{ item }}
+  </nz-list-item>
+</nz-list>
+<nz-list nzBordered nzHeader="课程排行">
+  <nz-list-item *ngFor="let item of data">
+    <span nz-typography><mark>[ITEM]</mark></span>
+    {{ item }}
+  </nz-list-item>
+</nz-list>
