@@ -1,24 +1,91 @@
-<nz-list nzBordered nzHeader="最新问答">
-  <nz-list-item *ngFor="let item of data">
-    <span nz-typography><mark>[ITEM]</mark></span>
-    {{ item }}
-  </nz-list-item>
-</nz-list>
-<nz-list nzBordered nzHeader="最新评价">
-  <nz-list-item *ngFor="let item of data">
-    <span nz-typography><mark>[ITEM]</mark></span>
-    {{ item }}
-  </nz-list-item>
-</nz-list>
-<nz-list nzBordered nzHeader="最新学生">
-  <nz-list-item *ngFor="let item of data">
-    <span nz-typography><mark>[ITEM]</mark></span>
-    {{ item }}
-  </nz-list-item>
-</nz-list>
-<nz-list nzBordered nzHeader="课程排行">
-  <nz-list-item *ngFor="let item of data">
-    <span nz-typography><mark>[ITEM]</mark></span>
-    {{ item }}
-  </nz-list-item>
-</nz-list>
+<div nz-row [nzGutter]="24">
+  <div nz-col [nzXl]="8" [nzMd]="12" [nzXs]="24">
+    <ul
+      nz-list
+      [nzDataSource]="data"
+      nzBordered
+      [nzHeader]="'公告'"
+      [nzRenderItem]="noticeItem"
+    >
+      <ng-template #noticeItem let-item>
+        <li nz-list-item [nzActions]="[opAction]" [nzContent]="item" nzNoFlex></li>
+        <ng-template #opAction><a (click)="msg.info('edit')">edit</a></ng-template>
+      </ng-template>
+    </ul>
+  </div>
+
+  <div nz-col [nzXl]="8" [nzMd]="12" [nzXs]="24">
+    <ul
+      nz-list
+      [nzDataSource]="data"
+      nzBordered
+      [nzHeader]="'订单'"
+      [nzRenderItem]="orderItem"
+    >
+      <ng-template #orderItem let-item>
+        <li nz-list-item [nzActions]="[opAction]" [nzContent]="item" nzNoFlex></li>
+        <ng-template #opAction><a (click)="msg.info('edit')">edit</a></ng-template>
+      </ng-template>
+    </ul>
+  </div>
+
+  <div nz-col [nzXl]="8" [nzMd]="12" [nzXs]="24">
+    <ul
+      nz-list
+      [nzDataSource]="data"
+      nzBordered
+      [nzHeader]="'课程'"
+      [nzRenderItem]="courseItem"
+    >
+      <ng-template #courseItem let-item>
+        <li nz-list-item [nzActions]="[opAction]" [nzContent]="item" nzNoFlex></li>
+        <ng-template #opAction><a (click)="msg.info('edit')">edit</a></ng-template>
+      </ng-template>
+    </ul>
+  </div>
+
+  <div nz-col [nzXl]="8" [nzMd]="12" [nzXs]="24">
+    <ul
+      nz-list
+      [nzDataSource]="data"
+      nzBordered
+      [nzHeader]="'任务'"
+      [nzRenderItem]="taskItem"
+    >
+      <ng-template #taskItem let-item>
+        <li nz-list-item [nzActions]="[opAction]" [nzContent]="item" nzNoFlex></li>
+        <ng-template #opAction><a (click)="msg.info('edit')">edit</a></ng-template>
+      </ng-template>
+    </ul>
+  </div>
+
+  <div nz-col [nzXl]="8" [nzMd]="12" [nzXs]="24">
+    <ul
+      nz-list
+      [nzDataSource]="data"
+      nzBordered
+      [nzHeader]="'问答'"
+      [nzRenderItem]="questionItem"
+    >
+      <ng-template #questionItem let-item>
+        <li nz-list-item [nzActions]="[opAction]" [nzContent]="item" nzNoFlex></li>
+        <ng-template #opAction><a (click)="msg.info('edit')">edit</a></ng-template>
+      </ng-template>
+    </ul>
+  </div>
+
+  <div nz-col [nzXl]="8" [nzMd]="12" [nzXs]="24">
+    <ul
+      nz-list
+      [nzDataSource]="data"
+      nzBordered
+      [nzHeader]="'评论'"
+      [nzRenderItem]="commentItem"
+    >
+      <ng-template #commentItem let-item>
+        <li nz-list-item [nzActions]="[opAction]" [nzContent]="item" nzNoFlex></li>
+        <ng-template #opAction><a (click)="msg.info('edit')">edit</a></ng-template>
+      </ng-template>
+    </ul>
+  </div>
+</div>

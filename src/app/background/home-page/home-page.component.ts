@@ -17,4 +17,6 @@ export class HomePageComponent implements OnInit {
 
   constructor(private msg: NzMessageService) {}
 
+  ngOnInit(): void {
+  }
 }
