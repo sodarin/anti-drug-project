@@ -1,7 +1,7 @@
 <form nz-form [formGroup]="registerForm" (ngSubmit)="submitRegisterForm()">
   <!-- 用户名 -->
   <nz-form-item>
-    <nz-form-control nzErrorTip="请输入用户名！">
+    <nz-form-control [nzErrorTip]="errorUser">
       <nz-input-group nzPrefixIcon="user">
         <input
           type="text"
@@ -10,6 +10,15 @@
           placeholder="请输入用户名"
         />
       </nz-input-group>
+
+      <ng-template #errorUser let-control>
+        <ng-container *ngIf="control.hasError('confirm')">
+          用户名不存在！
+        </ng-container>
+        <ng-container *ngIf="control.hasError('required')">
+          用户名为空！
+        </ng-container>
+      </ng-template>
     </nz-form-control>
   </nz-form-item>
 

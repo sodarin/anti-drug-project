@@ -4,14 +4,17 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class LoginRegisterService {
 
   dataLogin: any = {}
 
   constructor(private http: HttpClient) { }
 
   postLogin(username: string, password: string) {
-    let res = this.http.post('login/doLogin', { username, password }).toPromise();
+    let res = this.http.post('login/doLogin', {
+      username: username,
+      password: password
+    }).toPromise();
     res.then(data => {
       if (typeof data === "object") {
         this.dataLogin = data;
@@ -29,4 +32,20 @@ export class LoginService {
 
     return res;
   }
+
+  postRegister(
+    username: string,
+    email: string,
+    phoneNumber: number,
+    password: string
+  ) {
+    let res = this.http.post('login/doRegister', {
+      username: username,
+      email: email,
+      phoneNumber: phoneNumber,
+      password: password
+    }).toPromise();
+    return res;
+  }
+
 }

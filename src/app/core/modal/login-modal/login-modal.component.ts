@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { RegisterModalComponent } from '../register-modal/register-modal.component';
 import { NzModalService } from 'ng-zorro-antd';
-import { LoginService } from 'src/app/service/login/login.service';
+import { LoginRegisterService } from 'src/app/service/login-register/login-register.service';
 
 @Component({
   selector: 'app-login-modal',
@@ -17,7 +17,7 @@ export class LoginModalComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private _modalService: NzModalService,
-    private loginService: LoginService
+    private loginService: LoginRegisterService
   ) { }
 
   ngOnInit() {
@@ -33,9 +33,10 @@ export class LoginModalComponent implements OnInit {
       this.loginForm.controls[i].updateValueAndValidity()
     }
     if (this.loginForm.valid) {
-      console.log(this.loginForm.value);
-
-      this.loginService.postLogin(this.loginForm.value.username, this.loginForm.value.password).then(
+      this.loginService.postLogin(
+        this.loginForm.value.username,
+        this.loginForm.value.password
+      ).then(
         data => {
           this.dataLogin = data;
           if (this.dataLogin == '用户不存在') {
@@ -44,7 +45,6 @@ export class LoginModalComponent implements OnInit {
             this.loginForm.controls.password.setErrors({ 'confirm': true });
           } else {
             console.log('登录成功');
-
           }
         }
       );

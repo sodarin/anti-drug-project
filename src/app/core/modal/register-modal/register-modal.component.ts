@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { LoginRegisterService } from 'src/app/service/login-register/login-register.service';
 
 @Component({
   selector: 'app-register-modal',
@@ -8,10 +9,12 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 })
 export class RegisterModalComponent implements OnInit {
   registerForm: FormGroup;
+  dataRegister: any = {}
 
   constructor(
     private fb: FormBuilder,
-  ) { }
+    private registerService: LoginRegisterService
+    ) { }
 
   ngOnInit() {
     this.registerForm = this.fb.group({
@@ -31,6 +34,22 @@ export class RegisterModalComponent implements OnInit {
     }
     if (this.registerForm.valid) {
       console.log(this.registerForm.value);
+
+      this.registerService.postRegister(
+        this.registerForm.value.username,
+        this.registerForm.value.email,
+        this.registerForm.value.phoneNumber,
+        this.registerForm.value.password
+      ).then(
+        data => {
+          this.dataRegister = data;
+          if (this.dataRegister == '用户已存在') {
+            this.registerForm.controls.username.setErrors({ 'confirm': true });
+          } else if (this.dataRegister == '注册成功') {
+            console.log('登录成功');
+          }
+        }
+      );
     }
   }
 
