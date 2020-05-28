@@ -11,26 +11,10 @@ export class LoginRegisterService {
   constructor(private http: HttpClient) { }
 
   postLogin(username: string, password: string) {
-    let res = this.http.post('login/doLogin', {
+    return this.http.post('login/doLogin', {
       username: username,
       password: password
-    }).toPromise();
-    res.then(data => {
-      if (typeof data === "object") {
-        this.dataLogin = data;
-        window.localStorage["id"] = this.dataLogin.id;
-        window.localStorage["password"] = this.dataLogin.password;
-        window.localStorage["salt"] = this.dataLogin.salt;
-        window.localStorage["nickname"] = this.dataLogin.nickname;
-        window.localStorage["title"] = this.dataLogin.title;
-        window.localStorage["smallavatar"] = this.dataLogin.smallavatar;
-        window.localStorage["mediumavatar"] = this.dataLogin.mediumavatar;
-        window.localStorage["largeavatar"] = this.dataLogin.largeavatar;
-        window.localStorage["roles"] = this.dataLogin.roles;
-      }
-    })
-
-    return res;
+    });
   }
 
   postRegister(
@@ -39,13 +23,15 @@ export class LoginRegisterService {
     phoneNumber: number,
     password: string
   ) {
-    let res = this.http.post('login/doRegister', {
+    console.log(username, email, phoneNumber, password);
+    
+
+    return this.http.post('login/doRegister', {
       username: username,
       email: email,
-      phoneNumber: phoneNumber,
+      phoneNumber: phoneNumber + "",
       password: password
-    }).toPromise();
-    return res;
+    });
   }
 
 }

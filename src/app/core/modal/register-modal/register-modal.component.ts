@@ -40,14 +40,20 @@ export class RegisterModalComponent implements OnInit {
         this.registerForm.value.email,
         this.registerForm.value.phoneNumber,
         this.registerForm.value.password
-      ).then(
-        data => {
-          this.dataRegister = data;
-          if (this.dataRegister == '用户已存在') {
-            this.registerForm.controls.username.setErrors({ 'confirm': true });
-          } else if (this.dataRegister == '注册成功') {
-            console.log('登录成功');
-          }
+      ).subscribe(
+        (res: any) => {
+          this.dataRegister = res.data;
+          console.log('注册成功');
+        }, error => {
+          console.log(error);
+          
+          // this.dataRegister = error.error.msg;
+          // console.log(this.dataRegister);
+          // if (this.dataRegister == '用户已存在！') {
+          //   this.registerForm.controls.username.setErrors({ 'confirm': true });
+          // } else {
+          //   console.log('error', error);
+          // }
         }
       );
     }

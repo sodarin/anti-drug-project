@@ -36,15 +36,19 @@ export class LoginModalComponent implements OnInit {
       this.loginService.postLogin(
         this.loginForm.value.username,
         this.loginForm.value.password
-      ).then(
-        data => {
-          this.dataLogin = data;
-          if (this.dataLogin == '用户不存在') {
+      ).subscribe(
+        (res: any) => {
+          this.dataLogin = res.data;
+          console.log('登录成功');
+        }, error => {
+          this.dataLogin = error.error.msg;
+          console.log(this.dataLogin);
+          if (this.dataLogin == '用户不存在！') {
             this.loginForm.controls.username.setErrors({ 'confirm': true });
-          } else if (this.dataLogin == '密码错误') {
+          } else if (this.dataLogin == '密码错误！') {
             this.loginForm.controls.password.setErrors({ 'confirm': true });
           } else {
-            console.log('登录成功');
+            console.log('error', error);
           }
         }
       );
