@@ -49,7 +49,7 @@
       没有账户？
       <a (click)="register()">现在注册！</a>
       <a class="login-form-forget">忘记密码</a>
-      <button nz-button class="login-form-button" [nzType]="'primary'">
+      <button nz-button class="login-form-button" [nzType]="'primary'" [nzLoading]="isOkLoading">
         登录
       </button>
     </nz-form-control>

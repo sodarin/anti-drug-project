@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NzModalService } from 'ng-zorro-antd';
+import { NzModalService, NzMessageService } from 'ng-zorro-antd';
 import { LoginModalComponent } from '../core/modal/login-modal/login-modal.component';
 import { RegisterModalComponent } from '../core/modal/register-modal/register-modal.component';
 
@@ -18,6 +18,7 @@ export class FrontDeskComponent implements OnInit {
   constructor(
     private router: Router,
     private _modalService: NzModalService,
+    private msg: NzMessageService,
   ) { }
 
   ngOnInit() {
@@ -27,7 +28,8 @@ export class FrontDeskComponent implements OnInit {
     const modal = this._modalService.create({
       nzTitle: '登录',
       nzContent: LoginModalComponent,
-      nzFooter: null
+      nzFooter: null,
+      nzOnOk: () => this.isLogin = (typeof window.localStorage["id"] == "string")
     })
   }
 
@@ -38,12 +40,21 @@ export class FrontDeskComponent implements OnInit {
       nzFooter: null
     })
   }
-  
 
   logout() {
-    // 注销相关逻辑
-    console.log('已注销');
-
+    if (window.localStorage["id"]) {
+      this.isLogin = false;
+      window.localStorage.removeItem("id");
+      window.localStorage.removeItem("password");
+      window.localStorage.removeItem("salt");
+      window.localStorage.removeItem("nickname");
+      window.localStorage.removeItem("title");
+      window.localStorage.removeItem("smallavatar");
+      window.localStorage.removeItem("mediumavatar");
+      window.localStorage.removeItem("largeavatar");
+      window.localStorage.removeItem("roles");
+      this.msg.success('注销成功');
+    }
   }
 
   navigateByUrl(url: string) {
