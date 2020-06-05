@@ -9,26 +9,18 @@ import { NzMessageService } from 'ng-zorro-antd';
 export class HomePageComponent implements OnInit {
   notice = [
     '公告1',
-    '公告2',
-    '公告3',
-    '公告4',
-    '公告5'
+    '公告2'
   ];
 
   order = [
     '订单1',
-    '订单2',
-    '订单3',
-    '订单4',
-    '订单5'
+    '订单2'
   ];
   
   course = [
     '课程1',
     '课程2',
-    '课程3',
-    '课程4',
-    '课程5'
+    '课程3'
   ];
   
   task = [
@@ -44,7 +36,8 @@ export class HomePageComponent implements OnInit {
     '问答2',
     '问答3',
     '问答4',
-    '问答5'
+    '问答5',
+    '问答6',
   ];
   
   comment = [

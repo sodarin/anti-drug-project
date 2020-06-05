@@ -24,7 +24,7 @@
 
   <!-- 邮箱 -->
   <nz-form-item>
-    <nz-form-control nzErrorTip="请输入邮箱">
+    <nz-form-control [nzErrorTip]="errorEmail">
       <nz-input-group nzPrefixIcon="mail">
         <input
           nz-input
@@ -33,6 +33,15 @@
           placeholder="请输入邮箱"
         />
       </nz-input-group>
+
+      <ng-template #errorEmail let-control>
+        <ng-container *ngIf="control.hasError('confirm')">
+          邮箱已存在
+        </ng-container>
+        <ng-container *ngIf="control.hasError('required')">
+          邮箱格式不正确
+        </ng-container>
+      </ng-template>
     </nz-form-control>
   </nz-form-item>
 

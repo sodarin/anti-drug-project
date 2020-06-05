@@ -46,6 +46,8 @@ export class RegisterModalComponent implements OnInit {
           this.dataRegister = error.error;
           if (this.dataRegister.text == "用户名已存在") {
             this.registerForm.controls.username.setErrors({ 'confirm': true });
+          } else if (this.dataRegister.text == "邮箱已被注册") {
+            this.registerForm.controls.email.setErrors({ 'confirm': true });
           } else if (this.dataRegister.text == "注册成功") {
             this.msg.success('注册成功');
             this.modal.destroy();
