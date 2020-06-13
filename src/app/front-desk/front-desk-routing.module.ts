@@ -99,7 +99,7 @@ import {ClassinfComponent} from '../client/classinf/classinf.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/client', pathMatch: 'full' },
- 
+
   {
     path: 'client', component: FrontDeskComponent, children: [
       { path: '', component: ClientComponent },
@@ -138,7 +138,7 @@ const routes: Routes = [
         {path: 'fans', component: FansComponent,outlet:'r2'},
       ]},
       { path: 'classlist', component: ClasslistComponent },
-      { path: 'openresource', component: OpenresourceComponent},
+      { path: 'openresource', component: OpenresourceComponent },
       { path: 'openresourcedetail/:id', component: OpenresourcedetailComponent },
       {path: 'groupmainlist', component: GroupmainlistComponent,children:[
           {path: '', component: GroupnowComponent},
@@ -169,9 +169,10 @@ const routes: Routes = [
           { path: 'coursesetting', component: CourseSettingComponent },
           { path: 'studentsetting', component: StudentSettingComponent },
           { path: 'coversetting', component: CoverSettingComponent },
-          { path: 'testpaper', component: TestpaperListingComponent},
+          { path: 'testpaper', component: TestpaperListingComponent },
           { path: 'testpaper/:paperid/resulttable', component: ResultTableComponent }
-        ]},
+        ]
+      },
       { path: 'testpaper/:paperid/result/:studentid', component: PaperResultDetailComponent },
       { path: 'course/:courseid/analysis/:courseTaskId', component: PaperResultAnalysisComponent},
       { path: 'tidings', component:TidingsComponent, children: [

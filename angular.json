@@ -11,6 +11,15 @@
       "schematics": {
         "@schematics/angular:component": {
           "style": "less"
+        },
+        "architect": {
+          "build": {
+            "options": {
+              "scripts": [
+                "node_modules/echarts/dist/echarts.min.js"
+              ]
+            }
+          }
         }
       },
       "architect": {
@@ -43,12 +52,10 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ],
+              "fileReplacements": [{
+                "replace": "src/environments/environment.ts",
+                "with": "src/environments/environment.prod.ts"
+              }],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
