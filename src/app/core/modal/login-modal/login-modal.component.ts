@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { RegisterModalComponent } from '../register-modal/register-modal.component';
 import { NzModalService, NzMessageService, NzModalRef } from 'ng-zorro-antd';
 import { LoginRegisterService } from 'src/app/service/login-register/login-register.service';
+import { AuthService } from 'src/app/front-desk/auth/auth.service';
 
 @Component({
   selector: 'app-login-modal',
@@ -19,7 +20,8 @@ export class LoginModalComponent implements OnInit {
     private _modalService: NzModalService,
     private loginService: LoginRegisterService,
     private msg: NzMessageService,
-    private modal: NzModalRef
+    private modal: NzModalRef,
+    private authService: AuthService,
   ) { }
 
   ngOnInit() {
@@ -42,9 +44,13 @@ export class LoginModalComponent implements OnInit {
       ).subscribe(
         (res: any) => {
           this.dataLogin = res.data;
-          this.msg.success('登录成功');
-          this.modal.triggerOk();
-          this.modal.destroy();
+          this.authService.login().subscribe(() => {
+            if (this.authService.isLoggedIn) {
+              this.msg.success('登录成功');
+              this.modal.triggerOk();
+              this.modal.destroy();
+            }
+          })
         },
         error => {
           this.isOkLoading = false;
