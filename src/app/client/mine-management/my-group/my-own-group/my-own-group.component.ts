@@ -50,4 +50,8 @@ export class MyOwnGroupComponent implements OnInit {
 
       })
   }
+
+  viewGroup(item:any){
+    this.router.navigateByUrl("/client/groupmainlist/"+item.id);
+  }
 }

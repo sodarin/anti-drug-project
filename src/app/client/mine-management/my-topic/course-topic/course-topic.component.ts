@@ -44,4 +44,8 @@ export class MyCourseTopicComponent implements OnInit {
       })
 
   }
+
+  viewTopic(item:any){
+    console.log(item);
+  }
 }

@@ -9,7 +9,7 @@
     <nz-divider style="margin-top:5px;"></nz-divider>
     <nz-list [nzDataSource]="comments" [nzRenderItem]="commentsitem" [nzItemLayout]="'horizontal'">
         <ng-template #commentsitem let-commentsitem>
-            <nz-comment [nzAuthor]="commentsitem.userName" [nzDatetime]="commentsitem.time">
+            <nz-comment [nzAuthor]="commentsitem.userName" [nzDatetime]="commentsitem.time* 1000 | date: 'yyyy-MM-dd HH:mm:ss'">
                 <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="commentsitem.userSmallAvatar">
                 </nz-avatar>
                 <nz-comment-content>

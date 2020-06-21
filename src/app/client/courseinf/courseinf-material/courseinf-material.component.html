@@ -4,7 +4,7 @@
             <nz-list-item-meta [nzTitle]="nzTitle"
                 nzDescription="{{materialitem.time}}"><!--{{materialitem.size}} · {{materialitem.class}} ·-->
                 <ng-template #nzTitle>
-                    <a [href]="materialitem.link"><b>
+                    <a href="{{materialitem.link}}"><b>
                             {{materialitem.title}}</b></a>
                 </ng-template>
             </nz-list-item-meta>

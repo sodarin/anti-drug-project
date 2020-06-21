@@ -5,11 +5,12 @@ import { CourseInfService } from 'src/app/service/courseinf-frontend/courseinf-f
   selector: 'app-courseinf-courselist-bottom',
   templateUrl: './courseinf-courselist-bottom.component.html',
   styleUrls: ['./courseinf-courselist-bottom.component.less'],
-  inputs:["courseid"],
+  inputs:["courseid","teacherplanid"],
 })
 export class CourseinfCourselistBottomComponent implements OnInit {
   courseid = "";
   courseList=[];
+  
   constructor(private courseinfservice: CourseInfService,private notification: NzNotificationService) { }
 
   ngOnInit() {

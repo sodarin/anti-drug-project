@@ -40,5 +40,9 @@ teacherId:string ='1';
       })
   }
 
+  viewQuestion(item:any){
+    console.log(item);
+  }
+
 
 }

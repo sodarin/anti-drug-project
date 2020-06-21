@@ -9,6 +9,7 @@ import {CourseBaseInfoEditService} from '../service/course-base-info-edit/course
   styleUrls: ['./course-management.component.less']
 })
 export class CourseManagementComponent implements OnInit {
+
   courseId: string;
   location: Location;
   title: string;

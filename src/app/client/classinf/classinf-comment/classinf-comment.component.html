@@ -60,7 +60,7 @@
                     nzAvatar="{{reponseitem.largeAvatar}}"
                     [nzDescription]="nzDescription">
                     <ng-template #nzTitle>
-                        {{reponseitem.nickName}}· {{reponseitem.createdTimeString}}
+                        {{reponseitem.nickName}}· {{reponseitem.createdTimeString* 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}
                     </ng-template>
                     <ng-template #nzDescription>
                             <div [innerHTML]="reponseitem.content"></div>

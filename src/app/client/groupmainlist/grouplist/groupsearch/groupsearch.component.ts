@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {GrouplistService} from '../../../../service/grouplist/grouplist.service';
 import {NzMessageService, NzNotificationService} from 'ng-zorro-antd';
 import {GroupfirstComponent} from '../groupfirst/groupfirst.component';
 import {GroupfirstService} from '../../../../service/groupfirst/groupfirst.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-groupsearch',
@@ -14,10 +15,9 @@ export class GroupsearchComponent implements OnInit {
 
   inputValue: string;
   detail:[];
-  toId:string
+  toId:string;
   isfocus:boolean;
   leader: string;
-
   searchValue: string = '';
   groupId: string;
 userId:string="1";
@@ -46,22 +46,23 @@ userId:string="1";
   ) { }
 
   ngOnInit() {
-    this.searchValue = this.routeInfo.snapshot.queryParams['leader'];
+    this.leader = this.routeInfo.snapshot.queryParams['content'];
     this.groupId = location.pathname.split('/')[3];
     // console.log(this.searchValue)
     // console.log(this.id)
-  this.filterTopic()
+    this.filterTopic();
   }
   navigateByUrl(url: string) {
     this.router.navigateByUrl(url)
   }
   //搜索
   filterTopic() {
-
+    this.searchValue = this.leader;
     this.loading = true;
     this.grouplistService$.getSearch(this.searchValue,this.groupId).subscribe(result => {
       this.loading = false;
       this.ThreadList = result.data;
+      this.router.navigateByUrl(`/client/groupmainlist/${this.groupId}/groupsearch?content=${this.searchValue}`)
     }, error1 => {
       this._notification.create(
         'error',
@@ -83,6 +84,7 @@ userId:string="1";
         `${error1.error}`)
     })
   }
+
 
 
   // 关注
@@ -124,6 +126,8 @@ userId:string="1";
     }
 
   }
+
+
 
 
 }

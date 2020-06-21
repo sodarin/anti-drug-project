@@ -14,6 +14,10 @@ export class CourseManagementBackHalfService {
   ) { }
 
   // 教学计划设置
+  getPlanTaskNew(id:string): Observable<any>{
+    return this._http.get(`/course/getTaskList?courseId=${id}`)
+  }
+
   getTeachingPlan(id: string): Observable<any> {
     return this._http.get(`/teachingPlan/getTeachingPlanList?courseSetId=${id}`)
   }
@@ -125,6 +129,24 @@ export class CourseManagementBackHalfService {
       goals: goals,
       summary: summary,
       title: title
+    })
+  }
+
+  //添加任务
+  addPlanTask_Text(): Observable<any> {
+    return this._http.post(`/course/createSubTask_Text`, {
+      // activityText_createduserid: contentBody.courseSetId,
+      // activityText_finishtype: contentBody.creator,
+      // activity_fromcourseid: contentBody.expiryMode,
+      // activity_fromcoursesetid: contentBody.courseSetTitle,
+      // activity_title: contentBody.learnMode,
+      // courseTask_courseid: contentBody.expiryDays,
+      // courseTask_createduserid: contentBody.expiryEndDate,
+      // courseTask_fromcoursesetid: contentBody.expiryStartDate,
+      // courseTask_isoptional:0,
+      // courseTask_mode:0,
+      // courseTask_title:0,
+      // courseTask_status:0,
     })
   }
 }

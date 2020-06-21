@@ -66,4 +66,8 @@ export class LearningCourseComponent implements OnInit {
     return watchTime/learnTime;
   }
 
+  viewCourse(id:any){
+    console.log(id);
+  }
+
 }

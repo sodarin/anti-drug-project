@@ -36,6 +36,7 @@ export class GroupthreadComponent implements OnInit {
   userId:string="1";
   toId:string;
   isfocus:boolean;
+  conversationId: any;
 
   data: any[] = [];
   submitting = false;
@@ -88,6 +89,7 @@ export class GroupthreadComponent implements OnInit {
               private groupmainlistService$:GroupmainlistService,
               private grouphotService$:GrouphotService,
               private _modal: NzModalService,
+              private groupfirstService$: GroupfirstService
               ) {
     this.publishReplyForm = this.fb.group({
       content: ['', Validators.required],
@@ -100,9 +102,9 @@ export class GroupthreadComponent implements OnInit {
     this.groupId = pathList[3];
     this.threadId = pathList[5];
     this.getList();
-    this.getNewMember();
-    this.getMemberMessage();
-    this.getList();
+    // this.getNewMember();
+    // this.getMemberMessage();
+    // this.getList();
     this.getThreadOwner();
     this.getThreadMessage();
     //this.getMyPost()
@@ -118,6 +120,9 @@ export class GroupthreadComponent implements OnInit {
     this.router.navigateByUrl("/client/groupmainlist/"+this.groupId)
   }
   message(data: any, template: TemplateRef<{}>) {
+    this.groupfirstService$.getConversationId(data.id, this.userId).subscribe(result => {
+      this.conversationId = result
+    });
     this.threadCreatingForm.controls.title.setValue(data.nickName);
     const modal = this._modal.create({
       nzTitle: '发送私信',
@@ -129,7 +134,7 @@ export class GroupthreadComponent implements OnInit {
           this.threadCreatingForm.controls[i].updateValueAndValidity()
         }
         if ( !this.threadCreatingForm.controls.content.errors) {
-          this.grouplistService$.sendMessage(this.threadCreatingForm.controls.content.value,this.userId,data.id).subscribe(result => {
+          this.grouplistService$.sendMessage(this.threadCreatingForm.controls.content.value,this.userId,data.id, this.conversationId).subscribe(result => {
             this._notification.create(
               'success',
               '发送成功',

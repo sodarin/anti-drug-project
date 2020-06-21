@@ -18,7 +18,7 @@ export class CourselistComponent implements OnInit {
   currentPage: number = 1;
   order: string = "latest";
   treetag: string[] = ["0", "0", "0", "0"];
-  treetag_s: string = "0";
+  type_tag: string = "0";
   commontag: string = "All";
   //Component params
   totalPage: number = 1;
@@ -38,11 +38,24 @@ export class CourselistComponent implements OnInit {
     // });
 
     //this.totalPage = courseservice.getCoursesNum();
+
+    route.queryParams.subscribe(queryParams=>{
+      this.order = queryParams.orderBy||"New"; 
+      this.type_tag = queryParams.type_tag||"0";
+
+    });
+
+    if(this.type_tag=="22"||this.type_tag=="23"||this.type_tag=="24"||this.type_tag=="25"){
+      this.treetag = ["18",this.type_tag,"0","0"];
+    }else{
+      this.treetag = [this.type_tag,"0","0","0"];
+    }
+    console.log(this.treetag.length)
   }
 
   ngOnInit() {
     //服务器请求---待替换
-    this.courseservice.getCourses(this.currentPage, this.order, this.treetag_s).subscribe((res: any) => {
+    this.courseservice.getCourses(this.currentPage, this.order, this.type_tag).subscribe((res: any) => {
       this.renderResulsts(res);
     }, error => {
       this._notification.create(
@@ -63,11 +76,18 @@ export class CourselistComponent implements OnInit {
     //   queryParams: {
     //     page: this.currentPage,
     //     orderBy: this.order,
-    //     treetag:this.treetag_s,
+    //     treetag:this.type_tag,
     //     commontag:this.commontag
     //   } 
     // });
-    this.courseservice.getCourses(this.currentPage, this.order, this.treetag_s).subscribe((res: any) => {
+    this.router.navigate([], { 
+      relativeTo: this.route,      
+      queryParams: {
+        orderBy: this.order,
+        type_tag:this.type_tag,
+      } 
+    });
+    this.courseservice.getCourses(this.currentPage, this.order, this.type_tag).subscribe((res: any) => {
       this.renderResulsts(res);
     }, error => {
       this._notification.create(
@@ -104,19 +124,18 @@ export class CourselistComponent implements OnInit {
   changeOrder(order: string): void {
     this.currentPage = 1;
     this.order = order;
-    console.log(this.order);
     this.refreshPage();
   }
 
   settreeTag(vals: string[]): void {
     this.treetag = vals;
-    this.treetag_s = "0";
+    this.type_tag = "0";
     for (var i = 0; i < vals.length; i++) {
       if (vals[i] == "0" && i > 0) {
-        this.treetag_s = vals[i - 1];
+        this.type_tag = vals[i - 1];
         break;
       } else {
-        this.treetag_s = "0";
+        this.type_tag = "0";
       }
     }
     this.refreshPage();

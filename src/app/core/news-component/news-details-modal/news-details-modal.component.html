@@ -33,14 +33,14 @@
                 <p class="content-link">
                   <i *ngIf="isLike==false" nz-icon style="cursor: pointer;" [nzType]="'heart'" (click)="getHeart1()"></i>
                   <i *ngIf="isLike==true" nz-icon style="cursor: pointer;color:red;" [nzType]="'heart'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#eb1f13'" (click)="getHeart0()"></i>
-                  <i nz-icon style="cursor: pointer;" [nzType]="'share-alt'" nz-popover  [nzPopoverContent]="contentTemplate" nzPopoverTrigger="click"></i>
+                  <!-- <i nz-icon style="cursor: pointer;" [nzType]="'share-alt'" nz-popover  [nzPopoverContent]="contentTemplate" nzPopoverTrigger="click"></i>
                   <ng-template #contentTemplate>
                     <div>
                       <i nz-icon [nzType]="'wechat'"></i>
                       <i nz-icon [nzType]="'weibo'"></i>
                       <i nz-icon [nzType]="'qq'"></i>
                     </div>
-                  </ng-template>
+                  </ng-template> -->
                 </p>
                 <p>文章评论：news.discussion</p>
                 <ng-template #commentTemplateRef let-comment="comment">

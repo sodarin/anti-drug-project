@@ -24,7 +24,9 @@ export class GroupfirstComponent implements OnInit {
   detail:[];
   toId:string
   isfocus:boolean;
-  groupId:string
+  groupId:string;
+
+  conversationId: string;
 
 
 
@@ -64,7 +66,7 @@ export class GroupfirstComponent implements OnInit {
   ) { }
 
   ngOnInit():void {
-    this.userID = this.routeInfo.snapshot.params['id'];
+    // this.userID = this.routeInfo.snapshot.params['id'];
     let pathList = location.pathname.split('/');
     this.groupId = pathList[3];
     this.checkAll();
@@ -72,7 +74,7 @@ export class GroupfirstComponent implements OnInit {
       title: ['', Validators.required],
       content: ['', Validators.required],
     })
-    this.getReplyThread()
+    this.checkAll()
 
   }
 
@@ -82,6 +84,9 @@ export class GroupfirstComponent implements OnInit {
 
     message(data: any, template: TemplateRef<{}>) {
       this.threadCreatingForm.controls.title.setValue(data.nickName);
+      this.groupfirstService$.getConversationId(data.id, this.userId).subscribe(result => {
+        this.conversationId = result.data
+      });
       const modal = this._modal.create({
         nzTitle: '发送私信',
         nzContent: template,
@@ -92,7 +97,7 @@ export class GroupfirstComponent implements OnInit {
             this.threadCreatingForm.controls[i].updateValueAndValidity()
           }
           if ( !this.threadCreatingForm.controls.content.errors) {
-            this.grouplistService$.sendMessage(this.threadCreatingForm.controls.content.value,this.userId,data.id).subscribe(result => {
+            this.grouplistService$.sendMessage(this.threadCreatingForm.controls.content.value,this.userId,data.id, this.conversationId).subscribe(result => {
               this._notification.create(
                 'success',
                 '发送成功',
@@ -173,6 +178,7 @@ export class GroupfirstComponent implements OnInit {
         )
       })
     }
+    this.isfocus = true
 
   }
   //取消关注
@@ -193,12 +199,12 @@ export class GroupfirstComponent implements OnInit {
       })
     }
 
+    this.isfocus = false
+
   }
 
-
-  //获取话题回复列表
-  getReplyThread(){
-    this.groupfirstService$.showReply(this.nzValueQBJ,this.selectValue,this.groupId).subscribe(result=>{
+  changeSelectValue(value: string) {
+    this.groupfirstService$.showReply(this.nzValueQBJ,value,this.groupId).subscribe(result=>{
         this.ThreadList=result;
       },error1 => {
         this._notification.create(
@@ -208,6 +214,20 @@ export class GroupfirstComponent implements OnInit {
       }
     )
   }
+
+
+  //获取话题回复列表
+  // getReplyThread(){
+  //   this.groupfirstService$.showReply(this.nzValueQBJ,this.selectValue,this.groupId).subscribe(result=>{
+  //       this.ThreadList=result;
+  //     },error1 => {
+  //       this._notification.create(
+  //         'error',
+  //         '回复话题获取失败',
+  //         `${error1.error}`)
+  //     }
+  //   )
+  // }
   getUserDetail(id:string) {
     this.grouplistService$.getUser(id).subscribe(result=>{
       this.detail=result.data;

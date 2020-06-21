@@ -5,15 +5,14 @@
         <nz-list-item>
           <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="nzDesrc" >
             <ng-template #nzTitle>
-              <span class="question-title">{{ item.title }}</span>
+              <span class="question-title" (click)="viewTopic(item)">{{ item.title }}</span>
             </ng-template>
             <ng-template #nzDesrc>
-              <div>来自 <span style="cursor: pointer; color: #108ee9">{{ item.classTitle}}</span>·浏览量{{item.hitNum}}</div>
+              <div>来自 <span style="cursor: pointer; color:#458B74">{{ item.classTitle}}</span>·浏览量{{item.hitNum}}</div>
             </ng-template>
           </nz-list-item-meta>
         </nz-list-item>
       </ng-template>
     </nz-list>
     <nz-divider></nz-divider>
-
-</div>
+</div> 

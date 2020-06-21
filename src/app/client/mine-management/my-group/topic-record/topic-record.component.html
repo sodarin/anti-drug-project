@@ -10,13 +10,13 @@
 
         <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="nzDes">
           <ng-template #nzTitle>
-            <div class="change">{{ item.threadTitle }}
+            <div class="change" (click)="viewGroupTopic(item)">{{ item.threadTitle }}
               <nz-tag style="margin-left: 15px"  *ngIf="item.isElite=='1'" [nzColor]="'red'"> 精华</nz-tag>
               <nz-tag style="margin-left: 15px"  *ngIf="item.isStick=='1'"[nzColor]="'blue'"> 置顶</nz-tag>
             </div>
           </ng-template>
           <ng-template #nzDes>
-            <div >
+            <div>
               <nz-avatar nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
                          nz-popover
                          [nzPopoverTitle]="tem"

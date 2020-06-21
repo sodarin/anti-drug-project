@@ -17,7 +17,6 @@ export class UserStatisticsService {
     } else {
       return this._http.get(`/user/searchUserDataStatistics?nickName=${filterOptions.searchParameter}&pageSize=${pageSize}&pageNum=${targetPage}`)
     }
-
   }
   exportData(): Observable<any> {
     return this._http.get(`/user/xxx`, {responseType: 'blob'});

@@ -43,4 +43,8 @@ export class MyQAComponent implements OnInit {
 
       })
   }
+
+  viewQuestion(item:any){
+    console.log(item);
+  }
 }

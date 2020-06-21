@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,EventEmitter } from '@angular/core';
 import {NzModalService, NzNotificationService} from 'ng-zorro-antd';
 import {Router} from '@angular/router';
 import {TeachingPlanAddingModalComponent} from '../../core/modal/teaching-plan-adding-modal/teaching-plan-adding-modal.component';
 import {CourseManagementBackHalfService} from '../../service/course-management-back-half/course-management-back-half.service';
-
+  import { from } from 'rxjs';
 @Component({
   selector: 'app-teaching-plan-management',
   templateUrl: './teaching-plan-management.component.html',
@@ -18,12 +18,16 @@ export class TeachingPlanManagementComponent implements OnInit {
   loading: boolean = false;
   pageIndex: number = 1;
 
+  navigateTPage: EventEmitter<string>;//用于菜单切换
+
   constructor(
     private _modal: NzModalService,
     private route: Router,
     private courseManagement$: CourseManagementBackHalfService,
     private _notification: NzNotificationService
-  ) { }
+  ) { 
+    this.navigateTPage = new EventEmitter();
+  }
 
   ngOnInit() {
     this.courseId = location.pathname.split('/')[3];
@@ -35,6 +39,7 @@ export class TeachingPlanManagementComponent implements OnInit {
     this.courseManagement$.getTeachingPlan(this.courseId).subscribe(result => {
       this.loading = false;
       this.planList = result.data;
+      console.log(result);
     })
 
   }

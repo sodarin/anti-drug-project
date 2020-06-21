@@ -22,14 +22,6 @@
             <li nz-menu-item (click)="navigateByUrl('/client/course/' +courseId + '/testpaper')" [nzSelected]="location?.pathname.endsWith('testpapter')">试卷管理</li>
             <li nz-menu-item (click)="navigateByUrl('/client/course/' +courseId + '/question')" [nzSelected]="location?.pathname.endsWith('question')">题目管理</li>
           <li nz-menu-divider></li>
-          <li nz-menu-item (click)="navigateByUrl('/client/course/'+courseId+'/overview')">计划概览</li>
-          <li nz-menu-item (click)="navigateByUrl('/client/course/'+courseId+'/tasks')">计划任务</li>
-            <li nz-menu-item (click)="navigateByUrl('/client/course/' +courseId + '/plansetting')" [nzSelected]="location?.pathname.endsWith('plansetting')">计划设置</li>
-            <li nz-menu-item (click)="navigateByUrl('/client/course/' +courseId + '/teachersetting')" [nzSelected]="location?.pathname.endsWith('teachersetting')">教师设置</li>
-            <li nz-menu-item (click)="navigateByUrl('/client/course/' +courseId + '/studentsetting')" [nzSelected]="location?.pathname.endsWith('studentsetting')">学员设置</li>
-          <li nz-menu-divider></li>
-            <li nz-menu-item (click)="navigateByUrl('/client/course/' +courseId + '/papers')" [nzSelected]="location?.pathname.endsWith('papers')">试卷批阅</li>
-          <li nz-menu-divider></li>
             <li nz-menu-item (click)="navigateByUrl('/client/course/' +courseId + '/teaching_plan')" [nzSelected]="location?.pathname.endsWith('teaching_plan')">教学计划管理</li>
         </ul>
       </div>

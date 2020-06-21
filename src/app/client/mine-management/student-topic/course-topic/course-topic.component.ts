@@ -44,4 +44,8 @@ teacherId:string = '1';
       })
 
   }
+
+  viewTopic(item:any){
+    console.log(item);
+  }
 }

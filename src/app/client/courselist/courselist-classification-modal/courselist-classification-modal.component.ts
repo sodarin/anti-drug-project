@@ -149,6 +149,9 @@ export class CourselistClassificationModalComponent implements OnInit {
   setBreadList(): void {
     this.breadlist = [];
     let temptree = this.tree;
+    if(temptree ==undefined){
+      return;
+    }
     for (var i = 0; i < this.treetag.length; i++) {
       if (this.treetag[i] != "0") {
         for(let j=0;j<temptree.length;j++){

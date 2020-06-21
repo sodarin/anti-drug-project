@@ -32,7 +32,7 @@ export class FavoriteCourseComponent implements OnInit {
   searchData(pageIndex: number = this.pageIndex) {
     this.courseList = [];
     this.loading = true;
-    this.MyteachingService$.getMyCourseList(1,10,this.userId,"finished").subscribe(result=>{
+    this.MyteachingService$.getMyLikeCourseList(1,10,this.userId).subscribe(result=>{
         this.loading = false;
         this.dataList = result.data;
         this.courseList = this.dataList;

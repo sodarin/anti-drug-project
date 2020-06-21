@@ -34,7 +34,7 @@
         <ng-template #operationTemplate>
           <div class="user-management-operation">
             <div>
-              <span (click)="navigateTo('/client/course/'+ courseId + '/plansetting')"><i nz-icon nzType="edit" nzTheme="outline"></i>管理</span>
+              <span (click)="navigateTo('/client/course/'+ courseId + '/teaching_plan_page/'+data.id)"><i nz-icon nzType="edit" nzTheme="outline"></i>管理</span>
             </div>
             <div>
               <span (click)="copy(data)"><i nz-icon nzType="copy" nzTheme="outline"></i>复制为</span>

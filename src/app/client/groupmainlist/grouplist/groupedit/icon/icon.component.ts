@@ -17,14 +17,7 @@ export class IconComponent implements OnInit {
   };
   imageiconList:[];
   imageicon:string;
-  fileList = [
-    {
-      uid: -1,
-      name: 'xxx.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
-    }
-  ];
+  fileList: UploadFile[]= [];
 
   previewImage: string | undefined = '';
   previewVisible = false;

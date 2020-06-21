@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ClassInfService } from 'src/app/service/classinf-frontend/classinf-frontend.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import {TestuserService} from '../../../Test/testuser.service'
+import {TestuserService} from '../../../service/teacher-frontend/teacher-frontend.service';
 @Component({
   selector: 'app-classinf-header',
   templateUrl: './classinf-header.component.html',
@@ -9,34 +9,33 @@ import {TestuserService} from '../../../Test/testuser.service'
   inputs: ["user","classid"],
 })
 export class ClassinfHeaderComponent implements OnInit {
-  classid = "0";
+  classid = "0"
   user: any;
-  currentclass: any ;
-    // =
-    // {
-    //   //二维吗
-    //   qrcode: "../../../../assets/img/timg.jpg",
-    //   //时效
-    //   term: "None",
-    //   //承诺服务
-    //   commitmentservice: [false, false, false, false, false, false],
-    //
-    //   classroomCategory: "高中班级",
-    //   courseNum: 1,
-    //   id: 10,
-    //   postNum: 2,
-    //   recommended: 0,
-    //   recommendedSeq: 100,
-    //   recommendedTime: 0,
-    //   recommendedTimeString: "1970-01-01 08:00:00",
-    //   //service: "["event","liveAnswer","teacherAnswer","testpaperReview","homeworkReview"]",
-    //   smallpicture: "public://course/2019/06-25/1753288228b6372843.jpg",
-    //   status: "published",
-    //   studentNum: 56,
-    //   title: "沈阳市广全学校禁毒教学活动",
-    //   totalNum: 1,
-    //   ratingnum:1
-    // };
+  currentclass =
+    {
+      //二维吗
+      qrcode: "../../../../assets/img/timg.jpg",
+      //时效
+      term: "None",
+      //承诺服务
+      commitmentservice: [false, false, false, false, false, false],
+
+      classroomCategory: "高中班级",
+      courseNum: 1,
+      id: 10,
+      postNum: 2,
+      recommended: 0,
+      recommendedSeq: 100,
+      recommendedTime: 0,
+      recommendedTimeString: "1970-01-01 08:00:00",
+      //service: "["event","liveAnswer","teacherAnswer","testpaperReview","homeworkReview"]",
+      smallpicture: "../../../../assets/img/timg.jpg",
+      status: "published",
+      studentNum: 56,
+      title: "沈阳市广全学校禁毒教学活动",
+      totalNum: 1,
+      ratingnum:1,
+    };
 
 
   //页头显示用变量
@@ -66,10 +65,7 @@ export class ClassinfHeaderComponent implements OnInit {
 
     //仅测试用
     this.user = this.testuserservice.user;
-
     this.isJoin = this.testuserservice.isInClass(this.classid);
-
-
   }
   
   setcurrentclass(res: any) {
@@ -96,7 +92,13 @@ export class ClassinfHeaderComponent implements OnInit {
   }
 
   handleOk_ExitCourse(): void {
-    if (this.selectedExitReason!="其他"||this.CourseExitinputValue != "") {
+    if (this.selectedExitReason!=undefined&&this.selectedExitReason!=""&&this.selectedExitReason!="其他") {
+      this.CourseExitVisible = false;
+      this.exitlearn_submit();
+      //There are something
+      this.selectedExitReason = "";
+      this.CourseExitinputValue = "";
+    }else if(this.CourseExitinputValue != ""&&this.CourseExitinputValue != undefined){
       this.CourseExitVisible = false;
       this.exitlearn_submit();
       //There are something
@@ -106,9 +108,8 @@ export class ClassinfHeaderComponent implements OnInit {
       this.notification.create(
         'error',
         '发生错误！',
-        `输入不能为空`);
+        `请填写表单全部内容`);
     }
-
   }
 
   handleCancel_ExitCourse(): void {

@@ -5,7 +5,6 @@
     <nz-header>
       <div class="classlist-container">
         <nz-page-header  nzTitle="标签：" [nzSubtitle]="name"> </nz-page-header>
-        <nz-divider ></nz-divider>
       </div>
     </nz-header>
   </div>
@@ -51,7 +50,7 @@
         <ng-template style="margin-top: 16px;" #item1 let-item1 >
           <nz-list-item (click)="navigateByUrl('/client/newstag/'+item1?.id)">
             <div>
-              <nz-tag [nzColor]="'blue'">{{ item1 .name}}</nz-tag>
+              <nz-tag [nzColor]="'cyan'">{{ item1 .name}}</nz-tag>
             </div>
           </nz-list-item>
         </ng-template>

@@ -90,4 +90,9 @@ export class TopicRecordComponent implements OnInit {
         `${error1.error}`)
     })
   }
+
+  viewGroupTopic(item:any){
+    console.log(item);
+    //this.router.navigateByUrl("/client/groupmainlist/"+item.id);///groupthread/33
+  }
 }

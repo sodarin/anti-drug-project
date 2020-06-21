@@ -36,7 +36,7 @@ export class CourselistSortModalComponent implements OnInit {
       case "latest ":
         this.newKey = true;
         break;
-      case "hit":
+      case "hot":
         this.hotKey = true;
         break;
       case "recommend":

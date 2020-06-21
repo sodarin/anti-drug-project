@@ -1,4 +1,4 @@
-<nz-list [nzDataSource]="courses" [nzRenderItem]="courseitem" [nzItemLayout]="'horizontal'">
+<nz-list [nzDataSource]="courses" [nzRenderItem]="courseitem" [nzItemLayout]="'horizontal'" [nzLoading]="loading">
     <ng-template #courseitem let-courseitem>
         <nz-list-item>
             <nz-list-item-meta [nzTitle]="nzTitle">
@@ -12,8 +12,9 @@
         </nz-list-item>
     </ng-template>
 </nz-list>
-<!--<div class="pagination">-->
-<!--    <nz-pagination [(nzPageIndex)]="coursepage_number"-->
-<!--        [nzTotal]="total_course_p_num" (nzPageIndexChange)="onPageChange($event)">-->
-<!--    </nz-pagination>-->
-<!-- </div>-->
+<nz-divider></nz-divider>
+<div class="pagination">
+    <nz-pagination [(nzPageIndex)]="coursepage_number"
+        [nzTotal]="total_course_p_num" (nzPageIndexChange)="onPageChange($event)">
+    </nz-pagination>
+ </div>

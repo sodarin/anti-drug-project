@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {GrouptopicService} from '../../../../service/grouptopic/grouptopic.service';
 import {NzMessageService, NzModalService,NzNotificationService} from 'ng-zorro-antd';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
 @Component({
   selector: 'app-grouptopic',
   templateUrl: './grouptopic.component.html',
@@ -18,8 +19,8 @@ export class GrouptopicComponent implements OnInit {
   constructor(
     private grouptopicService$:GrouptopicService,
     private _notification: NzNotificationService,
-    private fb: FormBuilder
-
+    private fb: FormBuilder,
+    private route: Router
   ) { }
 
   ngOnInit() {
@@ -40,13 +41,14 @@ export class GrouptopicComponent implements OnInit {
       this.grouptopicService$.createGroupThread(this.threadCreatingForm.controls.content.value,this.threadCreatingForm.controls.title.value,this.groupId,this.userId).subscribe(result => {
         this._notification.create(
           'success',
-          '修改成功',
+          '发布成功',
           ''
-        )
+        );
+        this.route.navigateByUrl(`/client/groupmainlist/${this.groupId}`)
       },error1 => {
         this._notification.create(
           'error',
-          '修改失败',
+          '发布失败',
           `${error1.error}`
         )
       })

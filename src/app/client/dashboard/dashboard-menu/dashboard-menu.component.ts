@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard-menu',
@@ -11,4 +12,12 @@ export class DashboardMenuComponent {
   //   textAlign: 'center',
   //   nzHoverable: false
   // };
+
+  constructor(private router: Router,){
+
+  }
+
+  navigateByUrl(url: string) {
+    this.router.navigateByUrl(url);
+  }
 }

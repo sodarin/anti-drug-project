@@ -19,8 +19,15 @@ export class TeacherblockComponent implements OnInit {
   ngOnInit() {
   }
   //私信
-  showPrivateletterfirm(): void {
-    this.PrivatelettertVisible = true;
+  showPrivateletterfirm(toid:string): void {
+    if (toid != "1") {
+      this.PrivatelettertVisible = true;
+    }else {
+      this.notification.create(
+        'error',
+        '发生错误！',
+        `不能自己给自己发私信`)
+    }
   }
 
   handleOk_Privateletter(): void {
@@ -45,43 +52,55 @@ export class TeacherblockComponent implements OnInit {
       this.notification.create(
         'error',
         '发生错误！',
-        `输入不能为空`);
+        `请填写表单全部内容`);
     }
   }
 
   handleCancel_Privateletter(): void {
-    console.log('Button cancel clicked!');
     this.PrivatelettertVisible = false;
     this.PrivatelettertTitle = "";
     this.PrivateletterContent = "";
   }
- //关注
- follow_submit() {
-  this.classinfservice.follow_submit("1","2").subscribe((res: any) => {
-    this.notification.create(
-      'success',
-      '提交成功！',
-      `提交成功`)
-  }, error => {
-    this.notification.create(
-      'error',
-      '发生错误！',
-      `${error.error}`)
-  });
+
+  //关注
+  follow_submit(toid: string) {
+    if (toid != "1") {
+      this.classinfservice.follow_submit("1", toid).subscribe((res: any) => {
+        this.notification.create(
+          'success',
+          '提交成功！',
+          `提交成功`)
+          this.teacher.isfollowing = true;
+      }, error => {
+        this.notification.create(
+          'error',
+          '发生错误！',
+          `${error.error}`)
+      });
+    } else {
+      this.notification.create(
+        'error',
+        '发生错误！',
+        `不能自己关注自己`)
+    }
+  }
+
+  //取消关注
+  del_follow_submit(toid: string) {
+    this.classinfservice.delfollow_submit("1", toid).subscribe((res: any) => {
+      this.notification.create(
+        'success',
+        '提交成功！',
+        `提交成功`)
+        this.teacher.isfollowing = false;
+    }, error => {
+      this.notification.create(
+        'error',
+        '发生错误！',
+        `${error.error}`)
+    });
+  }
+
+
 }
 
-//取消关注
-del_follow_submit() {
-  this.classinfservice.delfollow_submit("1","1").subscribe((res: any) => {
-    this.notification.create(
-      'success',
-      '提交成功！',
-      `提交成功`)
-  }, error => {
-    this.notification.create(
-      'error',
-      '发生错误！',
-      `${error.error}`)
-  });
-}
-}

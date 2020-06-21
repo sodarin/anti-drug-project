@@ -6,49 +6,37 @@ import {Router} from '@angular/router';
   selector: 'app-courseinf-teacherlist-modal',
   templateUrl: './courseinf-teacherlist-modal.component.html',
   styleUrls: ['./courseinf-teacherlist-modal.component.less'],
-  inputs: ["courseid"],
+  inputs: ["teachers","courseid","teachplanId"],
 })
 export class CourseinfTeacherlistModalComponent implements OnInit {
   courseid = "0";
-  data = [
-    { id:"",name: "李丽", positionaltitles: "讲师", autograph: "没有签名", currentlearn: 10, follow: 10, fans: 10,smallAvatar:"",isfollowing:false },
-  ];
+  teachers = [];
+  teachplanId = "0";
   //私信
   privateletter_toid = "1";
   PrivatelettertVisible = false;
   PrivatelettertTitle: string="";
   PrivateletterContent: string="";
-  loading: boolean = false;
+
   constructor(private courseinfservice: CourseInfService,private notification: NzNotificationService,private route: Router) { }
 
   ngOnInit() {
-    this.loading = true;
-    this.courseinfservice.getCoursesTeachers(this.courseid).subscribe((res: any) => {
-      this.loading = false;
-      this.setCourseTeachers(res);
-    }, error => {
-      this.notification.create(
-        'error',
-        '错误！',
-        `${error}`,
-        { nzDuration: 100 }
-      )
-    });
+
   }
 
   setCourseTeachers(res: any) {
-    this.data = res.data.courseTeachers;
+    this.teachers = res.data.courseTeachers;
 
-    for(let i=0;i<this.data.length;i++){
-      if (this.data[i].smallAvatar == "") {
-        this.data[i].smallAvatar = "../../../../assets/img/timg2.jpg";
-      } else if (this.data[i].smallAvatar.substr(0, 6) == "public") {
-        this.data[i].smallAvatar = "../../../../assets/img/timg2.jpg";
-      } else if (this.data[i].smallAvatar.substr(7, 7) == "edusoho") {
-        this.data[i].smallAvatar = "../../../../assets/img/timg2.jpg";
+    for(let i=0;i<this.teachers.length;i++){
+      if (this.teachers[i].smallAvatar == "") {
+        this.teachers[i].smallAvatar = "../../../../assets/img/timg2.jpg";
+      } else if (this.teachers[i].smallAvatar.substr(0, 6) == "public") {
+        this.teachers[i].smallAvatar = "../../../../assets/img/timg2.jpg";
+      } else if (this.teachers[i].smallAvatar.substr(7, 7) == "edusoho") {
+        this.teachers[i].smallAvatar = "../../../../assets/img/timg2.jpg";
       }
 
-        this.courseinfservice.isfollowing("1",this.data[i].id).subscribe((res: any) => {
+        this.courseinfservice.isfollowing("1",this.teachers[i].id).subscribe((res: any) => {
           this.setstudentfollowing(res.data,i);
         }, error => {
           this.notification.create(
@@ -56,13 +44,11 @@ export class CourseinfTeacherlistModalComponent implements OnInit {
             '发生错误！',
             `${error.error}`)
         })
-
-
     }
   }
 
   setstudentfollowing(res:boolean,index:number){
-    this.data[index].isfollowing = res;
+    this.teachers[index].isfollowing = res;
   }
 
   showPrivateletterfirm(toid:string): void {
@@ -101,7 +87,7 @@ export class CourseinfTeacherlistModalComponent implements OnInit {
       this.notification.create(
         'error',
         '发生错误！',
-        `输入不能为空`);
+        `请填写表单全部内容`);
     }
   }
 
@@ -122,7 +108,7 @@ follow_submit(toid:string) {
         '提交成功！',
         `提交成功`)
   
-        this.courseinfservice.getCoursesTeachers(this.courseid).subscribe((res: any) => {
+        this.courseinfservice.get_teaching_plan_teachers(this.teachplanId).subscribe((res: any) => {
           this.setCourseTeachers(res);
         }, error => {
           this.notification.create(
@@ -154,7 +140,7 @@ del_follow_submit(toid:string) {
       '提交成功！',
       `提交成功`)
 
-      this.courseinfservice.getCoursesTeachers(this.courseid).subscribe((res: any) => {
+      this.courseinfservice.get_teaching_plan_teachers(this.teachplanId).subscribe((res: any) => {
         this.setCourseTeachers(res);
       }, error => {
         this.notification.create(

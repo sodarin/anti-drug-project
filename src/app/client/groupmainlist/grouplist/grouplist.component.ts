@@ -38,7 +38,7 @@ export class GrouplistComponent implements OnInit {
     },error1 => {
       this._notification.create(
         'error',
-        '小组名称获取失败',
+        '小组信息获取失败',
         `${error1.error}`)
     })
   }

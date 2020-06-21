@@ -1,7 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { SecurityProblemEditService } from 'src/app/service/security-problem-edit/security-problem-edit.service';
-
 @Component({
   selector: "app-security-problem-edit-modal",
   templateUrl: "./security-problem-edit-modal.component.html",
@@ -13,7 +11,7 @@ export class SecurityProblemEditModalComponent implements OnInit {
   securityEditForm: FormGroup;
 
 
-  constructor(private formBuilder: FormBuilder, private _securityProblemEditService: SecurityProblemEditService) { }
+  constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.securityEditForm = this.formBuilder.group({

@@ -19,21 +19,23 @@ import { AutocompleteInputComponent } from './class-management-component/autocom
 import { AddingCourseModalComponent } from './modal/adding-course-modal/adding-course-modal.component';
 import { LoginPasswdEditModelComponent } from './modal/login-passwd-edit-model/login-passwd-edit-model.component';
 import { SecurityProblemEditModalComponent } from './modal/security-problem-edit-modal/security-problem-edit-modal.component';
-import { NgxEchartsModule } from 'ngx-echarts';
+import {NgxEchartsModule} from 'ngx-echarts';
 import { PaperScoreStatisticsComponent } from './modal/paper-score-statistics/paper-score-statistics.component';
 import { TeachingPlanAddingModalComponent } from './modal/teaching-plan-adding-modal/teaching-plan-adding-modal.component';
-import { NewsTagModalComponent } from './news-component/news-tag-modal/news-tag-modal.component';
-import { NewsDetailsModalComponent } from './news-component/news-details-modal/news-details-modal.component';
-import { NewsSortModalComponent } from './news-component/news-sort-modal/news-sort-modal.component';
-import { NewsListviewModalComponent } from './news-component/news-listview-modal/news-listview-modal.component';
-import { NewsClassificationModalComponent } from './news-component/news-classification-modal/news-classification-modal.component';
-import { NewsNewsblockModalComponent } from './news-component/news-newsblock-modal/news-newsblock-modal.component';
+import {NewsTagModalComponent} from './news-component/news-tag-modal/news-tag-modal.component';
+import {NewsDetailsModalComponent} from './news-component/news-details-modal/news-details-modal.component';
+import {NewsSortModalComponent} from './news-component/news-sort-modal/news-sort-modal.component';
+import {NewsListviewModalComponent} from './news-component/news-listview-modal/news-listview-modal.component';
+import {NewsClassificationModalComponent} from './news-component/news-classification-modal/news-classification-modal.component';
+import {NewsNewsblockModalComponent} from './news-component/news-newsblock-modal/news-newsblock-modal.component';
 import { FocusDetailComponent } from './focus-detail/focus-detail.component';
-import { CoreRoutingModule } from "./core-routing.module";
+import { CoreRoutingModule  } from "./core-routing.module";
 import { FansComponent } from './fans/fans.component';
-import { RouterModule } from '@angular/router';
-import { VideoPlayerComponent } from './video-player/video-player.component';
-import { RegisterModalComponent } from './modal/register-modal/register-modal.component'
+import {RouterModule} from '@angular/router';
+import {VideoPlayerComponent} from './video-player/video-player.component'
+import { RegisterModalComponent } from './modal/register-modal/register-modal.component';
+import { FindPasswdModalComponent } from './modal/find-passwd-modal/find-passwd-modal.component';
+
 
 
 @NgModule({
@@ -64,14 +66,16 @@ import { RegisterModalComponent } from './modal/register-modal/register-modal.co
     FocusDetailComponent,
     FansComponent,
     VideoPlayerComponent,
-    RegisterModalComponent
+    RegisterModalComponent,
+    FindPasswdModalComponent
   ],
   imports: [
     ShareModule,
     QuillModule,
     NgxEchartsModule,
-    CoreRoutingModule,
-    RouterModule,
+    CoreRoutingModule ,
+    RouterModule
+
   ],
   exports: [
     LoginModalComponent,
@@ -99,7 +103,8 @@ import { RegisterModalComponent } from './modal/register-modal/register-modal.co
     FocusDetailComponent,
     FansComponent,
     VideoPlayerComponent,
-    RegisterModalComponent
+    RegisterModalComponent,
+    FindPasswdModalComponent
   ]
 })
 export class CoreModule { }

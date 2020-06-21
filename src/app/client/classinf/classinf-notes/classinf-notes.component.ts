@@ -45,11 +45,6 @@ export class ClassinfNotesComponent implements OnInit {
 
   ngOnInit() {
 
-    this.getClassNotes();
-    this.getClassCourse()
-  }
-
-  getClassNotes() {
     this.classinfservice.getclassNotes(this.classid).subscribe((res: any) => {
       this.setclassNotes(res);
     }, error => {
@@ -58,9 +53,7 @@ export class ClassinfNotesComponent implements OnInit {
         '发生错误！',
         `${error.error}`)
     })
-  }
 
-  getClassCourse() {
     this.classinfservice.getclassCourses(this.classid,0).subscribe((res: any) => {
       this.setclassCourses(res);
     }, error => {
@@ -113,6 +106,21 @@ export class ClassinfNotesComponent implements OnInit {
     this.courseSetTitle = courseSetTitle;
     this.classinfservice.getclassNotes(this.classid, this.select_note, this.noteorder).subscribe((res: any) => {
       this.setclassNotes(res);
+    }, error => {
+      this.notification.create(
+        'error',
+        '发生错误！',
+        `${error.error}`)
+    })
+  }
+
+  //笔记点赞 ------未完成
+  notelike(){
+    this.classinfservice.note_like('','').subscribe((res: any) => {
+      this.notification.create(
+        'success',
+        '提交成功！',
+        `提交成功`)
     }, error => {
       this.notification.create(
         'error',

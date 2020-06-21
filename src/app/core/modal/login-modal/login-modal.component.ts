@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { RegisterModalComponent } from '../register-modal/register-modal.component';
 import { NzModalService, NzMessageService, NzModalRef } from 'ng-zorro-antd';
 import { LoginRegisterService } from 'src/app/service/login-register/login-register.service';
-import { AuthService } from 'src/app/front-desk/auth/auth.service';
 
 @Component({
   selector: 'app-login-modal',
@@ -20,9 +19,8 @@ export class LoginModalComponent implements OnInit {
     private _modalService: NzModalService,
     private loginService: LoginRegisterService,
     private msg: NzMessageService,
-    private modal: NzModalRef,
-    private authService: AuthService,
-  ) { }
+    private modal: NzModalRef
+  ) {}
 
   ngOnInit() {
     this.loginForm = this.fb.group({
@@ -36,7 +34,9 @@ export class LoginModalComponent implements OnInit {
       this.loginForm.controls[i].markAsDirty();
       this.loginForm.controls[i].updateValueAndValidity()
     }
+
     if (this.loginForm.valid) {
+
       this.isOkLoading = true;
       this.loginService.postLogin(
         this.loginForm.value.username,
@@ -44,13 +44,20 @@ export class LoginModalComponent implements OnInit {
       ).subscribe(
         (res: any) => {
           this.dataLogin = res.data;
-          this.authService.login().subscribe(() => {
-            if (this.authService.isLoggedIn) {
-              this.msg.success('登录成功');
-              this.modal.triggerOk();
-              this.modal.destroy();
-            }
-          })
+          //确保用户名和密码正确再获取令牌
+          this.loginService.getToken(
+            this.loginForm.value.username,
+            this.loginForm.value.password
+            ).subscribe(
+              (token: any) => {
+                window.localStorage.setItem('token', JSON.stringify(token));
+                let expires_time = Date.parse(new Date().toString()) + token.expires_in * 1000;
+                window.localStorage.setItem('expires_time',expires_time.toString());
+              }
+            );
+          this.msg.success('登录成功');
+          this.modal.triggerOk();
+          this.modal.destroy();
         },
         error => {
           this.isOkLoading = false;
@@ -73,5 +80,6 @@ export class LoginModalComponent implements OnInit {
       nzContent: RegisterModalComponent,
       nzFooter: null
     })
+    this.modal.destroy();
   }
 }

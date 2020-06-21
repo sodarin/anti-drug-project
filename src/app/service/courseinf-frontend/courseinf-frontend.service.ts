@@ -53,13 +53,11 @@ export class CourseInfService {
     return this.http.get(uri, { params });
   }
 
-
-
   getCoursesTopic(courseid: string, page: number, type: string = "") {
     const params = new HttpParams()
       .set('courseID', courseid)
     // .set('classid',"")
-    const uri = `/course/plan/thread`;
+    const uri = `/course/getAllCourseTopics`;
     return this.http.get(uri, { params });
   }
 
@@ -290,4 +288,164 @@ export class CourseInfService {
     return this.http.get(uri, { params });
   }
 
+  //教学计划相关接口
+  get_teaching_plan_introduce(teachplanid:string){
+    const uri = `/course/plan/intro`;
+    const params = new HttpParams()
+      .set('courseID', teachplanid)
+    return this.http.get(uri, { params });
+  }
+
+  get_teaching_plan_note(courseID: string, pageNum: string,taskID:string, type: string){
+    const uri = `/course/plan/note`;
+    const params = new HttpParams()
+      .set('courseID', courseID)
+      .set('pageNum', pageNum)
+      .set('taskId', taskID)
+      .set('type', type)
+    return this.http.get(uri, { params });
+  }
+
+  get_teaching_plan_reivew(courseID:string){
+    const uri = `/course/plan/review`;
+    const params = new HttpParams()
+      .set('courseID', courseID)
+    return this.http.get(uri, { params });
+  }
+
+  get_teaching_plan_reivew_response(reviewId:string){
+    const uri = `/course/plan/getCourseReviewPost`;
+    const params = new HttpParams()
+      .set('pageNum', "1")
+      .set('pageSize', "10")
+      .set('reviewId', reviewId)
+    return this.http.get(uri, { params });
+  }
+
+  write_teaching_plan_review(courseid: string, teachplanid:string,parentId: string, content: string, title: string, rating: number, userId: string){
+    const uri = `/course/plan/createCourseReview`;
+    return this.http.post(uri,
+      {
+        content: content,
+        courseId: courseid,
+        courseSetId:teachplanid,
+        parentId:parentId,
+        rating: rating.toString(),
+        title: title,
+        userId: userId
+      });
+  }
+
+  
+  
+  get_teaching_plan_topic(teachplanid: string, page: string="1", type: string = "",sort:string = "") {
+    const params = new HttpParams()
+      .set('courseID', teachplanid)
+      .set('pageNum', page)
+      .set('sort', sort)
+      .set('type', type)
+    // .set('classid',"")
+    const uri = `/course/plan/thread`;
+    return this.http.get(uri, { params });
+  }
+
+  write_teaching_plan_topic(courseid: string,teachplanID:string, content: string,title:string, userId: string) {
+    const uri = `/course/plan/createCourseThread`;
+    return this.http.post(uri,
+      {
+        content: content,
+        courseId: courseid,
+        courseSetId:teachplanID,
+        taskId: 0,
+        title: title,
+        userId: userId
+      });
+  }
+
+  write_teaching_plan_questoin(courseid: string,teachplanID:string, content: string,title:string, userId: string) {
+    const uri = `course/plan/createCourseQuestion`;
+    return this.http.post(uri,
+      {
+        content: content,
+        courseId: courseid,
+        courseSetId:teachplanID,
+        taskId: 0,
+        title: title,
+        userId: userId
+      });
+  }
+
+  get_teaching_plan_topic_responses(threadid: string) {
+    const params = new HttpParams()
+      .set('pageNum', '1')
+      .set('pageSize', '5')
+      .set('threadId', threadid)
+    const uri = `/course/plan/getCourseThreadPost`;
+    return this.http.get(uri, { params });
+  }
+
+  write_teaching_plan_topic_response(courseid: string, parentId: string, content: string,userid:string) {
+    const uri = `/course/plan/createCourseThreadPost`;
+    return this.http.post(uri,
+      {
+        content: content,
+        courseId: courseid,
+        taskId: courseid,
+        threadId: parentId,
+        userId: userid
+      });
+  }
+
+  get_teaching_plan_material(teachplanID:string){
+    const uri = `/course/plan/material`;
+    const params = new HttpParams()
+      .set('courseID', teachplanID)
+    return this.http.get(uri, { params });
+  }
+
+  get_teaching_plan_teachers(teachplanID: string){
+    const params = new HttpParams()
+      .set('courseId', teachplanID)
+      .set('pageNum', "1")
+      .set('pageSize', "5")
+    const uri = `/course/plan/getCourseTeacher`;
+    return this.http.get(uri, { params });
+  }
+
+  get_teaching_plan_students(teachplanID: string) {
+    const params = new HttpParams()
+      .set('courseId', teachplanID)
+    const uri = `/course/plan/getCourseStudent`;
+    return this.http.get(uri, { params });
+  }
+
+  get_course_isJoin(userid: string,targetid: string) {
+    const params = new HttpParams()
+      .set('classificationname', "course")
+      .set('targetId', targetid)
+      .set('userId', userid)  
+    const uri = `/user/getIsJoin`;
+    return this.http.get(uri, { params });
+  }
+
+  teaching_plan_addstudents(userid: string,courseId:string,teachplanid:string){
+    const uri = `/teachingPlan/addStudent`;
+    return this.http.post(uri,
+      {
+        courseId: teachplanid,
+        courseSetId: courseId,
+        studentId: userid,
+      });
+  }
+
+  teaching_plan_deleteaddstudents(userid: string,teachplanid:string){
+    const uri = `/course/plan/createCourseThreadPost`;
+    return this.http.post(uri,
+      {
+        courseId: teachplanid,
+        userId: userid
+      });
+  }
+
 }
+

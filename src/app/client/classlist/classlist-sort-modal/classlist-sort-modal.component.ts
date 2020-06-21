@@ -30,6 +30,7 @@ export class ClasslistSortModalComponent implements OnInit {
     }
   }
 
+  //没啥意义？
   setOrderKey(): void {
     switch (this.order) {
       case "latest ":

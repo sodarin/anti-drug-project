@@ -7,10 +7,10 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 export class CourseService {
   constructor(private http:HttpClient){}
 
-  getCourse(id:string){
-    const uri = `http://localhost:3000/course2/${id}`;
-    return this.http.get(uri);
-  }
+  // getCourse(id:string){
+  //   const uri = `http://localhost:3000/course2/${id}`;
+  //   return this.http.get(uri);
+  // }
   getCourses(page:number,sortType:string,categoryId:string){
     const params = new HttpParams()
       .set('categoryId',categoryId)

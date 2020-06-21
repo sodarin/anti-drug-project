@@ -9,7 +9,9 @@ import {
 import { CourseService } from 'src/app/service/courselist-frontend/courselist-frontend.service';
 import { CourseInfService } from 'src/app/service/courseinf-frontend/courseinf-frontend.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import {TestuserService} from '../../Test/testuser.service'
+import { TestuserService } from '../../service/teacher-frontend/teacher-frontend.service';
+import { CourseManagementBackHalfService } from 'src/app/service/course-management-back-half/course-management-back-half.service';
+import { CourseManagementService } from 'src/app/service/course-management/course-management.service';
 @Component({
   selector: 'app-courseinf',
   templateUrl: './courseinf.component.html',
@@ -18,6 +20,7 @@ import {TestuserService} from '../../Test/testuser.service'
 export class CourseinfComponent implements OnInit {
   [x: string]: any;
   courseid = '0';
+  teachplanId: any = '0';
 
   //当前用户
   user = {
@@ -28,31 +31,27 @@ export class CourseinfComponent implements OnInit {
     currented: 5,
   }
 
-  isJoin = false;
+  joinINf = null;
 
-  //课程特点列表  暂时不做
-  //coursefeaturedata = [{ title: "没有特色" }];
-  
-  //公告历史记录
-  // noticeHistory = [{ id: '1', teachplan: "默认教学计划", content: "通知", startdate: "2019-3-3", enddate: "2019-3-5" },
-  // { id: '1', teachplan: "默认教学计划", content: "通知2", startdate: "2019-3-5", enddate: "2019-3-5" }
-  // ];
+  //各种数据
+  introduces = null;
+  courses = null;
+  notes = null;
+  comments = null;
+  topics = null;
+  materials = null;
+  teachers = null;
+  studentdata = null;
 
-
-  constructor(private courseservice: CourseService, private modalService: NzModalService, private courseinfservice: CourseInfService,
-    private router: Router, private activateInfo: ActivatedRoute, private message: NzMessageService, 
-    private notification: NzNotificationService,private testuserservice:TestuserService) {
-    // route.queryParams.subscribe(queryParams => {
-    //   this.coursepage_number = queryParams.coursepage || "1";
-    //   this.currenttopicpage = queryParams.topicpage || "1";
-    //   this.current_notespage = queryParams.notepage || "1";
-    //   this.current_comment_page = queryParams.commentpage || "1";
-    //   this.current_material_page = queryParams.materialpage || "1";
-    //   this.type_topic = queryParams.topic_type || "All";
-    //   this.order_topic = queryParams.topic_order || "New";
-    //   this.order_note = queryParams.note_order || "New";
-    //   this.select_note = this.currentcourse.name;
-    // })
+  constructor(private courseservice: CourseService, 
+    private courseinfservice: CourseInfService,
+    private router: Router, 
+    private activateInfo: ActivatedRoute, 
+    private message: NzMessageService,
+    private notification: NzNotificationService, 
+    private testuserservice: TestuserService,
+    private courseManagement$: CourseManagementBackHalfService,
+    private coursemanagementService:CourseManagementService) {
   }
 
   ngOnInit() {
@@ -60,6 +59,18 @@ export class CourseinfComponent implements OnInit {
     this.activateInfo.params.subscribe(
       (params: Params) => {
         this.courseid = params["id"];
+        this.teachplanId = params["pid"];
+        this.courseinfservice.get_course_isJoin("1",this.courseid).subscribe((res: any) => {
+          this.joinINf = res.data;
+          console.log(res);
+        }, error => {
+          this.notification.create(
+            'error',
+            '错误！',
+            `${error}`,
+            { nzDuration: 100 }
+          )
+        });
       }, error => {
         this.notification.create(
           'error',
@@ -71,45 +82,7 @@ export class CourseinfComponent implements OnInit {
     //this.user = this.testuserservice.user;
     this.isJoin = this.testuserservice.isInCourse(this.courseid);
     //初始化当前页码数据
-
-    // this.courseinfservice.getUser(this.courseid).subscribe((res: any) => {
-    //   this.setuser(res);
-    // }, error => {
-    //   this.notification.create(
-    //     'error',
-    //     '错误！',
-    //     `${error}`,
-    //     { nzDuration: 100 }
-    //   )
-    // });
-
-    // this.courseinfservice.getCoursesFeatures(this.courseid).subscribe((res: any) => {
-    //   this.setCoursesFeatures(res);
-    // }, error => {
-    //   this.notification.create(
-    //     'error',
-    //     '错误！',
-    //     `${error}`,
-    //     { nzDuration: 100 }
-    //   )
-    // });
-
-    // this.courseinfservice.getCoursesNotice(this.courseid).subscribe((res: any) => {
-    //   this.setCoursesNotes(res);
-    // }, error => {
-    //   this.notification.create(
-    //     'error',
-    //     '错误！',
-    //     `${error}`,
-    //     { nzDuration: 100 }
-    //   )
-    // });
-
-    // this.notescontainer.clear();
-    // // 创建一个插入式视图， 一般插入式视图都对应的是模版视图
-    // const noteslist: ViewRef = this.noteslisttemplate.createEmbeddedView(null);
-    // // 插入到容器当中 使用视图容器操作视图的方法insert
-    // this.notescontainer.insert(noteslist);
+    //this.reLoadData();
   }
 
 
@@ -117,39 +90,286 @@ export class CourseinfComponent implements OnInit {
     this.user = res;
   }
 
-  updataload(){
-    this.isJoin = this.testuserservice.isInCourse(this.courseid);
+  updataload() {
+    this.courseinfservice.get_course_isJoin("1",this.courseid).subscribe((res: any) => {
+      this.joinINf = res.data;
+      console.log(res);
+    }, error => {
+      this.notification.create(
+        'error',
+        '错误！',
+        `${error}`,
+        { nzDuration: 100 }
+      )
+    });
+  }
+
+  changeteachplan(id: number) {
+    this.teachplanId = id;
+    this.navigateByUrl('/client/courseinf/' + this.courseid + '/teachplan/' + id);
+    this.reLoadData();
+  }
+
+  navigateByUrl(url: string) {
+    this.router.navigateByUrl(url)
+  }
+
+  preLoadData(){
+    this.coursemanagementService.getMyCourse(this.pageIndex,this.courses.length,"1","learning").subscribe((res: any) => {
+      this.setCoursesIntroduce(res);
+    }, error => {
+      this.notification.create(
+        'error',
+        '错误！',
+        `${error}`,
+        { nzDuration: 100 }
+      )
+    });
   }
 
 
-  // setCoursesFeatures(res: any) {
-  //   this.relativecourseList = res.courses;
-  // }
+  reLoadData() {
+    this.courseinfservice.get_teaching_plan_introduce(this.teachplanId).subscribe((res: any) => {
+      this.setCoursesIntroduce(res);
+    }, error => {
+      this.notification.create(
+        'error',
+        '错误！',
+        `${error}`,
+        { nzDuration: 100 }
+      )
+    });
 
-  // setCoursesNotice(res: any) {
-  //   this.relativecourseList = res.courses;
-  // }
+    this.courseManagement$.getPlanTaskNew(this.teachplanId).subscribe((res: any) => {
+      this.setCoursesCatalog(res);
+    }, error => {
+      this.notification.create(
+        'error',
+        '错误！',
+        `${error}`,
+        { nzDuration: 100 }
+      )
+    });
 
-  // settotal_coursepages(res: any) {
+    this.courseinfservice.get_teaching_plan_note(this.courseid, "1", this.teachplanId, "New").subscribe((res: any) => {
+      this.setCoursesNotes(res);
+    }, error => {
+      this.notification.create(
+        'error',
+        '错误！',
+        `${error}`,
+        { nzDuration: 100 }
+      )
+    });
 
-  // }
+    this.courseinfservice.get_teaching_plan_reivew(this.teachplanId).subscribe((res: any) => {
+      this.setCoursesComments(res);
+    }, error => {
+      this.notification.create(
+        'error',
+        '错误！',
+        `${error}`,
+        { nzDuration: 100 }
+      )
+    });
 
-  // settotal_topicpages(res: any) {
+    this.courseinfservice.get_teaching_plan_topic(this.teachplanId, "1").subscribe((res: any) => {
+      this.setCoursesTopic(res);
+    }, error => {
+      this.notification.create(
+        'error',
+        '错误！',
+        `${error}`,
+        { nzDuration: 100 }
+      )
+    });
 
-  // }
+    this.courseinfservice.get_teaching_plan_material(this.teachplanId).subscribe((res: any) => {
+      this.setCoursesMaterials(res);
+    }, error => {
+      this.notification.create(
+        'error',
+        '错误！',
+        `${error}`,
+        { nzDuration: 100 }
+      )
+    });
 
-  // settotal_notespages(res: any) {
+    this.courseinfservice.get_teaching_plan_teachers(this.teachplanId).subscribe((res: any) => {
+      this.setCourseTeachers(res);
+    }, error => {
+      this.notification.create(
+        'error',
+        '错误！',
+        `${error}`,
+        { nzDuration: 100 }
+      )
+    });
 
-  // }
+    this.courseinfservice.get_teaching_plan_students(this.teachplanId).subscribe((res: any) => {
+      this.setstudents(res);
+    }, error => {
+      this.notification.create(
+        'error',
+        '错误！',
+        `${error}`,
+        { nzDuration: 100 }
+      )
+    });
+  }
 
-  // settotal_commentspages(res: any) {
+  setCoursesIntroduce(res: any) {
+    console.log(res);
+    if (res.code == 400) {
+      this.introduces = "";
+      return;
+    }
+    this.introduces = res.data;
+  }
 
-  // }
+  setCoursesCatalog(res: any) {
+    if (res.code == 200) {
+      this.courses = res.data[Object.keys(res.data)[0]];
+    } else {
+      this.courses = [];
+    }
+  }
 
-  // settotal_materialspages(res: any) {
+  setCoursesNotes(res: any) {
+    if (res.code == 400) {
+      this.notes = [];
+      return;
+    }
+    this.notes = res.data;
+    //this.total_notes_page = res.data.total;
 
-  // }
+    for (let i = 0; i < this.notes.length; i++) {
+      if (this.notes[i].userSmallAvatar == undefined) {
+        this.notes[i].userSmallAvatar = "../../../../assets/img/timg2.jpg";
+      } else if (this.notes[i].userSmallAvatar == "") {
+        this.notes[i].userSmallAvatar = "../../../../assets/img/timg2.jpg";
+      } else if (this.notes[i].userSmallAvatar.substr(0, 6) == "public") {
+        this.notes[i].userSmallAvatar = "../../../../assets/img/timg2.jpg";
+      } else if (this.notes[i].userSmallAvatar.substr(7, 7) == "edusoho") {
+        this.notes[i].userSmallAvatar = "../../../../assets/img/timg2.jpg";
+      }
+    }
+  }
 
+  setCoursesComments(res: any) {
+    if (res.code == 400) {
+      this.comments = [];
+      return;
+    }
+    this.comments = res;
+
+    for (var i = 0; i < this.comments.length; i++) {
+      this.comments[i].userSmallAvatar = ""
+      if (this.comments[i].userSmallAvatar == "") {
+        this.comments[i].userSmallAvatar = "../../../../assets/img/timg2.jpg";
+      } else if (this.comments[i].userSmallAvatar.substr(0, 6) == "public") {
+        this.comments[i].userSmallAvatar = "../../../../assets/img/timg2.jpg";
+      } else if (this.comments[i].userSmallAvatar.substr(7, 7) == "edusoho") {
+        this.comments[i].userSmallAvatar = "../../../../assets/img/timg2.jpg";
+      }
+    }
+    //this.total_comment_pages = res.data.total;
+  }
+
+  setCoursesTopic(res: any) {
+    //console.log(res);
+    if (res.code == 400) {
+      this.topics = [];
+      return;
+    }
+    this.topics = res.data;
+    //this.total_course_top_page = res.data.total;
+    if (this.topics != undefined) {
+      for (var i = 0; i < this.topics.length; i++) {
+        if (this.topics[i].largeAvatar == undefined) {
+          this.topics[i].largeAvatar = "../../../../assets/img/timg2.jpg";
+        } else if (this.topics[i].largeAvatar == "") {
+          this.topics[i].largeAvatar = "../../../../assets/img/timg2.jpg";
+        } else if (this.topics[i].largeAvatar.substr(0, 6) == "public") {
+          this.topics[i].largeAvatar = "../../../../assets/img/timg2.jpg";
+        } else if (this.topics[i].largeAvatar.substr(7, 7) == "edusoho") {
+          this.topics[i].largeAvatar = "../../../../assets/img/timg2.jpg";
+        }
+      }
+    }
+  }
+
+  setCoursesMaterials(res: any) {
+    if (res.code == 400) {
+      this.materials = [];
+      return;
+    }
+    this.materials = res;
+  }
+
+  setCourseTeachers(res: any) {
+    if (res.code == 400) {
+      this.teachers = [];
+      return;
+    }
+    this.teachers = res.data.courseTeachers;
+
+    for (let i = 0; i < this.teachers.length; i++) {
+      if (this.teachers[i].smallAvatar == "") {
+        this.teachers[i].smallAvatar = "../../../../assets/img/timg2.jpg";
+      } else if (this.teachers[i].smallAvatar.substr(0, 6) == "public") {
+        this.teachers[i].smallAvatar = "../../../../assets/img/timg2.jpg";
+      } else if (this.teachers[i].smallAvatar.substr(7, 7) == "edusoho") {
+        this.teachers[i].smallAvatar = "../../../../assets/img/timg2.jpg";
+      }
+
+      this.courseinfservice.isfollowing("1", this.teachers[i].id).subscribe((res: any) => {
+        this.setfollowing_teacher(res.data, i);
+      }, error => {
+        this.notification.create(
+          'error',
+          '发生错误！',
+          `${error.error}`)
+      })
+    }
+  }
+
+  setstudents(res: any) {
+    if (res.code == 400) {
+      this.studentdata = [];
+      return;
+    }
+
+    this.studentdata = res.data.courseStudents;
+
+    for (let i = 0; i < this.studentdata.length; i++) {
+      if (this.studentdata[i].smallAvatar == "") {
+        this.studentdata[i].smallAvatar = "../../../../assets/img/timg2.jpg";
+      } else if (this.studentdata[i].smallAvatar.substr(0, 6) == "public") {
+        this.studentdata[i].smallAvatar = "../../../../assets/img/timg2.jpg";
+      } else if (this.studentdata[i].smallAvatar.substr(7, 7) == "edusoho") {
+        this.studentdata[i].smallAvatar = "../../../../assets/img/timg2.jpg";
+      }
+
+      this.courseinfservice.isfollowing("1", this.studentdata[i].id).subscribe((res: any) => {
+        this.setfollowing_student(res.data, i);
+      }, error => {
+        this.notification.create(
+          'error',
+          '发生错误！',
+          `${error.error}`)
+      })
+    }
+    //console.log(this.studentdata)
+  }
+
+  setfollowing_teacher(res: boolean, index: number) {
+    this.teachers[index].isfollowing = res;
+  }
+
+  setfollowing_student(res: boolean, index: number) {
+    this.studentdata[index].isfollowing = res;
+  }
 
 
   //表单相关

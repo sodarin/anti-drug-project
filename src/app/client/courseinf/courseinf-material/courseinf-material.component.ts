@@ -5,42 +5,21 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
   selector: 'app-courseinf-material',
   templateUrl: './courseinf-material.component.html',
   styleUrls: ['./courseinf-material.component.less'],
-  inputs:["courseid"]
+  inputs:["materials","courseid","teachplanId"]
 })
 export class CourseinfMaterialComponent implements OnInit {
   courseid = "0";
-  materials = [
-    {
-      class: 'Han Solo',
-      name: '资料一',
-      datetime: '2019.1.1',
-      size: '632kb'
-    },
-    {
-      class: 'Han Solo',
-      name: '资料二',
-      datetime: '2019.1.1',
-      size: '632kb'
-    }
-  ];
+  materials = [];
+  teachplanId = "0";
+  
 
   total_material_pages = 1;//总资料页
   current_material_page = 1;//当前资料页
 
-
   constructor(private courseinfservice: CourseInfService,private notification: NzNotificationService) { }
 
   ngOnInit() {
-    this.courseinfservice.getCoursesMaterials(this.courseid).subscribe((res: any) => {
-      this.setCoursesMaterials(res);
-    }, error => {
-      this.notification.create(
-        'error',
-        '错误！',
-        `${error}`,
-        { nzDuration: 100 }
-      )
-    });
+
   }
 
   setCoursesMaterials(res: any) {
@@ -50,7 +29,7 @@ export class CourseinfMaterialComponent implements OnInit {
 
   
   onPageChange_material(event?: any) {
-    this.courseinfservice.getCoursesMaterials(this.courseid).subscribe((res: any) => {
+    this.courseinfservice.get_teaching_plan_material(this.teachplanId).subscribe((res: any) => {
       this.setCoursesMaterials(res);
     }, error => {
       this.notification.create(
