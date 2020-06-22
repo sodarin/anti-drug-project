@@ -36,14 +36,15 @@ export class LoginModalComponent implements OnInit {
     }
 
     if (this.loginForm.valid) {
-
       this.isOkLoading = true;
       this.loginService.postLogin(
         this.loginForm.value.username,
         this.loginForm.value.password
       ).subscribe(
         (res: any) => {
-          this.dataLogin = res.data;
+          //保存用户id
+          window.localStorage.setItem("id", res);
+
           //确保用户名和密码正确再获取令牌
           this.loginService.getToken(
             this.loginForm.value.username,

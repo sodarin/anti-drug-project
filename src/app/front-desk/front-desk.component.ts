@@ -10,7 +10,7 @@ import { RegisterModalComponent } from "../core/modal/register-modal/register-mo
   styleUrls: ["./front-desk.component.less"],
 })
 export class FrontDeskComponent implements OnInit {
-  isLogin: boolean = true;
+  isLogin: boolean = false;
   isCollapsed: boolean = true;
 
   constructor(
@@ -19,7 +19,11 @@ export class FrontDeskComponent implements OnInit {
     private msg: NzMessageService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (window.localStorage.getItem("id")) {
+      this.isLogin = true;
+    }
+  }
 
   login() {
     const modal = this._modalService.create({

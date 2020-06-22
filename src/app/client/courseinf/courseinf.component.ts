@@ -9,7 +9,7 @@ import {
 import { CourseService } from 'src/app/service/courselist-frontend/courselist-frontend.service';
 import { CourseInfService } from 'src/app/service/courseinf-frontend/courseinf-frontend.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { TestuserService } from '../../service/teacher-frontend/teacher-frontend.service';
+// import { TestuserService } from '../../service/teacher-frontend/teacher-frontend.service';
 import { CourseManagementBackHalfService } from 'src/app/service/course-management-back-half/course-management-back-half.service';
 import { CourseManagementService } from 'src/app/service/course-management/course-management.service';
 @Component({
@@ -49,7 +49,7 @@ export class CourseinfComponent implements OnInit {
     private activateInfo: ActivatedRoute, 
     private message: NzMessageService,
     private notification: NzNotificationService, 
-    private testuserservice: TestuserService,
+    // private testuserservice: TestuserService,
     private courseManagement$: CourseManagementBackHalfService,
     private coursemanagementService:CourseManagementService) {
   }
