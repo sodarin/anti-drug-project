@@ -46,9 +46,7 @@ export class FrontDeskComponent implements OnInit {
   logout() {
     if (window.localStorage.getItem("id")) {
       this.isLogin = false;
-      window.localStorage.removeItem("id");
-      window.localStorage.removeItem("token");
-      window.localStorage.removeItem("expires_time");
+      window.localStorage.clear();
       this.msg.success("注销成功");
     }
   }

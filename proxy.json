@@ -6,7 +6,13 @@
     "changeOrigin": true
   },
   "/login": {
-    "target": "http://localhost:9005",
+    "target": "http://localhost:9000",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/oauth": {
+    "target": "http://localhost:9000",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
