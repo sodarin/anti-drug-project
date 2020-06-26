@@ -51,7 +51,7 @@ export class LoginModalComponent implements OnInit {
             //保存用户信息
             window.localStorage.setItem("id", res);
             this.userManagementService
-              .getUserDetailById(res)
+              .getPersonalDetailById(res)
               .subscribe((data) => {
                 for (let [key, value] of Object.entries(data.data)) {
                   window.localStorage.setItem(key + "", value + "");
