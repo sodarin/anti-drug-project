@@ -3,7 +3,6 @@ import { Router } from "@angular/router";
 import { NzMessageService, NzModalService } from "ng-zorro-antd";
 import { LoginModalComponent } from "../core/modal/login-modal/login-modal.component";
 import { RegisterModalComponent } from "../core/modal/register-modal/register-modal.component";
-import { FrontAvatarComponent } from "./front-avatar/front-avatar.component";
 
 @Component({
   selector: "app-front-desk",
@@ -20,7 +19,25 @@ export class FrontDeskComponent implements OnInit {
     private msg: NzMessageService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.isLogin) {
+      this.checkLoginStatus();
+    }
+  }
+
+  checkLoginStatus() {
+    const expireTime =
+      (parseInt(window.localStorage.getItem("exp")) +
+        parseInt(window.localStorage.getItem("expires_in"))) *
+      1000;
+    const expireDate = new Date(expireTime);
+    const now = new Date();
+
+    if (expireDate.getTime() < now.getTime()) {
+      window.localStorage.clear();
+      this.isLogin = false;
+    }
+  }
 
   login() {
     const modal = this._modalService.create({
@@ -50,7 +67,6 @@ export class FrontDeskComponent implements OnInit {
   }
 
   navigateByUrl(url: string) {
-    console.log(url);
     this.router.navigateByUrl(url);
   }
 

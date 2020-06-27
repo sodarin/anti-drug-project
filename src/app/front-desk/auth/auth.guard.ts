@@ -1,17 +1,17 @@
-import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-import { AuthService } from './auth.service';
-import { NzMessageService } from 'ng-zorro-antd';
+import { Injectable } from "@angular/core";
+import {
+  CanActivate,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+  Router,
+} from "@angular/router";
+import { NzMessageService } from "ng-zorro-antd";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class AuthGuard implements CanActivate {
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private msg: NzMessageService,
-  ) { }
+  constructor(private router: Router, private msg: NzMessageService) {}
 
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -22,10 +22,12 @@ export class AuthGuard implements CanActivate {
   }
 
   checkLogin(url: string): boolean {
-    if (this.authService.isLoggedIn) { return true; }
-    this.msg.error('尚未登录');
-    this.authService.redirectUrl = url;
-    this.router.navigate(['/client']);
+    if (typeof window.localStorage.getItem("id") == "string") {
+      return true;
+    }
+
+    this.msg.error("尚未登录");
+    this.router.navigate(["/client"]);
     return false;
   }
 }

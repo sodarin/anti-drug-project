@@ -48,7 +48,7 @@ export class LoginModalComponent implements OnInit {
         .postLogin(this.loginForm.value.username, this.loginForm.value.password)
         .subscribe(
           (res: any) => {
-            //保存用户信息
+            //保存用户基本信息
             window.localStorage.setItem("id", res);
             this.userManagementService
               .getPersonalDetailById(res)
@@ -58,20 +58,20 @@ export class LoginModalComponent implements OnInit {
                 }
               });
 
-            //确保用户名和密码正确再获取令牌
+            //保存用户token
             this.loginService
               .getToken(
                 this.loginForm.value.username,
                 this.loginForm.value.password
               )
-              .subscribe((token: any) => {
-                window.localStorage.setItem("token", JSON.stringify(token));
-                let expires_time =
-                  Date.parse(new Date().toString()) + token.expires_in * 1000;
-                window.localStorage.setItem(
-                  "expires_time",
-                  expires_time.toString()
-                );
+              .subscribe((data: any) => {
+                window.localStorage.setItem("expires_in", data.expires_in);
+                this.loginService.checkToken(data.access_token)
+                .subscribe((access_token: any) => {
+                  for (let [key, value] of Object.entries(access_token)) {
+                    window.localStorage.setItem(key + "", value + "");
+                  }
+                });
               });
 
             this.msg.success("登录成功");

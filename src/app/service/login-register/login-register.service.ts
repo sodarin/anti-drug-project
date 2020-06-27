@@ -1,7 +1,5 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { NULL_EXPR } from "@angular/compiler/src/output/output_ast";
-import { map } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root",
@@ -30,6 +28,10 @@ export class LoginRegisterService {
         `password=${password}`,
       {}
     );
+  }
+
+  checkToken(token: string) {
+    return this.http.post(`oauth/check_token?token=${token}`, {});
   }
 
   checkUsername(username: string) {
