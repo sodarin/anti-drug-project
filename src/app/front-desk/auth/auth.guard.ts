@@ -23,7 +23,7 @@ export class AuthGuard implements CanActivate {
 
   checkLogin(url: string): boolean {
     if (this.authService.isLoggedIn) { return true; }
-    this.msg.error('尚未登陆，请登录');
+    this.msg.error('尚未登录');
     this.authService.redirectUrl = url;
     this.router.navigate(['/client']);
     return false;

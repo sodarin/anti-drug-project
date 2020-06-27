@@ -1,8 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { NzMessageService, NzModalService } from "ng-zorro-antd";
 import { LoginModalComponent } from "../core/modal/login-modal/login-modal.component";
 import { RegisterModalComponent } from "../core/modal/register-modal/register-modal.component";
+import { FrontAvatarComponent } from "./front-avatar/front-avatar.component";
 
 @Component({
   selector: "app-front-desk",
@@ -10,7 +11,7 @@ import { RegisterModalComponent } from "../core/modal/register-modal/register-mo
   styleUrls: ["./front-desk.component.less"],
 })
 export class FrontDeskComponent implements OnInit {
-  isLogin: boolean = false;
+  isLogin: boolean = typeof window.localStorage.getItem("id") == "string";
   isCollapsed: boolean = true;
 
   constructor(
@@ -19,19 +20,16 @@ export class FrontDeskComponent implements OnInit {
     private msg: NzMessageService
   ) {}
 
-  ngOnInit() {
-    if (window.localStorage.getItem("id")) {
-      this.isLogin = true;
-    }
-  }
+  ngOnInit() {}
 
   login() {
     const modal = this._modalService.create({
       nzTitle: "登录",
       nzContent: LoginModalComponent,
       nzFooter: null,
-      nzOnOk: () =>
-        (this.isLogin = typeof window.localStorage.getItem("id") == "string"),
+      nzOnOk: () => {
+        this.isLogin = typeof window.localStorage.getItem("id") == "string";
+      },
     });
   }
 
@@ -45,8 +43,8 @@ export class FrontDeskComponent implements OnInit {
 
   logout() {
     if (window.localStorage.getItem("id")) {
-      this.isLogin = false;
       window.localStorage.clear();
+      this.isLogin = false;
       this.msg.success("注销成功");
     }
   }
