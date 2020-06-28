@@ -1,12 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import {NzMessageService, NzModalService, NzNotificationService} from 'ng-zorro-antd';
-import { LoginModalComponent } from '../core/modal/login-modal/login-modal.component';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {PrivateChatService} from '../service/private-chat/private-chat.service';
-import {FrontDeskService} from '../service/front-desk/front-desk.service';
-import { RegisterModalComponent } from '../core/modal/register-modal/register-modal.component';
-import { AuthService } from './auth/auth.service';
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { Router } from "@angular/router";
+import { NzMessageService, NzModalService } from "ng-zorro-antd";
+import { LoginModalComponent } from "../core/modal/login-modal/login-modal.component";
+import { RegisterModalComponent } from "../core/modal/register-modal/register-modal.component";
 
 @Component({
   selector: 'app-front-desk',
@@ -14,18 +10,33 @@ import { AuthService } from './auth/auth.service';
   styleUrls: ['./front-desk.component.less'] 
 })
 export class FrontDeskComponent implements OnInit {
-  isLogin: boolean = true;
+  isLogin: boolean = typeof window.localStorage.getItem("id") == "string";
   isCollapsed: boolean = true;
-
-  userId: string = '1';
 
   constructor(
     private router: Router,
     private _modalService: NzModalService,
     private msg: NzMessageService
-  ) { }
+  ) {}
 
   ngOnInit() {
+    if (this.isLogin) {
+      this.checkLoginStatus();
+    }
+  }
+
+  checkLoginStatus() {
+    const expireTime =
+      (parseInt(window.localStorage.getItem("exp")) +
+        parseInt(window.localStorage.getItem("expires_in"))) *
+      1000;
+    const expireDate = new Date(expireTime);
+    const now = new Date();
+
+    if (expireDate.getTime() < now.getTime()) {
+      window.localStorage.clear();
+      this.isLogin = false;
+    }
   }
 
   login() {
@@ -33,8 +44,10 @@ export class FrontDeskComponent implements OnInit {
       nzTitle: '登录',
       nzContent: LoginModalComponent,
       nzFooter: null,
-      nzOnOk: () => this.isLogin = (typeof window.localStorage.getItem('id') == "string")
-    })
+      nzOnOk: () => {
+        this.isLogin = typeof window.localStorage.getItem("id") == "string";
+      },
+    });
   }
 
   register() {
@@ -46,22 +59,18 @@ export class FrontDeskComponent implements OnInit {
   }
 
   logout() {
-    if (window.localStorage.getItem('id')) {
+    if (window.localStorage.getItem("id")) {
+      window.localStorage.clear();
       this.isLogin = false;
-      window.localStorage.removeItem("id");
-      window.localStorage.removeItem("token");
-      window.localStorage.removeItem("expires_time");
-      this.msg.success('注销成功');
+      this.msg.success("注销成功");
     }
   }
 
   navigateByUrl(url: string) {
-    console.log(url);
     this.router.navigateByUrl(url);
   }
 
-  onResize(event) {
-    // 改变宽度时自动关闭侧边栏
+  onResize() {
     if (!this.isCollapsed) {
       this.isCollapsed = true;
     }
