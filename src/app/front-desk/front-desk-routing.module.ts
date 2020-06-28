@@ -98,8 +98,6 @@ import { TeachingPlanPageComponent } from '../course-management/teaching-plan-pa
 import {PaperMarkingComponent as ClassPaperMarkingComponent} from '../class-management/paper-marking/paper-marking.component'
 import { HomeworkMarkingComponent } from '../client/mine-management/homework-marking/homework-marking.component';
 import { AuthGuard } from './auth/auth.guard';
-import { PageNotFoundComponent } from '../client/page-not-found/page-not-found.component';
-
 
 
 const routes: Routes = [
@@ -238,8 +236,6 @@ const routes: Routes = [
       { path:'course/:id/task/:id/show',component:CourseTaskComponent}
     ]
   },
-  
-  { path: '**', component: PageNotFoundComponent },
 ];
 
 @NgModule({

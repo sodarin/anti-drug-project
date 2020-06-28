@@ -144,7 +144,6 @@ import { DashboardListCourseComponent } from './dashboard/dashboard-list/dashboa
 import { DashboardListOpenresourceComponent } from './dashboard/dashboard-list/dashboard-list-openresource/dashboard-list-openresource.component';
 import { DashboardListStudentComponent } from './dashboard/dashboard-list/dashboard-list-student/dashboard-list-student.component';
 import { DashboardListTeacherComponent } from './dashboard/dashboard-list/dashboard-list-teacher/dashboard-list-teacher.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 @NgModule({
@@ -209,7 +208,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     TopicRecordComponent, TopicComponent, GroupJoinComponent, MyGroupJoinComponent,TdClassificationComponent, TdCardComponent, MyNoteDetailComponent, CourseExamComponent,
     TopicPostComponent, MyOwnGroupComponent, CourseTaskComponent, MyClassTopicComponent, MyCourseTopicComponent, GroupsearchComponent, GroupmainsearchComponent, GroupthreadComponent,
     GroupthreadeditComponent, TeachPlanPageComponent,PaperListComponent,HomeworkMarkingComponent,HomeworkMarkingTabComponent,
-    DashboardMenuComponent, DashboardListComponent, DashboardListCourseComponent, DashboardListOpenresourceComponent, DashboardListStudentComponent, DashboardListTeacherComponent, PageNotFoundComponent
+    DashboardMenuComponent, DashboardListComponent, DashboardListCourseComponent, DashboardListOpenresourceComponent, DashboardListStudentComponent, DashboardListTeacherComponent
   ],
   imports: [
     ShareModule,

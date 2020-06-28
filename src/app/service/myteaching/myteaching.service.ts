@@ -36,12 +36,6 @@ export class MyteachingService {
     return this._http.get(`/user/getLearningCourse?pageNum=${pageNum}&pageSize=${pageSize}&userId=${userId}&learnStatus=${learnStatus}`)
   }
 
-  //我收藏的课程
-  getMyLikeCourseList(pageNum: number, pageSize: number, userId:number): Observable<any> {
-
-    return this._http.get(`/user/getLikeCourse?pageNum=${pageNum}&pageSize=${pageSize}&userId=${userId}`)
-  }
-
   //我的班级
   getMyClassList(pageNum: number, pageSize: number, userId:string): Observable<any> {
 

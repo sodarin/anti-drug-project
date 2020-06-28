@@ -1,7 +1,7 @@
 <nz-avatar
   nz-popover
   nzIcon="user"
-  [nzSrc]="avatar"
+  nzSrc="../../../assets/img/userface-small.jpg"
   [nzPopoverContent]="usercenter"
   nzPopoverPlacement="bottomRight"
 ></nz-avatar>
@@ -11,13 +11,13 @@
     <nz-avatar
       class="user-avatar pointer-perform"
       nzIcon="user"
-      [nzSrc]="avatar"
+      nzSrc="../../../assets/img/userface.jpg"
       [nzSize]="80"
       (click)="navigateByUrl('/client/userpage/' + userId)"
     >
     </nz-avatar
     >&nbsp;
-    <span slot="title" style="font-size: 24px;">{{ nickName }}</span>
+    <span slot="title" style="font-size: 24px">admin</span>
     <br />
     <nz-divider></nz-divider>
 
