@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {GroupcreateService} from '../../../service/groupcreate/groupcreate.service';
 import {NzNotificationService} from 'ng-zorro-antd';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-groupcreate',
@@ -17,7 +18,8 @@ export class GroupcreateComponent implements OnInit {
   userId:string="1";
   constructor(private groupcreateService$:GroupcreateService,
               private _notification: NzNotificationService,
-              private fb: FormBuilder) { }
+              private fb: FormBuilder,
+              private route: Router) { }
 
   ngOnInit() {
     this.threadCreatingForm = this.fb.group({
@@ -35,13 +37,14 @@ export class GroupcreateComponent implements OnInit {
       this.groupcreateService$.addNewGroup(this.threadCreatingForm.controls.content.value,this.threadCreatingForm.controls.title.value,this.userId).subscribe(result => {
         this._notification.create(
           'success',
-          '修改成功',
+          '发布成功',
           ''
-        )
+        );
+        this.route.navigateByUrl('/client/groupmainlist')
       },error1 => {
         this._notification.create(
           'error',
-          '修改失败',
+          '发布失败',
           `${error1.error}`
         )
       })

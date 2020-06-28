@@ -5,7 +5,6 @@ import {HttpClient, HttpParams} from '@angular/common/http';
   providedIn: 'root'
 })
 export class ClassService {
-
   constructor(private http:HttpClient){}
   getClasses(page:number,orderkey:string,tag:string){
     const params = new HttpParams()
@@ -15,8 +14,19 @@ export class ClassService {
       .set('pageNum',page.toString())
       .set('pageSize','12')
       .set('showAble','1')
-      .set('sortType',orderkey)
+      .set('sortType',"hot")//orderkey)
     const uri = `/classroom/explore`;
-    return this.http.get(uri,{params});//.pipe(map(data => data.classes));
+    return this.http.post(uri,{
+      classroomName:'',
+      classroomType:tag,
+      isClosed:0,
+      pageNum:page,
+      pageSize:12,
+      showAble:1,
+      sortType:orderkey
+    });
+    
+    
+    //.pipe(map(data => data.classes));
   }
 }

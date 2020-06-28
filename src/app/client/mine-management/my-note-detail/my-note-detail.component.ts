@@ -1,10 +1,11 @@
-import {AfterContentChecked, AfterContentInit, AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterContentChecked, AfterContentInit, AfterViewInit, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {NzNotificationService} from 'ng-zorro-antd';
 import {MyteachingService} from '../../../service/myteaching/myteaching.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 @Component({
   selector: 'app-my-note-detail',
   templateUrl: './my-note-detail.component.html',
+  encapsulation: ViewEncapsulation.None,
   styleUrls: ['./my-note-detail.component.less']
 })
 export class MyNoteDetailComponent implements OnInit {
@@ -12,9 +13,10 @@ export class MyNoteDetailComponent implements OnInit {
   noteDetailList = [];
   dataList = [];
   loading = false;
+  noteInfoList = [];
 
   userId:number = 1;
-  courseId:number = 2;
+  courseId:number;
   location: Location;
 
   panels = [
@@ -28,8 +30,11 @@ export class MyNoteDetailComponent implements OnInit {
   constructor(
     private _notification: NzNotificationService,
     private MyteachingService$: MyteachingService,
-    private router: Router
+    private router: Router,
+    private routerInfo: ActivatedRoute
   ) {
+    this.courseId = this.routerInfo.snapshot.params['id'];
+    this.userId = this.routerInfo.snapshot.params['userId']
   }
 
   ngOnInit() {
@@ -41,11 +46,15 @@ export class MyNoteDetailComponent implements OnInit {
 
   searchData(pageIndex: number = this.pageIndex) {
     this.noteDetailList = [];
+    this.noteInfoList = [];
     this.loading = true;
     this.MyteachingService$.getMyNoteDetilList(1, 10, this.userId,this.courseId).subscribe(result => {
         this.loading = false;
         this.dataList = result.data;
         this.noteDetailList = this.dataList;
+        this.noteInfoList.push(this.noteDetailList[0]);
+        console.log(this.noteDetailList);
+        console.log(this.noteInfoList)
         }
       ,
       error1 => {

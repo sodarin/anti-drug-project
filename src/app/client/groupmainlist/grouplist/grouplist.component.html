@@ -12,7 +12,7 @@
           <nz-avatar [nzSize]="64" nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png">  </nz-avatar>
         </ng-template>
         <ng-template #nzDescription>
-          <span >{{topicList?.groupMemberNum}}个成员     {{topicList?.groupThreadNum}}个话题      创建时间：{{topicList?.createdTime}}</span>
+          <span >{{topicList?.groupMemberNum}}个成员     {{topicList?.groupThreadNum}}个话题      创建时间：{{topicList?.createdTime*1000 | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
         </ng-template>
       </nz-card-meta>
     </div>

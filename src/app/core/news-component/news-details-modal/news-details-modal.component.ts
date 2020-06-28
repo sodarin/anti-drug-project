@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { formatDistance } from 'date-fns';
-import {NzMessageService, NzModalService, NzNotificationService} from 'ng-zorro-antd';
-import {NewsService} from '../../../service/news/news.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import { NzMessageService, NzModalService, NzNotificationService } from 'ng-zorro-antd';
+import { NewsService } from '../../../service/news/news.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import {ViewportScroller} from '@angular/common';
 
 @Component({
   selector: 'app-news-details-modal',
@@ -11,49 +12,33 @@ import {ActivatedRoute, Router} from '@angular/router';
 })
 export class NewsDetailsModalComponent implements OnInit {
   articleId: number;
-  isDelete:number;
-  isLike:boolean;
-  userId=1;
-  articleLike:{};
-  data1 = {
-    author: 'Han Solo',
-    avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-    content:
-      'We supply a series of design principles, practical patterns and high quality design resources' +
-      '(Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-    children: [
-      {
-        author: 'Han Solo',
-        avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-        content:
-          'We supply a series of design principles, practical patterns and high quality design resources' +
-          '(Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-        children: [
-          {
-            author: 'Han Solo',
-            avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-            content:
-              'We supply a series of design principles, practical patterns and high quality design resources' +
-              '(Sketch and Axure), to help people create their product prototypes beautifully and efficiently.'
-          },
-          {
-            author: 'Han Solo',
-            avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-            content:
-              'We supply a series of design principles, practical patterns and high quality design resources' +
-              '(Sketch and Axure), to help people create their product prototypes beautifully and efficiently.'
-          }
-        ]
-      }
-    ]
-  };
+  isDelete: number;
+  isLike: boolean;
+  userId = 1;
+  articleLike: {};
+  pageIndex = 1;
+  pageSize = 5;
 
-  dataList :any;
-  displayData : any;
-  tagList:any;
+  comments = [];
+  total: number = 0;
+
+  dataList: any;
+  displayData: any;
+  tagList: any;
   loading: boolean = false;
   id: string;
-  userid=1;
+  replyId: string;
+  userid = 1;
+
+
+  submitting = false;
+  user = {
+    author: 'Han Solo',
+    avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
+  };
+  replyString = '';
+  commentValue = this.replyString;
+
   constructor(
     private router: Router, private route: ActivatedRoute,
     private newsService$: NewsService,
@@ -61,6 +46,7 @@ export class NewsDetailsModalComponent implements OnInit {
     private _modalService: NzModalService,
     private routerInfo: ActivatedRoute,
     private _notification: NzNotificationService,
+    private vps: ViewportScroller
   ) {
   }
 
@@ -68,37 +54,74 @@ export class NewsDetailsModalComponent implements OnInit {
     this.id = this.routerInfo.snapshot.params['id'];
     this.searchArticlebyid();
     this.getArticleLike();
+    this.getComments()
   }
 
-  data: any[] = [];
-  submitting = false;
-  user = {
-    author: 'Han Solo',
-    avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
-  };
-  inputValue = '';
+  getComments() {
+    this.newsService$.getCommentListByArticleId(this.pageIndex, this.pageSize, this.id).subscribe(result => {
+      this.comments = result.data;
+      this.total = this.comments.length > 0? this.comments[0].count: 0;
+    })
+  }
+
+  addReplyValue(comment: any) {
+    this.replyString = `回复@${comment.username}：  `;
+    this.commentValue = this.replyString;
+    this.replyId = comment.commentId;
+    this.vps.scrollToAnchor('reply');
+  }
+
+  deleteComment(commentId: string) {
+    this.newsService$.deleteComment(commentId).subscribe(result => {
+      this._notification.success('删除成功！', '');
+      this.getComments()
+    }, error1 => {
+      this._notification.error('删除失败！', error1.error)
+    })
+  }
 
   handleSubmit(): void {
-    this.submitting = true;
-    const content = this.inputValue;
-    this.inputValue = '';
-    setTimeout(() => {
-      this.submitting = false;
-      this.data = [
-        ...this.data,
-        {
-          ...this.user,
-          content,
-          datetime: new Date(),
-          displayTime: formatDistance(new Date(), new Date())
-        }
-      ].map(e => {
-        return {
-          ...e,
-          displayTime: formatDistance(new Date(), e.datetime)
+    let content;
+    let comment = {};
+    let objecttype = '';
+    if (this.commentValue.startsWith(this.replyString) && this.replyString !== '') {
+       content = this.commentValue.split(this.replyString);
+      if (content[1] == '') {
+        this._notification.error('请填写评论内容！', '')
+      }else {
+        objecttype = 'comment';
+        this.submitting = true;
+        comment = {
+          content: content[1],
+          objectid: this.replyId,
+          userId: this.userId
         };
-      });
-    }, 800);
+      }
+    }else {
+      console.log(this.commentValue);
+      this.submitting = true;
+      objecttype = 'article';
+      comment = {
+        content: this.commentValue,
+        objectid: this.id,
+        userId: this.userId
+      }
+    }
+
+      this.newsService$.insertComment(comment, objecttype).subscribe(result => {
+        this.submitting = false;
+        if (objecttype == 'article') {
+          this.pageIndex = Math.ceil((this.total + 1) / this.pageSize);
+        }
+        this.getComments();
+        this.commentValue = '';
+        this.replyString = '';
+        this.replyId = '';
+        this._notification.success('评论成功！','')
+      }, error1 => {
+        this.submitting = false;
+        this._notification.error('评论失败！', '')
+      })
   }
 
   searchArticlebyid() {
@@ -108,28 +131,30 @@ export class NewsDetailsModalComponent implements OnInit {
       this.loading = false;
       this.dataList = result;
       this.displayData = this.dataList;
-      this.tagList=this.dataList.tagList;
+      this.tagList = this.dataList.tagList;
     }, error1 => {
       this.loading = false;
       this._message.error(error1.error);
     });
   }
-  getArticleLike(){
+  getArticleLike() {
     this.loading = true;
-    this.newsService$.getArticleLike(this.id,this.userId).subscribe(result => {
+    this.newsService$.getArticleLike(this.id, this.userId).subscribe(result => {
       this.loading = false;
-      this.isLike= result.data;
+      this.isLike = result.data;
     }, error1 => {
       this.loading = false;
+      this._message.error(error1.error);
+    });
+  }
+  getAriticlelikes(){
+    this.newsService$.getArticlebyid(this.id).subscribe(result => {
+      this.displayData.upsnum = result.upsnum;
+    }, error1 => {
       this._message.error(error1.error);
     });
   }
   setArticleLike() {
-   if (this.isDelete==0){
-     this.displayData.upsnum ++;
-   } else{
-     this.displayData.upsnum --;
-   }
     this.loading = true;
     this.articleLike = {
       articleId: this.id,
@@ -138,12 +163,13 @@ export class NewsDetailsModalComponent implements OnInit {
     };
     this.newsService$.setArticleLike(this.articleLike).subscribe(result => {
       this.getArticleLike();
+      this.getAriticlelikes();
       this._notification.create(
         'success',
         '操作成功',
         ''
       );
-    },error1 => {
+    }, error1 => {
       this._notification.create(
         'error',
         '操作失败',
@@ -154,30 +180,30 @@ export class NewsDetailsModalComponent implements OnInit {
   getNewContent(value: any) {
     this.getArticleLike();
     this.displayData = value;
-    this.tagList=this.displayData.tagList;
+    this.tagList = this.displayData.tagList;
   }
   navigateByUrl(url: string) {
     this.router.navigateByUrl(url);
   }
 
   navigate(id) {
-    if (id==1){
+    if (id == 1) {
       this.navigateByUrl('/client/newslaw');
-    }else if(id==2){
+    } else if (id == 2) {
       this.navigateByUrl('/client/newscase');
-    }else{
+    } else {
       this.navigateByUrl('/client/newsnews');
     }
   }
 
   getHeart1() {
-    this.isDelete=0;
+    this.isDelete = 0;
     this.setArticleLike();
 
   }
 
   getHeart0() {
-    this.isDelete=1;
+    this.isDelete = 1;
     this.setArticleLike();
 
   }

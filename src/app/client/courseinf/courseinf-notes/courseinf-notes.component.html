@@ -1,6 +1,6 @@
 <div class="listmenu">
-        <nz-dropdown style="margin: 5px;">
-            <a nz-dropdown> 排序 <i nz-icon type="down"></i> </a>
+        <button nz-button nz-dropdown [nzDropdownMenu]="note_menu" [nzPlacement]="'bottomLeft'">排序 </button>
+        <nz-dropdown-menu #note_menu="nzDropdownMenu">
             <ul nz-menu nzSelectable>
                 <li nz-menu-item (click)="changeOrder_Note('New')">
                     最新笔记
@@ -9,7 +9,7 @@
                     点赞最多
                 </li>
             </ul>
-        </nz-dropdown>
+        </nz-dropdown-menu>
     </div>
     <nz-divider style="margin-top:5px;"></nz-divider>
 <nz-list [nzDataSource]="notes" [nzRenderItem]="notesitem"
@@ -24,7 +24,7 @@
         </ng-template>
         <nz-list-item-meta [nzTitle]="nzTitle"
             nzAvatar="{{notesitem.userSmallAvatar}}"
-            nzDescription="{{notesitem.userName}} · {{notesitem.time}} · {{notesitem.taskName}}">
+            nzDescription="{{notesitem.authorName}} · {{notesitem.time* 1000 | date: 'yyyy-MM-dd HH:mm:ss'}} · {{notesitem.taskTitle}}">
             <ng-template #nzTitle>
                 <div [innerHTML]="notesitem.content"></div>
                 <!-- <a href="https://ng.ant.design">{{ topicitem.title }}</a>-->

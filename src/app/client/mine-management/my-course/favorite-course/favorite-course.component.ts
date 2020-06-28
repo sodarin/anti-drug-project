@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {NzModalService, NzNotificationService} from 'ng-zorro-antd';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {MyteachingService} from '../../../../service/myteaching/myteaching.service';
 
 @Component({
@@ -21,7 +21,8 @@ export class FavoriteCourseComponent implements OnInit {
     private _modal: NzModalService,
     private routerInfo: ActivatedRoute,
     private _notification: NzNotificationService,
-    private MyteachingService$:MyteachingService
+    private MyteachingService$:MyteachingService,
+    private router: Router
   ) { }
 
 
@@ -59,5 +60,9 @@ export class FavoriteCourseComponent implements OnInit {
   }
   LearnPro(learnTime: number, watchTime: number) {
     return watchTime/learnTime;
+  }
+
+  viewCourse(url: string) {
+    this.router.navigateByUrl(url)
   }
 }

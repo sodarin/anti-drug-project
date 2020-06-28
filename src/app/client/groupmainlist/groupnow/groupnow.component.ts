@@ -7,6 +7,7 @@ import {NzModalService, NzNotificationService} from 'ng-zorro-antd';
 import {GrouphotService} from '../../../service/grouphot/grouphot.service';
 import {GrouplistService} from '../../../service/grouplist/grouplist.service';
 import {FormGroup} from '@angular/forms';
+import {GroupfirstService} from '../../../service/groupfirst/groupfirst.service';
 
 
 @Component({
@@ -33,7 +34,8 @@ export class GroupnowComponent implements OnInit {
   focuson=3;
   detail:any;
   userId:string;
-  userID:string="1"
+  userID:string="1";
+  conversationId: any;
 
 
 
@@ -53,6 +55,7 @@ export class GroupnowComponent implements OnInit {
     private grouphotService$:GrouphotService,
     private grouplistService$:GrouplistService,
     private _modal: NzModalService,
+    private groupfirstService$: GroupfirstService
   ) { }
 
   ngOnInit() {
@@ -110,6 +113,9 @@ export class GroupnowComponent implements OnInit {
   }
   //发送私信
   message(data: any, template: TemplateRef<{}>) {
+    this.groupfirstService$.getConversationId(data.id, this.userId).subscribe(result => {
+      this.conversationId = result.data
+    });
     this.threadCreatingForm.controls.title.setValue(data.nickName);
     const modal = this._modal.create({
       nzTitle: '发送私信',
@@ -121,7 +127,7 @@ export class GroupnowComponent implements OnInit {
           this.threadCreatingForm.controls[i].updateValueAndValidity()
         }
         if ( !this.threadCreatingForm.controls.content.errors) {
-          this.grouplistService$.sendMessage(this.threadCreatingForm.controls.content.value,this.userId,data.id).subscribe(result => {
+          this.grouplistService$.sendMessage(this.threadCreatingForm.controls.content.value,this.userId,data.id, this.conversationId).subscribe(result => {
             this._notification.create(
               'success',
               '发送成功',

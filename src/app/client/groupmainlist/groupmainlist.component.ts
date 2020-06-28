@@ -60,7 +60,7 @@ export class GroupmainlistComponent implements OnInit {
 
 
   tclick(){
-    this.router.navigateByUrl("client/groupmainlist/"+this.userId)
+    this.router.navigateByUrl("client/mine/mygroup")
   }
   oclick(){
     this.router.navigateByUrl("client/groupcreate")

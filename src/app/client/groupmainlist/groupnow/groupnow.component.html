@@ -82,19 +82,20 @@
         ></nz-card-meta>
       </nz-card>
       <ng-template #nzTitle>
-        <div>{{detail?.nickName}} <span *ngIf="detail?.id !=userID">
-          <span *ngIf="isfocus==false">
-                      <button nzSize="small" style="float: right; width: 40px; height: 20px; font-size: 12px; " nz-button class="onebutton" nzType="primary" (click)="focus()" >关注</button>
-                    </span>
-                    <span *ngIf="isfocus==true">
-                      <button nzSize="small" style="float:right;width: 40px; height: 20px; font-size: 12px; " nz-button class="onebutton"    nzType="primary"  (click)="cancelfocus()" >已关注</button>
-                  </span>
-          </span>
+        <div>{{detail?.nickName}}
+          <span *ngIf="detail?.id!=userID">
+                        <span *ngIf="isfocus==false">
+                                    <button nzSize="small" style="width: 50px; height: 20px; font-size: 12px; float: right;" nz-button class="onebutton" nzType="primary"  (click)="focus()" >关注</button>
+                                  </span>
+                                  <span *ngIf="isfocus==true">
+                                    <button nzSize="small" style="width: 50px; height: 20px; font-size: 12px; float: right;" nz-button class="onebutton" nzType="primary" (click)="cancelfocus()" >已关注</button>
+                                </span>
+                          </span>
         </div>
       </ng-template>
       <ng-template #nzDescription>
         <div>{{detail?.job}}
-          <span *ngIf="detail?.id!=userID"><button nz-button style="float: right ; width: 40px; height: 20px; font-size: 12px; " nzSize="small" nzType="primary" (click)="message(detail, messageModal)">私信</button></span>
+          <span *ngIf="detail?.id!=userID"><button nz-button style="float: right ; width: 50px; height: 20px; font-size: 12px; " nzSize="small" nzType="primary" (click)="message(detail, messageModal)">私信</button></span>
         </div>
        </ng-template>
       <ng-template #avatarTemplate>
@@ -112,7 +113,7 @@
               <ng-template #content>
                 <a style="color: gray">{{detail?.signature}}</a>
               </ng-template>
-            </nz-avatar><b >{{recentitem.userName}} 发起了话题 · {{recentitem.updatedTime}} · {{recentitem.groupName}}</b></span>
+            </nz-avatar><b >{{recentitem.userName}} 发起了话题 · {{recentitem.updatedTime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}} · {{recentitem.groupName}}</b></span>
             </ng-template>
           </nz-list-item-meta>
         </nz-skeleton>

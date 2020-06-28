@@ -47,7 +47,7 @@ import { StudentTopicComponent } from './mine-management/student-topic/student-t
 import { TopicTabComponent } from './mine-management/student-topic/topic-tab/topic-tab.component';
 import { CourseTopicComponent } from './mine-management/student-topic/course-topic/course-topic.component';
 import { ClassTopicComponent } from './mine-management/student-topic/class-topic/class-topic.component';
-import { MinePaperMarkingComponent } from './mine-management/paper-marking/paper-marking.component';
+import { PaperMarkingComponent as MinePaperMarkingComponent } from './mine-management/paper-marking/paper-marking.component';
 import { PaperMarkingTabComponent } from './mine-management/paper-marking/paper-marking-tab/paper-marking-tab.component';
 import { HaveMarkedComponent } from './mine-management/paper-marking/have-marked/have-marked.component';
 import { NotMarkedComponent } from './mine-management/paper-marking/not-marked/not-marked.component';
@@ -134,6 +134,10 @@ import {CourselistCourseblockModalComponent} from './courselist/courselist-cours
 import {CourseinfTeacherlistModalComponent} from './courseinf/courseinf-teacherlist-modal/courseinf-teacherlist-modal.component';
 import {CourseinfStudentdynamicsModalComponent} from './courseinf/courseinf-studentdynamics-modal/courseinf-studentdynamics-modal.component';
 import {CourseExamComponent} from './course-exam/course-exam.component';
+import { TeachPlanPageComponent } from './course-management/teach-plan-page/teach-plan-page/teach-plan-page.component';
+import { PaperListComponent } from './mine-management/paper-marking/paper-list/paper-list.component';
+import { HomeworkMarkingComponent } from './mine-management/homework-marking/homework-marking.component';
+import { HomeworkMarkingTabComponent } from './mine-management/homework-marking/homework-marking-tab/homework-marking-tab.component';
 import { DashboardMenuComponent } from './dashboard/dashboard-menu/dashboard-menu.component';
 import { DashboardListComponent } from './dashboard/dashboard-list/dashboard-list.component';
 import { DashboardListCourseComponent } from './dashboard/dashboard-list/dashboard-list-course/dashboard-list-course.component';
@@ -202,7 +206,8 @@ import { DashboardListTeacherComponent } from './dashboard/dashboard-list/dashbo
     FavoriteCourseComponent, MyQAComponent, MyTopicComponent, MyTopicTabComponent, MyNoteComponent, MyExamComponent, MyGroupComponent,
      MyClassComponent, MyLiveComponent, CreateCourseComponent, MyLiveCourseComponent, ExamRecordComponent, QuestionRecordComponent,
     TopicRecordComponent, TopicComponent, GroupJoinComponent, MyGroupJoinComponent,TdClassificationComponent, TdCardComponent, MyNoteDetailComponent, CourseExamComponent,
-    TopicPostComponent, MyOwnGroupComponent, CourseTaskComponent, MyClassTopicComponent, MyCourseTopicComponent, GroupsearchComponent, GroupmainsearchComponent, GroupthreadComponent, GroupthreadeditComponent,
+    TopicPostComponent, MyOwnGroupComponent, CourseTaskComponent, MyClassTopicComponent, MyCourseTopicComponent, GroupsearchComponent, GroupmainsearchComponent, GroupthreadComponent,
+    GroupthreadeditComponent, TeachPlanPageComponent,PaperListComponent,HomeworkMarkingComponent,HomeworkMarkingTabComponent,
     DashboardMenuComponent, DashboardListComponent, DashboardListCourseComponent, DashboardListOpenresourceComponent, DashboardListStudentComponent, DashboardListTeacherComponent
   ],
   imports: [

@@ -284,4 +284,15 @@ export class ClassInfService {
         type: "string"
       });
   }
+
+
+  get_class_isJoin(userid: string,targetid: string) {
+    const uri = `/user/getIsJoin`;
+    return this.http.post(uri,
+      {
+        classificationname: "classroom",
+        targetId: targetid,
+        userId: userid
+      });
+  }
 }

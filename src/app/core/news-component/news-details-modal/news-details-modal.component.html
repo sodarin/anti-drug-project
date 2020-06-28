@@ -33,52 +33,55 @@
                 <p class="content-link">
                   <i *ngIf="isLike==false" nz-icon style="cursor: pointer;" [nzType]="'heart'" (click)="getHeart1()"></i>
                   <i *ngIf="isLike==true" nz-icon style="cursor: pointer;color:red;" [nzType]="'heart'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#eb1f13'" (click)="getHeart0()"></i>
-                  <i nz-icon style="cursor: pointer;" [nzType]="'share-alt'" nz-popover  [nzPopoverContent]="contentTemplate" nzPopoverTrigger="click"></i>
+                  <!-- <i nz-icon style="cursor: pointer;" [nzType]="'share-alt'" nz-popover  [nzPopoverContent]="contentTemplate" nzPopoverTrigger="click"></i>
                   <ng-template #contentTemplate>
                     <div>
                       <i nz-icon [nzType]="'wechat'"></i>
                       <i nz-icon [nzType]="'weibo'"></i>
                       <i nz-icon [nzType]="'qq'"></i>
                     </div>
-                  </ng-template>
+                  </ng-template> -->
                 </p>
-                <p>文章评论：news.discussion</p>
+                <p>文章评论：</p>
+                <nz-empty *ngIf="comments.length == 0"></nz-empty>
                 <ng-template #commentTemplateRef let-comment="comment">
-                  <nz-comment [nzAuthor]="comment.author">
-                    <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="comment.avatar"></nz-avatar>
+                  <nz-comment [nzAuthor]="comment.username" [nzDatetime]="comment.createdtime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'">
+                    <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="comment.useravatar"></nz-avatar>
                     <nz-comment-content>
                       <p>{{ comment.content }}</p>
                     </nz-comment-content>
-                    <nz-comment-action>Reply to</nz-comment-action>
-                    <ng-container *ngIf="comment.children && comment.children.length">
-                      <ng-template ngFor let-child [ngForOf]="comment.children">
-                        <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{ comment: child }">
+                    <nz-comment-action>
+                      <span (click)="addReplyValue(comment)">回复</span>
+                    </nz-comment-action>
+                    <nz-comment-action>
+                      <span (click)="deleteComment(comment.commentId)">删除</span>
+                    </nz-comment-action>
+                    <ng-container *ngIf="comment.reply && comment.reply.length">
+                      <ng-template ngFor let-child [ngForOf]="comment.reply">
+                        <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{comment: child}">
                         </ng-template>
                       </ng-template>
                     </ng-container>
                   </nz-comment>
                 </ng-template>
 
-                <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{ comment: data1 }"> </ng-template>
-
-                <nz-list *ngIf="data.length" [nzDataSource]="data" [nzRenderItem]="item" [nzItemLayout]="'horizontal'">
-                  <ng-template #item let-item>
-                    <nz-comment [nzAuthor]="item.author" [nzDatetime]="item.displayTime">
-                      <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="item.avatar"></nz-avatar>
-                      <nz-comment-content>
-                        <p>{{ item.content }}</p>
-                      </nz-comment-content>
-                    </nz-comment>
+                <ng-container *ngIf="comments.length > 0">
+                  <ng-template ngFor let-comment [ngForOf]="comments">
+                    <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{comment: comment}"></ng-template>
                   </ng-template>
-                </nz-list>
-                <nz-comment>
+                </ng-container>
+
+
+                <nz-pagination [nzHideOnSinglePage]="true" [(nzPageIndex)]="pageIndex" [nzTotal]="total" [nzPageSize]="pageSize" (nzPageIndexChange)="getComments()"></nz-pagination>
+                <nz-divider></nz-divider>
+                <nz-comment id="reply">
                   <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="user.avatar"></nz-avatar>
                   <nz-comment-content>
                     <nz-form-item>
-                      <textarea [(ngModel)]="inputValue" nz-input rows="4"></textarea>
+                      <textarea [(ngModel)]="commentValue" nz-input rows="4"></textarea>
                     </nz-form-item>
                     <nz-form-item>
-                      <button nz-button nzType="primary" [nzLoading]="submitting" [disabled]="!inputValue" (click)="handleSubmit()">
+                      <button nz-button nzType="primary" [nzLoading]="submitting" [disabled]="!commentValue" (click)="handleSubmit()">
                         发表评论
                       </button>
                     </nz-form-item>

@@ -4,22 +4,23 @@
         <nz-radio-group [(ngModel)]="type_topic" [nzButtonStyle]="'solid'">
             <label nz-radio-button nzValue="All" (click)="changeType_Topic('')">全部</label>
             <label nz-radio-button nzValue="Question" (click)="changeType_Topic('question')">问答</label>
-            <label nz-radio-button nzValue="Boutique" (click)="changeType_Topic('discussion')">话题</label>
+            <label nz-radio-button nzValue="Boutique" (click)="changeType_Topic('elite')">精华</label>
         </nz-radio-group>
-        <nz-dropdown style="margin: 5px;">
-            <a nz-dropdown> 排序 <i nz-icon type="down"></i> </a>
+        <button nz-button nz-dropdown [nzDropdownMenu]="order_menu" [nzPlacement]="'bottomLeft'" style="margin: 5px;" >排序</button>
+        <nz-dropdown-menu #order_menu="nzDropdownMenu">
             <ul nz-menu nzSelectable>
-                <li nz-menu-item (click)="changeOrder_Topic('New')">
+                <li nz-menu-item (click)="changeOrder_Topic('created')">
                     最新发帖
                 </li>
-                <li nz-menu-item (click)="changeOrder_Topic('LastResponse')">
+                <li nz-menu-item (click)="changeOrder_Topic('posted')">
                     最后回复
                 </li>
             </ul>
-        </nz-dropdown>
+        </nz-dropdown-menu>
+        
         <div style="position: relative;float: right;">
-            <nz-dropdown>
-                <button nz-button nz-dropdown><span>发话题/提问题</span> <i nz-icon type="down"></i></button>
+            <button nz-button nz-dropdown [nzDropdownMenu]="topic_menu" [nzPlacement]="'bottomLeft'" ><span>发话题/提问题</span></button>
+            <nz-dropdown-menu #topic_menu="nzDropdownMenu">
                 <ul nz-menu>
                     <li nz-menu-item>
                         <a (click)="write_topic()">发话题</a>
@@ -28,20 +29,24 @@
                         <a (click)="write_question()">提问题</a>
                     </li>
                 </ul>
-            </nz-dropdown>
+            </nz-dropdown-menu>
         </div>
     </div>
     <nz-divider style="margin-top:5px;"></nz-divider>
     <nz-list [nzDataSource]="topics" [nzRenderItem]="topicitem" [nzItemLayout]="'horizontal'">
         <ng-template #topicitem let-topicitem>
             <nz-list-item [nzActions]="[editAction, moreAction]">
-                <ng-template #editAction><a (click)="write_response(topicitem.id)">回复 {{topicitem.postNum}}</a></ng-template>
-                <ng-template #moreAction>浏览 {{topicitem.hitNum}}</ng-template>
+                <ng-template #editAction><a (click)="write_response(topicitem.id)">回复<!-- {{topicitem.postNum}}--></a></ng-template>
+                <!--<ng-template #moreAction>浏览 {{topicitem.hitNum}}</ng-template>-->
                 <nz-list-item-meta [nzTitle]="nzTitle"
                     nzAvatar="{{topicitem.largeAvatar}}"
-                    nzDescription="发起人 {{topicitem.userNickName}} 时间 {{topicitem.time}}">
+                    nzDescription="发起人 {{topicitem.createdUserName}} 时间 {{topicitem.createdTime* 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}">
                     <ng-template #nzTitle>
-                        <b> {{topicitem.title}}</b>
+                        <nz-tag *ngIf="topicitem.isStick=='1'" [nzColor]="'orange'">置顶</nz-tag>
+                        <nz-tag *ngIf="topicitem.isElite=='1'" [nzColor]="'red'">精华</nz-tag>
+                        <nz-tag *ngIf="topicitem.type=='question'" [nzColor]="'blue'">{{getTopicType(topicitem.type)}}</nz-tag>
+                        <nz-tag *ngIf="topicitem.type!='question'" [nzColor]="'#87d068'">{{getTopicType(topicitem.type)}}</nz-tag>
+                        <b>{{topicitem.title}}</b>
                         <!--  ({{topicitem.type}})   <a href="https://ng.ant.design">{{ topicitem.title }}</a>-->
                     </ng-template>
                 </nz-list-item-meta>
@@ -99,7 +104,7 @@
                     nzAvatar="{{reponseitem.smallAvatar}}"
                     [nzDescription]="nzDescription">
                     <ng-template #nzTitle>
-                        <b> {{reponseitem.nickName}}· {{reponseitem.createdTime}}</b>
+                        <b> {{reponseitem.nickName}}· {{reponseitem.createdTime* 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}</b>
                     </ng-template>
                     <ng-template #nzDescription>
                             <div [innerHTML]="reponseitem.content"></div>

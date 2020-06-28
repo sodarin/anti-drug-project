@@ -4,6 +4,7 @@ import {GroupmemberService} from "../../../../service/groupmember/groupmember.se
 import {ActivatedRoute} from '@angular/router';
 import {GrouplistService} from '../../../../service/grouplist/grouplist.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {GroupfirstService} from '../../../../service/groupfirst/groupfirst.service';
 
 @Component({
   selector: 'app-groupmember',
@@ -23,9 +24,11 @@ export class GroupmemberComponent implements OnInit {
   toId:string
   isfocus:boolean;
   threadCreatingForm: FormGroup;
+  conversationId: any;
 
   checkOption = [];
-  mapOfCheckedId: { [key: string]: boolean } = {};
+  memberMapOfCheckedId: { [key: string]: boolean } = {};
+  adminMapOfCheckedId: { [key: string]: boolean} = {};
   numberOfChecked = 0;
   isAllDisplayDataChecked = false;
   isIndeterminate = false;
@@ -40,6 +43,7 @@ export class GroupmemberComponent implements OnInit {
                private _notification: NzNotificationService,
                private _modal: NzModalService,
                private fb: FormBuilder,
+               private groupfirstService$: GroupfirstService
                ) {
     this.groupId = this.routeInfo.snapshot.params['id'];
   }
@@ -48,9 +52,7 @@ export class GroupmemberComponent implements OnInit {
     this.threadCreatingForm = this.fb.group({
       title: ['', Validators.required],
       content: ['', Validators.required],
-    })
-    this.getHeader();
-    this.getAdmin();
+    });
     this.getMember();
   }
 
@@ -69,51 +71,49 @@ export class GroupmemberComponent implements OnInit {
         `${error1.error}`)
     })
   }
-  //获取组长
-  getHeader(){
-    this.grouplistService$.getGroupMembers(this.groupId).subscribe(result=>{
-      this.Header=result.data;
-    },error1 => {
-      this._notification.create(
-        'error',
-        '小组组长获取失败',
-        `${error1.error}`)
-    })
-  }
-  //获取副组长
-  getAdmin(){
-    this.grouplistService$.getGroupMembers(this.groupId).subscribe(result=>{
-      this.admin=result.data;
-      this.admin = this.admin.filter(item => item.role == 'admin')
-    },error1 => {
-      this._notification.create(
-        'error',
-        '小组副组长获取失败',
-        `${error1.error}`)
-    })
-  }
+
+
 //获取组员
   getMember() {
     this.grouplistService$.getGroupMembers(this.groupId).subscribe(result => {
       this.member = result.data;
-      this.member = this.member.filter(item => item.role == 'member')
+      this.Header = this.member.filter(item => item.role=='owner');
+      this.admin = this.member.filter(item => item.role == 'viceOwner');
+      this.admin.forEach(item => this.adminMapOfCheckedId[item.userId] = false);
+      this.member = this.member.filter(item => item.role == 'member');
+      this.member.forEach(item => this.memberMapOfCheckedId[item.userId] = false);
     }, error1 => {
       this._notification.create(
         'error',
         '小组组员获取失败',
         `${error1.error}`)
-    })
+    });
+
   }
+
+  changeAdminChecked(label: any, value: any) {
+    this.adminMapOfCheckedId[label.nzValue] = value;
+  }
+
+  changeMemberChecked(label: any, value: any) {
+    this.memberMapOfCheckedId[label.nzValue] = value;
+  }
+
+
   //撤销副组长
   cancel(){
     let idList = [];
-    for (let mapOfCheckedIdKey in this.mapOfCheckedId) {
-      if (this.mapOfCheckedId[mapOfCheckedIdKey]) {
-        idList.push(mapOfCheckedIdKey)
+    for (let mapOfCheckedIdKey in this.adminMapOfCheckedId) {
+      if (this.adminMapOfCheckedId[mapOfCheckedIdKey]) {
+        idList.push(parseInt(mapOfCheckedIdKey))
       }
     }
-    this.groupmemberService$.cancelViceOwner(idList, this.userId).subscribe(result => {
-
+    this.groupmemberService$.cancelViceOwner(idList, this.groupId).subscribe(result => {
+      this._notification.success(
+        '成功撤销副组长',
+        ''
+      );
+      this.getMember()
     }, error1 => {
       this._notification.create(
         'error',
@@ -124,13 +124,17 @@ export class GroupmemberComponent implements OnInit {
   //踢出成员
   delete_member(){
     let idList = [];
-    for (let mapOfCheckedIdKey in this.mapOfCheckedId) {
-      if (this.mapOfCheckedId[mapOfCheckedIdKey]) {
-        idList.push(mapOfCheckedIdKey)
+    for (let mapOfCheckedIdKey in this.memberMapOfCheckedId) {
+      if (this.memberMapOfCheckedId[mapOfCheckedIdKey]) {
+        idList.push(parseInt(mapOfCheckedIdKey))
       }
     }
-    this.groupmemberService$.cancelMember(idList, this.userId).subscribe(result => {
-
+    this.groupmemberService$.cancelMember(idList, this.groupId).subscribe(result => {
+      this._notification.success(
+        '成功踢出成员',
+        ''
+      );
+      this.getMember()
     }, error1 => {
       this._notification.create(
         'error',
@@ -141,13 +145,18 @@ export class GroupmemberComponent implements OnInit {
   //设置副组长
   setting(){
     let idList = [];
-    for (let mapOfCheckedIdKey in this.mapOfCheckedId) {
-      if (this.mapOfCheckedId[mapOfCheckedIdKey]) {
-        idList.push(mapOfCheckedIdKey)
+    for (let mapOfCheckedIdKey in this.memberMapOfCheckedId) {
+      if (this.memberMapOfCheckedId[mapOfCheckedIdKey]) {
+        idList.push(parseInt(mapOfCheckedIdKey))
       }
     }
-    this.groupmemberService$.setlViceOwner(idList, this.userId).subscribe(result => {
-
+    console.log(idList)
+    this.groupmemberService$.setlViceOwner(idList, this.groupId).subscribe(result => {
+      this._notification.success(
+        '成功设置副组长',
+        ''
+      );
+      this.getMember()
     }, error1 => {
       this._notification.create(
         'error',
@@ -158,6 +167,9 @@ export class GroupmemberComponent implements OnInit {
 
   message(data: any, template: TemplateRef<{}>) {
     this.threadCreatingForm.controls.title.setValue(data.nickName);
+    this.groupfirstService$.getConversationId(data.id, this.userId).subscribe(result => {
+      this.conversationId = result.data
+    });
     const modal = this._modal.create({
       nzTitle: '发送私信',
       nzContent: template,
@@ -168,7 +180,7 @@ export class GroupmemberComponent implements OnInit {
           this.threadCreatingForm.controls[i].updateValueAndValidity()
         }
         if ( !this.threadCreatingForm.controls.content.errors) {
-          this.grouplistService$.sendMessage(this.threadCreatingForm.controls.content.value,this.userId,data.id).subscribe(result => {
+          this.grouplistService$.sendMessage(this.threadCreatingForm.controls.content.value,this.userId,data.id, this.conversationId).subscribe(result => {
             this._notification.create(
               'success',
               '发送成功',

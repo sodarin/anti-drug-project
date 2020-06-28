@@ -2,7 +2,7 @@
   <ng-template #item let-item>
     <nz-list-item [nzContent]="nzContent">
       <ng-template #nzContent>
-        <nz-card style="width: 180px;margin-top: 16px" [nzLoading]="loading" nzType="vertical">
+        <nz-card style="width: 180px;margin-top: 16px; cursor: pointer" (click)="navigateTo('/client/groupmainlist/' + item.id)" [nzLoading]="loading" nzType="vertical">
           <nz-card-meta
             [nzAvatar]="avatarTemplate"
             [nzTitle] = "item.groupTitle"

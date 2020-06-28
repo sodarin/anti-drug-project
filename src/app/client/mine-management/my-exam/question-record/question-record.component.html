@@ -11,7 +11,7 @@
     >
       <nz-skeleton [nzActive]="true" [nzLoading]="item.loading">
         <ng-template #editAction>
-          <button nz-button (click)="createMessage('success',item.id)">取消收藏</button>
+          <button nz-button (click)="createMessage('success',item.id, item.targetId)">取消收藏</button>
         </ng-template>
 
         <nz-list-item-meta
@@ -35,7 +35,11 @@
               <div nz-col nzSpan="22">
             <span  [innerHTML] ="detail.stem" ></span>
 
-                <div >选项:<span *ngFor="let meta of questionList; let i = index;" style="margin-right: 5px;" [innerHTML] ="meta"></span></div>
+                <div class="choiceView">
+                  <div *ngFor="let meta of questionList; let j = index" class="questionChoice">
+                    <span>{{characterList[j]}}</span>、<span style="display: inline-block" [innerHTML]="meta"></span>
+                  </div>
+                </div>
 
                 <nz-divider></nz-divider>
                 <div >正确答案是:<span *ngFor="let answer of answerList" style="margin-right: 5px;">{{getAnswer(answer)}}</span></div>

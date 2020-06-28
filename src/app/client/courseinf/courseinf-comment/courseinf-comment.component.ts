@@ -7,25 +7,13 @@ import { CourseInfService } from 'src/app/service/courseinf-frontend/courseinf-f
   selector: 'app-courseinf-comment',
   templateUrl: './courseinf-comment.component.html',
   styleUrls: ['./courseinf-comment.component.less'],
-  inputs: ["courseid"],
+  inputs: ["comments","courseid","teachplanId"],
 })
 export class CourseinfCommentComponent implements OnInit {
   courseid = "0";
+  teachplanId = "0";
   //评价
-  comments = [
-    {
-      id: "0",
-      author: 'Han Solo',
-      avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-      content:
-        'We supply a series of design principles, practical patterns and high quality design resources' +
-        '(Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-      datetime: '2019.1.1',
-      score: 2,
-      childClassReview: [],
-      userSmallAvatar:""
-    }
-  ];
+  comments = [];
 
   currentCommentResponse = [
     {
@@ -71,16 +59,7 @@ export class CourseinfCommentComponent implements OnInit {
   constructor(private modalService: NzModalService, private courseinfservice: CourseInfService, private notification: NzNotificationService) { }
 
   ngOnInit() {
-    this.courseinfservice.getCoursesComments(this.courseid).subscribe((res: any) => {
-      this.setCoursesComments(res);
-    }, error => {
-      this.notification.create(
-        'error',
-        '错误！',
-        `${error}`,
-        { nzDuration: 100 }
-      )
-    });
+
   }
 
   setCoursesComments(res: any) {
@@ -123,13 +102,13 @@ export class CourseinfCommentComponent implements OnInit {
       this.notification.create(
         'error',
         '发生错误！',
-        `输入不能为空`);
+        `请填写表单全部内容`);
     }
     this.from_init();
   }
 
   return_comment() {
-    this.courseinfservice.getCoursesComments(this.courseid).subscribe((res: any) => {
+    this.courseinfservice.get_teaching_plan_reivew(this.courseid).subscribe((res: any) => {
       this.setCoursesComments(res);
     }, error => {
       this.notification.create(
@@ -171,7 +150,7 @@ export class CourseinfCommentComponent implements OnInit {
     //   }
     // }
 
-    this.courseinfservice.getCommentResponses(this.currentcommitid).subscribe((res: any) => {
+    this.courseinfservice.get_teaching_plan_reivew_response(this.currentcommitid).subscribe((res: any) => {
       this.setCommentResponse(res);
     }, error => {
       this.notification.create(
@@ -187,6 +166,7 @@ export class CourseinfCommentComponent implements OnInit {
   }
 
   setCommentResponse(res:any){
+    console.log(res)
     this.currentCommentResponse = res.data.data;
 
     for (var i = 0; i < this.currentCommentResponse.length; i++) {
@@ -205,7 +185,7 @@ export class CourseinfCommentComponent implements OnInit {
 
   comment_response_submit(parentid: string) {
     if (this.editorContent != "") {
-      this.courseinfservice.comment_submit(this.courseid, this.currentcommitid, this.editorContent, this.editorTitle, this.commentnumber, "1").subscribe((res: any) => {
+      this.courseinfservice.write_teaching_plan_review(this.courseid,this.teachplanId, this.currentcommitid, this.editorContent, "", 0, "1").subscribe((res: any) => {
         this.notification.create(
           'success',
           '提交成功！',
@@ -221,7 +201,7 @@ export class CourseinfCommentComponent implements OnInit {
       this.notification.create(
         'error',
         '发生错误！',
-        `输入不能为空`);
+        `请填写表单全部内容`);
     }
     this.from_init();
   }
@@ -229,7 +209,7 @@ export class CourseinfCommentComponent implements OnInit {
 
 
   onPageChange_comment(event?: any) {
-    this.courseinfservice.getCoursesComments(this.courseid).subscribe((res: any) => {
+    this.courseinfservice.get_teaching_plan_reivew(this.courseid).subscribe((res: any) => {
       this.setCoursesComments(res);
     }, error => {
       this.notification.create(
@@ -244,7 +224,7 @@ export class CourseinfCommentComponent implements OnInit {
 
   response_submit() {
     if (this.editorContent != "") {
-      this.courseinfservice.response_submit(this.courseid,this.currentcommitid ,this.editorContent,"1").subscribe((res: any) => {
+      this.courseinfservice.write_teaching_plan_review(this.courseid,this.teachplanId, "", this.editorContent, this.editorTitle, this.commentnumber, "1").subscribe((res: any) => {
         this.notification.create(
           'success',
           '提交成功！',
@@ -260,7 +240,7 @@ export class CourseinfCommentComponent implements OnInit {
       this.notification.create(
         'error',
         '发生错误！',
-        `输入不能为空`);
+        `请填写表单全部内容`);
     }
     this.from_init();
   }

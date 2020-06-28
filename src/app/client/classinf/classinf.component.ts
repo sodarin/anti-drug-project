@@ -28,6 +28,7 @@ export class ClassinfComponent implements OnInit {
     finished: 5,
     currented: 5,
   }
+  joinINf = null;
 
   //公告历史记录
   // noticeHistory = [{ id: '1', teachplan: "默认教学计划", content: "通知", startdate: "2019-3-3", enddate: "2019-3-5" },
@@ -57,6 +58,18 @@ export class ClassinfComponent implements OnInit {
     this.activateInfo.params.subscribe(
       (params: Params) => {
         this.classid = params["id"];
+        this.classinfservice.get_class_isJoin("1",this.classid).subscribe((res: any) => {
+          this.joinINf = res.data;
+          console.log(this.joinINf)
+        }, error => {
+          this.joinINf = null;
+          this.notification.create(
+            'error',
+            '错误！',
+            `${error}`,
+            { nzDuration: 100 }
+          )
+        });
         //console.log(this.classid)
       }, error => {
         this.notification.create(
@@ -185,7 +198,7 @@ export class ClassinfComponent implements OnInit {
   //       this.notification.create(
   //         'error',
   //         '发生错误！',
-  //         `输入不能为空`);
+  //         `请填写表单全部内容`);
   //     }
   //   } else {
   //     console.log('Button ok clicked!2');

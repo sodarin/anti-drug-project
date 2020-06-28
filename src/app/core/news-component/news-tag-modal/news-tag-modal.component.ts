@@ -37,6 +37,7 @@ export class NewsTagModalComponent implements OnInit {
     this.searchData();
     this.searchArtTag();
   }
+
  //获取标签
   searchData() {
     this.displayData = [];
@@ -54,6 +55,7 @@ export class NewsTagModalComponent implements OnInit {
     this.displayData1 = [];
     this.loading = true;
     this.newsService$.getArtTag(this.id).subscribe(result => {
+    console.log(result.data);
       this.loading = false;
       this.dataList1 = result.data.articleVojoList;
       this.displayData1 = this.dataList1;
@@ -74,7 +76,6 @@ export class NewsTagModalComponent implements OnInit {
     })
   }
   navigateByUrl(url: string) {
-    console.log('111');
     this.id = url.split('/')[url.split('/').length - 1];
     this.ngOnInit();
     this.router.navigateByUrl(url);

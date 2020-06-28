@@ -50,6 +50,7 @@ export class GroupInfoComponent implements OnInit {
   toId:string
   isfocus:boolean;
   myGroup:[];
+  conversationId: any;
 
 
 
@@ -65,6 +66,7 @@ export class GroupInfoComponent implements OnInit {
               private groupeditEditService$:GroupEditService,
               private _modal: NzModalService,
               private fb: FormBuilder,
+              private route: Router
  ) {
     this.groupId = this.routeInfo.snapshot.params['id'];
 
@@ -77,18 +79,24 @@ export class GroupInfoComponent implements OnInit {
 
 
     this.getNewMember();
-    this.getMemberMessage();
-    this.getList();
-    this.getHeader();
+    // this.getMemberMessage();
+    // this.getList();
     this.threadCreatingForm = this.fb.group({
       title: ['', Validators.required],
       content: ['', Validators.required],
     })
-    this.getMyGroup()
+    // this.getMyGroup()
+  }
+
+  navigateByUrl(url: string) {
+    this.router.navigateByUrl(url)
   }
 
   message(data: any, template: TemplateRef<{}>) {
     this.threadCreatingForm.controls.title.setValue(data.nickName);
+    this.groupfirstService$.getConversationId(data.id, this.userId).subscribe(result => {
+      this.conversationId = result.data
+    });
     const modal = this._modal.create({
       nzTitle: '发送私信',
       nzContent: template,
@@ -99,7 +107,7 @@ export class GroupInfoComponent implements OnInit {
           this.threadCreatingForm.controls[i].updateValueAndValidity()
         }
         if ( !this.threadCreatingForm.controls.content.errors) {
-          this.grouplistService$.sendMessage(this.threadCreatingForm.controls.content.value,this.userId,data.id).subscribe(result => {
+          this.grouplistService$.sendMessage(this.threadCreatingForm.controls.content.value,this.userId,data.id, this.conversationId).subscribe(result => {
             this._notification.create(
               'success',
               '发送成功',
@@ -179,10 +187,16 @@ export class GroupInfoComponent implements OnInit {
 
   // 搜索
   filterTopicTable(){
-    this.router.navigateByUrl(`client/groupmainlist/${this.groupId}/groupsearch`)
-    // this.grouplistService$.getSearch(this.leader).subscribe(result=>{
-    //
-    // })
+    this.grouplistService$.getSearch(this.leader, this.groupId).subscribe(result=>{
+      this.router.navigateByUrl(`client/groupmainlist/${this.groupId}/groupsearch?content=${this.leader}`)
+    }, error1 => {
+      this._notification.error(
+        '搜索失败',
+        `${error1.error}`
+      )
+    });
+
+
   }
 
   //获取小组介绍
@@ -198,16 +212,16 @@ export class GroupInfoComponent implements OnInit {
   }
 
 //获取热门小组
-  getList() {
-    this.groupnowService$.getHotList().subscribe(result => {
-      this.hotGroupList = result.data;
-    }, error1 => {
-      this._notification.create(
-        'error',
-        '热门小组获取失败',
-        `${error1.error}`)
-    })
-  }
+//   getList() {
+//     this.groupnowService$.getHotList().subscribe(result => {
+//       this.hotGroupList = result.data;
+//     }, error1 => {
+//       this._notification.create(
+//         'error',
+//         '热门小组获取失败',
+//         `${error1.error}`)
+//     })
+//   }
   //获取新进小组成员
   getNewMember(){
     this.grouplistService$.getNewMember(this.groupId,3).subscribe(result=>{
@@ -248,26 +262,26 @@ export class GroupInfoComponent implements OnInit {
     })
   }
   //获取我的小组组长
-getHeader(){
-    this.grouplistService$.getGroupMembers(this.groupId).subscribe(result=>{
-      this.Header=result.data;
-    },error1 => {
-      this._notification.create(
-        'error',
-        '小组组长获取失败',
-        `${error1.error}`)
-    })
-}
+// getHeader(){
+//     this.grouplistService$.getGroupMembers(this.groupId).subscribe(result=>{
+//       this.Header=result.data;
+//     },error1 => {
+//       this._notification.create(
+//         'error',
+//         '小组组长获取失败',
+//         `${error1.error}`)
+//     })
+// }
 //获取我的小组卡片
-  getMyGroup(){
-      this.grouplistService$.getMyGroup(this.userId,this.groupId).subscribe(result=>{
-        this.Header = result;
-
-      },error1 => {
-        this._notification.create(
-          'error',
-          '我的卡片获取失败',
-          `${error1.error}`)
-      })
-  }
+//   getMyGroup(){
+//       this.grouplistService$.getMyGroup(this.userId,this.groupId).subscribe(result=>{
+//         this.Header = result;
+//
+//       },error1 => {
+//         this._notification.create(
+//           'error',
+//           '我的卡片获取失败',
+//           `${error1.error}`)
+//       })
+//   }
 }

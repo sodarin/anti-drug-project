@@ -10,11 +10,7 @@
         <div class="title">完成人数</div>
       </div>
       <div class="box"><span class="number">0</span>
-        <div class="title">免费试看数量
-          <span nz-popover nzPopoverContent="观看免费任务和视频的总次数">
-            <i nz-icon nzType="question-circle" nzTheme="fill" class="help-icon"></i>
-          </span>
-        </div>
+        <div class="title">任务数</div>
       </div>
       <div class="box"><span class="number">0</span>
         <div class="title">笔记数</div>
@@ -24,30 +20,6 @@
       </div>
       <div class="box"><span class="number">0</span>
         <div class="title">话题数</div>
-      </div>
-    </div>
-    <div class="statictic-body">
-      <div class="statictic-header">学员趋势</div>
-      <div class="date-range-picker">
-        <nz-range-picker [(ngModel)]="dateRange" (ngModelChange)="onChange($event)" [nzPlaceHolder]="['Start', 'End']">
-        </nz-range-picker>
-        <button nz-button nzType="link" style="margin-left: 20px;">7天</button>
-        <button nz-button nzType="link">30天</button>
-      </div>
-      <div echarts [options]="trendOptions" class="statictic-chart">
-      </div>
-    </div>
-    <div class="statictic-body">
-      <div class="statictic-header">完课率<span nz-popover nzPopoverContent="学完整个教学计划的人数 ÷ 该教学计划的学员总数">
-          <i nz-icon nzType="question-circle" nzTheme="fill" class="help-icon"></i>
-        </span></div>
-      <div class="date-range-picker">
-        <nz-range-picker [(ngModel)]="dateRange" (ngModelChange)="onChange($event)" [nzPlaceHolder]="['Start', 'End']">
-        </nz-range-picker>
-        <button nz-button nzType="link" style="margin-left: 20px;">7天</button>
-        <button nz-button nzType="link">30天</button>
-      </div>
-      <div echarts [options]="finishedOptions" class="statictic-chart">
       </div>
     </div>
   </div>

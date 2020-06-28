@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {NzNotificationService} from 'ng-zorro-antd';
 import {MyteachingService} from '../../../../service/myteaching/myteaching.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-class-topic',
@@ -16,7 +17,8 @@ export class ClassTopicComponent implements OnInit {
 teacherId:string = '1';
   constructor(
     private _notification: NzNotificationService,
-    private MyteachingService$: MyteachingService
+    private MyteachingService$: MyteachingService,
+    private router: Router
   ) {
   }
 
@@ -42,5 +44,9 @@ teacherId:string = '1';
 
       })
 
+  }
+
+  navigate(url: string) {
+    this.router.navigateByUrl(url)
   }
 }

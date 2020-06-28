@@ -60,6 +60,9 @@ export class PaperResultDetailComponent implements OnInit {
   }
 
   search() {
+    this.singlequestions = [];
+    this.multiplequestions = [];
+    this.judgequestions = [];
     this.paperResultDetailService.getTestPaperDetail(this.testPaperId ,this.userId).subscribe( result => {
       for (let item of result.data.SingleList){
         item.metas=eval(item.metas);
@@ -110,6 +113,29 @@ export class PaperResultDetailComponent implements OnInit {
     var reg = new RegExp("%","g");
     str = str.replace(reg,"");
     return str;
+  }
+
+  collectQuestion(item: any) {
+    let question = {
+      questionid: item.questionId,
+      targetid: this.testPaperId,
+      userid: this.userId,
+      targettype: 'testpaper'
+    };
+    this.paperResultDetailService.collectQuestion(question).subscribe(result => {
+      this._notification.success('收藏成功！', '');
+      this.search()
+    }, error1 => {
+      this._notification.error('收藏失败！', error1.error)
+    })
+  }
+  cancelCollectQuestion(questionId: string) {
+    this.paperResultDetailService.cancelCollection(questionId).subscribe(result => {
+      this._notification.success('取消成功！', '');
+      this.search()
+    }, error1 => {
+      this._notification.error('取消失败！', error1.error)
+    })
   }
 }
 

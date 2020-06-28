@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {NzNotificationService} from 'ng-zorro-antd';
 import {MyteachingService} from '../../../service/myteaching/myteaching.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-student-qa',
@@ -15,7 +16,8 @@ dataList = [];
 teacherId:string ='1';
   constructor(
     private _notification: NzNotificationService,
-    private MyteachingService$:MyteachingService
+    private MyteachingService$:MyteachingService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -38,6 +40,10 @@ teacherId:string ='1';
         )
 
       })
+  }
+
+  navigate(url: string) {
+    this.router.navigateByUrl(url)
   }
 
 

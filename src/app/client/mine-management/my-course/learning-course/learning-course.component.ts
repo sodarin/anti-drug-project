@@ -66,4 +66,8 @@ export class LearningCourseComponent implements OnInit {
     return watchTime/learnTime;
   }
 
+  viewCourse(url: string) {
+    this.router.navigateByUrl(url)
+  }
+
 }

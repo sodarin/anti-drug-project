@@ -92,7 +92,7 @@ export class ClassinfStudentlistComponent implements OnInit {
       this.notification.create(
         'error',
         '发生错误！',
-        `输入不能为空`);
+        `请填写表单全部内容`);
     }
   }
 

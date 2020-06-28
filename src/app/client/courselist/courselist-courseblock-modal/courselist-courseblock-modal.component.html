@@ -1,7 +1,7 @@
-<div *ngIf="course.serializeMode=='finished'" class="coursestate">
+<div *ngIf="course.serializeMode=='finished'" class="coursestate" (click)="navigateByUrl('/client/courseinf/'+course.id)">
     <img alt="finish" src="../../../../assets/img/finish.png" height="70">
 </div>
-<div *ngIf="course.serializeMode!='finished'"  class="coursestate">
+<div *ngIf="course.serializeMode!='finished'"  class="coursestate" (click)="navigateByUrl('/client/courseinf/'+course.id)">
     <img alt="update" src="../../../../assets/img/updating.png" height="70">
 </div>
 <nz-card nzHoverable [nzCover]="coverTemplate" (click)="navigateByUrl('/client/courseinf/'+course.id)">

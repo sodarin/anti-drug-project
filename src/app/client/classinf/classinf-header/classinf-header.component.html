@@ -1,8 +1,8 @@
 <!--courseinf-mainheadpage-->
 <nz-layout>
-    <nz-layout *ngIf="isJoin==false">
+    <nz-layout *ngIf="joinINf==null||joinINf.join==false">
         <nz-sider [nzWidth]="500">
-            <img alt="headerimg" class="headerimg" [src]="currentclass.smallpicture" />
+            <img alt="headerimg" class="headerimg" src="{{currentclass.smallpicture}}" />
         </nz-sider>
         <nz-content class="headerback">
             <h1 class="classtitle">{{currentclass.title}}</h1>
@@ -22,26 +22,26 @@
             </p>
          <!--   <p style="height: 10px;margin-left:10px;margin-top: 20px;">班级有效期：{{currentclass.expiryString}}</p>-->
             <div class="headeritem">
-                <div>
+                <div style="margin-left:20px;">
                     <i nz-icon nzType="user" class="header_icon2" nzTheme="outline"></i>
-                    <p style="height: 10px;margin:0;margin-top: -30px;text-align: center;">
+                    <p style="height: 10px;margin:0px;margin-top: -30px;text-align: center;">
                         学员({{currentclass.studentnum}})</p>
                 </div>
                 <div style="margin-left:20px;">
                     <i nz-icon nzType="wallet" class="header_icon2" nzTheme="outline"></i>
-                    <p style="height: 10px;margin:0;margin-top: -30px;text-align: center;">
+                    <p style="height: 10px;margin:0px;margin-top: -30px;text-align: center;">
                         课程({{currentclass.coursenum}})</p>
                 </div>
-<!--                <div style="margin-left:20px;">-->
-<!--                    <i nz-icon nzType="share-alt" class="header_icon2 header_icon" nzTheme="outline" nz-popover-->
-<!--                        [nzContent]="sharecontent" nzTrigger="click"></i>-->
-<!--                    <ng-template #sharecontent>-->
-<!--                        <i nz-icon nzType="qq" style="margin-left: -3px;" class="header_icon" nzTheme="outline"></i>-->
-<!--                        <i nz-icon nzType="wechat" class="header_icon" nzTheme="outline"></i>-->
-<!--                        <i nz-icon nzType="weibo" class="header_icon" nzTheme="outline"></i>-->
-<!--                    </ng-template>-->
-<!--                    <p style="height: 10px;margin-left:5px;margin-top: -30px;text-align: center;">分享</p>-->
-<!--                </div>-->
+                <div style="margin-left:20px;">
+                    <i nz-icon nzType="share-alt" class="header_icon2 header_icon" nzTheme="outline" nz-popover
+                        [nzContent]="sharecontent" nzTrigger="click"></i>
+                    <ng-template #sharecontent>
+                        <i nz-icon nzType="qq" style="margin-left: -3px;" class="header_icon" nzTheme="outline"></i>
+                        <i nz-icon nzType="wechat" class="header_icon" nzTheme="outline"></i>
+                        <i nz-icon nzType="weibo" class="header_icon" nzTheme="outline"></i>
+                    </ng-template>
+                    <p style="height: 10px;margin:0px;margin-top: -30px;text-align: center;">分享</p>
+                </div>
             </div>
 
             <span>承诺服务：
@@ -61,9 +61,9 @@
             <button nz-button style="float: right;margin:15px;width: 150px;height: 40px;" nzType="primary" (click)="joinclass_submit()">加入学习</button>
         </nz-content>
     </nz-layout>
-    <nz-layout *ngIf="isJoin==true">
+    <nz-layout *ngIf="joinINf!=null&&joinINf.join==true">
         <nz-sider [nzWidth]="500">
-            <img alt="headerimg" class="headerimg" [src]="currentclass.smallpicture" />
+            <img alt="headerimg" class="headerimg" src="{{currentclass.smallpicture}}" />
         </nz-sider>
         <nz-content class="headerback">
             <h1 class="classtitle">{{currentclass.title}} (<b style="color: red;">已加入</b>)</h1>
@@ -85,24 +85,24 @@
             <div class="headeritem">
                 <div style="margin-left:20px;">
                     <i nz-icon nzType="user" class="header_icon2" nzTheme="outline"></i>
-                    <p style="height: 10px;margin:0;margin-top: -30px;text-align: center;">
+                    <p style="height: 10px;margin:0px;margin-top: -30px;text-align: center;">
                         学员({{currentclass.studentnum}})</p>
                 </div>
                 <div style="margin-left:20px;">
                     <i nz-icon nzType="wallet" class="header_icon2" nzTheme="outline"></i>
-                    <p style="height: 10px;margin:0;margin-top: -30px;text-align: center;">
+                    <p style="height: 10px;margin:0px;margin-top: -30px;text-align: center;">
                         课程({{currentclass.coursenum}})</p>
                 </div>
-<!--                <div style="margin-left:20px;">-->
-<!--                    <i nz-icon nzType="share-alt" class="header_icon2 header_icon" nzTheme="outline" nz-popover-->
-<!--                        [nzContent]="sharecontent" nzTrigger="click"></i>-->
-<!--                    <ng-template #sharecontent>-->
-<!--                        <i nz-icon nzType="qq" style="margin-left: -3px;" class="header_icon" nzTheme="outline"></i>-->
-<!--                        <i nz-icon nzType="wechat" class="header_icon" nzTheme="outline"></i>-->
-<!--                        <i nz-icon nzType="weibo" class="header_icon" nzTheme="outline"></i>-->
-<!--                    </ng-template>-->
-<!--                    <p style="height: 10px;margin-left:5px;margin-top: -30px;text-align: center;">分享</p>-->
-<!--                </div>-->
+                <div style="margin-left:20px;">
+                    <i nz-icon nzType="share-alt" class="header_icon2 header_icon" nzTheme="outline" nz-popover
+                        [nzContent]="sharecontent" nzTrigger="click"></i>
+                    <ng-template #sharecontent>
+                        <i nz-icon nzType="qq" style="margin-left: -3px;" class="header_icon" nzTheme="outline"></i>
+                        <i nz-icon nzType="wechat" class="header_icon" nzTheme="outline"></i>
+                        <i nz-icon nzType="weibo" class="header_icon" nzTheme="outline"></i>
+                    </ng-template>
+                    <p style="height: 10px;margin:0px;margin-top: -30px;text-align: center;">分享</p>
+                </div>
             </div>
 
             <span>承诺服务：
@@ -123,7 +123,7 @@
                 (click)="showExitCoursefirm()">退出学习</button>
 
 
-            <nz-modal [(nzVisible)]="CourseExitVisible" nzTitle="要退出学习吗" (nzOnCancel)="handleOk_ExitCourse()"
+            <nz-modal [(nzVisible)]="CourseExitVisible" nzTitle="要退出学习吗" (nzOnCancel)="handleCancel_ExitCourse()"
                 (nzOnOk)="handleOk_ExitCourse()" nzOkText='退出学习' nzCancelText='继续学习' nzOkType='danger' [nzMaskClosable] = "false">
                 <div>
                     <nz-select style="width: 300px;" nzShowSearch nzAllowClear nzPlaceHolder="--请选择退学原因--"

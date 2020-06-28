@@ -50,4 +50,8 @@ export class MyOwnGroupComponent implements OnInit {
 
       })
   }
+
+  navigateTo(url: string) {
+    this.router.navigateByUrl(url)
+  }
 }

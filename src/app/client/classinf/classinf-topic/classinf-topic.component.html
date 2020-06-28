@@ -7,8 +7,8 @@
                 (click)="changeType_Topic('Question')">问答</label>-->
             <label nz-radio-button nzValue="Boutique" (click)="changeType_Topic('Boutique')">精品</label>
         </nz-radio-group>
-        <nz-dropdown style="margin: 5px;">
-            <a nz-dropdown> 排序 <i nz-icon type="down"></i> </a>
+        <button nz-button nz-dropdown [nzDropdownMenu]="order_menu" [nzPlacement]="'bottomLeft'" >排序</button>
+        <nz-dropdown-menu #order_menu="nzDropdownMenu">
             <ul nz-menu nzSelectable>
                 <li nz-menu-item (click)="changeOrder_Topic('createdTime')">
                     最新发帖
@@ -17,10 +17,10 @@
                     最后回复
                 </li>
             </ul>
-        </nz-dropdown>
+        </nz-dropdown-menu>
         <div style="position: relative;float: right;">
-            <nz-dropdown>
-                <button nz-button nz-dropdown><span>发话题/提问题</span> <i nz-icon type="down"></i></button>
+            <button nz-button nz-dropdown [nzDropdownMenu]="topic_menu" [nzPlacement]="'bottomLeft'" ><span>发话题/提问题</span></button>
+            <nz-dropdown-menu #topic_menu="nzDropdownMenu">
                 <ul nz-menu>
                     <li nz-menu-item>
                         <a (click)="write_topic()">发话题</a>
@@ -29,17 +29,17 @@
                         <a (click)="write_question()">提问题</a>
                     </li>
                 </ul>
-            </nz-dropdown>
+            </nz-dropdown-menu>
         </div>
     </div>
     <nz-divider style="margin-top:5px;"></nz-divider>
     <nz-list [nzDataSource]="topics" [nzRenderItem]="topicitem" [nzItemLayout]="'horizontal'">
         <ng-template #topicitem let-topicitem>
             <nz-list-item [nzActions]="[editAction, moreAction]">
-                <ng-template #editAction><a (click)="write_response(topicitem.threadId)">回复 {{topicitem.postNum}}</a></ng-template>
-                <ng-template #moreAction>浏览 {{topicitem.hitNum}}</ng-template>
+                <ng-template #editAction><a (click)="write_response(topicitem.threadId)">回复 <!--{{topicitem.postNum}}--></a></ng-template>
+                <!--<ng-template #moreAction>浏览 {{topicitem.hitNum}}</ng-template>-->
                 <nz-list-item-meta [nzTitle]="nzTitle" nzAvatar="{{topicitem.largeAvatar}}"
-                    nzDescription="{{topicitem.userNickName}} 发起了问题（话题）时间 {{topicitem.createdTime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}">
+                    nzDescription="{{topicitem.userNickName}} 发起了问题（话题）时间 {{topicitem.createdTime* 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}">
                     <ng-template #nzTitle>
                         <!--({{topicitem.type}})--><b> {{topicitem.title}}</b>
                         <!-- <a href="https://ng.ant.design">{{ topicitem.title }}</a>-->
@@ -51,7 +51,7 @@
     <nz-divider></nz-divider>
     <div class="pagination">
         <nz-pagination [(nzPageIndex)]="currenttopicpage" [nzTotal]="total_course_top_page"
-            (nzPageIndexChange)="onPageChange($event)"></nz-pagination>
+            (nzPageIndexChange)="onPageChange_topic($event)"></nz-pagination>
     </div>
 </ng-template>
 <ng-template #topicquestion>

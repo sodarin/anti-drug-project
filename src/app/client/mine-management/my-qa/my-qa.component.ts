@@ -17,7 +17,8 @@ export class MyQAComponent implements OnInit {
 
   constructor(
     private _notification: NzNotificationService,
-    private MyteachingService$: MyteachingService
+    private MyteachingService$: MyteachingService,
+    private router: Router
   ) {
   }
 
@@ -42,5 +43,9 @@ export class MyQAComponent implements OnInit {
         )
 
       })
+  }
+
+  navigate(url: string) {
+    this.router.navigateByUrl(url)
   }
 }

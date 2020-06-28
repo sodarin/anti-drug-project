@@ -23,7 +23,6 @@ export class MyGroupJoinComponent implements OnInit {
     private MyteachingService$: MyteachingService,
     private router: Router,
     private message: NzMessageService,
-
     private modalService: NzModalService
   ) { }
 
@@ -49,5 +48,9 @@ export class MyGroupJoinComponent implements OnInit {
         )
 
       })
+  }
+
+  navigateTo(url: string) {
+    this.router.navigateByUrl(url)
   }
 }

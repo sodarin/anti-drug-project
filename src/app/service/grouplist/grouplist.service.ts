@@ -62,11 +62,23 @@ export class GrouplistService {
   }
 
   //发送私信
-  sendMessage(content: string, userId: string, toId: string): Observable<any> {
+  sendMessage(content: string, userId: string, toId: string, messageIdList: any): Observable<any> {
+    console.log(messageIdList)
+    let messageConversationId = 0;
+    let messageId = 0;
+    let messageRelationId = 0;
+    if(messageIdList !== []) {
+      messageConversationId = messageIdList.messageConversationId;
+      messageId = messageIdList.messageId;
+      messageRelationId = messageIdList.messageRelationId
+    }
     return this._http.put(`/user/sendMessage`, {
       fromId: userId,
       content: content,
-      toId: toId
+      toId: toId,
+      messageConversationId: messageConversationId,
+      messageId: messageId,
+      messageRelationId: messageRelationId
     })
   }
   //是否已经关注

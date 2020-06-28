@@ -9,7 +9,7 @@ import { Component, OnInit,EventEmitter } from '@angular/core';
 export class ClassificationListComponent implements OnInit {
 
   label:string = "";
-  list = [];
+  list:any=[];
   selectkey:boolean[]=[];
   layer:number = -1;
   TagClick: EventEmitter<string[]>;

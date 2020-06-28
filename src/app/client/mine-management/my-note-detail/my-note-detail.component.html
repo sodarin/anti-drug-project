@@ -4,13 +4,13 @@
   </div>
   <nz-divider></nz-divider>
   <div class="page-content ">
-    <nz-list  [nzDataSource]="noteDetailList" [nzRenderItem]="item" [nzItemLayout]="'horizontal'" [nzLoading]="loading">
+    <nz-list  [nzDataSource]="noteInfoList" [nzRenderItem]="item" [nzItemLayout]="'horizontal'" [nzLoading]="loading">
       <ng-template #item let-item>
         <nz-list-item >
-          <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="nzDesrc" >
+          <nz-list-item-meta [nzTitle]="nzTitle">
             <ng-template #nzTitle>
               <div style="display: flex; flex-direction: row; justify-content: space-between;font-size: medium ">
-              《{{ item.courseTitle }}》的笔记
+              《{{item.courseSetTitle}}-{{ item.courseTitle }}》的笔记
                 <div style="display:flex; margin-right: 2%">
               <button nz-button nzSize="samll" nzType="default" (click)="navigatTo('client/mine/mynote')">返回</button>
                 </div>
@@ -32,7 +32,7 @@
                     共{{panel.length}}字
                   </div>
                 </div>
-                <div [innerHTML]="panel.content"  style="cursor: pointer;" ></div>
+                <div [innerHTML]="panel.content"  style="cursor: pointer;"></div>
               </nz-collapse-panel>
             </nz-collapse>
 

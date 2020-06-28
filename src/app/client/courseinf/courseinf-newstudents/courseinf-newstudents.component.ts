@@ -6,33 +6,26 @@ import {Router} from '@angular/router';
   selector: 'app-courseinf-newstudents',
   templateUrl: './courseinf-newstudents.component.html',
   styleUrls: ['./courseinf-newstudents.component.less'],
-  inputs: ["courseid","studentdata"],
+  inputs: ["courseid","studentdata","teachplanId"],
 })
 export class CourseinfNewstudentsComponent implements OnInit {
   courseid = "0";
+  teachplanId = "0";
   studentdata: any;
   //私信
   privateletter_toid = "1";
   PrivatelettertVisible = false;
   PrivatelettertTitle: string="";
   PrivateletterContent: string="";
+
   constructor(private courseinfservice: CourseInfService,private notification: NzNotificationService,private route: Router) { }
 
   ngOnInit() {
-    this.courseinfservice.getstudents(this.courseid).subscribe((res: any) => {
-      this.setstudents(res);
-    }, error => {
-      this.notification.create(
-        'error',
-        '错误！',
-        `${error}`,
-        { nzDuration: 100 }
-      )
-    });
+
   }
 
   setstudents(res: any) {
-    this.studentdata = res.data;
+    this.studentdata = res.data.courseStudents;
 
     for(let i=0;i<this.studentdata.length;i++){
       if (this.studentdata[i].smallAvatar == "") {
@@ -95,7 +88,7 @@ export class CourseinfNewstudentsComponent implements OnInit {
       this.notification.create(
         'error',
         '发生错误！',
-        `输入不能为空`);
+        `请填写表单全部内容`);
     }
   }
 
@@ -115,7 +108,7 @@ export class CourseinfNewstudentsComponent implements OnInit {
       '提交成功！',
       `提交成功`)
 
-      this.courseinfservice.getstudents(this.courseid).subscribe((res: any) => {
+      this.courseinfservice.get_teaching_plan_students(this.teachplanId).subscribe((res: any) => {
         this.setstudents(res);
       }, error => {
         this.notification.create(
@@ -144,7 +137,7 @@ del_follow_submit(toid:string) {
       '提交成功！',
       `提交成功`)
 
-      this.courseinfservice.getstudents(this.courseid).subscribe((res: any) => {
+      this.courseinfservice.get_teaching_plan_students(this.teachplanId).subscribe((res: any) => {
         this.setstudents(res);
       }, error => {
         this.notification.create(

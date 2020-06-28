@@ -71,8 +71,8 @@
               <span *ngIf="item.selfAnswer.toString()==item.rightAnswer.toString()">回答正确</span>
               <span *ngIf="item.selfAnswer.toString()!=item.rightAnswer.toString()">回答错误</span>
               <div style="float: right">
-                <a><span nz-icon nzType="heart" nzTheme="outline"></span>收藏</a>
-              </div>
+                <a *ngIf="item.favorite == '0'" (click)="collectQuestion(item)"><span nz-icon nzType="heart" nzTheme="outline"></span>收藏</a>
+                <a *ngIf="item.favorite == '1'" (click)="cancelCollectQuestion(item.questionId)"><span nz-icon nzType="heart" nzTheme="twotone"></span>取消收藏</a>              </div>
             </div>
           </div>
         </div>
@@ -105,8 +105,8 @@
               <span *ngIf="item.selfAnswer.toString()==item.rightAnswer.toString()">回答正确</span>
               <span *ngIf="item.selfAnswer.toString()!=item.rightAnswer.toString()">回答错误</span>
               <div style="float: right">
-                <a><span nz-icon nzType="heart" nzTheme="outline"></span>收藏</a>
-              </div>
+                <a *ngIf="item.favorite == '0'" (click)="collectQuestion(item)"><span nz-icon nzType="heart" nzTheme="outline"></span>收藏</a>
+                <a *ngIf="item.favorite == '1'" (click)="cancelCollectQuestion(item.questionId)"><span nz-icon nzType="heart" nzTheme="twotone"></span>取消收藏</a>              </div>
 
             </div>
 
@@ -142,7 +142,8 @@
               <span *ngIf="item.selfAnswer.toString()==item.rightAnswer.toString()">回答正确</span>
               <span *ngIf="item.selfAnswer.toString()!=item.rightAnswer.toString()">回答错误</span>
               <div style="float: right">
-                <a><span nz-icon nzType="heart" nzTheme="outline"></span>收藏</a>
+                <a *ngIf="item.favorite == '0'" (click)="collectQuestion(item)"><span nz-icon nzType="heart" nzTheme="outline"></span>收藏</a>
+                <a *ngIf="item.favorite == '1'" (click)="cancelCollectQuestion(item.questionId)"><span nz-icon nzType="heart" nzTheme="twotone"></span>取消收藏</a>
               </div>
 
             </div>
@@ -192,7 +193,8 @@
               <div>
                 <nz-anchor  [nzAffix]="false">
                   <span  *ngFor="let item of judgequestions;let i = index">
-                    <nz-link [ngStyle]="{'background-color':item.iscorrect? '#43bc60':'red'}" nzHref="#judgequestion{{i}}" nzTitle="{{i+1}}"></nz-link>
+                    <nz-link *ngIf="item.selfAnswer.length==0"  style="background-color: #cccccc" nzHref="#judgequestion{{i}}" nzTitle="{{i+1}}"></nz-link>
+                    <nz-link *ngIf="item.selfAnswer.length!=0" [ngStyle]="{'background-color':item.selfAnswer.toString()==item.rightAnswer.toString()? '#43bc60':'red'}" nzHref="#judgequestion{{i}}" nzTitle="{{i+1}}"></nz-link>
                   </span>
                 </nz-anchor>
               </div>

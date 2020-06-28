@@ -9,16 +9,16 @@
     <thead>
     <tr>
       <th>名称</th>
-      <th>班级课程</th>
+      <th>所属班级</th>
       <th>状态</th>
       <th>操作</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let data of recordListTable.data">
-      <td   class="question-title" (click)="navigatTo('client/course/'+ data.id )"
+      <td   class="question-title" (click)="navigatTo('client/course/'+ data.coursesetid )"
       >{{data.coursesettitle}}</td>
-      <td>{{data.studentnum}}</td>
+      <td>{{data.classroomTitle}}</td>
       <td>{{data.status == 'published'? '已发布': (data.status == 'closed'? '已关闭': '未发布')}}</td>
       <td >
         <i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
@@ -26,13 +26,13 @@
 
         <div class="user-management-operation">
           <div>
-            <span class="question-title"  (click)="navigatTo('client/course/'+ data.id + '/base')">管理</span>
+            <span class="question-title"  (click)="navigatTo('client/course/'+ data.coursesetid + '/base')">管理</span>
           </div>
           <div>
-            <span  class="question-title" (click)="navigatTo('/client/course/'+ data.id +'/teaching_plan')">计划管理</span>
+            <span  class="question-title" (click)="navigatTo('/client/course/'+ data.coursesetid +'/teaching_plan')">计划管理</span>
           </div>
           <div>
-            <span  class="question-title" (click)="navigatTo('/client/course/'+ data.id +'/file')">文件管理</span>
+            <span  class="question-title" (click)="navigatTo('/client/course/'+ data.coursesetid +'/file')">文件管理</span>
           </div>
         </div>
       </ng-template>

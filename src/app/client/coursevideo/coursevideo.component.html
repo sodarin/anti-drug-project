@@ -1,12 +1,12 @@
 <nz-content style="padding-top: 15px" nzType="flex" nzJustify="center" nz-row>
   <div nz-col nzSpan="16">
     <nz-breadcrumb style="margin-bottom: 20px;">
-      <label style="margin-right: 10px;padding-top: 8px;" class="labelClick"
-        [routerLink]="['/client/courseinf/', courseId]">
+      <a style="margin-right: 10px;padding-top: 8px;" class="labelClick"
+        (click)="navigateByUrl('/client/courseinf/'+courseId+'/teachplan/'+ teachplanId)">
         <i nz-icon nzType="left" style="margin-right: 5px;padding-top: 8px;"></i>返回课程
-      </label>
+      </a>
       <label style="border-left: 1px solid;border-color: darkgray; padding-left: 15px;color: darkgrey;">
-        {{ taskName }}
+        {{ title }}
       </label>
 
       <div style="float: right;">
@@ -18,12 +18,12 @@
           [nzBodyStyle]="{ 'padding': '0' ,height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
           nzWidth="16%">
           <ul style="padding: 0px;">
-            <li *ngFor="let task of taskList" [ngClass]="{'liSelected':taskName == task?.taskName}">
+            <li *ngFor="let task of taskList" [ngClass]="{'liSelected':title == task?.title}">
               <span nz-col nzSpan="4">
                 <i nz-icon nzType="book" nzTheme="outline"></i>
               </span>
               <span nz-col nzSpan="20">
-                {{ task?.taskName }}
+                {{ task?.title }}
               </span>
             </li>
           </ul>
@@ -140,8 +140,12 @@
 
       </div>
     </nz-breadcrumb>
-    <div class="video-content">
+    <div *ngIf="false" class="video-content">
       <app-video-player (outer)="setVideoLearingStatus($event)"></app-video-player>
+    </div>
+
+    <div *ngIf="true" class="text-content">
+      <h1>some information</h1>
     </div>
 
     <div *ngIf="videoLearingStatus=='doing'||videoLearingStatus=='start'; then thenBlock else elseBlock">

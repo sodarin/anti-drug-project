@@ -77,5 +77,22 @@ export class NewsService {
     return this._http.get(`/info/infoback/isArticleLike?articleId=${articleId}&userId=${userId}`)
   }
 
+  getCommentListByArticleId(pageIndex: number, pageSize: number, articleId: string): Observable<any> {
+    return this._http.get(`/comment/articleComments?objId=${articleId}&pageNum=${pageIndex}&pageSize=${pageSize}`)
+  }
+
+  insertComment(comment: any, objecttype: string): Observable<any> {
+    return this._http.post(`/comment/insertComment`, {
+      content: comment.content,
+      objectid: comment.objectid,
+      userid: comment.userId,
+      objecttype: objecttype
+    })
+  }
+
+  deleteComment(id: string): Observable<any> {
+    return this._http.delete(`/comment/deleteComment?id=${id}`)
+  }
+
 }
 

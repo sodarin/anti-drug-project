@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { CourseService } from 'src/app/service/courselist-frontend/courselist-frontend.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { NzNotificationService } from 'ng-zorro-antd';
+import { ClassInfService } from 'src/app/service/classinf-frontend/classinf-frontend.service';
 
 @Component({
   selector: 'app-dashboard-list-student',
@@ -46,9 +50,33 @@ export class DashboardListStudentComponent implements OnInit {
     },
 
   ];
-  constructor() { }
+  constructor(private courseservice: CourseService, private router: Router,
+    private route: ActivatedRoute, private _notification: NzNotificationService,
+    private classinfservice: ClassInfService) { }
 
   ngOnInit() {
+    // this.classinfservice.getclassstdDynamic("")
+    //   .subscribe((res: any) => {
+    //     this.renderResulsts(res);
+    //   }, error => {
+    //     this._notification.create(
+    //       'error',
+    //       '发生错误！',
+    //       `${error.error}`)
+    //   });
   }
+
+  renderResulsts(res: any): void {
+    this.studentList = null;
+    if (res) {
+      this.studentList = res.data.data;
+      this.studentList.splice(8, 8);
+    }
+  }
+
+  navigateByUrl(url: string) {
+    this.router.navigateByUrl(url);
+  }
+
 
 }

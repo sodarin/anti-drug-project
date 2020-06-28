@@ -10,9 +10,9 @@
 
         <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="nzDes">
           <ng-template #nzTitle>
-            <div class="change">{{ item.threadTitle }}
-              <nz-tag style="margin-left: 15px"  *ngIf="item.isElite=='1'" [nzColor]="'red'"> 精华</nz-tag>
-              <nz-tag style="margin-left: 15px"  *ngIf="item.isStick=='1'"[nzColor]="'blue'"> 置顶</nz-tag>
+            <div class="change" (click)="navigate('/client/groupmainlist/' + item.groupId + '/groupthread/' + item.threadId)">{{ item.threadTitle }}
+              <nz-tag style="margin-left: 15px"  *ngIf="item.isElite=='1'" [nzColor]="'red'">精华</nz-tag>
+              <nz-tag style="margin-left: 15px"  *ngIf="item.isStick=='1'" [nzColor]="'blue'">置顶</nz-tag>
             </div>
           </ng-template>
           <ng-template #nzDes>
@@ -55,7 +55,7 @@
                   <a style="color: gray">{{detail?.signature}}</a>
                 </ng-template>
               </nz-avatar>
-          <span class="change">{{item.userName}}</span>发起了话题 · {{getDate(item.createdTime) }} · <span class="change">{{item.groupName}}</span> · 最后回复<span class="change">{{item.lastPostUserName}}</span>{{getDate(item.updatedTime)}}</div>
+          <span class="change">{{item.userName}}</span>发起了话题·{{getDate(item.createdTime) }}·<span class="change" (click)="navigate('/client/groupmainlist/' + item.groupId)">{{item.groupName}}</span>·最后回复·{{getDate(item.updatedTime)}}</div>
 
 
         </ng-template>

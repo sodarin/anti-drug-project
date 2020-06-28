@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 import { ManagementDashboardComponent } from 'src/app/class-management/management-dashboard/management-dashboard.component';
 import { TeacherManagementService } from "src/app/service/teacher-management/teacher-management.service";
 import { FollowManagementService } from "src/app/service/follow-management/follow-management.service";
-import {NzMessageService} from 'ng-zorro-antd';
+import { NzMessageService, NzNotificationService } from 'ng-zorro-antd';
 @Component({
   selector: 'app-teacher',
   templateUrl: './teacher.component.html',
@@ -13,22 +13,23 @@ export class TeacherComponent implements OnInit {
   displayData: any[] = [];
   loading: boolean;
   total: number;
-  pageIndex: number=1;
-  pageSize:number=8;
+  pageIndex: number = 1;
+  pageSize: number = 8;
 
 
   constructor(
     private router: Router,
     private teacherManagementService: TeacherManagementService,
-    private followmanagementService:FollowManagementService,
+    private followmanagementService: FollowManagementService,
     private message: NzMessageService,
+    private notification: NzNotificationService,
   ) {
   }
 
 
   ngOnInit() {
-      this.searchData();
-      
+    this.searchData();
+
   }
 
   show1(i) {
@@ -48,43 +49,94 @@ export class TeacherComponent implements OnInit {
       this.displayData = result.data.teachers;
       this.displayData.forEach(item => {
         item.isshow = true;
+        //验证是否已关注
+        this.followmanagementService.isFollowed('1', item.id).subscribe(res => {
+          item.isfollowed=res.data;
+        });
       })
     }, error1 => {
       this.loading = false;
-      this.message.create('error',`${error1.error}`);
+      this.message.create('error', `${error1.error}`);
     })
-    
+
   }
-  
-  changePageIndex(pageindex ) {
+
+  changePageIndex(pageindex) {
     this.pageIndex = pageindex;
     this.searchData();
   }
-  
+
 
   navigateByUrl(url: string) {
     this.router.navigateByUrl(url);
   }
 
-  follow(id:string){
-      this.followmanagementService.followUser('1',id).subscribe(res=>{
-          this.message.create('success',"关注成功！");
-      },error1=>{
-          this.message.create('error',"关注失败！");          
+  关注
+  follow_submit(item_id: any) {
+    if (item_id != "1") {
+      this.followmanagementService.followUser("1", item_id).subscribe((res: any) => {
+        this.notification.create(
+          'success',
+          '提交成功！',
+          `提交成功`)
+          this.followmanagementService.isFollowed('1', item_id).subscribe(res => {
+            this.displayData.forEach(item => {
+              if(item.id == item_id){
+                item.isfollowed = res.data;
+              }
+            });
+          }, error => {
+          this.notification.create(
+            'error',
+            '发生错误！',
+            `${error.error}`)
+        });
+      }, error => {
+        this.notification.create(
+          'error',
+          '发生错误！',
+          `${error.error}`)
       });
-      
-  }
-  isFollowed(id:string){
-      return this.followmanagementService.isFollowed('1',id).subscribe(res=>res.data);
-  }
-
-  defollow(id:string){
-    this.followmanagementService.defollow('1',id).subscribe(res=>{
-      this.message.create('success',"已取消关注！");
-  }
-  ,error1=>{
-      this.message.create('error',error1.error);          
-  });
+    } else {
+      this.notification.create(
+        'error',
+        '发生错误！',
+        `不能自己关注自己`)
+    }
   }
 
+  //取消关注
+  del_follow_submit(item_id: any) {
+    this.followmanagementService.defollow("1", item_id).subscribe((res: any) => {
+      this.notification.create(
+        'success',
+        '提交成功！',
+        `提交成功`)
+
+        this.followmanagementService.isFollowed('1', item_id).subscribe(res => {
+          this.displayData.forEach(item => {
+            if(item.id == item_id){
+              item.isfollowed = res.data;
+            }
+          });
+        }, error => {
+        this.notification.create(
+          'error',
+          '发生错误！',
+          `${error.error}`)
+      });
+    }, error => {
+      this.notification.create(
+        'error',
+        '发生错误！',
+        `${error.error}`)
+    });
+  }
+
+  isFollowed(id: string) {
+    this.followmanagementService.isFollowed('1', id).subscribe(res => {
+      console.log(res.data);
+      return res.data
+    });
+  }
 }

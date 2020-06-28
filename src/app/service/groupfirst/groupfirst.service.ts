@@ -19,4 +19,8 @@ export class GroupfirstService {
     })
 
   }
+
+  getConversationId(toId: string, fromId: string): Observable<any> {
+    return this._http.get(`/user/getConversationId?fromId=${fromId}&toId=${toId}`)
+  }
 }

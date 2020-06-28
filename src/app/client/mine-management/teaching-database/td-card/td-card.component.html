@@ -1,13 +1,13 @@
 <div *ngIf="isbatcheditable==true" class="cardstate">
     <nz-switch [(ngModel)]="isselected" [nzCheckedChildren]="checkedTemplate"
         [nzUnCheckedChildren]="unCheckedTemplate" (ngModelChange)="Batchselecte()"></nz-switch>
-    <ng-template #checkedTemplate><i nz-icon type="check"></i></ng-template>
-    <ng-template #unCheckedTemplate><i nz-icon type="close"></i></ng-template>
+    <ng-template #checkedTemplate><i nz-icon nzType="check" nzTheme="outline"></i></ng-template>
+    <ng-template #unCheckedTemplate><i nz-icon nzType="close" nzTheme="outline"></i></ng-template>
 </div>
 
-<nz-card style="width:200px;" nzHoverable [nzCover]="coverTemplate"
+<nz-card style="width:230px;" nzHoverable [nzCover]="coverTemplate"
     [nzActions]="[actionSetting, actionEdit, actionEllipsis]">
-    <nz-card-meta nzTitle="{{data.name}}" nzDescription="时间:{{data.date}}">
+    <nz-card-meta nzTitle="{{data.filename}}" nzDescription="时间:{{data.createdTime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}">
     </nz-card-meta>
 </nz-card>
 <ng-template #coverTemplate>
@@ -17,21 +17,24 @@
     <div (click)="showpreviewfirm()"><i nz-icon nzType="eye" nzTheme="outline"></i><span>预览</span></div>
 </ng-template>
 <ng-template #actionEdit>
-    <div (click)="collectMessage()"><i nz-icon nzType="heart" nzTheme="outline"></i><span>收藏</span></div>
+    <div *ngIf="data.isCollected==0" (click)="collectMaterial()"><i nz-icon nzType="heart" nzTheme="outline"></i><span>收藏</span></div>
+    <div *ngIf="data.isCollected==1" (click)="UncollectMaterial()"><i nz-icon nzType="heart" nzTheme="fill"></i><span>取消收藏</span></div>
 </ng-template>
 <ng-template #actionEllipsis>
     <div>
-        <i nz-icon nzType="setting" nzTheme="outline"></i>
-        <nz-dropdown [nzPlacement]="'topCenter'">
+        <i nz-icon nzType="setting" nzTheme="outline"  nz-dropdown [nzDropdownMenu]="topic_menu"></i>
+        <nz-dropdown-menu #topic_menu="nzDropdownMenu">
             <span nz-dropdown>其他</span>
             <ul nz-menu nzSelectable>
-                <li nz-menu-item (click)="showeditfirm()"> <i nz-icon nzType="edit" nzTheme="outline"></i>编辑</li>
+                <li nz-menu-item *ngIf="userId==data.createdUserID" (click)="showeditfirm()"> <i nz-icon nzType="edit" nzTheme="outline"></i>编辑</li>
                 <li nz-menu-item (click)="downloadMessage()"><i nz-icon nzType="download" nzTheme="outline"></i>下载</li>
-                <li nz-menu-item (click)="showShareConfirm()"><i nz-icon nzType="share-alt" nzTheme="outline"></i>共享
+                <li nz-menu-item *ngIf="userId==data.createdUserID&&data.isPublic==0" (click)="setSharing(1)"><i nz-icon nzType="share-alt" nzTheme="outline"></i>共享
                 </li>
-                <li nz-menu-item (click)="showDeleteConfirm()"><i nz-icon nzType="delete" nzTheme="outline"></i>删除</li>
+                <li nz-menu-item *ngIf="userId==data.createdUserID&&data.isPublic==1" (click)="setSharing(0)"><i nz-icon nzType="share-alt" nzTheme="outline"></i>取消共享
+                </li>
+                <li nz-menu-item *ngIf="userId==data.createdUserID" (click)="DeleteMaterial()"><i nz-icon nzType="delete" nzTheme="outline"></i>删除</li>
             </ul>
-        </nz-dropdown>
+        </nz-dropdown-menu>
     </div>
 
 </ng-template>
@@ -52,7 +55,7 @@
         <b>标签:</b>
         <nz-select [nzMaxTagCount]="3" [nzMaxTagPlaceholder]="tagPlaceHolder" style="width: 100%" nzMode="multiple"
             nzPlaceHolder="请添加标签" [(ngModel)]="edit_tags">
-            <nz-option *ngFor="let option of total_tags" [nzLabel]="option" [nzValue]="option">
+            <nz-option *ngFor="let option of total_tags" [nzLabel]="option.name" [nzValue]="option.id">
             </nz-option>
         </nz-select>
         <ng-template #tagPlaceHolder let-selectedList> and {{ selectedList.length }} more selected </ng-template>
@@ -62,7 +65,7 @@
     </div>
     <div style="margin-top:10px;">
         <b>共享:</b>
-        <nz-radio-group [(ngModel)]="edit_share">
+        <nz-radio-group [(ngModel)]="isshare">
             <label nz-radio nzValue="Share">共享到公共资料（其他老师可以查看、预览、引用该资料）</label>
             <label nz-radio nzValue="NotShare">仅自己可见</label>
         </nz-radio-group>

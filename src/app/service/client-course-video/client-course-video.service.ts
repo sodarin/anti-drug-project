@@ -9,10 +9,8 @@ export class ClientCourseVideoService {
 
   constructor(private http: HttpClient) { }
   // 获得任务列表
-  getTaskList(courseID: string): Observable<any> {
-    const api = '/course/plan/task';
-    const httpParams = new HttpParams().set('courseID', courseID);
-    return this.http.get(api, {params: httpParams});
+  getTaskList(id: string): Observable<any> {
+    return this.http.get(`/course/getTaskList?courseId=${id}`)
   }
   // 向服务器发送笔记
   postNote(userId: string, courseSetId: string, courseId: string, taskId: string, content: string): Observable<any> {

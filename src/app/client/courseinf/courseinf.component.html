@@ -3,7 +3,7 @@
         <nz-layout>
             <nz-header class="nz-header_inner">
                 <!--courseinf-mainheadpage-->
-                <app-courseinf-header [courseid]="courseid" [user]="user" (joinCourse)="updataload()" (exitCourse)="updataload()"></app-courseinf-header>
+                <app-courseinf-header [joinINf] = "joinINf" [courseid]="courseid" [user]="user"  [teachplanId]="teachplanId" (joinCourse)="updataload()" (exitCourse)="updataload()" (changePlan)="changeteachplan($event)"></app-courseinf-header>
             </nz-header>
             <nz-layout>
                 <nz-content>
@@ -22,27 +22,25 @@
                                 nzType="primary" (click)="showNoticeconfirm()">添加公告</button>-->
                             <nz-tabset>
                                 <nz-tab nzTitle="介绍">
-                                    <app-courseinf-introduce [courseid]="courseid"></app-courseinf-introduce>
+                                    <app-courseinf-introduce [introduces] = "introduces"></app-courseinf-introduce>
                                 </nz-tab>
                                 <nz-tab nzTitle="目录">
-                                    <app-courseinf-courses [courseid]="courseid"></app-courseinf-courses>
-                                    <nz-divider></nz-divider>
+                                    <app-courseinf-courses [courses] = "courses"  [courseid]="courseid" [teachplanId]="teachplanId"></app-courseinf-courses>
                                 </nz-tab>
-                                <nz-tab *ngIf="isJoin==true" nzTitle="话题">                           
-                                        <app-courseinf-topic [courseid]="courseid">
+                                <nz-tab *ngIf="joinINf!=null&&joinINf?.join==true" nzTitle="话题">                           
+                                        <app-courseinf-topic [topics]="topics" [courseid]="courseid" [teachplanId]="teachplanId">
                                         </app-courseinf-topic>                       
                                 </nz-tab>
                                 <nz-tab nzTitle="笔记">
-                                    <app-courseinf-notes [courseid]="courseid"></app-courseinf-notes>
+                                    <app-courseinf-notes [notes] = "notes" [courseid]="courseid" [teachplanId]="teachplanId"></app-courseinf-notes>
                                 </nz-tab>
-                                <nz-tab *ngIf="isJoin==true" nzTitle="资料区">
-                                    <app-courseinf-material [courseid]="courseid"></app-courseinf-material>
+                                <nz-tab *ngIf="joinINf!=null&&joinINf?.join==true" nzTitle="资料区">
+                                    <app-courseinf-material [courseid]="courseid" [teachplanId]="teachplanId" [materials]="materials"></app-courseinf-material>
                                 </nz-tab>
                                 <nz-tab nzTitle="评价">
-                                    <app-courseinf-comment [courseid]="courseid"></app-courseinf-comment>   
+                                    <app-courseinf-comment [courseid]="courseid" [teachplanId]="teachplanId" [comments]="comments"></app-courseinf-comment>   
                                 </nz-tab>
                             </nz-tabset>
-
                         </nz-content>
                         <!--courseinf-courseList-->
                 <!--        <nz-content class="nz-content_inner">
@@ -53,7 +51,7 @@
                 </nz-content>
                 <nz-sider [nzWidth]="280">
                     <nz-layout>
-                        <app-courseinf-teacherlist-modal [courseid]="courseid" ></app-courseinf-teacherlist-modal>
+                        <app-courseinf-teacherlist-modal [teachers]="teachers" [courseid]="courseid" [teachplanId]="teachplanId"></app-courseinf-teacherlist-modal>
                         <!--courseinf-coursefeatures-->
                         <!--
                         <nz-content class="nz-content_inner">
@@ -62,9 +60,7 @@
                         </nz-content>
                         -->
                         <!--courseinf-studentlist-->
-                        <nz-content class="nz-content_inner">
-                            <app-courseinf-newstudents [courseid]="courseid" [studentdata]="studentdata"></app-courseinf-newstudents>
-                        </nz-content>
+                        <app-courseinf-newstudents [studentdata]="studentdata" [courseid]="courseid" [teachplanId]="teachplanId"></app-courseinf-newstudents>
                         <app-courseinf-studentdynamics-modal [class_or_course_id]="courseid" [type]="'course'">
                         </app-courseinf-studentdynamics-modal>
                     </nz-layout>

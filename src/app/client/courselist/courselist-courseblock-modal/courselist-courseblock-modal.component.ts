@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Course } from 'src/app/Test/course.module';
 import {
   Router,
 } from '@angular/router';

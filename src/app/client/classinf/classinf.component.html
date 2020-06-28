@@ -2,8 +2,10 @@
     <nz-content class="container-content">
         <nz-layout>
             <nz-header class="nz-header_inner">
-                <app-classinf-header [user]="user" [classid]="classid"></app-classinf-header>
+                <app-classinf-header [joinINf]="joinINf" [user]="user" [classid]="classid"></app-classinf-header>
+
             </nz-header>
+            <nz-divider nzType="vertical"></nz-divider>
             <nz-layout>
                 <nz-content>
                     <nz-layout>
@@ -48,14 +50,10 @@
                         <nz-content *ngIf="user.isJoin==true" class="nz-content_inner2">
                             <app-signin></app-signin>
                         </nz-content>
-                        <nz-content class="nz-content_inner">
-                            <app-classinf-headmaster [classid]="classid"></app-classinf-headmaster>
-                        </nz-content>
+                        <app-classinf-headmaster [classid]="classid"></app-classinf-headmaster>
                         <!--courseinf-studentlist-->
-                        <nz-content class="nz-content_inner">
-                            <app-classinf-studentlist [classid]="classid"></app-classinf-studentlist>
-                        </nz-content>
-                        <app-courseinf-studentdynamics-modal [class_or_course_id]="classid" [type]="'class'">
+                        <app-classinf-studentlist [classid]="classid"></app-classinf-studentlist>
+                        <app-courseinf-studentdynamics-modal [class_or_course_id]="classid" [type]="class">
                         </app-courseinf-studentdynamics-modal>
                     </nz-layout>
                 </nz-sider>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable, Subject} from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +14,11 @@ export class CourseManagementBackHalfService {
   ) { }
 
   // 教学计划设置
+  //获得计划任务
+  getPlanTaskNew(id: string): Observable<any> {
+    return this._http.get(`/course/getTaskList?courseId=${id}`)
+  }
+
   getTeachingPlan(id: string): Observable<any> {
     return this._http.get(`/teachingPlan/getTeachingPlanList?courseSetId=${id}`)
   }
@@ -126,5 +131,29 @@ export class CourseManagementBackHalfService {
       summary: summary,
       title: title
     })
+  }
+
+  //添加任务
+  addPlanTask_Text(userId: string, courseID: string, teachingplanId: string, title: string, content: string,
+    isOptional: boolean, finishDetail: string, seq: number): Observable<any> {
+    var isop = 0;
+    if (isOptional) {
+      isop = 1;
+    }
+    return this._http.post(`/course/createTask_Text`, {
+      content: content,
+      createdUserId: userId,
+      finishDetail: finishDetail,
+      fromCourseId: teachingplanId,
+      fromCourseSetId: courseID,
+      isOptional: isop,
+      remark: "",
+      seq: seq,
+      title: title,
+    })
+  }
+  //排序任务
+  sortPlanTask(courseId:string,taskIdArray:any): Observable<any> {
+    return this._http.put(`/course/sort?courseId=${courseId}&sortList=${taskIdArray}`, {})
   }
 }

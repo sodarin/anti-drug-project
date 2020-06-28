@@ -1,0 +1,36 @@
+<nz-layout>
+    <nz-header>
+      <div class="header">
+        <img class="header-image" [src]="imgUrl">
+        <div class="header-info">
+          <div>{{title}}<nz-tag [nzColor]="'#87d068'">{{status === 'published'? '已发布': '未发布'}}</nz-tag>
+            <div></div>教师:<span *ngFor="let name of teachersName" style="margin-right: 5px;">{{name}}</span>
+          </div>
+          <h1>{{teachplanInf?.title}}</h1>
+        </div>
+      </div>
+    </nz-header>
+    <nz-content>
+      <div class="content">
+        <div class="left-content">
+          <ul nz-menu nzMode="inline" class="sider-menu">
+            <!-- <li nz-menu-item (click)="navigateByUrl('/client/course/'+courseId+'/teaching_plan_page/'+teachplanId+'/overview')">计划概览</li> -->
+            <li nz-menu-item (click)="navigateByUrl('/client/course/'+courseId+'/teaching_plan_page/'+teachplanId+'/tasks')">计划任务</li>
+            <li nz-menu-item (click)="navigateByUrl('/client/course/' +courseId + '/teaching_plan_page/'+teachplanId+'/plansetting')" [nzSelected]="location?.pathname.endsWith('plansetting')">计划设置</li>
+            <li nz-menu-divider></li>
+            <li nz-menu-item (click)="navigateByUrl('/client/course/' +courseId + '/teaching_plan_page/'+teachplanId+'/teachersetting')" [nzSelected]="location?.pathname.endsWith('teachersetting')">教师设置</li>
+            <li nz-menu-item (click)="navigateByUrl('/client/course/' +courseId + '/teaching_plan_page/'+teachplanId+'/studentsetting')" [nzSelected]="location?.pathname.endsWith('studentsetting')">学员设置</li>
+          <li nz-menu-divider></li>
+          <li nz-menu-item (click)="navigateByUrl('/client/course/' +courseId + '/teaching_plan_page/'+teachplanId+ '/papers')" [nzSelected]="location?.pathname.endsWith('papers')">试卷批阅</li>
+          <li nz-menu-item (click)="navigateByUrl('/client/course/' +courseId + '/teaching_plan_page/'+teachplanId+ '/homeworks')" [nzSelected]="location?.pathname.endsWith('homeworks')">作业批阅</li>
+          <li nz-menu-divider></li>
+          <li nz-menu-item (click)="navigateByUrl('/client/course/' +courseId + '/teaching_plan')" [nzSelected]="location?.pathname.endsWith('teaching_plan')">返回教学计划管理</li>
+          </ul>
+        </div>
+        <div class="right-content">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </nz-content>
+  </nz-layout>
+  

@@ -11,8 +11,9 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 })
 export class CoursevideoComponent implements OnInit {
   courseId: string;
+  teachplanId: string;
   taskId: string;
-  taskName: string='';
+  title: string='';
   catalog_visible = false;
   note_visible = false;
   question_visible = false;
@@ -22,17 +23,23 @@ export class CoursevideoComponent implements OnInit {
   questionForm: FormGroup;
   videoLearingStatus:string;
   constructor(private router: Router, private formBuilder: FormBuilder,
-              private courseVideoService: ClientCourseVideoService, private message: NzMessageService) { }
+              private courseVideoService: ClientCourseVideoService, private message: NzMessageService,
+              private route: Router) { }
 
   ngOnInit() {
     this.courseId = location.pathname.split('/')[3];
-    this.taskId = location.pathname.split('/')[5];
+    this.teachplanId = location.pathname.split('/')[5];
+    this.taskId = location.pathname.split('/')[7];
 
-    this.courseVideoService.getTaskList(this.courseId.toString()).subscribe(result => {
-      this.taskList = result;
+    this.courseVideoService.getTaskList(this.teachplanId.toString()).subscribe(result => {
+     // this.taskList = result;
+
+      this.taskList = result.data[Object.keys(result.data)[0]];
      // this.taskName="";
-      let index=Number(this.taskId)-1;
-      this.taskName = this.taskList[index].taskName;  // taskId不是数组下标！！
+      // let index=Number(this.taskId)-1;
+      // this.title = this.taskList[index].title;  // taskId不是数组下标！！
+
+      //获取任务信息！！！！！！！！
     });
     this.noteForm = this.formBuilder.group({
         noteContent: ['', Validators.required]
@@ -94,5 +101,9 @@ export class CoursevideoComponent implements OnInit {
 
   closeQuestion(): void {
     this.question_visible = false;
+  }
+
+  navigateByUrl(url: string) {
+    this.route.navigateByUrl(url)
   }
 }

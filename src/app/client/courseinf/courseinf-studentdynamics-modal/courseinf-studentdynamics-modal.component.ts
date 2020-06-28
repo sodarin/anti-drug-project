@@ -7,12 +7,11 @@ import { ClassInfService } from 'src/app/service/classinf-frontend/classinf-fron
   selector: 'app-courseinf-studentdynamics-modal',
   templateUrl: './courseinf-studentdynamics-modal.component.html',
   styleUrls: ['./courseinf-studentdynamics-modal.component.less'],
-  inputs: ["class_or_course_id","type"],
+  inputs: ["class_or_course_id","type","teacherplanid"],
 })
 export class CourseinfStudentdynamicsModalComponent implements OnInit {
   class_or_course_id ="0";
   type = "course";
-  loading: boolean = false;
   data = [
     {
       id:'1',
@@ -31,6 +30,7 @@ export class CourseinfStudentdynamicsModalComponent implements OnInit {
       datetime: '2019.1.2',
     }
   ];
+
   constructor(private courseinfservice: CourseInfService, private route: Router,
     private classinfservice: ClassInfService, private notification: NzNotificationService) { }
 

@@ -92,4 +92,8 @@ export class TopicComponent implements OnInit {
         `${error1.error}`)
     })
   }
+
+  navigate(url: string) {
+    this.router.navigateByUrl(url)
+  }
 }

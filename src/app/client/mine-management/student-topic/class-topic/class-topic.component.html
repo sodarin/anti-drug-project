@@ -8,7 +8,7 @@
               <span class="question-title">{{ item.title }}</span>
             </ng-template>
             <ng-template #nzDesrc>
-              <div>来自 <span style="cursor: pointer; color: #108ee9">{{ item.classTitle}}</span>·浏览量{{item.hitNum}}</div>
+              <div>来自 <span style="cursor: pointer; color: #108ee9" (click)="navigate('/client/classinf/' + item.classroomId)">{{ item.className}}</span>·浏览量{{item.hitNum}}</div>
             </ng-template>
           </nz-list-item-meta>
         </nz-list-item>

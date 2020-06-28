@@ -45,7 +45,7 @@ export class QuestionRecordComponent implements OnInit {
   ngOnInit(){
     this.searchData()
   }
-
+  characterList = ['A' , 'B' , 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
 
   searchData() {
     this.loading = true;
@@ -83,19 +83,8 @@ export class QuestionRecordComponent implements OnInit {
       })
   }
 
-  edit(questionId: number) {
-   this.MyteachingService$.deleteMyFavorite(questionId).subscribe( data => {
-      console.log("DELETE Request is successful ", data);
-    },
-    error => {
-      console.log("Error", error);
-    }
-   );
-
-
-  }
-  createMessage(type:string ,questionId: number): void {
-    this.MyteachingService$.deleteMyFavorite(questionId).subscribe( data => {
+  createMessage(type:string ,questionId: number, targetId: number): void {
+    this.MyteachingService$.deleteMyFavorite(questionId, targetId, this.userId).subscribe( data => {
         console.log("DELETE Request is successful ", data);
         this.message.create(type, `取消收藏成功`);
         this.ngOnInit()
