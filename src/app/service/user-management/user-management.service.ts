@@ -35,6 +35,10 @@ export class UserManagementService {
     return this._http.get(`/user/getUserDetail?userId=${userId}`);
   }
 
+  getPersonalDetailById(userId: string): Observable<any> {
+    return this._http.get(`/user/getPersonalDetail?userId=${userId}`);
+  }
+
   updateUserDetail(
     userId: string, trueName: string, gender: string, idcard: string, mobile: string, company: string, job: string, iam: string, signature: string, site: string,
     weibo: string, weixin: string, qq: string, about: string

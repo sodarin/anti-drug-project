@@ -22,6 +22,7 @@ export class NewsManagementService {
       status: filterOptions.searchState
     })
 
+
   }
 
   getNewsDetail(id: string): Observable<any> {
@@ -29,7 +30,7 @@ export class NewsManagementService {
   }
 
   updateNews(id: string, programa: string, body: string, featured: string, promoted: string, stick: string, title: string, tagIds: []): Observable<any> {
-    return this._http.post(`/info/infoback/updatearticle`, {
+    return this._http.put(`/info/infoback/updatearticle`, {
       id: id,
       body: body,
       categoryid: programa,
@@ -73,6 +74,28 @@ export class NewsManagementService {
       promoted: promoted
     })
   }
+
+  postNews(id: string): Observable<any> {
+    return this._http.put(`/info/infoback/updatearticle`, {
+      status: 'published',
+      id: id
+    })
+  }
+
+  recycleNews(id: string): Observable<any> {
+    return this._http.put(`/info/infoback/updatearticle`, {
+      status: 'trash',
+      id: id
+    })
+  }
+
+  cancelPostNews(id: string): Observable<any> {
+    return this._http.put(`/info/infoback/updatearticle`, {
+      id: id,
+      status: 'unpublished'
+    })
+  }
+
 
   deleteAritcles(list: any): Observable<any> {
     return this._http.delete(`/info/infoback/delarticles?idList=${list}`)

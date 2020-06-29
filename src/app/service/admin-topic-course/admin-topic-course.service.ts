@@ -44,15 +44,12 @@ export class AdminTopicCourseService {
     if (filterOption.keyWord == '' && filterOption.title == '' && filterOption.creator == '') {
       return this._http.get(`/classroom/background/getBackGroundThread?pageNum=${targetPage}&pageSize=${pageSize}`)
     } else {
-      return this._http.get(`/classroom/background/getBackGroundThread?pageNum=${targetPage}&pageSize=${pageSize}&authorName=${filterOption.creator}&searchParam=${filterOption.keyWord}&searchType=${filterOption.title}`)
+      return this._http.get(`/classroom/background/getBackGroundThread?pageNum=${targetPage}&pageSize=${pageSize}&nickName=${filterOption.creator}&searchParam=${filterOption.keyWord}&searchType=${filterOption.title}`)
     }
   }
 
-  deleteClassThread(id: string): Observable<any> {
-    return this._http.delete(`/classroom/background/delBackGroundThread?id=${id}`)
-  }
 
   deleteClassThreadInBatch(idList: any): Observable<any> {
-    return this._http.delete(`/classroom/background/delBackGroundThread?deleteList=${idList}`)
+    return this._http.delete(`/classroom/background/delBackGroundThread?threadId=${idList}`)
   }
 }

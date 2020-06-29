@@ -32,7 +32,7 @@ export class GrouphotComponent implements OnInit {
   focuson=3;
 
 
-  constructor( private http: HttpClient,) { }
+  constructor( private http: HttpClient) { }
 
   ngOnInit():void {
     this.getData((res: any) => {

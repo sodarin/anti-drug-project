@@ -12,31 +12,34 @@
       [nzLoading]="false"
     >
       <ng-template #item let-item>
-        <nz-list-item [nzContent]="item.testTime" [nzActions]="[starAction, likeAction, msgAction]" [nzExtra]="extra">
+        <nz-list-item [nzContent]="item?.createdTime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'" [nzActions]="[starAction, likeAction, msgAction]" [nzExtra]="extra">
           <ng-template #starAction><i nz-icon nzType="area-chart" nz-tooltip nzTooltipTitle="成绩分布" (click)="showScoreStatistics(item)"></i></ng-template>
-          <ng-template #likeAction><i nz-icon nzType="bars" nz-tooltip nzTooltipTitle="答题分布" (click)="navigateTo('client/testpaper/' + item.id + '/analysis')"></i></ng-template>
+          <ng-template #likeAction><i nz-icon nzType="bars" nz-tooltip nzTooltipTitle="答题分布" (click)="navigateTo('client/course/' + item?.courseId + '/analysis/' + item.taskId)"></i></ng-template>
           <ng-template #msgAction><i nz-icon nzType="check" nz-tooltip nzTooltipTitle="批阅"></i></ng-template>
-          <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="item.description">
+          <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="nzDescription">
             <ng-template #nzTitle>
-              <span>{{ item.title }}</span>
+              <span>{{ item?.number + ' ' + item?.title }}</span>
+            </ng-template>
+            <ng-template #nzDescription>
+              <span [innerHTML]="item?.description"></span>
             </ng-template>
           </nz-list-item-meta>
           <ng-template #extra>
             <div class="extra-action">
-              <div class="marked" (click)="navigateTo('client/classroom/' + classroomId + '/testpaper/' + item.id + '/resulttable?status=finished')">
+              <div class="marked" (click)="navigateTo('client/classroom/' + classroomId + '/testpaper/' + item?.testId + '/resulttable?status=finished')">
                 <span style="color: #67C23A">已批</span>
                 <nz-divider style="margin: 12px 0;"></nz-divider>
-                <span style="color: #67C23A; text-align: center">{{item.marked}}</span>
+                <span style="color: #67C23A; text-align: center">{{item.statisticsData.finished? item.statisticsData.finished: '0'}}</span>
               </div>
-              <div class="marking" (click)="navigateTo('client/classroom/' + classroomId + '/testpaper/' + item.id + '/resulttable?status=reviewing')">
+              <div class="marking" (click)="navigateTo('client/classroom/' + classroomId + '/testpaper/' + item?.testId + '/resulttable?status=reviewing')">
                 <span style="color: #ffa51f;">未批</span>
                 <nz-divider style="margin: 12px 0;"></nz-divider>
-                <span style="color: #ffa51f; text-align: center">{{item.marking}}</span>
+                <span style="color: #ffa51f; text-align: center">{{item.statisticsData.reviewing? item.statisticsData.reviewing: '0'}}</span>
               </div>
-              <div class="unhandle" (click)="navigateTo('client/classroom/' + classroomId + '/testpaper/' + item.id + '/resulttable?status=doing')">
+              <div class="unhandle" (click)="navigateTo('client/classroom/' + classroomId + '/testpaper/' + item?.testId + '/resulttable?status=doing')">
                 <span style="color: #ed3e3e;">未交</span>
                 <nz-divider style="margin: 12px 0;"></nz-divider>
-                <span style="color: #ed3e3e; text-align: center">{{item.unhandle}}</span>
+                <span style="color: #ed3e3e; text-align: center">{{item.statisticsData.doing? item.statisticsData.doing: '0'}}</span>
               </div>
             </div>
           </ng-template>

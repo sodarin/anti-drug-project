@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
+import {NzNotificationService} from 'ng-zorro-antd';
+import {MyteachingService} from '../../../service/myteaching/myteaching.service';
 
 @Component({
   selector: 'app-my-qa',
@@ -7,36 +9,43 @@ import {ActivatedRoute, Router} from "@angular/router";
   styleUrls: ['./my-qa.component.less']
 })
 export class MyQAComponent implements OnInit {
+  pageIndex: number;
+  questionList = [];
+  dataList = [];
+  loading = false;
+  userId :string ='1';
 
-  location: Location;
   constructor(
-    private routeInfo: ActivatedRoute,
+    private _notification: NzNotificationService,
+    private MyteachingService$: MyteachingService,
     private router: Router
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
-    this.location = location;
+    this.searchData()
   }
 
-  navigatTo(url: string) {
+  searchData(pageIndex: number = this.pageIndex) {
+    this.questionList = [];
+    this.loading = true;
+    this.MyteachingService$.getMyQAList(1, 10, this.userId).subscribe(result => {
+        this.loading = false;
+        this.dataList = result.data;
+        this.questionList = this.dataList;
+      },
+      error1 => {
+        this.loading = false;
+        this._notification.create(
+          'error',
+          '发生错误',
+          `${error1.error}`
+        )
+
+      })
+  }
+
+  navigate(url: string) {
     this.router.navigateByUrl(url)
   }
-
-
-  loading = false;
-  data = [
-    {
-      title: '创建的课程不可以删除吗',
-      descr:'来自默认教学计划 - 课程发布指南 · 2浏览',
-      num:'2',
-      source:'默认教学计划 - 课程发布指南 '
-    },
-    {
-      title: '学员可以在网校进行那些操作呢？',
-      descr:'来自默认教学计划 - 课程发布指南 · 5浏览',
-      num: '5',
-      source: '默认教学计划 - 课程发布指南 ',
-    },
-
-  ];
 }

@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NewsNewsblockModalComponent implements OnInit {
   displayData = [];
-  data=[];
+  data: any;
   constructor() { }
 
   ngOnInit() {

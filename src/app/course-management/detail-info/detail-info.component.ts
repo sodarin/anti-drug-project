@@ -45,8 +45,8 @@ export class DetailInfoComponent implements OnInit {
 
   getCourseInfo() {
     this._courseBaseInfoEditService.getCourseInfo(this.courseId).subscribe(res => {
-      this.goals = (res.data.baseData.goals != '') ? res.data.baseData.goals.split('|') : [];
-      this.audiences = (res.data.baseData.audiences != '') ? res.data.baseData.audiences.split('|') : [];
+      this.goals = (res.data.baseData.goals != '') ? res.data.baseData.goals.substr(1, res.data.baseData.goals.length - 2).split('|') : [];
+      this.audiences = (res.data.baseData.audiences != '') ? res.data.baseData.audiences.substr(1, res.data.baseData.audiences.length - 2).split('|') : [];
       this.validateForm.patchValue({
         summary: res.data.baseData.summary,
         goals: this.goals,
@@ -64,8 +64,8 @@ export class DetailInfoComponent implements OnInit {
     let detailInfo: any = {
       courseId: this.courseId,
       summary: this.validateForm.controls.summary.value,
-      goals: this.goals.join('|'),
-      audiences: this.audiences.join('|')
+      goals: "|" + this.goals.join('|') + "|",
+      audiences: "|" + this.audiences.join('|') + "|"
     }
     console.log(detailInfo);
 
@@ -91,10 +91,12 @@ export class DetailInfoComponent implements OnInit {
     if (key == 'goal') {
       if (this.goal == '') return;
       this.goals.push(this.goal);
+      this.goal = '';
     }
     else {
       if (this.audience == '') return;
       this.audiences.push(this.audience);
+      this.audience = '';
     }
   }
   removeItem(value: string, key: string) {

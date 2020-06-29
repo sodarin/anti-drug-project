@@ -1,0 +1,167 @@
+nz-layout{
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+nz-content{
+  margin: 20px auto;
+  flex: 1;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+}
+.content-left1{
+  width: 812px;
+  margin-right: 5px;
+  float: left;
+}
+.content-right1{
+  min-width: 270px;
+  height: 200px;
+  margin-left: 5px;
+  float: right;
+  //position:relative;
+  //overflow: hidden;
+}
+.box{
+  width:270px;
+  height:200px;
+  position:relative;
+  overflow: hidden;
+}
+.box .box-con{
+  width:120px;
+  height:120px;
+  position: absolute;
+  background: #108ee9;
+  top:-60px;
+  right:-60px;
+  transform: rotate(45deg);
+}
+.box .box-con span{
+  position: absolute;
+  bottom:0;
+  display: block;
+  width:120px;
+  margin-bottom: 6px;
+  text-align: center;
+  font-weight: bold;
+  color: white;
+}
+
+.content-right1 .row{
+  height: 30px;
+  text-indent: 3em;
+}
+
+.analysis{
+  border: 2px;
+  border-radius: 4px;
+  background: #43bc60;
+  padding: 2px 15px;
+  color: white;
+  font-size: 16px;
+}
+.card-left-top1{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.card-left1{
+  margin-bottom: 10px;
+}
+.questionTitle1{
+  font-size: large;
+}
+.questionInfo1{
+  font-size: 12px;
+  margin-left: 10px;
+}
+.question1{
+  margin-bottom: 50px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 2px solid #d6d6d6;
+}
+.questioncontent{
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  width: 100%;
+  height: 50px;
+
+}
+.questionNum1{
+  height: 45.6px;
+  width: 45px;
+  margin-right: 10px;
+  float: left;
+}
+.questionNum-top1{
+  font-size: 18px;
+  color: #108ee9;
+  width: 10px;
+  margin: 0 auto;
+}
+.questionNum-bot1{
+  background-color: #f6f6f6;
+  border-radius: 2px;
+  border:1px solid #cccccc;
+  text-align: center;
+}
+.question1 p{
+  font-size: 14px;
+  height: 25px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  width: 100%;
+}
+.result{
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  text-align: center;
+  left: 550px;
+  top: -23px;
+  margin-right: 35px;
+}
+.correct1{
+  color: #43bc60;
+  font-weight: bold;
+}
+.correct{
+  background-color: green;
+  color: #fff;
+  font-weight: bold;
+}
+.wrong{
+  background-color: red;
+  color: #fff;
+  font-weight: bold;
+}
+.choiceView1{
+  margin-left: 50px;
+  border-bottom: 2px dashed #f2f2f2;
+}
+.content-right1 .infor{
+  font-size: 12px;
+  color: #909399;
+}
+.content-right1 .data{
+  font-size: 18px;
+  font-weight: normal;
+}
+:host ::ng-deep .anticon{
+  width: 25px;
+}
+:host ::ng-deep svg{
+  margin-left: -40px;
+}
+.choiceView1 p:hover{
+  background-color: #909399;
+}
+.content-right1 .data i:hover{
+  cursor: pointer;
+}
+

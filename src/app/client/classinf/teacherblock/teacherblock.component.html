@@ -1,0 +1,39 @@
+<nz-card nzHoverable [nzCover]="coverTemplate">
+    <nz-card-meta [nzDescription]="titleTemplate">
+    </nz-card-meta>
+</nz-card>
+<ng-template #coverTemplate>
+    <div class="header">
+        <img class="round_icon" src="{{teacher.largeAvatar}}">
+        <p><b>{{teacher.nickName}}</b></p>
+        <p>{{teacher.positionaltitles}}</p>
+    </div>
+</ng-template>
+
+<ng-template #titleTemplate>
+    <div class="autograph">
+        <div *ngIf="teacher.about==none">
+            <p>暂无签名</p>
+        </div>
+        <div *ngIf="teacher.about!=''" [innerHTML]="teacher.about"></div>
+    </div>
+    <nz-divider style="margin-bottom: 5px;"></nz-divider>
+    <div style="padding: 0;margin:0;text-align: center;">
+        <button *ngIf="teacher.isfollowing==false" nz-button class="popovercard_button" nzType="primary"
+            (click)="follow_submit(teacher.id)">关注</button>
+        <button *ngIf="teacher.isfollowing==true" nz-button class="popovercard_button" nzType="primary"
+            (click)="del_follow_submit(teacher.id)">取消关注</button>
+
+        <button nz-button class="popovercard_button" nzType="default" (click)="showPrivateletterfirm(teacher.id)">私信</button>
+    </div>
+</ng-template>
+
+<nz-modal [(nzVisible)]="PrivatelettertVisible" nzTitle="发送私信" (nzOnCancel)="handleCancel_Privateletter()"
+    (nzOnOk)="handleOk_Privateletter()" nzOkText='发送' nzCancelText='取消'  [nzMaskClosable]="false">
+    <div>
+        <input nz-input placeholder="请输入标题" [(ngModel)]="PrivatelettertTitle" />
+    </div>
+    <div style="margin-top:10px;">
+        <textarea rows="4" nz-input [(ngModel)]="PrivateletterContent" placeholder="请输入内容"></textarea>
+    </div>
+</nz-modal>

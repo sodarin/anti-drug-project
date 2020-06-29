@@ -6,15 +6,8 @@
     [nzDataSource]="list"
     [nzItemLayout]="'horizontal'"
     [nzRenderItem]="item"
-    [nzPagination]="pagination"
     [nzLoading]="loading"
   >
-    <tr>
-      <th
-        [(nzChecked)]="isAllDisplayDataChecked"
-        (nzCheckedChange)="checkAll($event)"
-      ></th>
-    </tr>
 
     <ng-template #item let-item>
       <nz-list-item
@@ -76,9 +69,6 @@
           </nz-list-item-meta>
         </nz-skeleton>
       </nz-list-item>
-    </ng-template>
-    <ng-template #pagination>
-      <nz-pagination [nzPageIndex]="1" [nzTotal]="50" (nzPageIndexChange)="loadData($event)"></nz-pagination>
     </ng-template>
   </nz-list>
 

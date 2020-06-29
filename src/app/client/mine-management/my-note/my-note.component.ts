@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {NzNotificationService} from 'ng-zorro-antd';
+import {MyteachingService} from '../../../service/myteaching/myteaching.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-my-note',
@@ -6,27 +9,44 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./my-note.component.less']
 })
 export class MyNoteComponent implements OnInit {
+  pageIndex: number;
+  noteList = [];
+  dataList = [];
+  loading = false;
 
-  constructor() { }
+  userId:string='1';
+  location: Location;
+
+  constructor(
+    private _notification: NzNotificationService,
+    private MyteachingService$: MyteachingService,
+    private router: Router
+  ) {
+  }
 
   ngOnInit() {
+    this.searchData()
   }
-  loading = false;
-  data = [
-    {
-      title: '默认教学笔记',
-      descr:'共1篇笔记',
-      num:'2',
-      source:'默认教学计划 - 课程发布指南 ',
-      content:'最后更新于2019-05-01'
-    },
-    {
-      title: '这是一个笔记',
-      descr:'共1篇笔记',
-      num: '5',
-      source: '默认教学计划 - 课程发布指南 ',
-      content:"最后更新于2019-10-01"
-    },
 
-  ];
+  searchData(pageIndex: number = this.pageIndex) {
+    this.noteList = [];
+    this.loading = true;
+    this.MyteachingService$.getMyNoteList(1, 10, this.userId).subscribe(result => {
+        this.loading = false;
+        this.dataList = result.data;
+        this.noteList = this.dataList;
+      },
+      error1 => {
+        this.loading = false;
+        this._notification.create(
+          'error',
+          '发生错误',
+          `${error1.error}`
+        )
+
+      })
+  }
+  navigatTo(url: string) {
+    this.router.navigateByUrl(url)
+  }
 }

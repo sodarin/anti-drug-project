@@ -1,0 +1,45 @@
+<nz-avatar
+  nz-popover
+  nzIcon="user"
+  [nzSrc]="avatar"
+  [nzPopoverContent]="usercenter"
+  nzPopoverPlacement="bottomRight"
+></nz-avatar>
+
+<ng-template #usercenter>
+  <div class="user-center">
+    <nz-avatar
+      class="user-avatar pointer-perform"
+      nzIcon="user"
+      [nzSrc]="avatar"
+      [nzSize]="80"
+      (click)="navigateByUrl('/client/userpage/' + userId)"
+    >
+    </nz-avatar
+    >&nbsp;
+    <span slot="title" style="font-size: 24px;">{{ nickName }}</span>
+    <br />
+    <nz-divider></nz-divider>
+
+    <div
+      nz-row
+      class="center-operation pointer-perform"
+      nzType="flex"
+      nzJustify="center"
+    >
+      <div nz-col nzSpan="11">
+        <span (click)="navigateByUrl('/client/settings')"
+          ><i nz-icon [nzType]="'setting'"></i>个人设置</span
+        >
+      </div>
+      <div nz-col nzSpan="4">
+        <nz-divider nzType="vertical"></nz-divider>
+      </div>
+      <div nz-col nzSpan="9">
+        <span (click)="logout()"
+          ><i nz-icon [nzType]="'logout'"></i>退出登录</span
+        >
+      </div>
+    </div>
+  </div>
+</ng-template>

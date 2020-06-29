@@ -1,0 +1,27 @@
+<nz-list [nzDataSource]="courses" [nzRenderItem]="courseitem" [nzItemLayout]="'horizontal'" [nzLoading]="loading">
+    <ng-template #courseitem let-courseitem>
+        <nz-list-item>
+            <nz-list-item-meta [nzTitle]="nzTitle">
+                <ng-template #nzTitle>
+                    <div class="listitem courselink">
+                        <img width="200" alt="logo"
+                            src="{{courseitem.smallAvatar}}" />
+                        <div style="margin-left: 20px;">
+                            <p><a (click)="navigateByUrl('/client/courseinf/'+courseitem.courseId)"><span
+                                        style="font-size: 20px;">{{ courseitem.courseSetTitle }}</span></a>
+                            </p>
+                            <nz-rate [ngModel]="3" nzDisabled>
+                            </nz-rate>
+                        </div>
+                    </div>
+                </ng-template>
+            </nz-list-item-meta>
+        </nz-list-item>
+    </ng-template>
+</nz-list>
+<nz-divider></nz-divider>
+<div class="pagination">
+    <nz-pagination [(nzPageIndex)]="coursepage_number"
+        [nzTotal]="total_course_p_num" (nzPageIndexChange)="onPageChange_course($event)">
+    </nz-pagination>
+</div>

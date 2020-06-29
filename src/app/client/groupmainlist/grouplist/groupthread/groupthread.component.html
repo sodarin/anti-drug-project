@@ -1,0 +1,147 @@
+<div class="container">
+  <div class="all">
+    <div class="left">
+      <div class="first">
+
+          <div style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center;">
+            <h3>{{RecentThreadList?.threadTitle}}</h3>
+            <nz-tag style="font-size: 10px;margin-right: 4px" *ngIf="nzValueZD==0" [nzColor]="'#f50'">置顶</nz-tag>
+            <nz-tag style="font-size: 10px;margin-right: 4px" *ngIf="nzValueJ==0" [nzColor]="'#87d068'">精华</nz-tag>
+          </div>
+        <nz-divider></nz-divider>
+          <div style="display: flex; flex-direction: row; justify-content: space-between;height: 40px">
+            <nz-input-group style="display:flex; margin-left:2%;margin-right: 2%" [nzSuffix]="suffixTemplateInfo" [nzPrefix]="prefixTemplateUser">
+              <input type="text" nz-input placeholder="发表于{{RecentThreadList?.threadTime * 1000 | date: 'yyyy-MM-dd'}} {{RecentThreadList?.hitNum}}次查看" [(ngModel)]="value" [disabled]="true" />
+            </nz-input-group>
+            <ng-template #prefixTemplateUser></ng-template>
+            <ng-template #suffixTemplateInfo>
+<!--        <i nz-icon style="margin-right: 6px;font-size: 24px;cursor: pointer;" [nzType]="'share-alt'" nz-popover  [nzPopoverContent]="contentTemplate" nzPopoverTrigger="click"></i>-->
+              <ng-template #contentTemplate>
+<!--                <div>-->
+<!--                  <i nz-icon style="margin-right: 6px;font-size: 24px;" [nzType]="'wechat'"></i>-->
+<!--                  <i nz-icon style="margin-right: 6px;font-size: 24px;" [nzType]="'weibo'"></i>-->
+<!--                  <i nz-icon style="margin-right: 6px;font-size: 24px;" [nzType]="'qq'"></i>-->
+<!--                </div>-->
+              </ng-template></ng-template>
+            <br />
+            <br />
+          </div>
+
+          <div style="display:flex; margin-left:2%;margin-right: 2%" [innerHTML]="RecentThreadList?.threadContent">
+          </div>
+
+          <div style="display: flex; flex-direction: row; justify-content: flex-end">
+            <button style="margin-right: 10px;" nz-button nzType="default" (click)="oclick()">编辑</button>
+            <button *ngIf="nzValueJ==1"  style=";margin-right: 10px;" nz-button nzType="default" (click)="getNzValueJ0()">加精</button>
+            <button *ngIf="nzValueJ==0"  style="margin-right: 10px;" nz-button nzType="default" (click)="getNzValueJ1()">取消加精</button>
+            <button *ngIf="nzValueZD==1"  style="margin-right: 10px;" nz-button nzType="default" (click)="getNzValueZD0()">置顶</button>
+            <button *ngIf="nzValueZD==0" style="margin-right: 10px;" nz-button nzType="default" (click)="getNzValueZD1()">取消置顶</button>
+            <button  *ngIf="only==1" style="margin-right: 10px;" nz-button nzType="default" (click)="onlyMy()">只看楼主</button>
+            <button  *ngIf="only==0" style="margin-right: 10px;" nz-button nzType="default" (click)="all()">查看全部</button>
+            <button  *ngIf="downToUp==1" nz-button nzType="default" (click)="downtoUp()">倒序查看</button>
+            <button  *ngIf="downToUp==0" nz-button nzType="default" (click)="upToDown()">正序查看</button>
+
+          </div>
+      </div>
+      <div class="two">
+        <h3>{{"1"}}回复</h3>
+        <ng-template #commentTemplateRef let-comment="comment">
+          <nz-comment [nzAuthor]="comment.author">
+            <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="comment.avatar"></nz-avatar>
+            <nz-comment-content>
+              <p>{{ comment.content }}</p>
+            </nz-comment-content>
+            <nz-comment-action>Reply to</nz-comment-action>
+            <ng-container *ngIf="comment.children && comment.children.length">
+              <ng-template ngFor let-child [ngForOf]="comment.children">
+                <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{ comment: child }">
+                </ng-template>
+              </ng-template>
+            </ng-container>
+          </nz-comment>
+        </ng-template>
+
+        <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{ comment: data1 }"> </ng-template>
+
+      </div>
+
+        <div class="three">
+          <h3>发表回复</h3>
+          <nz-comment>
+            <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="user.avatar"></nz-avatar>
+            <nz-comment-content>
+              <nz-form-item>
+                <textarea [(ngModel)]="inputValue" nz-input rows="4"></textarea>
+              </nz-form-item>
+              <nz-form-item>
+                <button nz-button nzType="primary" [nzLoading]="submitting" [disabled]="!inputValue" (click)="handleSubmit()">
+                  回复
+                </button>
+              </nz-form-item>
+            </nz-comment-content>
+          </nz-comment>
+
+        </div>
+
+
+    </div>
+          <div class="right">
+            <div class="group-leader-card">
+              <h3>话题作者</h3>
+              <nz-divider></nz-divider>
+              <nz-card nzBordered="false">
+                <nz-card-meta
+                  [nzTitle]="title"
+                  [nzDescription]="description"
+                  [nzAvatar]="avatarTemplate"
+                  (mouseenter)="getUserDetail(owner?.userId)"
+                ></nz-card-meta>
+              </nz-card>
+              <ng-template #title>
+                <a>{{owner?.userNickName}}</a>
+              </ng-template>
+              <ng-template #description>
+                <a>{{owner?.userTitle}}</a>
+              </ng-template>
+              <ng-template #avatarTemplate>
+                <nz-avatar nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                           nz-popover
+                           [nzPopoverTitle]="tem"
+                           [nzPopoverContent]="content"
+
+                >
+                  <ng-template #tem>
+                    <nz-card style="width:300px;"  [nzActions]="[ actionEdit,actionShow]">
+                      <nz-card-meta
+                        [nzTitle]="nzTitle"
+                        [nzDescription]="nzDescription"
+                        [nzAvatar]="avatarTemplate"
+                      ></nz-card-meta>
+                    </nz-card>
+                    <ng-template #nzTitle>
+                      <span>{{detail?.trueName}}</span>
+                    </ng-template>
+                    <ng-template #nzDescription>
+                      <a>{{detail?.job}}</a>
+                    </ng-template>
+                    <ng-template #avatarTemplate>
+                      <nz-avatar nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
+                    </ng-template>
+                    <ng-template #actionEdit>
+                      <a>{{detail?.followedNum}}</a>
+                      <p>关注</p>
+                    </ng-template>
+                    <ng-template #actionShow>
+                      <a>{{detail?.fansNum}}</a>
+                      <p>粉丝</p>
+                    </ng-template>
+                  </ng-template>
+                  <ng-template #content>
+                    <a style="color: gray">{{detail?.signature}}</a>
+                  </ng-template>
+                </nz-avatar>
+              </ng-template>
+            </div>
+
+</div>
+</div>

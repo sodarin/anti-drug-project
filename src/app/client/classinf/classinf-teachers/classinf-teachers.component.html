@@ -1,0 +1,18 @@
+<nz-content>
+    <nz-list [nzDataSource]="teachersdata" [nzRenderItem]="teachersitem"
+        [nzGrid]="{ gutter: 24, xs: 24, sm: 24, md: 24, lg: 12, xl: 8}">
+        <ng-template #teachersitem let-teachersitem>
+            <nz-list-item [nzContent]="nzContent">
+                <ng-template #nzContent>
+                    <app-teacherblock [teacher]="teachersitem"></app-teacherblock>
+                </ng-template>
+            </nz-list-item>
+        </ng-template>
+    </nz-list>
+    <nz-divider></nz-divider>
+    <div class="pagination">
+        <nz-pagination [(nzPageIndex)]="current_teachers_page" [nzTotal]="total_teachers_pages"
+            (nzPageIndexChange)="onPageChange_teacher($event)">
+        </nz-pagination>
+    </div>
+</nz-content>

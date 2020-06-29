@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-student-management-tab',
@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./student-management-tab.component.less']
 })
 export class StudentManagementTabComponent implements OnInit {
+
+  @Input()
+  planId: string;
 
   constructor() { }
 

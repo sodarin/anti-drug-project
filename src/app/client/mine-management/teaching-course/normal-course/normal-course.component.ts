@@ -1,7 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-//import  {TeachingCourseService} from "../../../../service/teaching-course/teaching-course.service";
-import {NzMessageService, NzModalService} from "ng-zorro-antd";
+
+import  {MyteachingService} from "../../../../service/myteaching/myteaching.service";
+import {NzNotificationService} from 'ng-zorro-antd';
+import {Router} from '@angular/router';
+
+
+
 
 @Component({
   selector: 'app-normal-course',
@@ -16,56 +20,51 @@ export class NormalCourseComponent implements OnInit {
   total: number;
   loading: boolean = false;
   pageIndex: number = 1;
+  status:string;
 
+  teacherId: string = "1";
+  i: number =1;
   dataList = [];
   displayData = [];
   totalPage: number;
 
-  constructor(
-    private routerInfo: ActivatedRoute,
-    // private TeachingCourseService$: TeachingCourseService,
-    private _message: NzMessageService,
 
+  constructor(
+    private _notification: NzNotificationService,
+    private MyteachingService$:MyteachingService,
+    private router: Router
   ) { }
 
   ngOnInit() {
-    this.recordList = [
-      {
-        name: '课程发布指南',
-        number: 5,
-        state: '已发布',
-      },
-      {
-        name: '班级功能介绍',
-        number: 10,
-        state: '已发布',
-      },
-      {
-        name: '测试',
-        number: 0,
-        state: '未发布',
-      }
-
-    ]
+    this.searchData()
   }
 
   filterStudent() {
 
   }
-
   searchData(pageIndex: number = this.pageIndex) {
     this.recordList = [];
     this.loading = true;
-    // this.TeachingCourseService$.getNormalCourseList(pageIndex, 10).subscribe(result => {
-    //   this.loading = false;
-    //   this.total = result.data[0].totalNum ? result.data[0].totalNum : 0;
-    //   this.totalPage = Math.ceil(this.total / 10);
-    //   this.dataList = result.data;
-    //   this.recordList = this.dataList;
-    // }, error1 => this._message.error(error1.error));
+    this.MyteachingService$.getCourseList(pageIndex,8 , this.teacherId,"ordinary").subscribe(result=>{
+        this.loading = false;
+        this.dataList = result.data;
+        this.recordList = this.dataList;
+        this.total = this.recordList[0].totalNum
+      },
+      error1 => {
+        this.loading = false;
+        this._notification.create(
+          'error',
+          '发生错误',
+          `${error1.error}`
+        )
+
+      })
   }
 
-  management() {
 
+
+  navigatTo(url: string) {
+    this.router.navigateByUrl(url)
   }
 }

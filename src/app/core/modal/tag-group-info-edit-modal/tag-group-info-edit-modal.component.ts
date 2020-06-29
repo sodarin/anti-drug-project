@@ -21,9 +21,7 @@ export class TagGroupInfoEditModalComponent implements OnInit {
 
   ngOnInit() {
 
-    this.TagGroupManagementService$.getTagGroupDetailById(this.id).subscribe(result => {
-      this.name=result.name;
-    })
+
   }
 
   submit() {

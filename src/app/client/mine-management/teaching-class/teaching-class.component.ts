@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {NzModalService} from "ng-zorro-antd";
-import {ActivatedRoute} from "@angular/router";
+import {NzModalService, NzNotificationService} from 'ng-zorro-antd';
+import {ActivatedRoute, Router} from '@angular/router';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import {MyteachingService} from '../../../service/myteaching/myteaching.service';
 
 @Component({
   selector: 'app-teaching-class',
@@ -10,55 +11,65 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 })
 export class TeachingClassComponent implements OnInit {
 
-
-  courseList = [];
   classroomId: string;
+
+  classroomList = [];
+  title: string;
+
+  coursenum: string;
+  studentnum: number;
+  todayNewStudent: number;
+  threadnum: number;
+
+  total: number;
+  loading: boolean = false;
+  pageIndex: number = 1;
+
+  dataList = [];
+  totalPage: number;
 
   constructor(
     private _modal: NzModalService,
-    private routerInfo: ActivatedRoute
-  ) { }
+    private routerInfo: ActivatedRoute,
+    private _notification: NzNotificationService,
+    private MyteachingService$: MyteachingService,
+    private router: Router
+  ) {
+  }
 
   ngOnInit() {
-    this.courseList.push({
-        title: '虹桥中学（二年级一班）毒品预防教育',
-        descr: '共5课   1',
-        stuNum: '5',
-        topicNum: '3',
-        taskNum: '2',
-
-      },
-      {
-        title: '虹桥中学（二年级一班）毒品预防教育',
-        descr: '共5课   1',
-
-        stuNum: '5',
-        topicNum: '3',
-        taskNum: '2',
-      },
-      {
-        title: '虹桥中学（二年级一班）毒品预防教育',
-        descr: '共5课   1',
-
-        stuNum: '5',
-        topicNum: '3',
-        taskNum: '2',
-      },
-      {
-        title: '虹桥中学（二年级一班）毒品预防教育',
-        descr: '共5课   1',
-        stuNum: '5',
-        topicNum: '3',
-        taskNum: '2',
-      },
-    );
-    this.classroomId = this.routerInfo.snapshot.params['id']
+    this.searchData()
   }
 
-  drop(event: CdkDragDrop<any[]>) {
-    moveItemInArray(this.courseList, event.previousIndex, event.currentIndex);
+  searchData() {
+    this.loading = true;
+    this.classroomList = [];
+    this.MyteachingService$.getClassList(1, 10,"1" ).subscribe(result => {
+        this.loading = false;
+        this.dataList = result.data;
+        this.classroomList = this.dataList;
+      },
+      error1 => {
+        this.loading = false;
+        this._notification.create(
+          'error',
+          '发生错误',
+          `${error1.error}`
+        )
+
+      })
+  }
+  choiceColor(status:string){
+    if(status=="closed"){
+      return "red";
+          }
+    if(status=="published"){
+      return "green";
+    }
   }
 
-
-
+  navigatTo(url: string) {
+    this.router.navigateByUrl(url)
+  }
 }
+

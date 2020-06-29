@@ -1,0 +1,13 @@
+<nz-layout>
+    <nz-sider [nzWidth]="100">
+            <p></p>
+            <span>{{label}}</span>
+    </nz-sider>
+    <nz-content>
+            <ul nz-menu nzMode="horizontal">
+                    <li nz-menu-item *ngFor="let item of list;let ind = index" [nzSelected] = "selectkey[ind]" (click)="ClickTag(item.id)">
+                            {{item.name}}
+                    </li>
+            </ul>
+    </nz-content>
+</nz-layout>

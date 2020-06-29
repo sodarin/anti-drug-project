@@ -1,0 +1,28 @@
+<nz-card nzHoverable [nzCover]="coverTemplate" [nzActions]="[actionSetting, actionEdit, actionEllipsis]" 
+(click)="navigateByUrl('/client/classinf/'+classes.id)">
+  <nz-card-meta nzTitle="{{classes.title}}"></nz-card-meta>
+  <div class="cardtags">
+    <nz-tag [nzColor]="'cyan'">动</nz-tag>
+    <nz-tag [nzColor]="'cyan'">疑</nz-tag>
+    <nz-tag [nzColor]="'cyan'">问</nz-tag>
+    <nz-tag [nzColor]="'cyan'">练</nz-tag>
+    <nz-tag [nzColor]="'cyan'">试</nz-tag>
+    <nz-tag [nzColor]="'cyan'">业</nz-tag>
+  </div>
+</nz-card>
+
+<ng-template #coverTemplate>
+    <img alt="example" src="{{classes.smallPicture}}" />
+</ng-template>
+<ng-template #actionSetting>
+  <i nz-icon nzType="read" nzTheme="outline"></i>
+  <span>{{classes.courseNum}}</span>
+</ng-template>
+<ng-template #actionEdit>
+  <i nz-icon nzType="user" nzTheme="outline"></i>
+  <span>{{classes.studentNum}}</span>
+</ng-template>
+<ng-template #actionEllipsis>
+  <i nz-icon nzType="message" nzTheme="outline"></i>
+  <span>{{classes.postNum}}</span>
+</ng-template>

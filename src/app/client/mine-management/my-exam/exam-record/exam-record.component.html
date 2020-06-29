@@ -1,33 +1,35 @@
 <nz-list
       class="demo-loadmore-list"
-      [nzDataSource]="list"
+      [nzDataSource]="recordList"
       [nzItemLayout]="'horizontal'"
-      [nzLoading]="initLoading"
       [nzRenderItem]="item"
-      [nzLoadMore]="loadMore"
+      [nzBordered]="true"
     >
       <ng-template #item let-item>
         <nz-list-item
-          [nzContent]="item.loading ? '' : '得分90分'"
-          [nzActions]="item.loading ? [] : [editAction]"
+          [nzContent]="score"
+          [nzActions]="[editAction]"
         >
-          <nz-skeleton [nzAvatar]="true" [nzActive]="true" [nzTitle]="false" [nzLoading]="item.loading">
-            <ng-template #editAction><a (click)="edit(item)">查看结果</a></ng-template>
+          <nz-skeleton [nzActive]="true" [nzLoading]="item.loading">
+            <ng-template #score>
+              <div>得分<span style="color: gold; font-weight: bold">{{item.score}}</span>分</div></ng-template>
+            <ng-template #editAction>
+              <div class="question-title" (click)="navigatTo('client/testpaper/'+ item.testId +'/result/'+userId)">查看结果</div>
+            </ng-template>
             
             <nz-list-item-meta
               [nzTitle]="nzTitle"
-              nzDescription="来自课程《初中第1课 毒品-人类的公敌》计划《默认教学计划》——2019年7月30日 16:08:21"
+              [nzDescription]="nzDescription"
             >
               <ng-template #nzTitle>
-                <a href="https://ng.ant.design">{{ item.name.last }}</a>
+                <div >{{ item.paperName }}</div>
               </ng-template>
+              <ng-template #nzDescription>
+                <div >来自课程<span style="cursor: pointer; color:#458B74">《{{ item.courseSetTitle}}》</span>计划<span style="cursor: pointer; color: #458B74">《{{item.courseTitle}}》</span> · {{item.createdTimeString}}</div>
+              </ng-template>
+
             </nz-list-item-meta>
           </nz-skeleton>
         </nz-list-item>
-      </ng-template>
-      <ng-template #loadMore>
-        <div class="loadmore">
-          <button nz-button *ngIf="!loadingMore" (click)="onLoadMore()">loading more</button>
-        </div>
       </ng-template>
     </nz-list>

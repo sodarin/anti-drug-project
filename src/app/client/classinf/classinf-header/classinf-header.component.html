@@ -1,0 +1,142 @@
+<!--courseinf-mainheadpage-->
+<nz-layout>
+    <nz-layout *ngIf="joinINf==null||joinINf.join==false">
+        <nz-sider [nzWidth]="500">
+            <img alt="headerimg" class="headerimg" src="{{currentclass.smallpicture}}" />
+        </nz-sider>
+        <nz-content class="headerback">
+            <h1 class="classtitle">{{currentclass.title}}</h1>
+            <!--<i nz-icon nzType="qrcode" class="header_icon" nzTheme="outline" nz-popover [nzContent]="qrcodecontent"
+                nzTrigger="click">
+            </i>
+            <ng-template #qrcodecontent>
+                <div class="bigqrcode">
+                    <img alt="finish" src="{{currentclass.qrcode}}" height="100" width="100">
+                    <p style="margin-top: 5px;height: 30px;">
+                        扫描二维吗继续学习，二维吗时效为半小时。
+                    </p>
+                </div>
+            </ng-template>-->
+            <p style="height: 10px;margin-left:10px;margin-top: -20px;">评价：<nz-rate [ngModel]="currentclass.ratingnum" nzDisabled>
+                </nz-rate>
+            </p>
+         <!--   <p style="height: 10px;margin-left:10px;margin-top: 20px;">班级有效期：{{currentclass.expiryString}}</p>-->
+            <div class="headeritem">
+                <div style="margin-left:20px;">
+                    <i nz-icon nzType="user" class="header_icon2" nzTheme="outline"></i>
+                    <p style="height: 10px;margin:0px;margin-top: -30px;text-align: center;">
+                        学员({{currentclass.studentnum}})</p>
+                </div>
+                <div style="margin-left:20px;">
+                    <i nz-icon nzType="wallet" class="header_icon2" nzTheme="outline"></i>
+                    <p style="height: 10px;margin:0px;margin-top: -30px;text-align: center;">
+                        课程({{currentclass.coursenum}})</p>
+                </div>
+                <div style="margin-left:20px;">
+                    <i nz-icon nzType="share-alt" class="header_icon2 header_icon" nzTheme="outline" nz-popover
+                        [nzContent]="sharecontent" nzTrigger="click"></i>
+                    <ng-template #sharecontent>
+                        <i nz-icon nzType="qq" style="margin-left: -3px;" class="header_icon" nzTheme="outline"></i>
+                        <i nz-icon nzType="wechat" class="header_icon" nzTheme="outline"></i>
+                        <i nz-icon nzType="weibo" class="header_icon" nzTheme="outline"></i>
+                    </ng-template>
+                    <p style="height: 10px;margin:0px;margin-top: -30px;text-align: center;">分享</p>
+                </div>
+            </div>
+
+            <span>承诺服务：
+                <nz-tag [nzColor]="commitmentservice[0]" nz-popover nzTitle="24小时作业批阅"
+                    nzContent="不定期组织各种线上或线下的班级活动，让学习更加生动有趣，同学关系更为紧密">动</nz-tag>
+                <nz-tag [nzColor]="commitmentservice[1]" nz-popover nzTitle="24小时作业批阅"
+                    nzContent="24小时内完成作业批阅，即时反馈并巩固您的学习效果">练</nz-tag>
+                <nz-tag [nzColor]="commitmentservice[2]" nz-popover nzTitle="24小时阅卷点评"
+                    nzContent="24小时内批阅您提交的试卷，给予有针对性的点评">试</nz-tag>
+                <nz-tag [nzColor]="commitmentservice[3]" nz-popover nzTitle="24小时作业批阅"
+                    nzContent="完成全部学习后，老师对您的学习成果和能力水平给出评估，并提供专业化的就业指导">业</nz-tag>
+                <nz-tag [nzColor]="commitmentservice[4]" nz-popover nzTitle="提问必答"
+                    nzContent="对于提问做到有问必答，帮您扫清学习过程中的种种障碍">问</nz-tag>
+                <nz-tag [nzColor]="commitmentservice[5]" nz-popover nzTitle="一对一在线答疑" nzContent="提供专属的一对一在线答疑，快速答疑解惑。">疑
+                </nz-tag>
+            </span>
+            <button nz-button style="float: right;margin:15px;width: 150px;height: 40px;" nzType="primary" (click)="joinclass_submit()">加入学习</button>
+        </nz-content>
+    </nz-layout>
+    <nz-layout *ngIf="joinINf!=null&&joinINf.join==true">
+        <nz-sider [nzWidth]="500">
+            <img alt="headerimg" class="headerimg" src="{{currentclass.smallpicture}}" />
+        </nz-sider>
+        <nz-content class="headerback">
+            <h1 class="classtitle">{{currentclass.title}} (<b style="color: red;">已加入</b>)</h1>
+           <!-- <i nz-icon nzType="qrcode" class="header_icon" nzTheme="outline" nz-popover [nzContent]="qrcodecontent"
+                nzTrigger="click">
+            </i>
+            <ng-template #qrcodecontent>
+                <div class="bigqrcode">
+                    <img alt="finish" src="{{currentclass.qrcode}}" height="100" width="100">
+                    <p style="margin-top: 5px;height: 30px;">
+                        扫描二维吗继续学习，二维吗时效为半小时。
+                    </p>
+                </div>
+            </ng-template>-->
+            <p style="height: 10px;margin-left:10px;margin-top: -20px;">评价：<nz-rate [ngModel]="currentclass.ratingnum" nzDisabled>
+                </nz-rate>
+            </p>
+            <!--<p style="height: 10px;margin-left:10px;margin-top: 20px;">班级有效期：{{currentclass.expiryString}}</p>-->
+            <div class="headeritem">
+                <div style="margin-left:20px;">
+                    <i nz-icon nzType="user" class="header_icon2" nzTheme="outline"></i>
+                    <p style="height: 10px;margin:0px;margin-top: -30px;text-align: center;">
+                        学员({{currentclass.studentnum}})</p>
+                </div>
+                <div style="margin-left:20px;">
+                    <i nz-icon nzType="wallet" class="header_icon2" nzTheme="outline"></i>
+                    <p style="height: 10px;margin:0px;margin-top: -30px;text-align: center;">
+                        课程({{currentclass.coursenum}})</p>
+                </div>
+                <div style="margin-left:20px;">
+                    <i nz-icon nzType="share-alt" class="header_icon2 header_icon" nzTheme="outline" nz-popover
+                        [nzContent]="sharecontent" nzTrigger="click"></i>
+                    <ng-template #sharecontent>
+                        <i nz-icon nzType="qq" style="margin-left: -3px;" class="header_icon" nzTheme="outline"></i>
+                        <i nz-icon nzType="wechat" class="header_icon" nzTheme="outline"></i>
+                        <i nz-icon nzType="weibo" class="header_icon" nzTheme="outline"></i>
+                    </ng-template>
+                    <p style="height: 10px;margin:0px;margin-top: -30px;text-align: center;">分享</p>
+                </div>
+            </div>
+
+            <span>承诺服务：
+                <nz-tag [nzColor]="commitmentservice[0]" nz-popover nzTitle="24小时作业批阅"
+                    nzContent="不定期组织各种线上或线下的班级活动，让学习更加生动有趣，同学关系更为紧密">动</nz-tag>
+                <nz-tag [nzColor]="commitmentservice[1]" nz-popover nzTitle="24小时作业批阅"
+                    nzContent="24小时内完成作业批阅，即时反馈并巩固您的学习效果">练</nz-tag>
+                <nz-tag [nzColor]="commitmentservice[2]" nz-popover nzTitle="24小时阅卷点评"
+                    nzContent="24小时内批阅您提交的试卷，给予有针对性的点评">试</nz-tag>
+                <nz-tag [nzColor]="commitmentservice[3]" nz-popover nzTitle="24小时作业批阅"
+                    nzContent="完成全部学习后，老师对您的学习成果和能力水平给出评估，并提供专业化的就业指导">业</nz-tag>
+                <nz-tag [nzColor]="commitmentservice[4]" nz-popover nzTitle="提问必答"
+                    nzContent="对于提问做到有问必答，帮您扫清学习过程中的种种障碍">问</nz-tag>
+                <nz-tag [nzColor]="commitmentservice[5]" nz-popover nzTitle="一对一在线答疑" nzContent="提供专属的一对一在线答疑，快速答疑解惑。">疑
+                </nz-tag>
+            </span>
+            <button nz-button style="float: right;margin:15px;width: 150px;height: 40px;" nzType="danger"
+                (click)="showExitCoursefirm()">退出学习</button>
+
+
+            <nz-modal [(nzVisible)]="CourseExitVisible" nzTitle="要退出学习吗" (nzOnCancel)="handleCancel_ExitCourse()"
+                (nzOnOk)="handleOk_ExitCourse()" nzOkText='退出学习' nzCancelText='继续学习' nzOkType='danger' [nzMaskClosable] = "false">
+                <div>
+                    <nz-select style="width: 300px;" nzShowSearch nzAllowClear nzPlaceHolder="--请选择退学原因--"
+                        [(ngModel)]="selectedExitReason">
+                        <nz-option nzLabel="课程内容质量差" nzValue="课程内容质量差"></nz-option>
+                        <nz-option nzLabel="老师服务态度不好" nzValue="老师服务态度不好"></nz-option>
+                        <nz-option nzLabel="其他" nzValue="其他"></nz-option>
+                    </nz-select>
+                </div>
+                <div *ngIf="selectedExitReason=='其他'" style="margin-top:10px;">
+                    <textarea rows="4" nz-input [(ngModel)]="CourseExitinputValue" placeholder="请输入退学原因"></textarea>
+                </div>
+            </nz-modal>
+        </nz-content>
+    </nz-layout>
+</nz-layout>

@@ -68,7 +68,7 @@
                 <nz-tag [nzColor]="'blue'">正确答案:</nz-tag>{{data.answer==null?'无':data.answer}}
               </div>
               <div class="question-analysis">
-                <nz-tag [nzColor]="'blue'">解析:</nz-tag> {{data.analysis==null?'无解析':data.analysis}}
+                <nz-tag [nzColor]="'blue'">解析:</nz-tag> <span>{{data.analysis==null?'无解析':data.analysis}}</span>
               </div>
             </ng-template>
             <nz-divider nzType="vertical"></nz-divider>

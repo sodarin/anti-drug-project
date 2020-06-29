@@ -47,12 +47,10 @@ import { StudentTopicComponent } from './mine-management/student-topic/student-t
 import { TopicTabComponent } from './mine-management/student-topic/topic-tab/topic-tab.component';
 import { CourseTopicComponent } from './mine-management/student-topic/course-topic/course-topic.component';
 import { ClassTopicComponent } from './mine-management/student-topic/class-topic/class-topic.component';
-import { MinePaperMarkingComponent } from './mine-management/paper-marking/paper-marking.component';
+import { PaperMarkingComponent as MinePaperMarkingComponent } from './mine-management/paper-marking/paper-marking.component';
 import { PaperMarkingTabComponent } from './mine-management/paper-marking/paper-marking-tab/paper-marking-tab.component';
 import { HaveMarkedComponent } from './mine-management/paper-marking/have-marked/have-marked.component';
 import { NotMarkedComponent } from './mine-management/paper-marking/not-marked/not-marked.component';
-import { HomeworkMarkingComponent } from './mine-management/homework-marking/homework-marking.component';
-import { HomeworkMarkingTabComponent } from './mine-management/homework-marking/homework-marking-tab/homework-marking-tab.component';
 import { TeachingDatabaseComponent } from './mine-management/teaching-database/teaching-database.component';
 import { TeachingDatabaseTabComponent } from './mine-management/teaching-database/teaching-database-tab/teaching-database-tab.component';
 import { MyInformationComponent } from './mine-management/teaching-database/my-information/my-information.component';
@@ -68,9 +66,6 @@ import { MyQAComponent } from './mine-management/my-qa/my-qa.component';
 import { MyTopicComponent } from './mine-management/my-topic/my-topic.component';
 import { MyTopicTabComponent } from './mine-management/my-topic/my-topic-tab/my-topic-tab.component';
 import { MyNoteComponent } from './mine-management/my-note/my-note.component';
-import { MyHomeworkComponent } from './mine-management/my-homework/my-homework.component';
-import { MyHomeworkTabComponent } from './mine-management/my-homework/my-homework-tab/my-homework-tab.component';
-import { MarkingComponent } from './mine-management/my-homework/marking/marking.component';
 import { MyClassComponent } from './mine-management/my-class/my-class.component';
 import { MyLiveComponent } from './mine-management/my-live/my-live.component';
 import { CreateCourseComponent } from './mine-management/teaching-course/create-course/create-course.component';
@@ -88,6 +83,69 @@ import { TopicComponent } from './mine-management/my-group/topic/topic.component
 import { GroupJoinComponent } from './mine-management/my-group/group-join/group-join.component';
 import { MyGroupJoinComponent } from './mine-management/my-group/my-group-join/my-group-join.component';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import {MyNoteDetailComponent} from './mine-management/my-note-detail/my-note-detail.component';
+import {TopicPostComponent} from './mine-management/my-group/topic-post/topic-post.component';
+import {MyOwnGroupComponent} from './mine-management/my-group/my-own-group/my-own-group.component';
+import {CourseTaskComponent} from './course-task/course-task.component';
+import {MyClassTopicComponent} from './mine-management/my-topic/class-topic/class-topic.component';
+import {MyCourseTopicComponent} from './mine-management/my-topic/course-topic/course-topic.component';
+import {GroupsearchComponent} from './groupmainlist/grouplist/groupsearch/groupsearch.component';
+import {GroupmainsearchComponent} from './groupmainlist/groupmainsearch/groupmainsearch.component';
+import {GroupthreadeditComponent} from './groupmainlist/grouplist/groupthreadedit/groupthreadedit.component';
+import {GroupthreadComponent} from './groupmainlist/grouplist/groupthread/groupthread.component';
+import {MessagesComponent} from './tidings/messages/messages.component';
+import {PrivateChatComponent} from './tidings/private-chat/private-chat.component';
+import {NotificationsComponent} from './tidings/notifications/notifications.component';
+import {TidingsComponent} from './tidings/tidings.component';
+
+import { ClassinfHeaderComponent } from './classinf/classinf-header/classinf-header.component';
+import { ClassinfIntroducesComponent } from './classinf/classinf-introduces/classinf-introduces.component';
+import { ClassinfCoursesComponent } from './classinf/classinf-courses/classinf-courses.component';
+import { ClassinfCommentComponent } from './classinf/classinf-comment/classinf-comment.component';
+import { ClassinfTopicComponent } from './classinf/classinf-topic/classinf-topic.component';
+import { ClassinfNotesComponent } from './classinf/classinf-notes/classinf-notes.component';
+import { ClassinfTeachersComponent } from './classinf/classinf-teachers/classinf-teachers.component';
+import { SigninComponent } from './classinf/signin/signin.component';
+import { ClassinfHeadmasterComponent } from './classinf/classinf-headmaster/classinf-headmaster.component';
+import { ClassinfStudentlistComponent } from './classinf/classinf-studentlist/classinf-studentlist.component';
+import { CourseinfHeaderComponent } from './courseinf/courseinf-header/courseinf-header.component';
+import { CourseinfIntroduceComponent } from './courseinf/courseinf-introduce/courseinf-introduce.component';
+import { CourseinfCoursesComponent } from './courseinf/courseinf-courses/courseinf-courses.component';
+import { CourseinfTopicComponent } from './courseinf/courseinf-topic/courseinf-topic.component';
+import { CourseinfNotesComponent } from './courseinf/courseinf-notes/courseinf-notes.component';
+import { CourseinfCommentComponent } from './courseinf/courseinf-comment/courseinf-comment.component';
+import { CourseinfCourselistBottomComponent } from './courseinf/courseinf-courselist-bottom/courseinf-courselist-bottom.component';
+import { CourseinfCoursefeatureComponent } from './courseinf/courseinf-coursefeature/courseinf-coursefeature.component';
+import { CourseinfNewstudentsComponent } from './courseinf/courseinf-newstudents/courseinf-newstudents.component';
+import { CourseinfComponent } from './courseinf/courseinf.component';
+import { ClassinfComponent } from './classinf/classinf.component';
+import { CourseinfMaterialComponent } from './courseinf/courseinf-material/courseinf-material.component';
+import { ClasslistSortModalComponent } from './classlist/classlist-sort-modal/classlist-sort-modal.component';
+import {CoursevideoComponent} from './coursevideo/coursevideo.component'
+import {ClasslistListviewModalComponent} from './classlist/classlist-listview-modal/classlist-listview-modal.component';
+import {ClasslistClassblockModalComponent} from './classlist/classlist-classblock-modal/classlist-classblock-modal.component';
+import {ClasslistClassificationModalComponent} from './classlist/classlist-classification-modal/classlist-classification-modal.component';
+import {TeacherblockComponent} from './classinf/teacherblock/teacherblock.component';
+import {CourselistClassificationModalComponent} from './courselist/courselist-classification-modal/courselist-classification-modal.component';
+import {ClassificationListComponent} from './courselist/courselist-classification-modal/classification-list/classification-list.component';
+import {CourselistSortModalComponent} from './courselist/courselist-sort-modal/courselist-sort-modal.component';
+import {CourselistListviewModalComponent} from './courselist/courselist-listview-modal/courselist-listview-modal.component';
+import {CourselistCourseblockModalComponent} from './courselist/courselist-courseblock-modal/courselist-courseblock-modal.component';
+import {CourseinfTeacherlistModalComponent} from './courseinf/courseinf-teacherlist-modal/courseinf-teacherlist-modal.component';
+import {CourseinfStudentdynamicsModalComponent} from './courseinf/courseinf-studentdynamics-modal/courseinf-studentdynamics-modal.component';
+import {CourseExamComponent} from './course-exam/course-exam.component';
+import { TeachPlanPageComponent } from './course-management/teach-plan-page/teach-plan-page/teach-plan-page.component';
+import { PaperListComponent } from './mine-management/paper-marking/paper-list/paper-list.component';
+import { HomeworkMarkingComponent } from './mine-management/homework-marking/homework-marking.component';
+import { HomeworkMarkingTabComponent } from './mine-management/homework-marking/homework-marking-tab/homework-marking-tab.component';
+import { DashboardMenuComponent } from './dashboard/dashboard-menu/dashboard-menu.component';
+import { DashboardListComponent } from './dashboard/dashboard-list/dashboard-list.component';
+import { DashboardListCourseComponent } from './dashboard/dashboard-list/dashboard-list-course/dashboard-list-course.component';
+import { DashboardListOpenresourceComponent } from './dashboard/dashboard-list/dashboard-list-openresource/dashboard-list-openresource.component';
+import { DashboardListStudentComponent } from './dashboard/dashboard-list/dashboard-list-student/dashboard-list-student.component';
+import { DashboardListTeacherComponent } from './dashboard/dashboard-list/dashboard-list-teacher/dashboard-list-teacher.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+
 
 @NgModule({
   declarations: [
@@ -117,17 +175,41 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
     EditComponent,
     EdittabComponent,
     IconComponent,
+    MessagesComponent,
+    PrivateChatComponent,
+    NotificationsComponent,
+    TidingsComponent,
     NewsAllModalComponent,
     NewsLawModalComponent,
+    ClasslistListviewModalComponent,
+    ClasslistClassblockModalComponent,
+    TeacherblockComponent,
+    CourselistClassificationModalComponent,
+    ClassificationListComponent,
+    CourselistSortModalComponent,
+    CourselistListviewModalComponent,
+    CourselistCourseblockModalComponent,
+    CourseinfTeacherlistModalComponent,
+    CourseinfStudentdynamicsModalComponent,
+    ClasslistClassificationModalComponent,
+    ClassinfHeaderComponent, ClassinfIntroducesComponent, ClassinfCoursesComponent,
+    ClassinfCommentComponent, ClassinfTopicComponent, ClassinfNotesComponent, ClassinfTeachersComponent, CourseinfComponent, ClassinfComponent,
+    SigninComponent, ClassinfHeadmasterComponent, ClassinfStudentlistComponent, CourseinfHeaderComponent,
+    CourseinfIntroduceComponent, CourseinfCoursesComponent, CourseinfTopicComponent, CourseinfNotesComponent,
+    CourseinfCommentComponent, CourseinfCourselistBottomComponent, CourseinfCoursefeatureComponent, CourseinfNewstudentsComponent,
+    CourseinfMaterialComponent, ClasslistSortModalComponent,CoursevideoComponent,
     NewsNewsModalComponent, NewsCaseModalComponent,
     MineManagementComponent, TeachingCourseComponent, TeachingCourseTabComponent,
     NormalCourseComponent, LiveCourseComponent, ClassCourseComponent, RecordCourseComponent, OpenCourseComponent, TeachingClassComponent, StudentQAComponent,
     StudentTopicComponent, TopicTabComponent, CourseTopicComponent, ClassTopicComponent, MinePaperMarkingComponent, PaperMarkingTabComponent, HaveMarkedComponent,
-    NotMarkedComponent,  HomeworkMarkingComponent, HomeworkMarkingTabComponent, TeachingDatabaseComponent, TeachingDatabaseTabComponent, MyInformationComponent,
+    NotMarkedComponent, TeachingDatabaseComponent, TeachingDatabaseTabComponent, MyInformationComponent,
     PublicInformationComponent, FavoritesComponent, FromSharingComponent, MyCourseComponent, MyCourseTabComponent, LearningCourseComponent, LearnedCourseComponent,
-    FavoriteCourseComponent, MyQAComponent, MyTopicComponent, MyTopicTabComponent, MyNoteComponent, MyHomeworkComponent, MyExamComponent, MyGroupComponent,
-    MyHomeworkTabComponent, MarkingComponent, MyClassComponent, MyLiveComponent, CreateCourseComponent, MyLiveCourseComponent, ExamRecordComponent, QuestionRecordComponent,
-    TopicRecordComponent, TopicComponent, GroupJoinComponent, MyGroupJoinComponent,TdClassificationComponent, TdCardComponent
+    FavoriteCourseComponent, MyQAComponent, MyTopicComponent, MyTopicTabComponent, MyNoteComponent, MyExamComponent, MyGroupComponent,
+     MyClassComponent, MyLiveComponent, CreateCourseComponent, MyLiveCourseComponent, ExamRecordComponent, QuestionRecordComponent,
+    TopicRecordComponent, TopicComponent, GroupJoinComponent, MyGroupJoinComponent,TdClassificationComponent, TdCardComponent, MyNoteDetailComponent, CourseExamComponent,
+    TopicPostComponent, MyOwnGroupComponent, CourseTaskComponent, MyClassTopicComponent, MyCourseTopicComponent, GroupsearchComponent, GroupmainsearchComponent, GroupthreadComponent,
+    GroupthreadeditComponent, TeachPlanPageComponent,PaperListComponent,HomeworkMarkingComponent,HomeworkMarkingTabComponent,
+    DashboardMenuComponent, DashboardListComponent, DashboardListCourseComponent, DashboardListOpenresourceComponent, DashboardListStudentComponent, DashboardListTeacherComponent, PageNotFoundComponent
   ],
   imports: [
     ShareModule,

@@ -65,11 +65,13 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "budgets": [{
-                "type": "initial",
-                "maximumWarning": "2mb",
-                "maximumError": "5mb"
-              }]
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "6mb",
+                  "maximumError": "7mb"
+                }
+              ]
             }
           }
         },
@@ -150,5 +152,8 @@
       }
     }
   },
-  "defaultProject": "anti-drug-project"
+  "defaultProject": "anti-drug-project",
+  "cli": {
+    "analytics": false
+  }
 }

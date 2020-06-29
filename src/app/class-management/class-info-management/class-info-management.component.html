@@ -21,7 +21,7 @@
                    formControlName="tags"
                    nzAllowClear
                    id="tags" >
-          <nz-option *ngFor="let option of tagOptions" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+          <nz-option *ngFor="let option of tagOptions" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
         </nz-select>
       </nz-form-control>
     </nz-form-item>
@@ -39,25 +39,30 @@
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="expireType">班级有效期</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
-        <nz-radio-group formControlName="expireType" id="expireType">
-          <label nz-radio nzValue="expiration">截止日期</label>
-          <label nz-radio nzValue="usefulLife">有效期天数</label>
+        <nz-radio-group [nzDisabled]="true" formControlName="expireType" id="expireType">
+          <label nz-radio nzValue="date">截止日期</label>
+          <label nz-radio nzValue="days">有效期天数</label>
           <label nz-radio nzValue="forever">永久有效</label>
         </nz-radio-group>
       </nz-form-control>
     </nz-form-item>
 
-<!--    <div>-->
-<!--      <input *ngIf="classInfoEditForm.controls.expireType.value === 'usefulLife'" [(ngModel)]="usefulLife" />天-->
-<!--      <nz-date-picker *ngIf="classInfoEditForm.controls.expireType.value === 'expiration'" [(ngModel)]="expirationDate"></nz-date-picker>-->
-<!--    </div>-->
+
+    <nz-form-item>
+      <nz-form-control nzOffset="6" [nzSm]="14" [nzXs]="24">
+        <nz-input-group *ngIf="classroom?.expiryMode == 'days'" nzAddOnAfter="天">
+          <input nz-input *ngIf="classInfoEditForm.controls.expireType.value === 'days'" formControlName="usefulLife" />
+        </nz-input-group>
+        <nz-date-picker *ngIf="classroom?.expiryMode === 'date'" formControlName="dateRange"></nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
 
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="classification">分类</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
         <nz-select formControlName="classification"
                    id="classification" >
-          <nz-option *ngFor="let option of classificationOptions" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+          <nz-option *ngFor="let option of classificationOptions" [nzLabel]="option.label" [nzValue]="option.id"></nz-option>
         </nz-select>
       </nz-form-control>
     </nz-form-item>

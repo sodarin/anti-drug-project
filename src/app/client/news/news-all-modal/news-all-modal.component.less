@@ -25,10 +25,12 @@ nz-content {
 
 .left-content {
   width: 60%;
+  margin-bottom: 20px;
 }
 
 .right-content {
   width: 35%;
+  margin-bottom: 20px;
 }
 
 
@@ -52,9 +54,24 @@ nz-layout:last-child {
 :host ::ng-deep .ant-card {
   height: 200px;
 }
-:host ::ng-deep .ant-card-cover img {
-  height: 100px;
+:host ::ng-deep .ant-card-cover .small-picture {
+  height: 120px;
+}
+
+:host ::ng-deep .ant-card-cover .large-picture {
+  height: 350px;
+}
+
+.list-area {
+  background-color: #ffffff;
+  padding: 2% 2%;
+}
+
+.demo-loadmore-list {
+  min-height: 350px;
 }
 
 
-
+nz-layout,nz-content{
+  background:none;
+}

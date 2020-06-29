@@ -1,7 +1,7 @@
 <div class="content">
   <div class="input-filter">
     <nz-select class="select-control" [(ngModel)]="rating" nzAllowClear="false">
-      <nz-option nzValue="-1" nzLabel="全部评分"></nz-option>
+      <nz-option nzValue="0" nzLabel="全部评分"></nz-option>
       <nz-option nzValue="1" nzLabel="1星"></nz-option>
       <nz-option nzValue="2" nzLabel="2星"></nz-option>
       <nz-option nzValue="3" nzLabel="3星"></nz-option>
@@ -47,22 +47,22 @@
     <tr *ngFor="let data of ratingTable.data">
       <td
         nzShowCheckbox
-        [(nzChecked)]="mapOfCheckedId[data.id]"
+        [(nzChecked)]="mapOfCheckedId[data.reviewId]"
         (nzCheckedChange)="refreshStatus()"
       ></td>
       <td>
-        <span (click)="unfoldOrFoldContent(data.id)" class="is-ellipsis" *ngIf="mapOfEllipsis[data.id]">{{data.ratingContent}}</span>
-        <span (click)="unfoldOrFoldContent(data.id)" class="not-ellipsis" *ngIf="!mapOfEllipsis[data.id]">{{data.ratingContent}}</span>
+        <span>{{data.content}}</span><br/>
+        <span *ngIf="data.classroomTitle !== ''"><span (click)="navigateTo(data.classroomId)" style="color: #6dd2ee; cursor: pointer; font-size: 14px;">{{data.classroomTitle}}</span><span style="font-size: 12px;"></span></span>
       </td>
-      <td>{{data.rating}}</td>
+      <td>{{data.rating}}星</td>
       <td>
-        <span style="color: #108ee9; cursor: pointer;" (click)="openUserInfoModal(data.authorId)">{{data.author}}</span>
-        <span>{{data.creatTime}}</span>
+        <span style="color: #108ee9; cursor: pointer;" (click)="openUserInfoModal(data.userId)">{{data.nickName}}</span><br/>
+        <span>{{data.createdTime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
       </td>
       <td><i class="more-operation" nz-popover nzTitle="可执行操作" [nzContent]="operationTemplate" nzTrigger="hover" nz-icon nzType="more" nzTheme="outline" nzPlacement="bottom"></i></td>
       <ng-template #operationTemplate>
         <div class="user-management-operation">
-          <div><span (click)="deleteRatingRecord(data.id)"><i nz-icon nzType="delete" nzTheme="outline"></i>删除</span></div>
+          <div><span (click)="deleteRatingRecord(data.reviewId)"><i nz-icon nzType="delete" nzTheme="outline"></i>删除</span></div>
         </div>
       </ng-template>
     </tr>

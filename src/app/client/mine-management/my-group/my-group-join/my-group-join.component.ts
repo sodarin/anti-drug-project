@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {NzMessageService, NzModalService, NzNotificationService} from 'ng-zorro-antd';
+import {MyteachingService} from '../../../../service/myteaching/myteaching.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-my-group-join',
@@ -7,30 +11,46 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MyGroupJoinComponent implements OnInit {
 
-  constructor() { }
+  MyGroupList:[];
+  dataList:[];
+  userId:number=1;
+  loading:boolean;
+
+  constructor(
+    private http: HttpClient,
+    private msg: NzMessageService,
+    private _notification: NzNotificationService,
+    private MyteachingService$: MyteachingService,
+    private router: Router,
+    private message: NzMessageService,
+    private modalService: NzModalService
+  ) { }
 
   ngOnInit() {
+    this.searchData()
   }
-  data = [
-    {
-      title: 'Title 1'
-    },
-    {
-      title: 'Title 2'
-    },
-    {
-      title: 'Title 3'
-    },
-    {
-      title: 'Title 4'
-    }
-    ,
-    {
-      title: 'Title 5'
-    }
-    ,
-    {
-      title: 'Title 6'
-    }
-  ];
+
+
+  searchData() {
+    this.MyGroupList = [];
+    this.loading = true;
+    this.MyteachingService$.getMyJoinGroup(this.userId).subscribe(result => {
+        this.loading = false;
+        this.dataList = result.data;
+        this.MyGroupList = this.dataList;
+      },
+      error1 => {
+        this.loading = false;
+        this._notification.create(
+          'error',
+          '发生错误',
+          `${error1.error}`
+        )
+
+      })
+  }
+
+  navigateTo(url: string) {
+    this.router.navigateByUrl(url)
+  }
 }

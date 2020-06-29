@@ -1,9 +1,0 @@
-<nz-list [nzDataSource]="courselist" [nzRenderItem]="item" [nzGrid]="{ gutter: 24, xs: 24, sm: 12, md: 12, lg: 8, xl: 6 }">
-    <ng-template #item let-item>
-        <nz-list-item [nzContent]="nzContent">
-            <ng-template #nzContent>
-                <app-courselist-courseblock-modal [course]="item"></app-courselist-courseblock-modal>
-            </ng-template>
-        </nz-list-item>
-    </ng-template>
-</nz-list>

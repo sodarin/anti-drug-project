@@ -1,1 +1,64 @@
-<p>question-record works!</p>
+<nz-list
+  class="demo-loadmore-list"
+  [nzDataSource]="FavoriteList"
+  [nzItemLayout]="'horizontal'"
+  [nzRenderItem]="item"
+  [nzBordered]="true"
+>
+  <ng-template #item let-item>
+    <nz-list-item
+      [nzActions]="[editAction]"
+    >
+      <nz-skeleton [nzActive]="true" [nzLoading]="item.loading">
+        <ng-template #editAction>
+          <button nz-button (click)="createMessage('success',item.id, item.targetId)">取消收藏</button>
+        </ng-template>
+
+        <nz-list-item-meta
+          [nzTitle]="nzTitle"
+          [nzDescription]="nzDescription"
+        >
+
+          <ng-template #nzTitle >
+            <div  class="question-title" [innerHTML] ="item.stem"  (click)="createTplModal(tplTitle, tplContent, tplFooter,item.id)"></div>
+          </ng-template>
+
+
+          <ng-template #tplTitle>
+            <span>题目预览</span>
+          </ng-template>
+          <ng-template #tplContent>
+            <div nz-row>
+              <div nz-col nzSpan="2">
+                <nz-tag [nzColor]="'blue'">{{detail.score}}分</nz-tag>
+                </div>
+              <div nz-col nzSpan="22">
+            <span  [innerHTML] ="detail.stem" ></span>
+
+                <div class="choiceView">
+                  <div *ngFor="let meta of questionList; let j = index" class="questionChoice">
+                    <span>{{characterList[j]}}</span>、<span style="display: inline-block" [innerHTML]="meta"></span>
+                  </div>
+                </div>
+
+                <nz-divider></nz-divider>
+                <div >正确答案是:<span *ngFor="let answer of answerList" style="margin-right: 5px;">{{getAnswer(answer)}}</span></div>
+                <div style="background: #f4f4f4; padding: 2% 5%; margin-top: 20px;" *ngIf="detail.analysis==''">无解析</div>
+                <div style="background: #f4f4f4; padding: 2% 5%;margin-top: 20px; " *ngIf="detail.analysis!=''">{{detail.analysis}}</div>
+            </div>
+            </div>
+          </ng-template>
+          <ng-template #tplFooter>
+            <button nz-button nzType="primary" (click)="destroyTplModal()" [nzLoading]="tplModalButtonLoading">
+              关闭
+            </button>
+          </ng-template>
+          <ng-template #nzDescription>
+            <div >来自试卷{{ item.testPaperName}}· 收藏于{{item.transformedTime}}</div>
+          </ng-template>
+
+        </nz-list-item-meta>
+      </nz-skeleton>
+    </nz-list-item>
+  </ng-template>
+</nz-list>

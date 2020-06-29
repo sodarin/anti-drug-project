@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { NgZorroAntdModule, NZ_I18N, zh_CN } from 'ng-zorro-antd';
 import { ShareModule } from './share/share.module';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FrontDeskModule } from './front-desk/front-desk.module';
 import { BackgroundModule } from './background/background.module';
 import zh from '@angular/common/locales/zh';
@@ -26,16 +26,16 @@ import { TagGroupInfoEditModalComponent } from './core/modal/tag-group-info-edit
 import { NewsEditModalComponent } from './core/modal/news-edit-modal/news-edit-modal.component';
 import { ProgramaEditModalComponent } from './core/modal/programa-edit-modal/programa-edit-modal.component';
 import { AnnouncementEditModalComponent } from './core/modal/announcement-edit-modal/announcement-edit-modal.component';
-import { CourseService } from './Test/course.service';
 import { AddingCourseModalComponent } from './core/modal/adding-course-modal/adding-course-modal.component';
 import { ClientModule } from './client/client.module'
 import { LoginPasswdEditModelComponent } from './core/modal/login-passwd-edit-model/login-passwd-edit-model.component';
 import { SecurityProblemEditModalComponent } from './core/modal/security-problem-edit-modal/security-problem-edit-modal.component';
 import { CourseManagementModule } from './course-management/course-management.module'
-import { NgxEchartsModule } from 'ngx-echarts';
-import { PaperScoreStatisticsComponent } from './core/modal/paper-score-statistics/paper-score-statistics.component';
-import { TeachingPlanAddingModalComponent } from './core/modal/teaching-plan-adding-modal/teaching-plan-adding-modal.component';
-
+import {PaperScoreStatisticsComponent} from './core/modal/paper-score-statistics/paper-score-statistics.component';
+import {TeachingPlanAddingModalComponent} from './core/modal/teaching-plan-adding-modal/teaching-plan-adding-modal.component';
+import { RegisterModalComponent } from './core/modal/register-modal/register-modal.component';
+import { FindPasswdModalComponent } from './core/modal/find-passwd-modal/find-passwd-modal.component';
+import { CommonInterceptor } from './share/common-interceptor.interceptor';
 registerLocaleData(zh);
 @NgModule({
   declarations: [
@@ -54,17 +54,22 @@ registerLocaleData(zh);
     CoreModule,
     QuillModule.forRoot(),
     ClientModule,
-    CourseManagementModule,
-    NgxEchartsModule
+    CourseManagementModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: zh_CN },
     QuillEditorComponent,
     QuillModule,
-    CourseService
+    {
+      provide: HTTP_INTERCEPTORS,
+          useClass: CommonInterceptor,
+          multi: true
+    },
   ],
   entryComponents: [
     LoginModalComponent,
+    RegisterModalComponent,
+    FindPasswdModalComponent,
     LoginPasswdEditModelComponent,
     SecurityProblemEditModalComponent,
     UserInfoViewModalComponent,

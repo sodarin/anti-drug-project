@@ -16,10 +16,11 @@ export class GroupTopicManagementTableService {
     }
   }
 
-  createNewGroup(title: string, about: string): Observable<any> {
+  createNewGroup(title: string, about: string, id: string): Observable<any> {
     return this._http.post(`/groupGate/addNewGroup`, {
       title: title,
-      about: about
+      about: about,
+      ownerid: id
     })
   }
 

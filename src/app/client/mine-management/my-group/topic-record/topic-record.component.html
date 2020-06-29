@@ -1,1 +1,68 @@
-<p>topic-record works!</p>
+<div class="page-content">
+
+  <nz-list [nzDataSource]="MyTopicList" [nzRenderItem]="item" [nzItemLayout]="'horizontal'" [nzLoading]="loading">
+    <ng-template #item let-item>
+
+      <nz-list-item>
+        <div class="box">
+          <div class="number">{{item.postNum}}</div><div class="HF">回复</div>
+        </div>
+
+        <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="nzDes">
+          <ng-template #nzTitle>
+            <div class="change" (click)="navigate('/client/groupmainlist/' + item.groupId + '/groupthread/' + item.threadId)">{{ item.threadTitle }}
+              <nz-tag style="margin-left: 15px"  *ngIf="item.isElite=='1'" [nzColor]="'red'">精华</nz-tag>
+              <nz-tag style="margin-left: 15px"  *ngIf="item.isStick=='1'" [nzColor]="'blue'">置顶</nz-tag>
+            </div>
+          </ng-template>
+          <ng-template #nzDes>
+            <div>
+              <nz-avatar nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                         nz-popover
+                         [nzPopoverTitle]="tem"
+                         [nzPopoverContent]="content"
+                         (mouseenter)="getUserDetail(item?.userId)"
+              >
+                <ng-template #tem>
+                  <nz-card [nzActions]="[actionEdit,actionShow]">
+                    <nz-card-meta
+                      [nzTitle]="nzTitle"
+                      [nzDescription]="nzDescription"
+                      [nzAvatar]="avatarTemplate"
+
+                    ></nz-card-meta>
+                  </nz-card>
+
+                  <ng-template #nzTitle>
+                    <span>{{detail?.nickName}}</span>
+                  </ng-template>
+                  <ng-template #nzDescription>
+                    <a>{{detail?.job}}</a>
+                  </ng-template>
+                  <ng-template #avatarTemplate>
+                    <nz-avatar nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
+                  </ng-template>
+                  <ng-template #actionEdit>
+                    <a>{{detail?.followedNum}}</a>
+                    <p>关注</p>
+                  </ng-template>
+                  <ng-template #actionShow>
+                    <a>{{detail?.fansNum}}</a>
+                    <p>粉丝</p>
+                  </ng-template>
+                </ng-template>
+                <ng-template #content>
+                  <a style="color: gray">{{detail?.signature}}</a>
+                </ng-template>
+              </nz-avatar>
+          <span class="change">{{item.userName}}</span>发起了话题·{{getDate(item.createdTime) }}·<span class="change" (click)="navigate('/client/groupmainlist/' + item.groupId)">{{item.groupName}}</span>·最后回复·{{getDate(item.updatedTime)}}</div>
+
+
+        </ng-template>
+        </nz-list-item-meta>
+      </nz-list-item>
+
+    </ng-template>
+  </nz-list>
+  <nz-divider></nz-divider>
+</div>

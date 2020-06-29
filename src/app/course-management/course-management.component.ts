@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router'
-import { CourseBaseInfoEditService } from '../service/course-base-info-edit/course-base-info-edit.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {CourseBaseInfoEditService} from '../service/course-base-info-edit/course-base-info-edit.service';
 
 
 @Component({
@@ -9,6 +9,7 @@ import { CourseBaseInfoEditService } from '../service/course-base-info-edit/cour
   styleUrls: ['./course-management.component.less']
 })
 export class CourseManagementComponent implements OnInit {
+
   courseId: string;
   location: Location;
   title: string;
@@ -22,7 +23,7 @@ export class CourseManagementComponent implements OnInit {
     private router: Router,
     private routerInfo: ActivatedRoute,
     private _courseBaseInfoEditService: CourseBaseInfoEditService) {
-    this.location = location
+    this.location = location;
     this.routerInfo.params.subscribe(res => {
       this.courseId = res.id;
     });
@@ -42,7 +43,7 @@ export class CourseManagementComponent implements OnInit {
     this._courseBaseInfoEditService.getCourseInfo(this.courseId).subscribe(res => {
       this.title = res.data.baseData.title;
       this.status = res.data.baseData.status;
-      this.imgUrl = res.data.baseData.cover
+      this.imgUrl = res.data.baseData.cover;
       this.teachersName = res.data.teachersName;
     })
   }

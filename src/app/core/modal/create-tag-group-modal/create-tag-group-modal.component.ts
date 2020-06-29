@@ -12,7 +12,7 @@ import {TagGroupManagementService} from '../../../service/tag-group-management/t
 export class CreateTagGroupModalComponent implements OnInit {
 
   @Input()
-  id: string;
+  item: any;
 
   tagGroupForm: FormGroup;
   listOfOption = [];
@@ -25,15 +25,13 @@ export class CreateTagGroupModalComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (this.id) {
-      this.tagGroupService$.getTagGroupDetailById(this.id).subscribe(result => {
-        this.tagGroupForm = this.fb.group({
-          name: [result.name, Validators.required],
-          isCourseListSelect: [result.isCourseListSelect],
-          isClassListSelect: [result.isClassListSelect],
-          tag: [result.tagList]
-        })
-      }, error1 => this._message.error(error1.error))
+    if (this.item) {
+      this.tagGroupForm = this.fb.group({
+        name: [this.item.name, Validators.required],
+        isCourseListSelect: [this.item.isCourseListSelect],
+        isClassListSelect: [this.item.isClassListSelect],
+        tag: [this.item.tagList]
+      })
     } else {
       this.tagGroupForm = this.fb.group({
         name: ['', Validators.required],

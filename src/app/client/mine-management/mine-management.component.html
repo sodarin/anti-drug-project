@@ -25,7 +25,7 @@
               <li nz-menu-item (click)="navigatTo('client/mine/mynote')" [nzSelected]="location?.pathname.endsWith('mynote')">我的笔记</li>
 <!--              <li nz-menu-item (click)="navigatTo('client/mine/myhomework')" [nzSelected]="location?.pathname.endsWith('myhomework')">我的作业</li>-->
               <li nz-menu-item (click)="navigatTo('client/mine/myexam')" [nzSelected]="location?.pathname.endsWith('myexam')">我的考试</li>
-              <li nz-menu-item (click)="navigatTo('client/mine/mygroup')" [nzSelected]="location?.pathname.endsWith('mygroup')">我的小组</li>
+              <li nz-menu-item (click)="navigatTo('client/mine/mygroup?tab=main')" [nzSelected]="location?.pathname.endsWith('mygroup')">我的小组</li>
             </ul>
           </li>
         </ul>

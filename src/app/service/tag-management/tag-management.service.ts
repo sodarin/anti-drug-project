@@ -10,7 +10,7 @@ export class TagManagementService {
   constructor(private _http: HttpClient) { }
 
   getTagList(): Observable<any> {
-    return this._http.get(`/info/tags`)
+    return this._http.get(`/info/infoback/tags`)
   }
 
   updateTagDetail(tagId: string, name: string): Observable<any> {

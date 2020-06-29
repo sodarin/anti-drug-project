@@ -1,0 +1,17 @@
+
+<ul nz-menu nzMode="horizontal">
+        <li nz-menu-item [nzSelected]="newKey" (click)="setOrder('latest')">
+                <i nz-icon nzType="mail"></i>
+                最新
+        </li>
+        <li nz-menu-item [nzSelected]="hotKey" (click)="setOrder('hot')">
+                <i nz-icon nzType="fire" ></i>
+                最热
+        </li>
+        <li nz-menu-item [nzSelected]="recKey"  (click)="setOrder('recommend')">
+                <i nz-icon nzType="appstore"></i>
+                推荐
+        </li>
+</ul>
+
+

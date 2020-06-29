@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,22 +8,19 @@ import {Observable} from "rxjs";
 export class GroupfirstService {
 
   constructor(private _http: HttpClient) { }
-
-  getTopicList(targetPage: number, pageSize: number): Observable<any> {
-    return this._http.post(`/group/getIndexGroup`, {
-      pageSize: pageSize,
-      pageNum: targetPage,
+//获取回复的列表
+  showReply(special:boolean,selectValue:string,groupId:string,pageNum=0,pageSize=0):Observable<any>{
+    return this._http.post(`/groupGate/showGroupThread`, {
+      isReward:special,
+      screeningApproach:selectValue,
+      groupID:groupId,
+      pageNum:pageNum,
+      pageSize:pageSize
     })
+
   }
-  /*
-  filterTopic(targetPage: number, pageSize: number, filterOptions: any): Observable<any> {
-    return this._http.post(`/group/getIndexGroup`, {
-      pageSize: pageSize,
-      pageNum: targetPage,
-      state: filterOptions.state,
-      searchParameter: filterOptions.searchParameter,
-      attribute: filterOptions.attribute
-    })
-  }*/
 
+  getConversationId(toId: string, fromId: string): Observable<any> {
+    return this._http.get(`/user/getConversationId?fromId=${fromId}&toId=${toId}`)
+  }
 }

@@ -1,0 +1,55 @@
+<div class="card-content">
+  <nz-card>
+    <div class="card-header">
+      <p>私信</p>
+<!--      <a class="write-message">写私信</a>-->
+      <button nz-button nzType="primary" (click)="showModal()" class="write-message">
+        <span>写私信</span>
+      </button>
+      <nz-modal [(nzVisible)]="isVisible" nzTitle="写私信" [nzOkLoading] = "isOkLoading" (nzOnCancel)="handleCancel()"
+                (nzOnOk)="handleOk()" nzOkText = "发送" [nzOkDisabled] = "(!inputValue1)||(!inputValue2)">
+<!--        <ng-template #modalFooter>-->
+<!--          <button nz-button nzType="default" (click)="handleCancel()">取消</button>-->
+<!--          <button nz-button nzType="primary" (click)="handleOk()" [nzLoading]="isOkLoading">发送</button>-->
+<!--        </ng-template>-->
+        <nz-comment>
+          <nz-comment-content>
+            <nz-form-item>
+              <textarea [(ngModel)]="inputValue1" nz-input rows="1" placeholder="收信人用户名"></textarea>
+            </nz-form-item>
+            <nz-form-item>
+              <textarea [(ngModel)]="inputValue2" nz-input rows="6" placeholder="想要说的话"></textarea>
+            </nz-form-item>
+          </nz-comment-content>
+        </nz-comment>
+      </nz-modal>
+    </div>
+    <div>
+      <nz-list [nzDataSource]="data" [nzRenderItem]="item" [nzPagination]="pagination" [nzItemLayout]="'horizontal'" [nzLoading]="loading">
+        <ng-template #item let-item>
+          <nz-list-item>
+            <nz-avatar nzIcon="user" nzSrc="{{item.fromSmallAvatar}}"
+                       [nzSize]="50">
+            </nz-avatar>
+            <a  (click)="read(item.messageId)" [routerLink]="['/client/tidings/privatechat',item.fromNickName]">
+              <nz-list-item-meta
+                [nzTitle]="nzTitle"
+                nzDescription="{{item.createdTime*1000 | date:'yyyy-MM-dd HH:mm:ss'}}"
+              >
+                <ng-template #nzTitle>
+                  <div>
+                    <a [ngStyle]="{'font-weight':item.isRead == '0' ? 'bold':'none'}">{{item.fromNickName}}{{item.content}}</a>
+                  </div>
+                </ng-template>
+              </nz-list-item-meta>
+            </a>
+          </nz-list-item>
+        </ng-template>
+        <ng-template #pagination>
+          <nz-pagination [nzPageIndex]="pageIndex" [nzPageSize]="pageSize" [nzTotal]= "total" (nzPageIndexChange)="loadIndex($event)"></nz-pagination>
+        </ng-template>
+      </nz-list>
+
+    </div>
+  </nz-card>
+</div>

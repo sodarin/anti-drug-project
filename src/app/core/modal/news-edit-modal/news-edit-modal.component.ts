@@ -41,14 +41,16 @@ export class NewsEditModalComponent implements OnInit {
       this.listOfProgramma = result;
     });
     this.tagManagementService$.getTagList().subscribe(result => {
-      this.listOfTag = result
+      this.listOfTag = result.data
     });
     if (this.item) {
       this.newsManagementService$.getNewsDetail(this.item.id).subscribe(result => {
         let tagIdList = [];
-        result.tagList.forEach(item => {
-          tagIdList.push(item.id)
-        });
+        if (result.tagList.length > 0) {
+          result.tagList.forEach(item => {
+            tagIdList.push(item.id)
+          });
+        }
         this.newsEditForm = this.fb.group({
           title: [result.title, Validators.required],
           programa: [result.categoryid, Validators.required],

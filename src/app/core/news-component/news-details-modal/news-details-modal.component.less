@@ -4,7 +4,6 @@
   font-size: 24px;
 }
 nz-content {
-  background: #fff;
   min-height: 120px;
   line-height: 120px;
   display: flex;
@@ -14,10 +13,13 @@ nz-content {
 
 .left-content {
   width: 60%;
+  margin-top: 47px;
+  margin-bottom: 20px;
 }
 
 .right-content {
   width: 35%;
+  margin-bottom: 20px;
 }
 
 
@@ -33,10 +35,17 @@ nz-layout:last-child {
 }
 
 
+
 :host ::ng-deep .ant-card {
   height: 200px;
 }
 :host ::ng-deep .ant-card-cover img {
   height: 100px;
 }
+
+nz-layout,nz-content{
+  background:none;
+}
+
+
 

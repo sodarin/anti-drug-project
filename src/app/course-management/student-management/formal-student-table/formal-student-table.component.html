@@ -6,6 +6,7 @@
   <nz-divider></nz-divider>
   <nz-table #studentListTable
             [nzData]="studentList"
+            [nzFrontPagination]="false"
             [nzTotal]="total"
             [nzLoading]="loading"
             [nzPageSize]="8"
@@ -22,13 +23,13 @@
     <tr *ngFor="let data of studentListTable.data">
       <td>
         <div style="display: flex; flex-direction: row; justify-content: flex-start">
-          <img class="avatar" [src]="data?.imgUrl" />
+          <img class="avatar" [src]="(data.smallAvatar.startsWith('public') || data.smallAvatar == '')? 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png': data.smallAvatar" />
           <div style="display: flex; flex-direction: column; justify-content: space-between">
             <span style="cursor: pointer; font-size: 14px; color: rgba(0, 0, 0, .75);">
-              {{data.name}}
-              <span style="font-size: 12px; color: rgba(0, 0, 0, .55);">({{data.comment}})</span>
+              {{data.nickName}}
+              <span style="font-size: 12px; color: rgba(0, 0, 0, .55);" *ngIf="data.remark !== ''">({{data.remark}})</span>
             </span>
-            <span style="font-size: 12px; color: rgba(0, 0, 0, .55);">加入时间{{data.involveTime | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
+            <span style="font-size: 12px; color: rgba(0, 0, 0, .55);">加入时间{{data.createdTime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
           </div>
         </div>
       </td>
@@ -37,14 +38,14 @@
       <ng-template #operationTemplate>
         <div class="user-management-operation">
           <div>
-            <span (click)="sendMessage(data.studentId, messageSendingTemplate)"><i nz-icon nzType="mail" nzTheme="outline"></i>发私信</span>
+            <span (click)="sendMessage(data.id, messageSendingTemplate)"><i nz-icon nzType="mail" nzTheme="outline"></i>发私信</span>
           </div>
-          <div><span (click)="checkInfo(data.studentId)"><i nz-icon nzType="eye" nzTheme="outline"></i>查看资料</span></div>
+          <div><span (click)="checkInfo(data.id)"><i nz-icon nzType="eye" nzTheme="outline"></i>查看资料</span></div>
           <div>
             <span (click)="writeComment(data, commentEditingTemplate)"><i nz-icon nzType="form" nzTheme="outline"></i>备注</span>
           </div>
-          <div><span (click)="deleteStudent(data.studentId)"><i nz-icon nzType="delete" nzTheme="outline"></i>移除</span></div>
-          <div><span (click)="modifyExpireTime(data.studentId, expireTimeModifyingTemplate)"><i nz-icon nzType="clock-circle" nzTheme="outline"></i>修改学员有效期</span></div>
+          <div><span (click)="deleteStudent(data.id)"><i nz-icon nzType="delete" nzTheme="outline"></i>移除</span></div>
+          <div><span (click)="modifyExpireTime(data.id, expireTimeModifyingTemplate)"><i nz-icon nzType="clock-circle" nzTheme="outline"></i>修改学员有效期</span></div>
         </div>
       </ng-template>
     </tr>

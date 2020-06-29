@@ -16,6 +16,7 @@ export class GroupTopicManagementTableComponent implements OnInit {
   selectedStateFilterValue = '';
   groupName: string = '';
   leader: string = '';
+  userId: string = '1';
 
   dataList = [];
   displayData = [];
@@ -44,9 +45,7 @@ export class GroupTopicManagementTableComponent implements OnInit {
 
   ngOnInit() {
     this.searchData();
-    this.newGroupForm = this.fb.group({
-      groupName: ['', Validators.required]
-    })
+
   }
   // 搜索
 
@@ -84,7 +83,7 @@ export class GroupTopicManagementTableComponent implements OnInit {
       this.total = result.data.total;
       this.totalPage = Math.ceil(this.total / 10);
       this.dataList = result.data.data;
-      this.displayData = this.dataList;
+      this.displayData = this.dataList
     }, error1 => {
       this.loading = false;
       this._notification.error(
@@ -106,6 +105,10 @@ export class GroupTopicManagementTableComponent implements OnInit {
   }
 
   createNewGroup(template: TemplateRef<{}>) {
+    this.newGroupForm = this.fb.group({
+      groupName: ['', Validators.required]
+    });
+    this.introductionContent = '';
     this._modalService.create({
       nzTitle: '添加小组',
       nzContent: template,
@@ -116,7 +119,7 @@ export class GroupTopicManagementTableComponent implements OnInit {
         this.newGroupForm.markAllAsTouched();
         this.newGroupForm.controls.groupName.updateValueAndValidity();
         if (!this.newGroupForm.controls.groupName.errors) {
-          this.groupTopicManagementTableService$.createNewGroup(this.newGroupForm.controls.groupName.value, this.introductionContent).subscribe(result => {
+          this.groupTopicManagementTableService$.createNewGroup(this.newGroupForm.controls.groupName.value, this.introductionContent, this.userId).subscribe(result => {
             this.searchData();
             this._notification.success(
               '创建成功！',
@@ -136,6 +139,7 @@ export class GroupTopicManagementTableComponent implements OnInit {
   }
 
   openGroup(id: string) {
+
     this._modalService.confirm({
       nzTitle: '是否要开启小组？',
       nzOnOk: () => {

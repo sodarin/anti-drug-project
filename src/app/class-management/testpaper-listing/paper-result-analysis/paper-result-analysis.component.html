@@ -1,1 +1,124 @@
-<p>paper-result-analysis works!</p>
+<nz-layout>
+  <nz-content>
+    <div class="content-left1">
+      <nz-card class="card-left1">
+        <div class="card-left-top1">
+          <strong style="font-size: 27px">{{taskTitle}}</strong>
+          <span class="analysis">试题分析</span>
+        </div>
+        <nz-divider style="margin: 5px 0px"></nz-divider>
+        <strong style="font-size: 14px">{{taskTitle}}</strong>
+      </nz-card>
+      <nz-card *ngIf="singlequestions.length!=0" class="card-left1">
+        <div>
+          <strong class="questionTitle1">单选题</strong>
+          <span class="questionInfo1">共{{singlequestions.length}}题，共{{singlequestions.length*score}}分</span>
+        </div>
+        <div>
+          <div class="question1" *ngFor="let item of singlequestions; let i = index">
+            <div>
+              <div id="singlequestion1{{i}}" class="questionNum1">
+                <div class="questionNum-top1">{{i+1}}</div>
+                <div class="questionNum-bot1">{{score}}.0分</div>
+              </div>
+              <div [innerHTML]="item.stem" class="questionconcent"style="border-bottom: 2px dashed #f2f2f2;padding-bottom:10px;padding-top: 4px">
+              </div>
+            </div>
+            <div class="choiceView1">
+              <div style="text-align: right"><span style="margin-right: 105px">初次答题</span></div>
+              <div *ngFor="let item1 of item.metas; let j = index">
+                  <p [ngClass]="{'correct1':item.courseTaskList[j].status=='right'}">
+                    <span>{{characterList[j]}}、</span><span style="text-align: left; display: inline-block" [innerHTML]="item1">
+
+                  </span></p>
+                  <span class="result" style="overflow: hidden;" [ngClass]="{'correct':item.courseTaskList[j].status=='right','wrong':item.courseTaskList[j].status=='wrong'}">{{item.courseTaskList[j].memberNum/totalmemberNum * 100 | number: '1.1-2'}}%</span><span class="result">{{item.courseTaskList[j].memberNum}}人次</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nz-card>
+      <nz-card *ngIf="multiplequestions.length!=0" class="card-left1">
+        <div>
+          <strong class="questionTitle1">多选题</strong>
+          <span class="questionInfo1">共{{multiplequestions.length}}题，共{{multiplequestions.length*score}}分</span>
+        </div>
+        <div>
+          <div class="question1" *ngFor="let item of multiplequestions; let i = index">
+            <div>
+              <div id="multiplequestion1{{i}}}" class="questionNum1">
+                <div class="questionNum-top1">{{i+1}}</div>
+                <div class="questionNum-bot1">{{score}}.0分</div>
+              </div>
+              <div [innerHTML]="item.stem" class="questionconcent" style="border-bottom: 2px dashed #f2f2f2;padding-bottom:10px;padding-top: 4px">
+              </div>
+            </div>
+            <div class="choiceView1">
+              <div style="text-align: right"><span style="margin-right: 105px">初次答题</span></div>
+              <div *ngFor="let item1 of item.metas; let j = index">
+                <p [ngClass]="{'correct1':item.courseTaskList[j].status=='right'}">
+                  <span>{{characterList[j]}}、</span><span style="text-align: left; display: inline-block"[innerHTML]="item1"></span></p>
+                <span class="result" [ngClass]="{'correct':item.courseTaskList[j].status=='right','wrong':item.courseTaskList[j].status=='wrong'}">{{item.courseTaskList[j].memberNum/totalmemberNum * 100 | number: '1.1-2'}}%</span><span class="result">{{item.courseTaskList[j].memberNum}}人次</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nz-card>
+      <nz-card *ngIf="judgequestions.length!=0" class="card-left1">
+        <div>
+          <strong class="questionTitle1">判断题</strong>
+          <span class="questionInfo1">共{{judgequestions.length}}题，共{{judgequestions.length*5}}分</span>
+        </div>
+        <div>
+          <div class="question1" *ngFor="let item of judgequestions; let i = index">
+            <div>
+              <div id="judgequestions1{{i}}}" class="questionNum1">
+                <div class="questionNum-top1">{{i+1}}</div>
+                <div class="questionNum-bot1">{{score}}.0分</div>
+              </div>
+              <div [innerHTML]="item.stem" class="questionconcent" style="border-bottom: 2px dashed #f2f2f2;padding-bottom:10px;padding-top: 4px">
+              </div>
+            </div>
+            <div class="choiceView1">
+              <div style="text-align: right"><span style="margin-right: 105px">初次答题</span></div>
+              <div *ngFor="let item1 of item.metas; let j = index">
+                <p [ngClass]="{'correct1':item.courseTaskList[j].status=='right'}">
+                  <span>{{characterList[j]}}、</span><span style="text-align: left; display: inline-block" [innerHTML]="item1"></span></p>
+                <span class="result" style="font-size: 12px" [ngClass]="{'correct':item.courseTaskList[j].status=='right','wrong':item.courseTaskList[j].status=='wrong'}">{{item.courseTaskList[j].memberNum/totalmemberNum * 100 | number: '1.1-2'}}%</span><span class="result">{{item.courseTaskList[j].memberNum}}人次</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+    <div class="content-right1 ">
+      <nz-affix [nzTarget]="target" id="affix-container-target">
+        <nz-card class="box">
+          <div class="box-con">
+            <span>考试数据</span>
+          </div>
+          <div class="data-panel ">
+            <div class="row">
+              <span class="infor">班级人数：</span> <span class="data">{{classstudentnumber}}</span>
+            </div>
+            <div class="row">
+              <span class="infor">参加人数：</span> <span class="data">{{participants}}</span>
+            </div>
+            <div class="row">
+              <span class="infor">完成人数：</span> <span class="data">{{completions}}</span>
+            </div>
+            <div class="row">
+              <span class="infor" style="margin-left: 2em">总分：</span> <span class="data">{{totalscore}}</span>
+            </div>
+            <div class="row">
+              <span class="infor" style="margin-left: 1em">平均分：</span> <span class="data">{{averagescore}}</span>
+              <i nz-icon nzType="question-circle" nzTheme="fill" nz-tooltip [nzTooltipTitle]="titleTemplate" nzTooltipPlacement="bottom"></i>
+              <ng-template #titleTemplate >
+                <span style="font-size: 12px">平均成绩以首次提交的成绩计算</span>
+              </ng-template>
+            </div>
+          </div>
+        </nz-card>
+      </nz-affix>
+    </div>
+  </nz-content>
+</nz-layout>

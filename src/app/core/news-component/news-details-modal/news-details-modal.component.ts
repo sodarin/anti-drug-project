@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { formatDistance } from 'date-fns';
-import {NzMessageService, NzModalService} from 'ng-zorro-antd';
-import {NewsManagementService} from '../../../service/news-management/news-management.service';
+import { NzMessageService, NzModalService, NzNotificationService } from 'ng-zorro-antd';
+import { NewsService } from '../../../service/news/news.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import {ViewportScroller} from '@angular/common';
 
 @Component({
   selector: 'app-news-details-modal',
@@ -9,57 +11,200 @@ import {NewsManagementService} from '../../../service/news-management/news-manag
   styleUrls: ['./news-details-modal.component.less'],
 })
 export class NewsDetailsModalComponent implements OnInit {
+  articleId: number;
+  isDelete: number;
+  isLike: boolean;
+  userId = 1;
+  articleLike: {};
+  pageIndex = 1;
+  pageSize = 5;
 
+  comments = [];
+  total: number = 0;
+
+  dataList: any;
+  displayData: any;
+  tagList: any;
   loading: boolean = false;
-  constructor(
-    private newsService$: NewsManagementService,
-    private _message: NzMessageService,
-    private _modalService: NzModalService
-  ) {
-  }
+  id: string;
+  replyId: string;
+  userid = 1;
 
-  ngOnInit() {
-  }
 
-  data: any[] = [];
   submitting = false;
   user = {
     author: 'Han Solo',
     avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
   };
-  inputValue = '';
+  replyString = '';
+  commentValue = this.replyString;
 
-  handleSubmit(): void {
-    this.submitting = true;
-    const content = this.inputValue;
-    this.inputValue = '';
-    setTimeout(() => {
-      this.submitting = false;
-      this.data = [
-        ...this.data,
-        {
-          ...this.user,
-          content,
-          datetime: new Date(),
-          displayTime: formatDistance(new Date(), new Date())
-        }
-      ].map(e => {
-        return {
-          ...e,
-          displayTime: formatDistance(new Date(), e.datetime)
-        };
-      });
-    }, 800);
+  constructor(
+    private router: Router, private route: ActivatedRoute,
+    private newsService$: NewsService,
+    private _message: NzMessageService,
+    private _modalService: NzModalService,
+    private routerInfo: ActivatedRoute,
+    private _notification: NzNotificationService,
+    private vps: ViewportScroller
+  ) {
   }
-  searchData(id: string) {
-    this.loading = true;
-    this.newsService$.getNewsDetail(id).subscribe(result => {
-      this.data = result;
-    }, error1 => {
-      this.loading = false;
-      this._message.error(error1.error)
+
+  ngOnInit() {
+    this.id = this.routerInfo.snapshot.params['id'];
+    this.searchArticlebyid();
+    this.getArticleLike();
+    this.getComments()
+  }
+
+  getComments() {
+    this.newsService$.getCommentListByArticleId(this.pageIndex, this.pageSize, this.id).subscribe(result => {
+      this.comments = result.data;
+      this.total = this.comments.length > 0? this.comments[0].count: 0;
     })
   }
 
+  addReplyValue(comment: any) {
+    this.replyString = `回复@${comment.username}：  `;
+    this.commentValue = this.replyString;
+    this.replyId = comment.commentId;
+    this.vps.scrollToAnchor('reply');
+  }
 
+  deleteComment(commentId: string) {
+    this.newsService$.deleteComment(commentId).subscribe(result => {
+      this._notification.success('删除成功！', '');
+      this.getComments()
+    }, error1 => {
+      this._notification.error('删除失败！', error1.error)
+    })
+  }
+
+  handleSubmit(): void {
+    let content;
+    let comment = {};
+    let objecttype = '';
+    if (this.commentValue.startsWith(this.replyString) && this.replyString !== '') {
+       content = this.commentValue.split(this.replyString);
+      if (content[1] == '') {
+        this._notification.error('请填写评论内容！', '')
+      }else {
+        objecttype = 'comment';
+        this.submitting = true;
+        comment = {
+          content: content[1],
+          objectid: this.replyId,
+          userId: this.userId
+        };
+      }
+    }else {
+      console.log(this.commentValue);
+      this.submitting = true;
+      objecttype = 'article';
+      comment = {
+        content: this.commentValue,
+        objectid: this.id,
+        userId: this.userId
+      }
+    }
+
+      this.newsService$.insertComment(comment, objecttype).subscribe(result => {
+        this.submitting = false;
+        if (objecttype == 'article') {
+          this.pageIndex = Math.ceil((this.total + 1) / this.pageSize);
+        }
+        this.getComments();
+        this.commentValue = '';
+        this.replyString = '';
+        this.replyId = '';
+        this._notification.success('评论成功！','')
+      }, error1 => {
+        this.submitting = false;
+        this._notification.error('评论失败！', '')
+      })
+  }
+
+  searchArticlebyid() {
+    this.displayData = [];
+    this.loading = true;
+    this.newsService$.getArticlebyid(this.id).subscribe(result => {
+      this.loading = false;
+      this.dataList = result;
+      this.displayData = this.dataList;
+      this.tagList = this.dataList.tagList;
+    }, error1 => {
+      this.loading = false;
+      this._message.error(error1.error);
+    });
+  }
+  getArticleLike() {
+    this.loading = true;
+    this.newsService$.getArticleLike(this.id, this.userId).subscribe(result => {
+      this.loading = false;
+      this.isLike = result.data;
+    }, error1 => {
+      this.loading = false;
+      this._message.error(error1.error);
+    });
+  }
+  getAriticlelikes(){
+    this.newsService$.getArticlebyid(this.id).subscribe(result => {
+      this.displayData.upsnum = result.upsnum;
+    }, error1 => {
+      this._message.error(error1.error);
+    });
+  }
+  setArticleLike() {
+    this.loading = true;
+    this.articleLike = {
+      articleId: this.id,
+      isDelete: this.isDelete,
+      userId: 1,
+    };
+    this.newsService$.setArticleLike(this.articleLike).subscribe(result => {
+      this.getArticleLike();
+      this.getAriticlelikes();
+      this._notification.create(
+        'success',
+        '操作成功',
+        ''
+      );
+    }, error1 => {
+      this._notification.create(
+        'error',
+        '操作失败',
+        `${error1.error}`
+      );
+    });
+  }
+  getNewContent(value: any) {
+    this.getArticleLike();
+    this.displayData = value;
+    this.tagList = this.displayData.tagList;
+  }
+  navigateByUrl(url: string) {
+    this.router.navigateByUrl(url);
+  }
+
+  navigate(id) {
+    if (id == 1) {
+      this.navigateByUrl('/client/newslaw');
+    } else if (id == 2) {
+      this.navigateByUrl('/client/newscase');
+    } else {
+      this.navigateByUrl('/client/newsnews');
+    }
+  }
+
+  getHeart1() {
+    this.isDelete = 0;
+    this.setArticleLike();
+
+  }
+
+  getHeart0() {
+    this.isDelete = 1;
+    this.setArticleLike();
+
+  }
 }

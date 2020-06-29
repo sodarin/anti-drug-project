@@ -14,10 +14,8 @@ export class AdminCourseService {
   ) { }
 
   createNewCourse(title: string, type: string, userId: string): Observable<any> {
-    return this._http.post(`/course/createCourse`, {
-      title: title,
-      type: type,
-      userId: userId
+    return this._http.post(`/course/createCourse?title=${title}&type=${type}&userId=${userId}`, {
+
     })
   }
 

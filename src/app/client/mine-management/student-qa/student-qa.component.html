@@ -5,18 +5,20 @@
   <nz-divider></nz-divider>
   <div class="page-content">
 
-<nz-list [nzDataSource]="data" [nzRenderItem]="item" [nzItemLayout]="'horizontal'" [nzLoading]="loading">
+<nz-list [nzDataSource]="questionList" [nzRenderItem]="item" [nzItemLayout]="'horizontal'" [nzLoading]="loading">
   <ng-template #item let-item>
 
     <nz-list-item>
       <nz-tag [nzColor]="'#108ee9'">问</nz-tag>
-      <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="item.descr">
+      <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="nzDesrc" >
         <ng-template #nzTitle>
-          <a href="https://ng.ant.design">{{ item.title }}</a>
+          <span class="question-title" (click)="viewQuestion(item)">{{ item.title }}</span>
+        </ng-template>
+        <ng-template #nzDesrc>
+          <div >来自<span style="cursor: pointer; color: #108ee9" (click)="navigate('/client/courseinf/' + item.courseSetId)">{{ item.courseTitle}}-{{item.courseSetTitle}}</span>·浏览量{{item.hitNum}}</div>
         </ng-template>
       </nz-list-item-meta>
     </nz-list-item>
-    <!--span> 来自{{item.source}}|浏览量{{item.num}}</span-->
   </ng-template>
 </nz-list>
     <nz-divider></nz-divider>

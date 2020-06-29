@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {HttpClient, HttpParams} from '@angular/common/http';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -47,5 +48,4 @@ export class CourseBaseInfoEditService {
     const api = '/info/tags';
     return this._http.get(api);
   }
-
 }

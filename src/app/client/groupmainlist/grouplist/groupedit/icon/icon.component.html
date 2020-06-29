@@ -1,12 +1,14 @@
 <div class="clearfix">
   <h2>当前图标</h2>
   <nz-upload
-    nzAction="https://jsonplaceholder.typicode.com/posts/"
+    nzAction="http://219.216.86.249:9013/material/uploadGroupCover"
     nzListType="picture-card"
     [(nzFileList)]="fileList"
     [nzShowButton]="fileList.length < 1"
     [nzShowUploadList]="showUploadList"
     [nzPreview]="handlePreview"
+    [nzFileType]="'image/png,image/jpeg,image/gif,image/jpg'"
+    [nzCustomRequest]="customReq"
   >
     <i nz-icon nzType="plus"></i>
     <div class="ant-upload-text">Upload</div>

@@ -1,0 +1,124 @@
+<ng-container #topiccontainer [ngTemplateOutlet]="topiclisttemplate"></ng-container>
+<ng-template #topiclisttemplate>
+    <div class="listmenu">
+        <nz-radio-group [(ngModel)]="type_topic" [nzButtonStyle]="'solid'">
+            <label nz-radio-button nzValue="All" (click)="changeType_Topic('All')">全部</label>
+            <!--   <label nz-radio-button nzValue="Question"
+                (click)="changeType_Topic('Question')">问答</label>-->
+            <label nz-radio-button nzValue="Boutique" (click)="changeType_Topic('Boutique')">精品</label>
+        </nz-radio-group>
+        <button nz-button nz-dropdown [nzDropdownMenu]="order_menu" [nzPlacement]="'bottomLeft'" >排序</button>
+        <nz-dropdown-menu #order_menu="nzDropdownMenu">
+            <ul nz-menu nzSelectable>
+                <li nz-menu-item (click)="changeOrder_Topic('createdTime')">
+                    最新发帖
+                </li>
+                <li nz-menu-item (click)="changeOrder_Topic('updatedTime')">
+                    最后回复
+                </li>
+            </ul>
+        </nz-dropdown-menu>
+        <div style="position: relative;float: right;">
+            <button nz-button nz-dropdown [nzDropdownMenu]="topic_menu" [nzPlacement]="'bottomLeft'" ><span>发话题/提问题</span></button>
+            <nz-dropdown-menu #topic_menu="nzDropdownMenu">
+                <ul nz-menu>
+                    <li nz-menu-item>
+                        <a (click)="write_topic()">发话题</a>
+                    </li>
+                    <li nz-menu-item>
+                        <a (click)="write_question()">提问题</a>
+                    </li>
+                </ul>
+            </nz-dropdown-menu>
+        </div>
+    </div>
+    <nz-divider style="margin-top:5px;"></nz-divider>
+    <nz-list [nzDataSource]="topics" [nzRenderItem]="topicitem" [nzItemLayout]="'horizontal'">
+        <ng-template #topicitem let-topicitem>
+            <nz-list-item [nzActions]="[editAction, moreAction]">
+                <ng-template #editAction><a (click)="write_response(topicitem.threadId)">回复 <!--{{topicitem.postNum}}--></a></ng-template>
+                <!--<ng-template #moreAction>浏览 {{topicitem.hitNum}}</ng-template>-->
+                <nz-list-item-meta [nzTitle]="nzTitle" nzAvatar="{{topicitem.largeAvatar}}"
+                    nzDescription="{{topicitem.userNickName}} 发起了问题（话题）时间 {{topicitem.createdTime* 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}">
+                    <ng-template #nzTitle>
+                        <!--({{topicitem.type}})--><b> {{topicitem.title}}</b>
+                        <!-- <a href="https://ng.ant.design">{{ topicitem.title }}</a>-->
+                    </ng-template>
+                </nz-list-item-meta>
+            </nz-list-item>
+        </ng-template>
+    </nz-list>
+    <nz-divider></nz-divider>
+    <div class="pagination">
+        <nz-pagination [(nzPageIndex)]="currenttopicpage" [nzTotal]="total_course_top_page"
+            (nzPageIndexChange)="onPageChange_topic($event)"></nz-pagination>
+    </div>
+</ng-template>
+<ng-template #topicquestion>
+    <div class="editarea">
+        <input nz-input placeholder="请输入问题的标题" [(ngModel)]="editorTitle" />
+    </div>
+
+    <div class="editarea">
+        <quill-editor [styles]="{height: '250px'}" placeholder="请输入问题内容" [(ngModel)]="editorContent"></quill-editor>
+    </div>
+
+    <div class="editarea">
+        <button nz-button style="margin: 5px;min-width:120px;float: right;" nzType="primary"
+            (click)="questoin_submit()">提交</button>
+        <button nz-button style="margin: 5px;min-width:120px;float: right;" nzType="default"
+            (click)="return_topic()">返回</button>
+    </div>
+    <nz-divider></nz-divider>
+</ng-template>
+<ng-template #publishtopic>
+    <div class="editarea">
+        <input nz-input placeholder="请输入话题的标题" [(ngModel)]="editorTitle" />
+    </div>
+
+    <div class="editarea">
+        <quill-editor [styles]="{height: '250px'}" placeholder="请输入话题内容" [(ngModel)]="editorContent"></quill-editor>
+    </div>
+
+    <div class="editarea">
+        <button nz-button style="margin: 5px;min-width:120px;float: right;" nzType="primary"
+            (click)="topic_submit()">提交</button>
+        <button nz-button style="margin: 5px;min-width:120px;float: right;" nzType="default"
+            (click)="return_topic()">返回</button>
+    </div>
+    <nz-divider></nz-divider>
+</ng-template>
+<ng-template #responsetemplate>
+    <h2>历史回复</h2>
+    <nz-divider></nz-divider>
+
+    <nz-list [nzDataSource]="currentTopicResponse" [nzRenderItem]="reponseitem" [nzItemLayout]="'horizontal'">
+        <ng-template #reponseitem let-reponseitem>
+            <nz-list-item>
+                <nz-list-item-meta [nzTitle]="nzTitle"
+                    nzAvatar="{{reponseitem.largeAvatar}}"
+                    [nzDescription]="nzDescription">
+                    <ng-template #nzDescription>
+                        <div [innerHTML]="reponseitem.content"></div>
+                    </ng-template>
+                    <ng-template #nzTitle>
+                        <b> {{reponseitem.nickName}}· {{reponseitem.createdTime}}</b>
+                    </ng-template>
+                </nz-list-item-meta>
+            </nz-list-item>
+        </ng-template>
+    </nz-list>
+    <h2>添加回复</h2>
+    <nz-divider></nz-divider>
+    <div class="editarea">
+        <quill-editor [styles]="{height: '250px'}" placeholder="请输入回复内容" [(ngModel)]="editorContent"></quill-editor>
+    </div>
+
+    <div class="editarea">
+        <button nz-button style="margin: 5px;min-width:120px;float: right;" nzType="primary"
+            (click)="response_submit()">提交</button>
+        <button nz-button style="margin: 5px;min-width:120px;float: right;" nzType="default"
+            (click)="return_response()">返回</button>
+    </div>
+    <nz-divider></nz-divider>
+</ng-template>

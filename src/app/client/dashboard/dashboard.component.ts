@@ -25,4 +25,9 @@ export class DashboardComponent implements OnInit {
     })
   }
 
+  gridStyle = {
+    width: '25%',
+    textAlign: 'center'
+  };
+
 }

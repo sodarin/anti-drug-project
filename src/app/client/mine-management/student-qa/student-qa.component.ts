@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {NzNotificationService} from 'ng-zorro-antd';
+import {MyteachingService} from '../../../service/myteaching/myteaching.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-student-qa',
@@ -6,31 +9,42 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./student-qa.component.less']
 })
 export class StudentQAComponent implements OnInit {
-
-  constructor() { }
-
-
+ pageIndex: number;
+ questionList = [];
+dataList = [];
   loading = false;
-  data = [
-    {
-      title: '创建的课程不可以删除吗',
-      descr:'来自默认教学计划 - 课程发布指南 · 2浏览',
-      num:'2',
-      source:'默认教学计划 - 课程发布指南 '
-    },
-    {
-      title: '学员可以在网校进行那些操作呢？',
-      descr:'来自默认教学计划 - 课程发布指南 · 5浏览',
-      num: '5',
-      source: '默认教学计划 - 课程发布指南 ',
-    },
+teacherId:string ='1';
+  constructor(
+    private _notification: NzNotificationService,
+    private MyteachingService$:MyteachingService,
+    private router: Router
+  ) { }
 
-  ];
+  ngOnInit() {
+    this.searchData()
+  }
+  searchData(pageIndex: number = this.pageIndex) {
+    this.questionList = [];
+    this.loading = true;
+    this.MyteachingService$.getStudentQAList(1,10,this.teacherId).subscribe(result=>{
+        this.loading = false;
+        this.dataList = result.data;
+        this.questionList = this.dataList;
+      },
+      error1 => {
+        this.loading = false;
+        this._notification.create(
+          'error',
+          '发生错误',
+          `${error1.error}`
+        )
 
-  ngOnInit(): void {
-
+      })
   }
 
+  navigate(url: string) {
+    this.router.navigateByUrl(url)
+  }
 
 
 }

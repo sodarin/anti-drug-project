@@ -64,8 +64,8 @@ export class AdminNoteManagementTableComponent implements OnInit {
       this.dataList = result.data.data;
       this.displayData = this.dataList;
       this.displayData.forEach(item => {
-        this.mapOfEllipsis[item.messageId] = true;
-        this.mapOfCheckedId[item.messageId] = false
+        this.mapOfEllipsis[item.id] = true;
+        this.mapOfCheckedId[item.id] = false
       });
       this.isAllDisplayDataChecked = false;
       this.isIndeterminate = false;
@@ -86,8 +86,8 @@ export class AdminNoteManagementTableComponent implements OnInit {
       this.dataList = result.data.data;
       this.displayData = this.dataList;
       this.displayData.forEach(item => {
-        this.mapOfEllipsis[item.messageId] = true;
-        this.mapOfCheckedId[item.messageId] = false
+        this.mapOfEllipsis[item.id] = true;
+        this.mapOfCheckedId[item.id] = false
       });
       this.isAllDisplayDataChecked = false;
       this.isIndeterminate = false;

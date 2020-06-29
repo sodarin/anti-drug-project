@@ -1,1 +1,215 @@
-<p>paper-result-detail works!</p>
+<nz-layout>
+  <nz-content>
+    <div class="content-left">
+      <nz-card class="card-left">
+        <div class="card-left-top">
+          <strong style="font-size: 27px ;margin-bottom: 10px">{{paperName}}</strong>
+          <span class="complete">批阅完成</span>
+        </div>
+        <span class="userinfo">答题人：{{username}} 交卷时间：{{subtime*1000 | date: 'yyyy-MM-dd HH:mm:ss'}} 用时：{{usetime}}秒</span>
+        <nz-divider style="margin: 5px 0px"></nz-divider>
+        <div class="grade-info">
+          <div class="grade-back">
+            <div class="grade">
+              <div class="total-score">
+                {{singleScore}}
+                <small style="font-size: 16px">分</small>
+              </div>
+              <small style="color: #919191">总分{{totalScore}}分</small>
+            </div>
+          </div>
+
+          <div class="grade-table">
+            <nz-table #borderedTable nzBordered  [nzHideOnSinglePage]=true [nzTitle]="" [nzData]="dataSet">
+              <thead>
+              <tr>
+                <th></th>
+                <th *ngIf="singlequestions.length!=0">单选题 <small >({{singlequestions.length}}道)</small></th>
+                <th *ngIf="multiplequestions.length!=0">多选题 <small >({{multiplequestions.length}}道)</small></th>
+                <th *ngIf="judgequestions.length!=0">判断题 <small >({{judgequestions.length}}道)</small></th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let data of borderedTable.data;let j= index">
+                <td class="t{{j}}">{{data.type}}</td>
+                <td class="t{{j}}" *ngIf="singlequestions.length!=0">{{ data.single }}{{data.unit}}</td>
+                <td class="t{{j}}" *ngIf="multiplequestions.length!=0">{{ data.multiple }}{{data.unit}}</td>
+                <td class="t{{j}}" *ngIf="judgequestions.length!=0">{{ data.check }}{{data.unit}}</td>
+              </tr>
+              </tbody>
+            </nz-table>
+          </div>
+
+
+        </div>
+      </nz-card>
+      <nz-card *ngIf="singlequestions.length!=0" class="card-left">
+        <div>
+          <strong class="questionTitle">单选题</strong>
+          <span class="questionInfo">共{{singlequestions.length}}题，共{{singlequestions.length*singlequestions[0].score}}分</span>
+        </div>
+        <div>
+          <div  class="question" *ngFor="let item of singlequestions;let i = index" [hidden]="switchValue&&item.selfScore==item.score" >
+            <div>
+              <div id="singlequestion{{i}}" class="questionNum" >
+                <div class="questionNum-top">{{i+1}}</div>
+                <div class="questionNum-bot" >{{item.score}}分</div>
+              </div>
+              <div [innerHTML]="item.stem" style="display: inline-block;overflow: hidden;width: 92%;height: 50px;border-bottom: 2px dashed #f2f2f2">
+              </div>
+            </div>
+            <div class="choiceView" >
+              <div *ngFor="let item1 of item.metas;let j= index" class="questionChoice" >
+                <span>{{characterList[j]}}、</span><span style="display: inline-block" [ngClass]="{'correct':item.rightAnswer.indexOf(j.toString())!=-1 ,'wrong':item.rightAnswer.indexOf(j.toString())==-1&&item.selfAnswer.indexOf(j.toString())!=-1  }" [innerHTML]="item1"></span>
+              </div>
+            </div>
+            <div class="answerView">
+              <span>正确答案是</span>
+              <span *ngFor="let m of item.rightAnswer;let j = index">
+                <strong style="color: #67C23A" >{{characterList[m]}},</strong>
+              </span>
+              <span *ngIf="item.selfAnswer.toString()==item.rightAnswer.toString()">回答正确</span>
+              <span *ngIf="item.selfAnswer.toString()!=item.rightAnswer.toString()">回答错误</span>
+              <div style="float: right">
+                <a *ngIf="item.favorite == '0'" (click)="collectQuestion(item)"><span nz-icon nzType="heart" nzTheme="outline"></span>收藏</a>
+                <a *ngIf="item.favorite == '1'" (click)="cancelCollectQuestion(item.questionId)"><span nz-icon nzType="heart" nzTheme="twotone"></span>取消收藏</a>              </div>
+            </div>
+          </div>
+        </div>
+      </nz-card>
+      <nz-card *ngIf="multiplequestions.length!=0" class="card-left">
+        <div>
+          <strong class="questionTitle">多选题</strong>
+          <span class="questionInfo">共{{multiplequestions.length}}题，共{{multiplequestions.length*multiplequestions[0].score}}分</span>
+        </div>
+        <div>
+          <div  class="question" *ngFor="let item of multiplequestions;let i = index" [hidden]="switchValue&&item.selfScore==item.score">
+            <div>
+              <div id="multiplequestion{{i}}" class="questionNum" >
+                <div class="questionNum-top">{{i+1}}</div>
+                <div class="questionNum-bot" >{{item.score}}分</div>
+              </div>
+              <div [innerHTML]="item.stem" style="display: inline-block;overflow: hidden;width: 92%;height: 50px;border-bottom: 2px dashed #f2f2f2">
+              </div>
+            </div>
+            <div class="choiceView" >
+              <div *ngFor="let item1 of item.metas;let j= index" class="questionChoice" >
+                <span>{{characterList[j]}}、</span><span style="display: inline-block" [ngClass]="{'correct':item.rightAnswer.indexOf(j.toString())!=-1 ,'wrong':item.rightAnswer.indexOf(j.toString())==-1&&item.selfAnswer.indexOf(j.toString())!=-1}" [innerHTML]="item1"></span>
+              </div>
+            </div>
+            <div class="answerView">
+              <span>正确答案是</span>
+              <span *ngFor="let m of item.rightAnswer;let j = index">
+                <strong style="color: #67C23A"  >{{characterList[m]}},</strong>
+              </span>
+              <span *ngIf="item.selfAnswer.toString()==item.rightAnswer.toString()">回答正确</span>
+              <span *ngIf="item.selfAnswer.toString()!=item.rightAnswer.toString()">回答错误</span>
+              <div style="float: right">
+                <a *ngIf="item.favorite == '0'" (click)="collectQuestion(item)"><span nz-icon nzType="heart" nzTheme="outline"></span>收藏</a>
+                <a *ngIf="item.favorite == '1'" (click)="cancelCollectQuestion(item.questionId)"><span nz-icon nzType="heart" nzTheme="twotone"></span>取消收藏</a>              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </nz-card>
+      <nz-card *ngIf="judgequestions.length!=0" class="card-left" >
+        <div>
+          <strong class="questionTitle">判断题</strong>
+          <span class="questionInfo">共{{judgequestions.length}}题，共{{judgequestions.length*judgequestions[0].score}}分</span>
+        </div>
+        <div>
+          <div  class="question" *ngFor="let item of judgequestions;let i = index" [hidden]="switchValue&&item.selfScore==item.score">
+            <div>
+              <div id="judgequestion{{i}}" class="questionNum" >
+                <div class="questionNum-top">{{i+1}}</div>
+                <div class="questionNum-bot" >{{item.score}}分</div>
+              </div>
+              <div  style="display: inline-block;overflow: hidden;width: 92%;height: 50px;border-bottom: 2px dashed #f2f2f2">
+                <div [innerHTML]="item.stem" style="display: inline-block;overflow: hidden;width: 92%;height: 50px;border-bottom: 2px dashed #f2f2f2">
+              </div>
+            </div>
+            <div class="choiceView" >
+              <div *ngFor="let item1 of item.metas;let j= index" class="questionChoice" >
+                <span>{{characterList[j]}}、</span><span style="display: inline-block" [ngClass]="{'correct':item.rightAnswer.indexOf(j.toString())!=-1 ,'wrong':item.rightAnswer.indexOf(j.toString())==-1&&item.selfAnswer.indexOf(j.toString())!=-1}" [innerHTML]="item1"></span>
+              </div>
+            </div>
+            <div class="answerView">
+              <span>正确答案是</span>
+              <span *ngFor="let m of item.rightAnswer;let j = index">
+                <strong style="color: #67C23A"  >{{characterList[m]}},</strong>
+              </span>
+              <span *ngIf="item.selfAnswer.toString()==item.rightAnswer.toString()">回答正确</span>
+              <span *ngIf="item.selfAnswer.toString()!=item.rightAnswer.toString()">回答错误</span>
+              <div style="float: right">
+                <a *ngIf="item.favorite == '0'" (click)="collectQuestion(item)"><span nz-icon nzType="heart" nzTheme="outline"></span>收藏</a>
+                <a *ngIf="item.favorite == '1'" (click)="cancelCollectQuestion(item.questionId)"><span nz-icon nzType="heart" nzTheme="twotone"></span>取消收藏</a>
+              </div>
+
+            </div>
+
+          </div>
+          </div>
+        </div>
+      </nz-card>
+
+    </div>
+
+
+
+    <div class="content-right">
+      <nz-affix [nzTarget]="target" id="affix-container-target">
+        <div class="right right-top">
+          <a href="" class="reTest">再考一次</a>
+        </div>
+        <div></div>
+        <div class="right right-bottom">
+          <nz-divider  nzText="答题卡" nzOrientation="left" style="font-size: 20px"></nz-divider>
+          <div class="datika">
+            <div *ngIf="singlequestions.length!=0" class="single">
+              <div>单选题</div>
+              <div>
+                <nz-anchor [nzAffix]="false">
+                  <span  *ngFor="let item of singlequestions;let i = index">
+                    <nz-link *ngIf="item.selfAnswer.length==0"  style="background-color: #cccccc" nzHref="#singlequestion{{i}}" nzTitle="{{i+1}}"></nz-link>
+                    <nz-link *ngIf="item.selfAnswer.length!=0" [ngStyle]="{'background-color':item.selfAnswer.toString()==item.rightAnswer.toString()? '#43bc60':'red'}" nzHref="#singlequestion{{i}}" nzTitle="{{i+1}}"></nz-link>
+                  </span>
+                </nz-anchor>
+              </div>
+            </div>
+            <div *ngIf="multiplequestions.length!=0">
+              <div>多选题</div>
+              <div>
+                <nz-anchor  [nzAffix]="false">
+                  <span  *ngFor="let item of multiplequestions;let i = index">
+                    <nz-link *ngIf="item.selfAnswer.length==0"  style="background-color: #cccccc" nzHref="#multiplequestion{{i}}" nzTitle="{{i+1}}"></nz-link>
+                    <nz-link *ngIf="item.selfAnswer.length!=0" [ngStyle]="{'background-color':item.selfAnswer.toString()==item.rightAnswer.toString()? '#43bc60':'red'}" nzHref="#multiplequestion{{i}}" nzTitle="{{i+1}}"></nz-link>
+                  </span>
+                </nz-anchor>
+              </div>
+            </div>
+            <div *ngIf="judgequestions.length!=0">
+              <div>判断题</div>
+              <div>
+                <nz-anchor  [nzAffix]="false">
+                  <span  *ngFor="let item of judgequestions;let i = index">
+                    <nz-link *ngIf="item.selfAnswer.length==0"  style="background-color: #cccccc" nzHref="#judgequestion{{i}}" nzTitle="{{i+1}}"></nz-link>
+                    <nz-link *ngIf="item.selfAnswer.length!=0" [ngStyle]="{'background-color':item.selfAnswer.toString()==item.rightAnswer.toString()? '#43bc60':'red'}" nzHref="#judgequestion{{i}}" nzTitle="{{i+1}}"></nz-link>
+                  </span>
+                </nz-anchor>
+              </div>
+            </div>
+          </div>
+          <div></div>
+          <div style="text-align: center">
+            <div style="width: 13px;height: 13px;border-radius: 50%;background-color:#67C23A;display: inline-block;margin:0px 10px"></div>正确
+            <div style="width: 13px;height: 13px;border-radius: 50%;background-color:red;display: inline-block;margin:0px 10px"></div>错误
+            <div style="width: 13px;height: 13px;border-radius: 50%;background-color:#cccccc;display: inline-block;margin:0px 10px"></div>未答
+          </div>
+          <nz-divider ></nz-divider>
+          <div >只显示错题 <nz-switch nzSize="small"  (click)="switchValue=!switchValue"></nz-switch></div>
+        </div>
+      </nz-affix>
+    </div>
+  </nz-content>
+</nz-layout>

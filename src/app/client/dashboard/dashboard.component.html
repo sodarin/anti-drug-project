@@ -1,7 +1,8 @@
-<p>
-  dashboard works!
-</p>
-<form (ngSubmit)="upload()" enctype="multipart/form-data">
-  <input type="file"/>
-</form>
-<button (click)="upload()"></button>
+<nz-layout>
+    <nz-content>
+      <app-dashboard-menu></app-dashboard-menu>
+      &nbsp;&nbsp;
+      <app-dashboard-list></app-dashboard-list>
+      &nbsp;&nbsp;&nbsp;
+    </nz-content>
+  </nz-layout>

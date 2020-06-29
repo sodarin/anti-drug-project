@@ -9,15 +9,25 @@ export class ImagesUploadingService {
 
 
   constructor(private _http: HttpClient) { }
-  getBackground(images:string){
-    return this._http.post(`/group/getIndexGroup`, {
+  setGroupBackground(images:string){
+    return this._http.put(`/groupGate/`, {
       images:images
     })
   }
 
-  getIcon(imageicon:string){
-    return this._http.post(`/group/getIndexGroup`, {
-     imageicon:imageicon
+  getIcon(imageicon:any,groupId:string,userId){
+    return this._http.post(`/material/uploadFile`, {
+      imageicon:imageicon,
+      fileGroupID:groupId,
+
+    })
+  }
+
+  setGroupLogo(groupId:string,imageicon:string){
+    return this._http.put(`/groupGate/setGroupLogo`, {
+      groupId:groupId,
+      logo:imageicon,
+
     })
   }
 }
