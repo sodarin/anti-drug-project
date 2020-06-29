@@ -37,9 +37,9 @@ export class VideoPlayerComponent implements OnInit, OnDestroy {
   };
 
 
-  // player: videojs = {
-  //   currentTime() { }
-  // };
+  player: any = {
+    currentTime() { }
+  };
 
 
   //,public videoService:VideoService
@@ -70,29 +70,29 @@ export class VideoPlayerComponent implements OnInit, OnDestroy {
       nzTitle: '视频学习完成',
     });
   }
-  // onload() {
-  //   var that = this;
-  //   that.player = videojs('my-video', this.options, function onPlayerReady() {  // 播放器内部监控
+  onload() {
+    var that = this;
+    // that.player = videojs('my-video', this.options, function onPlayerReady() {  // 播放器内部监控
 
-  //     this.on('ended', function () {
-  //       that.changeLearnStatus(that.allogId, 'finish', parseInt(that.player.duration())); // 如果学习完了，学习位置设置为0还总长度
-  //       that.success();
-  //     });
+    //   this.on('ended', function () {
+    //     that.changeLearnStatus(that.allogId, 'finish', parseInt(that.player.duration())); // 如果学习完了，学习位置设置为0还总长度
+    //     that.success();
+    //   });
 
-  //     that.renderer2.listen(that.el.nativeElement.querySelector('.vjs-progress-control'), 'mouseup',
-  //       () => {
-  //         if (parseInt(that.player.currentTime()) > that.maxTime) {
-  //           that.onJump(that.maxTime)
-  //         }
-  //       });
-  //     this.on('timeupdate', function () {
-  //         let currentTime:number=parseInt(that.player.currentTime())
-  //         if ((currentTime - that.maxTime) <= 1) {
-  //           that.maxTime = currentTime;
-  //         }
-  //     });
-  //   });
-  // }
+    //   that.renderer2.listen(that.el.nativeElement.querySelector('.vjs-progress-control'), 'mouseup',
+    //     () => {
+    //       if (parseInt(that.player.currentTime()) > that.maxTime) {
+    //         that.onJump(that.maxTime)
+    //       }
+    //     });
+    //   this.on('timeupdate', function () {
+    //       let currentTime:number=parseInt(that.player.currentTime())
+    //       if ((currentTime - that.maxTime) <= 1) {
+    //         that.maxTime = currentTime;
+    //       }
+    //   });
+    // });
+  }
 
 
   // 获得该学习记录的状态和上次的位置
