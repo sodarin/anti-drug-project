@@ -145,16 +145,15 @@ const routes: Routes = [
       { path: 'openresource', component: OpenresourceComponent},
       { path: 'openresourcedetail/:id', component: OpenresourcedetailComponent },
       {path: 'groupmainlist', component: GroupmainlistComponent,
-      canActivate: [AuthGuard], 
       children:[
           {path: '', component: GroupnowComponent},
           {path: 'groupmainsearch', component: GroupmainsearchComponent}
         ]},
       {path: 'groupcreate', component: GroupcreateComponent, canActivate: [AuthGuard]},
       {path: 'groupmainlist/:id', component: GrouplistComponent,
-      canActivate: [AuthGuard],  children: [
+       children: [
           {path: '', component: GroupInfoComponent},
-          {path: 'groupthread/grouptopic', component: GrouptopicComponent},
+          {path: 'groupthread/grouptopic', component: GrouptopicComponent, canActivate: [AuthGuard]},
           {path: 'groupsearch', component: GroupsearchComponent},
           {path: 'groupthread/:id', component: GroupthreadComponent},
           {path: 'groupthread/:id/groupthreadedit', component: GroupthreadeditComponent}
