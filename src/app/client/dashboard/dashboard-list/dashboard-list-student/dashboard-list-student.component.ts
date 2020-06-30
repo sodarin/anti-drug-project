@@ -87,15 +87,14 @@ export class DashboardListStudentComponent implements OnInit {
         for (var item of this.comment) {
           item.content = item.content.replace(/\<[^\>]*\>/g, "");
         }
-        console.log(this.comment);
-        
+        // console.log(this.comment);
       });
   }
 
   getUserActivity(id: string) {
     this.classinfservice.getclassstdDynamic(id).subscribe(
       (res: any) => {
-        console.log(res);
+        // console.log(res);
         // this.renderResulsts(res);
       },
       (error) => {
