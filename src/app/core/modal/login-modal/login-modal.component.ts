@@ -80,6 +80,7 @@ export class LoginModalComponent implements OnInit {
             this.modal.destroy();
           },
           (error) => {
+            this.msg.error("登录失败");
             this.isOkLoading = false;
             this.dataLogin = error.error;
             if (this.dataLogin.text == "用户不存在") {

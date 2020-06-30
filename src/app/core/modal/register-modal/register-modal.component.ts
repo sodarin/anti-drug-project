@@ -42,6 +42,7 @@ export class RegisterModalComponent implements OnInit {
         this.registerForm.value.password
       ).subscribe(
         () => { }, error => {
+          this.msg.error("注册失败");
           this.isOkLoading = false;
           this.dataRegister = error.error;
           if (this.dataRegister.text == "用户名已存在") {
