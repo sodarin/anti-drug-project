@@ -5,6 +5,7 @@ import {ActivatedRoute} from '@angular/router';
 import {GrouplistService} from '../../../../service/grouplist/grouplist.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {GroupfirstService} from '../../../../service/groupfirst/groupfirst.service';
+import { AuthService } from 'src/app/front-desk/auth/auth.service';
 
 @Component({
   selector: 'app-groupmember',
@@ -25,6 +26,7 @@ export class GroupmemberComponent implements OnInit {
   isfocus:boolean;
   threadCreatingForm: FormGroup;
   conversationId: any;
+  curUserOwnThisGroup:boolean;
 
   checkOption = [];
   memberMapOfCheckedId: { [key: string]: boolean } = {};
@@ -43,7 +45,8 @@ export class GroupmemberComponent implements OnInit {
                private _notification: NzNotificationService,
                private _modal: NzModalService,
                private fb: FormBuilder,
-               private groupfirstService$: GroupfirstService
+               private groupfirstService$: GroupfirstService,
+               private authService: AuthService
                ) {
     this.groupId = this.routeInfo.snapshot.params['id'];
   }
@@ -54,6 +57,7 @@ export class GroupmemberComponent implements OnInit {
       content: ['', Validators.required],
     });
     this.getMember();
+    this.curUserOwnThisGroup = this.authService.userOwnGroupChecker(this.groupId);
   }
 
 

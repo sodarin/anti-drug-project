@@ -9,6 +9,7 @@ import { RegisterModalComponent } from "../register-modal/register-modal.compone
 import { NzModalService, NzMessageService, NzModalRef } from "ng-zorro-antd";
 import { LoginRegisterService } from "src/app/service/login-register/login-register.service";
 import { UserManagementService } from "src/app/service/user-management/user-management.service";
+import { MyteachingService } from "src/app/service/admin-review/myteaching/myteaching.service";
 
 @Component({
   selector: "app-login-modal",
@@ -26,6 +27,7 @@ export class LoginModalComponent implements OnInit {
     private loginService: LoginRegisterService,
     private msg: NzMessageService,
     private userManagementService: UserManagementService,
+    private myteachingService: MyteachingService,
     private modal: NzModalRef
   ) {}
 
@@ -43,7 +45,6 @@ export class LoginModalComponent implements OnInit {
     }
 
     if (this.loginForm.valid) {
-
       this.isOkLoading = true;
       this.loginService
         .postLogin(this.loginForm.value.username, this.loginForm.value.password)
@@ -74,6 +75,24 @@ export class LoginModalComponent implements OnInit {
                   }
                 });
               });
+
+            //保存用户所在小组id
+            this.myteachingService.getMyJoinGroup(res).subscribe((data) => {
+              let myGroups = "";
+              for (const groupItem of data.data) {
+                myGroups = myGroups + groupItem.id + ";";
+              }
+              window.localStorage.setItem("myGroups", myGroups);
+            });
+            
+            //保存用户所管理小组id
+            this.myteachingService.getMyOwnGroup(res).subscribe((data) => {
+              let myOwnGroups = "";
+              for (const groupItem of data.data) {
+                myOwnGroups = myOwnGroups + groupItem.id + ";";
+              }
+              window.localStorage.setItem("myOwnGroups", myOwnGroups);
+            });
 
             this.msg.success("登录成功");
             this.modal.triggerOk();
