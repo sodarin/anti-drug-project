@@ -24,12 +24,12 @@ export class AuthGuard implements CanActivate {
   ): boolean {
     let url: string = state.url;
 
-    // 创建小组，仅限管理员访问
+    // 页面：创建小组，仅限管理员访问
     if (url == "/client/groupcreate") {
       return this.checkStatus(url, "SUPER_ADMIN");
     }
 
-    // 创建小组话题，仅限小组成员访问
+    // 页面：创建小组话题，仅限小组成员访问
     if (url.indexOf("/groupthread/grouptopic") != -1) {
       let targetGroupId = url.split("/")[3];
       if (!this.authService.userInGroupChecker(targetGroupId)) {
