@@ -42,7 +42,7 @@ export class AuthGuard implements CanActivate {
   }
 
   checkStatus(url: string, identity = null): boolean {
-    if (typeof window.localStorage.getItem("id") != "string") {
+    if (!this.authService.userLoginChecker()) {
       this.msg.error("尚未登录");
       return false;
     }

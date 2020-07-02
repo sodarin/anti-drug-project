@@ -4,6 +4,10 @@ import { Injectable } from "@angular/core";
   providedIn: "root",
 })
 export class AuthService {
+  userLoginChecker(): boolean {
+    return typeof window.localStorage.getItem("id") == "string";
+  }
+  
   userIdentityChecker(identity: string): boolean {
     let localIdentities = window.localStorage.getItem("authorities");
     return localIdentities.indexOf(identity) != -1;
