@@ -41,9 +41,9 @@
       <!-- <li nz-submenu *ngIf="isLogin" nzTitle="管理后台"> -->
       <li nz-submenu nzTitle="管理后台">
         <ul>
-          <li nz-menu-item>进入后台</li>
-          <li nz-menu-item>我的教学</li>
-          <li nz-menu-item>我的学习</li>
+          <li nz-menu-item (click)="navigateByUrl('/admin')">管理后台</li>
+          <li nz-menu-item (click)="navigateByUrl('/client/mine/teachingcourse')">我的教学</li>
+          <li nz-menu-item (click)="navigateByUrl('/client/mine/mycourse')">我的学习</li>
         </ul>
       </li>
 
@@ -105,9 +105,9 @@
 
           <li nz-submenu *ngIf="isLogin" nzTitle="管理后台" class="menu-item">
             <ul>
-              <li nz-menu-item>进入后台</li>
-              <li nz-menu-item>我的教学</li>
-              <li nz-menu-item>我的学习</li>
+              <li nz-menu-item (click)="navigateByUrl('/admin')">管理后台</li>
+              <li nz-menu-item (click)="navigateByUrl('/client/mine/teachingcourse')">我的教学</li>
+              <li nz-menu-item (click)="navigateByUrl('/client/mine/mycourse')">我的学习</li>
             </ul>
           </li>
 

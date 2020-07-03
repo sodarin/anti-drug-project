@@ -9,9 +9,15 @@
         (click)="navigateByUrl('/client/course/'+courseId+'/question_create/mutiple_choice')"><i nz-icon nzType="plus"
           nzTheme="outline"></i>多选题</button>
       <button nz-button nzType="primary" class="header-button"
+        (click)="navigateByUrl('/client/course/'+courseId+'/question_create/choice')"><i nz-icon nzType="plus"
+          nzTheme="outline"></i>不定项选择题</button>
+      <button nz-button nzType="primary" class="header-button"
+        (click)="navigateByUrl('/client/course/'+courseId+'/question_create/determine')"><i nz-icon nzType="plus"
+          nzTheme="outline"></i>判断题</button>
+      <!-- <button nz-button nzType="primary" class="header-button"
         (click)="navigateByUrl('/client/course/'+courseId+'/question_create/essay')" disabled><i nz-icon nzType="plus"
-          nzTheme="outline"></i>问答题</button>
-      <button nz-button nz-dropdown [nzDropdownMenu]="operationsMenu" nzPlacement="bottomRight">
+          nzTheme="outline"></i>问答题</button> -->
+      <!-- <button nz-button nz-dropdown [nzDropdownMenu]="operationsMenu" nzPlacement="bottomRight">
         <i nz-icon nzType="caret-down" nzTheme="outline"></i>
       </button>
       <nz-dropdown-menu #operationsMenu="nzDropdownMenu">
@@ -23,9 +29,9 @@
           <li nz-menu-item (click)="navigateByUrl('/client/course/'+courseId+'/question_create/completion')" nzDisabled>
             <i nz-icon nzType="plus" nzTheme="outline"></i>填空题</li>
           <li nz-menu-item (click)="navigateByUrl('/client/course/'+courseId+'/question_create/material')" nzDisabled><i
-              nz-icon nzType="plus" nzTheme="outline"></i>材料题</li>
+              nz-icon nzType="plus" nzTheme="outline"></i>材料题</li> 
         </ul>
-      </nz-dropdown-menu>
+      </nz-dropdown-menu> -->
     </div>
   </div>
   <nz-divider></nz-divider>

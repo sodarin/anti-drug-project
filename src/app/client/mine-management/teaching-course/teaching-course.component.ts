@@ -21,5 +21,4 @@ export class TeachingCourseComponent implements OnInit {
   navigatTo(url: string) {
     this.router.navigateByUrl(url)
   }
-
 }

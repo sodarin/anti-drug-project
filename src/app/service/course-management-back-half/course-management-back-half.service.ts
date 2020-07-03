@@ -134,23 +134,12 @@ export class CourseManagementBackHalfService {
   }
 
   //添加任务
-  addPlanTask_Text(userId: string, courseID: string, teachingplanId: string, title: string, content: string,
-    isOptional: boolean, finishDetail: string, seq: number): Observable<any> {
-    var isop = 0;
-    if (isOptional) {
-      isop = 1;
-    }
-    return this._http.post(`/course/createTask_Text`, {
-      content: content,
-      createdUserId: userId,
-      finishDetail: finishDetail,
-      fromCourseId: teachingplanId,
-      fromCourseSetId: courseID,
-      isOptional: isop,
-      remark: "",
-      seq: seq,
-      title: title,
-    })
+  addPlanTask_Text(pt_form:any): Observable<any> {
+    return this._http.post(`/course/createTask_Text`, pt_form)
+  }
+
+  addPlanTask_Homework(hk_form:any): Observable<any> {
+    return this._http.post(`/course/createTask_Homework`, hk_form)
   }
   //排序任务
   sortPlanTask(courseId:string,taskIdArray:any): Observable<any> {

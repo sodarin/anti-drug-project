@@ -46,7 +46,6 @@ export class MyClassComponent implements OnInit {
     this.classroomList = [];
     this.MyteachingService$.getMyClassList(1, 10,this.userId ).subscribe(result => {
         this.loading = false;
-        console.log(result);
         this.dataList = result.data;
         this.classroomList = this.dataList;
       },
@@ -71,10 +70,6 @@ export class MyClassComponent implements OnInit {
 
   navigatTo(url: string) {
     this.route.navigateByUrl(url)
-  }
-
-  viewClass(classitem:any){
-    console.log(classitem);
   }
 
 }

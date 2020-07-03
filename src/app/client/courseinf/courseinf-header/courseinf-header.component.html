@@ -1,12 +1,12 @@
 <nz-layout>
     <nz-header class="header_inner">
-        <div *ngIf="currentcourse.serializemode=='finished'" class="coursestate">
+        <div *ngIf="currentcourse?.serializemode=='finished'" class="coursestate">
             <img alt="finish" src="../../../../assets/img/finish.png" height="70">
         </div>
-        <div *ngIf="currentcourse.serializemode=='none'|| currentcourse.serializemode=='serialized'" class="coursestate">
+        <div *ngIf="currentcourse?.serializemode=='none'|| currentcourse?.serializemode=='serialized'" class="coursestate">
             <img alt="update" src="../../../../assets/img/updating.png" height="70">
         </div>
-        <h1 class="coursetitle">{{currentcourse.title}} --- {{currentplan?.title}}</h1>
+        <h1 class="coursetitle">{{currentcourse?.title}} --- {{currentplan?.title}}</h1>
         <!--<i nz-icon nzType="qrcode" class="header_icon" nzTheme="outline" nz-popover
             [nzContent]="qrcodecontent" nzTrigger="click">
         </i>
@@ -20,7 +20,7 @@
         </ng-template>--> 
         <div style="float: right;">
             <i nz-icon nzType="user" class="header_icon"
-                nzTheme="outline"></i><span>&nbsp;<b>{{currentcourse.studentnum}}人</b>
+                nzTheme="outline"></i><span>&nbsp;<b>{{currentcourse?.studentnum}}人</b>
             </span>
             <i *ngIf="joinINf==null||joinINf.collection==false" nz-icon nzType="star" class="header_icon" nzTheme="outline" (click)="collect_submit()"></i>
             <i *ngIf="joinINf!=null&&joinINf.collection==true" nz-icon nzType="star" class="header_icon" nzTheme="fill" (click)="uncollect_submit()"></i>
@@ -54,7 +54,7 @@
     </nz-header>
     <nz-layout *ngIf="joinINf==null ||joinINf?.join==false">
         <nz-sider [nzWidth]="500">
-            <img alt="headerimg" class="headerimg" src="{{currentcourse.cover}}" />
+            <img alt="headerimg" class="headerimg" src="{{currentcourse?.cover}}" />
         </nz-sider>
         <nz-content class="headerback">
             <div class="headeritem">

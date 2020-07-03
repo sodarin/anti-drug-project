@@ -5,7 +5,7 @@
       <nz-list-item>
         <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="nzDesrc" >
           <ng-template #nzTitle>
-          <span class="question-title" (click)="viewTopic(item)">{{ item.title }}</span>
+          <span class="question-title">{{ item.title }}</span>
           </ng-template>
           <ng-template #nzDesrc>
             <div>来自<span style="cursor: pointer; color: #108ee9" (click)="navigate('/client/classroom/' + item.courseSetId)">{{ item.courseTitle}}-{{item.courseSetTitle}}</span>·浏览量{{item.hitNum}}</div>

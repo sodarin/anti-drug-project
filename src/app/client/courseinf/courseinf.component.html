@@ -3,7 +3,8 @@
         <nz-layout>
             <nz-header class="nz-header_inner">
                 <!--courseinf-mainheadpage-->
-                <app-courseinf-header [joinINf] = "joinINf" [courseid]="courseid" [user]="user"  [teachplanId]="teachplanId" (joinCourse)="updataload()" (exitCourse)="updataload()" (changePlan)="changeteachplan($event)"></app-courseinf-header>
+                <app-courseinf-header #header [joinINf] = "joinINf" [courseid]="courseid" [user]="user"  [teachplanId]="teachplanId"
+                 (joinCourse)="updataload()" (exitCourse)="updataload()" (changePlan)="changeteachplan($event)"></app-courseinf-header>
             </nz-header>
             <nz-layout>
                 <nz-content>

@@ -9,10 +9,14 @@ export class QuestionCreateService {
 
   constructor(private _http: HttpClient) { }
 
+  getQuestionNum(courseSetId: number): Observable<any> {
+    const api = `/course/getQuestionNum?courseSetId=${courseSetId}`
+    return this._http.get(api);
+  }
   getCourseQuestionList(courseId: any, pageNum: number = 1, pageSize: number = 10, keyWord: any = '', type: string = ''): Observable<any> {
-    const api = '/course/getCourseQuestionList?';
+    const api = '/course/getCourseQuestionList';
     let httpParams = new HttpParams()
-      .set('courseId', courseId)
+      .set('courseSetId', courseId)
       .set('keyWord', keyWord)
       .set('pageNum', `${pageNum}`)
       .set('pageSize', `${pageSize}`)

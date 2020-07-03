@@ -2,7 +2,7 @@
     <nz-content class="container-content">
         <nz-layout>
             <nz-header class="nz-header_inner">
-                <app-classinf-header [joinINf]="joinINf" [user]="user" [classid]="classid"></app-classinf-header>
+                <app-classinf-header [joinINf]="joinINf" [user]="user" [classid]="classid" (joinClass)="reloadData()" (exitClass)="reloadData()"></app-classinf-header>
 
             </nz-header>
             <nz-divider nzType="vertical"></nz-divider>
@@ -31,11 +31,11 @@
                                 <nz-tab nzTitle="评价">
                                     <app-classinf-comment [classid]="classid"></app-classinf-comment>
                                 </nz-tab>
-                                <nz-tab nzTitle="话题">
+                                <nz-tab nzTitle="话题" *ngIf="joinINf!=null&&joinINf.join==true">
                                     <app-classinf-topic [classid]="classid">
                                     </app-classinf-topic>
                                 </nz-tab>
-                                <nz-tab nzTitle="笔记">
+                                <nz-tab nzTitle="笔记" *ngIf="joinINf!=null&&joinINf.join==true">
                                     <app-classinf-notes [classid]="classid"></app-classinf-notes>
                                 </nz-tab>
                                 <nz-tab nzTitle="师资">

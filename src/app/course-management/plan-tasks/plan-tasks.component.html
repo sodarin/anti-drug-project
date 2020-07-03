@@ -44,7 +44,8 @@
                   <nz-button-group nzSize='small'>
                     <button nz-button><i nz-icon nzType="eye" nzTheme="outline"></i>预览</button>
                     <button nz-button><i nz-icon nzType="edit" nzTheme="outline"></i>编辑</button>
-                    <button nz-button><i nz-icon nzType="upload" nzTheme="outline" (click)="publishTask(panel[0].taskId)"></i>发布</button>
+                    <button nz-button><i nz-icon nzType="upload" nzTheme="outline"
+                        (click)="publishTask(panel[0].taskId)"></i>发布</button>
                     <button nz-button><i nz-icon nzType="delete" nzTheme="outline"></i>删除</button>
                   </nz-button-group>
                 </ng-template>
@@ -132,14 +133,21 @@
   <div *ngIf="addtask_currentpage==1">
     <!-- 图文、讨论页 -->
     <div *ngIf="addtssk_currenttype=='picture_text'||addtssk_currenttype=='discuss'">
-      <div>
-        <span class="formTitle">标题</span>
-        <input nz-input placeholder="请输入标题" [(ngModel)]="pt_title" />
-      </div>
-      <p class="formTitle">内容</p>
-      <div style="margin-top:30px;">
-        <quill-editor [styles]="{height: '220px'}" placeholder="请输入评价内容" [(ngModel)]="pt_content"></quill-editor>
-      </div>
+      <form nz-form [formGroup]="pt_Form" nzLayout="vertical">
+        <nz-form-item>
+          <nz-form-label nzRequired>标题</nz-form-label>
+          <nz-form-control nzErrorTip="请输入标题">
+            <input nz-input id="title" formControlName="title" />
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label [nzSpan]="lblLength" nzRequired>内容</nz-form-label>
+          <nz-form-control [nzSpan]="conLength">
+            <quill-editor [styles]="{height: '220px'}" formControlName="content"></quill-editor>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
     </div>
     <!-- 资源、视频页 -->
     <div *ngIf="addtssk_currenttype=='video'||addtssk_currenttype=='voice'||addtssk_currenttype=='download'">
@@ -290,15 +298,14 @@
           <nz-form-label nzSpan="3" nzFor="chapter" nzRequired>标题名称</nz-form-label>
           <nz-form-control nzSpan="21" nzErrorTip="请输入标题名称" nzHasFeedback>
             <nz-input-group>
-              <input formControlName="homeWorkTitleName" required type="text" id="homeWorkTitleName" nz-input
-                placeholder="输入标题名称：" />
+              <input formControlName="title" required type="text" id="title" nz-input placeholder="输入标题名称：" />
             </nz-input-group>
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
           <nz-form-label nzSpan="3" nzFor="intro" nzRequired>作业说明</nz-form-label>
           <nz-form-control nzSpan="21" nzErrorTip="请输入作业说明" nzHasFeedback>
-            <quill-editor [styles]="{height: '200px'}" required formControlName="homeWorkIntro" id="homeWorkIntro">
+            <quill-editor [styles]="{height: '200px'}" required formControlName="content" id="content">
             </quill-editor>
           </nz-form-control>
         </nz-form-item>
@@ -309,26 +316,50 @@
           </button>
         </nz-form-item>
         <nz-form-item>
-          <nz-table #homeWorkExerciseTable>
-            <thead>
-              <tr>
-                <th nzShowCheckbox></th>
-                <th>题号</th>
-                <th width="30%">题干</th>
-                <th>类型</th>
-                <th>难度</th>
-                <th>操作</th>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-          </nz-table>
-          <label nz-checkbox>全选</label>
-          <button nz-button nzType="danger" nzSize="small">
-            <!--(click)="check()"--><i nz-icon nzType="delete" nzTheme="outline"></i>删除
-          </button>
+          <nz-table #SquestionListTable [nzFrontPagination]="false" >
+          <thead>
+            <tr>
+              <!-- <th nzShowCheckbox [(nzChecked)]="isAllChecked" (nzCheckedChange)="checkAll($event)"></th> -->
+              <th width="10%">选择</th>
+              <th width="35%">题干</th>
+              <th width="15%">类型</th>
+              <th>最后更新</th>
+              <th width="20%">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of selectedQuestions">
+              <td nzShowCheckbox (nzCheckedChange)="check2(data.id)"></td>
+              <td [innerHTML]="data.stem"></td>
+              <td>{{ questiontypeToChinese[data.type] }}</td>
+              <td>{{ data.updatedTime * 1000 | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+              <td><a nz-popover [nzPopoverTitle]="popoverTitle" [nzPopoverContent]="popoverContent">预览</a>
+                <ng-template #popoverTitle>
+                  <span [innerHTML]="data.stem"></span>
+                </ng-template>
+                <ng-template #popoverContent>
+                  <div class="question-body">
+                    <div>
+                      <nz-tag [nzColor]="'blue'">分值:</nz-tag>{{data.score==null?'无':data.score}}
+                    </div>
+                  </div>
+                  <div class="question-answer">
+                    <nz-tag [nzColor]="'blue'">正确答案:</nz-tag>{{data.answer==null?'无':data.answer}}
+                  </div>
+                  <div class="question-analysis">
+                    <nz-tag [nzColor]="'blue'">解析:</nz-tag> <span>{{data.analysis==null?'无解析':data.analysis}}</span>
+                  </div>
+                </ng-template>
+                <nz-divider nzType="vertical"></nz-divider>
+                <a (click)="confirmDelete(data.id)">删除</a>
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
         </nz-form-item>
       </form>
+      <button nz-button nzType="danger" (click)="confirmDeleteList()"><i nz-icon nzType="delete"
+        nzTheme="outline"></i>删除</button>
     </div>
 
   </div>
@@ -358,8 +389,8 @@
       <p>完成条件：提交作业</p>
     </div>
 
-    <div
-      *ngIf="addtssk_currenttype=='picture_text'||addtssk_currenttype=='video'||addtssk_currenttype=='voice'||addtssk_currenttype=='download'">
+    <div>
+      <!--  *ngIf="addtssk_currenttype=='picture_text'||addtssk_currenttype=='video'||addtssk_currenttype=='voice'||addtssk_currenttype=='download'" -->
       <label nz-checkbox [(ngModel)]="iselective">是否为选修</label>
     </div>
   </div>
@@ -385,39 +416,53 @@
 
 <!-- 题目选择 -->
 <nz-modal [(nzVisible)]="addsubject_visible" nzTitle="选择题目" (nzOnCancel)="handleCancel_subject()"
-  (nzOnOk)="handleOk_addsubject()" nzOkText='确定' nzCancelText='取消' [nzMaskClosable]="false">
-  <nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixButton">
-    <input type="text" nz-input placeholder="input search text" />
-  </nz-input-group>
-  <ng-template #suffixButton>
-    <button nz-button nzType="primary" nzSize="large" nzSearch>Search</button>
-  </ng-template>
-  <nz-divider></nz-divider>
-  <nz-table #basicTable [nzData]="soursedata" [nzPageIndex]="soursepage" nzPageSize="5">
-
-    <!-- (nzPageIndexChange) 当前页码改版时的回调函数 (nzPageSizeChange) 页数改变时的回调函数  (nzCheckedChange)	选中的回调-->
-    <thead>
-      <tr>
-        <!-- <th nzShowCheckbox [(nzChecked)]="isAllDisplayDataChecked" [nzIndeterminate]="isIndeterminate"
-          (nzCheckedChange)="checkAll($event)"></th> -->
-        <th>选择</th>
-        <th>名称</th>
-        <th>大小</th>
-        <th>日期</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let data of basicTable.data">
-        <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="refreshStatus()"></td>
-        <td>{{data.name}}</td>
-        <td>{{data.date}}</td>
-        <td>{{data.size}}</td>
-        <!-- <td>
-          <a>Action 一 {{data.name}}</a>
-          <nz-divider nzType="vertical"></nz-divider>
-          <a>Delete</a>
-        </td> -->
-      </tr>
-    </tbody>
-  </nz-table>
+  (nzOnOk)="handleOk_addsubject()" nzOkText='确定' nzCancelText='取消' [nzMaskClosable]="false" nzWidth="700">
+  <div class="select-group">
+    <nz-select nzPlaceHolder="请选择题型" style="width:15%;" class="form-item" [(ngModel)]="questionType" nzAllowClear>
+      <nz-option *ngFor="let item of listOfQuestionTypes" [nzValue]="item.value" [nzLabel]="item.label"></nz-option>
+    </nz-select>
+    <input type="text" nz-input placeHolder="请输入关键字" style="width:20%;" class="form-item" [(ngModel)]="questionKeyword">
+    <button nz-button class="form-item" nzType="primary" (click)="searchData()">搜索</button>
+  </div>
+  <div class="content">
+    <nz-table #questionListTable [nzData]="questionlist" [nzTotal]="questionTotalpage" [nzPageSize]="10"
+      [(nzPageIndex)]="questionPageIndex" [nzFrontPagination]="false" (nzPageIndexChange)="searchData()">
+      <thead>
+        <tr>
+          <!-- <th nzShowCheckbox [(nzChecked)]="isAllChecked" (nzCheckedChange)="checkAll($event)"></th> -->
+          <th width="10%">选择</th>
+          <th width="35%">题干</th>
+          <th width="15%">类型</th>
+          <th>最后更新</th>
+          <th width="20%">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of questionListTable.data">
+          <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="check(data)"></td>
+          <td [innerHTML]="data.stem"></td>
+          <td>{{ questiontypeToChinese[data.type] }}</td>
+          <td>{{ data.updatedTime * 1000 | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+          <td><a nz-popover [nzPopoverTitle]="popoverTitle" [nzPopoverContent]="popoverContent">预览</a>
+            <ng-template #popoverTitle>
+              <span [innerHTML]="data.stem"></span>
+            </ng-template>
+            <ng-template #popoverContent>
+              <div class="question-body">
+                <div>
+                  <nz-tag [nzColor]="'blue'">分值:</nz-tag>{{data.score==null?'无':data.score}}
+                </div>
+              </div>
+              <div class="question-answer">
+                <nz-tag [nzColor]="'blue'">正确答案:</nz-tag>{{data.answer==null?'无':data.answer}}
+              </div>
+              <div class="question-analysis">
+                <nz-tag [nzColor]="'blue'">解析:</nz-tag> <span>{{data.analysis==null?'无解析':data.analysis}}</span>
+              </div>
+            </ng-template>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
 </nz-modal>
