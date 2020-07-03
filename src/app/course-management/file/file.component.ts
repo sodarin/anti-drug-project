@@ -5,7 +5,6 @@ import { filter } from 'rxjs/operators';
 import { HttpResponse, HttpRequest, HttpClient } from '@angular/common/http';
 import { CourseManagementUtilService } from 'src/app/service/course-management-util/course-management-util.service';
 import { CourseFileService } from 'src/app/service/course-file/course-file.service';
-
 enum FILETYPE {
   image = '图片',
   video = '视频',
@@ -63,7 +62,7 @@ export class FileComponent implements OnInit {
     private _courseFileService: CourseFileService,
     private nzEmptyService: NzEmptyService,
     private msg: NzMessageService,
-    private http: HttpClient
+    private http: HttpClient,
   ) { }
 
 

@@ -57,7 +57,6 @@ export class CourseinfHeaderComponent implements OnInit {
   //页头显示用变量
   iscollection = "outline";
   islearned = "outline";
-  isJoin = false;
 
   //
   joinCourse: EventEmitter<any>;
@@ -66,10 +65,7 @@ export class CourseinfHeaderComponent implements OnInit {
 
 
   //临时计划
-  teacherplans = [
-    {title:"默认教学计划",code:0,color:"cyan",id:0},
-    {title:"其他计划",code:1,color:"cyan",id:1},
-  ]
+  teacherplans:any;
 
   constructor(private notification: NzNotificationService, private courseinfservice: CourseInfService,
     private testuserservice: TestuserService, private route: Router) {
@@ -79,6 +75,10 @@ export class CourseinfHeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    //仅测试用
+    this.user = this.testuserservice.user;
+    
+
     this.courseinfservice.getCourse(this.courseid).subscribe((res: any) => {
       this.setcurrentcourse(res);
     }, error => {
@@ -100,14 +100,7 @@ export class CourseinfHeaderComponent implements OnInit {
         { nzDuration: 100 }
       )
     });
-
-
-
-
-    //仅测试用
-    this.user = this.testuserservice.user;
-
-    this.isJoin = this.testuserservice.isInCourse(this.courseid);
+    
   }
 
   setcurrentcourse(res: any) {
@@ -125,11 +118,9 @@ export class CourseinfHeaderComponent implements OnInit {
 
   setteaching_plan(res: any) {
     this.teacherplans = res.data;
-    if(this.teacherplans.length>0){
-      this.changeteachplan(this.teacherplans[0].id);
-    }
-    
+    this.initteachplan(this.teachplanId);
   }
+
 
   learnpercent = (percent: number) => `${percent} %`;
   //退学
@@ -194,20 +185,61 @@ export class CourseinfHeaderComponent implements OnInit {
       this.notification.create(
         'error',
         '错误！',
-        `${error}`,
-        { nzDuration: 100 }
+        `${error}`
       )
     });
   }
 
   //收藏
   collect_submit() {
-
+    this.courseinfservice.collect_submit(this.teachplanId,parseInt(this.courseid),1).subscribe((res: any) => {
+      this.exitCourse.emit();//事件exitCourse事件仅用来更新数据，无实际意义
+      this.notification.create(
+        'success',
+        '提示',
+        `收藏成功`
+      )
+    }, error => {
+      this.notification.create(
+        'error',
+        '错误！',
+        `${error}`
+      )
+    });
   }
 
   //取消收藏
   uncollect_submit() {
+    this.courseinfservice.Uncollect_submit(this.teachplanId,this.courseid,"1").subscribe((res: any) => {
+      this.exitCourse.emit();//事件exitCourse事件仅用来更新数据，无实际意义
+      this.notification.create(
+        'success',
+        '提示',
+        `取消收藏成功`
+      )
+    }, error => {
+      this.notification.create(
+        'error',
+        '错误！',
+        `${error}`
+      )
+    });
+  }
 
+  initteachplan(id: string){
+    if(id=="0"||id == undefined){
+      this.teacherplans[0].color = '#458B74';
+      this.currentplan = this.teacherplans[0];
+    }else{
+      for (let temp of this.teacherplans) {
+        if (temp.id == id) {
+          this.currentplan = temp;
+          temp.color = '#458B74';
+        } else {
+          temp.color = 'cyan';
+        }
+      }
+    }
   }
 
   //改变教学计划

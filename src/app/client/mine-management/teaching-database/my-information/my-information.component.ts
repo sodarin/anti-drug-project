@@ -390,7 +390,6 @@ export class MyInformationComponent implements OnInit {
     ).subscribe((res: any) => {
       this.myshareuser = res.data.data;
       this.myshareusertotalpage = res.data.total;
-      console.log(this.myshareuser)
     }, error => {
       this._notification.create(
         'error',

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { ClassInfService } from 'src/app/service/classinf-frontend/classinf-frontend.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import {TestuserService} from '../../../service/teacher-frontend/teacher-frontend.service';
@@ -7,6 +7,7 @@ import {TestuserService} from '../../../service/teacher-frontend/teacher-fronten
   templateUrl: './classinf-header.component.html',
   styleUrls: ['./classinf-header.component.less'],
   inputs: ["user","classid","joinINf"],
+  outputs:["joinClass","exitClass"]
 })
 export class ClassinfHeaderComponent implements OnInit {
   classid = "0"
@@ -40,16 +41,20 @@ export class ClassinfHeaderComponent implements OnInit {
 
   //页头显示用变量
   commitmentservice = ["grey", "", "", "", "", ""];
-  isJoin:boolean = false;
 
   //退出班级
   CourseExitVisible = false;
   selectedExitReason: string;
   CourseExitinputValue: string;
 
+  joinClass: EventEmitter<any>;
+  exitClass: EventEmitter<any>;
+
 
   constructor(private classinfservice: ClassInfService, private notification: NzNotificationService,
     private testuserservice:TestuserService) {
+      this.joinClass = new EventEmitter();
+      this.exitClass = new EventEmitter();
   }
 
   ngOnInit() {
@@ -65,7 +70,6 @@ export class ClassinfHeaderComponent implements OnInit {
 
     //仅测试用
     this.user = this.testuserservice.user;
-    this.isJoin = this.testuserservice.isInClass(this.classid);
   }
   
   setcurrentclass(res: any) {
@@ -120,36 +124,34 @@ export class ClassinfHeaderComponent implements OnInit {
 
   //加入班级
   joinclass_submit() {
-    this.testuserservice.joinClass(this.classid);
-    this.isJoin = this.testuserservice.isInClass(this.classid);
-    // this.classinfservice.joinclass_submit(this.classid, "0").subscribe((res: any) => {
-    //   this.notification.create(
-    //     'success',
-    //     '提交成功！',
-    //     `提交成功`)
-    // }, error => {
-    //   this.notification.create(
-    //     'error',
-    //     '发生错误！',
-    //     `${error.error}`)
-    // })
+    this.classinfservice.joinclass_submit(this.classid, "1").subscribe((res: any) => {
+      this.joinClass.emit();
+      this.notification.create(
+        'success',
+        '提交成功！',
+        `提交成功`)
+    }, error => {
+      this.notification.create(
+        'error',
+        '发生错误！',
+        `${error.error}`)
+    })
   }
 
   //退出学习
   exitlearn_submit() {
-    this.testuserservice.exitClass(this.classid);
-    this.isJoin = this.testuserservice.isInClass(this.classid);
-    // this.classinfservice.exitlearn_submit(this.classid, "0").subscribe((res: any) => {
-    //   this.notification.create(
-    //     'success',
-    //     '提交成功！',
-    //     `提交成功`)
-    // }, error => {
-    //   this.notification.create(
-    //     'error',
-    //     '发生错误！',
-    //     `${error.error}`)
-    // })
+    this.classinfservice.exitlearn_submit(this.classid,"1").subscribe((res: any) => {
+      this.exitClass.emit();
+      this.notification.create(
+        'success',
+        '提交成功！',
+        `提交成功`)
+    }, error => {
+      this.notification.create(
+        'error',
+        '发生错误！',
+        `${error.error}`)
+    })
   }
 
 }

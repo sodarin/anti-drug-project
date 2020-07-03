@@ -13,10 +13,10 @@ import {NzNotificationService} from 'ng-zorro-antd';
 export class PlanSettingComponent implements OnInit {
 
   courseId: string;
+  teachplanId: string;
 
   planInfoEditForm: FormGroup;
 
-  planId: string;
 
   tagOptions = [];
   classificationOptions = [];
@@ -39,6 +39,7 @@ export class PlanSettingComponent implements OnInit {
 
   ngOnInit() {
     this.courseId = location.pathname.split('/')[3];
+    this.teachplanId = location.pathname.split('/')[5];
     this.planInfoEditForm = this.fb.group({
       name: ['', Validators.required],
       rule: [],
@@ -46,21 +47,8 @@ export class PlanSettingComponent implements OnInit {
       target: [''],
       tags: ['']
     });
-    this.searchPlanList()
-  }
 
-  searchPlanList() {
-    this.courseManagement$.getTeachingPlan(this.courseId).subscribe(result => {
-      this.planList = result.data;
-      this.planInfoEditForm.controls.name.setValue(this.planList[0].title);
-      this.planId = this.planList[0].id;
-      this.getBasicInfo(this.planId)
-    }, error1 => {
-      this._notification.error(
-        '获取计划列表出错！',
-        `${error1.error}`
-      )
-    })
+    this.getBasicInfo(this.teachplanId)
   }
 
   getBasicInfo(id: string) {
@@ -102,7 +90,7 @@ export class PlanSettingComponent implements OnInit {
           audienceString += '|'
         });
       }
-      this.courseManagement$.setPlanBasicInfo(this.planId, audienceString, this.planInfoEditForm.controls.rule.value, tagString, this.planInfoEditForm.controls.intro.value, this.planInfoEditForm.controls.name.value).subscribe(result => {
+      this.courseManagement$.setPlanBasicInfo(this.teachplanId, audienceString, this.planInfoEditForm.controls.rule.value, tagString, this.planInfoEditForm.controls.intro.value, this.planInfoEditForm.controls.name.value).subscribe(result => {
         this._notification.success(
           '教学计划设置成功！',
           ''
@@ -139,8 +127,8 @@ export class PlanSettingComponent implements OnInit {
   }
 
   onChange(data: any) {
-    this.planId = data.nzValue;
-    this.getBasicInfo(this.planId)
+    this.teachplanId = data.nzValue;
+    this.getBasicInfo(this.teachplanId)
   }
 
   deletetargetItem(data: any) {

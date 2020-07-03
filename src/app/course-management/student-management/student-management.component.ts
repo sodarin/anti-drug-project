@@ -18,7 +18,7 @@ export class StudentManagementComponent implements OnInit {
   studentId: string;
   studentList = [];
 
-  planId: string = '';
+  teachplanId: any;
   planList = [];
 
   constructor(
@@ -31,7 +31,8 @@ export class StudentManagementComponent implements OnInit {
 
   ngOnInit() {
     this.courseId = location.pathname.split('/')[3];
-    this.getPlanList();
+    this.teachplanId = location.pathname.split('/')[5];
+    this.searchStudent(this.teachplanId, '')
   }
 
   openAddingStudentModal(template: TemplateRef<{}>) {
@@ -49,7 +50,7 @@ export class StudentManagementComponent implements OnInit {
         this.addingForm.controls.comment.updateValueAndValidity();
         this.addingForm.controls.username.updateValueAndValidity();
         if (!this.addingForm.controls.comment.errors && !this.addingForm.controls.username.errors) {
-          this.courseManagement$.addStudent(this.planId, this.courseId, this.studentId).subscribe(result => {
+          this.courseManagement$.addStudent(this.teachplanId, this.courseId, this.studentId).subscribe(result => {
             let i;
             this.courseManagement$.addingStatus.subscribe(value => i = value);
             this.courseManagement$.addingStatus.next(i+1);
@@ -69,23 +70,11 @@ export class StudentManagementComponent implements OnInit {
       }
     });
     modal.afterClose.subscribe(() => {
-      this.searchStudent(this.planId, '');
+      this.searchStudent(this.teachplanId, '');
       this.studentId = '';
     })
   }
 
-  getPlanList() {
-    this.courseManagement$.getTeachingPlan(this.courseId).subscribe(result => {
-      this.planList = result.data;
-      this.planId = this.planList[0].id;
-      this.searchStudent(this.planId, '')
-    }, error1 => {
-      this._notification.error(
-        '获取计划列表失败！',
-        `${error1.error}`
-      )
-    })
-  }
 
   searchStudent(id: string, name: '') {
     this.courseManagement$.searchAddableStudent(id, name).subscribe(result => {
@@ -94,7 +83,7 @@ export class StudentManagementComponent implements OnInit {
   }
 
   onInput(value: any) {
-    this.searchStudent(this.planId, value)
+    this.searchStudent(this.teachplanId, value)
 
   }
 
@@ -104,7 +93,7 @@ export class StudentManagementComponent implements OnInit {
 
 
   onChange(data: any) {
-    this.planId = data;
-    this.searchStudent(this.planId, '');
+    this.teachplanId = data;
+    this.searchStudent(this.teachplanId, '');
   }
 }

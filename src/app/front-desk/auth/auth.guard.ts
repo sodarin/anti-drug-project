@@ -1,31 +1,55 @@
-import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-import { AuthService } from './auth.service';
-import { NzMessageService } from 'ng-zorro-antd';
+import { Injectable } from "@angular/core";
+import {
+  CanActivate,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+  Router,
+} from "@angular/router";
+import { NzMessageService } from "ng-zorro-antd";
+import { AuthService } from "./auth.service";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class AuthGuard implements CanActivate {
   constructor(
-    private authService: AuthService,
     private router: Router,
     private msg: NzMessageService,
-  ) { }
+    private authService: AuthService
+  ) {}
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {
     let url: string = state.url;
-    return this.checkLogin(url);
+
+    // 页面：创建小组，仅限管理员访问
+    if (url == "/client/groupcreate") {
+      return this.checkStatus(url, "SUPER_ADMIN");
+    }
+
+    // 页面：创建小组话题，仅限小组成员访问
+    if (url.indexOf("/groupthread/grouptopic") != -1) {
+      let targetGroupId = url.split("/")[3];
+      if (!this.authService.userInGroupChecker(targetGroupId)) {
+        this.msg.error("您不在此小组内");
+        return false;
+      }
+      return true;
+    }
+    return true;
   }
 
-  checkLogin(url: string): boolean {
-    if (this.authService.isLoggedIn) { return true; }
-    this.msg.error('尚未登陆，请登录');
-    this.authService.redirectUrl = url;
-    this.router.navigate(['/client']);
-    return false;
+  checkStatus(url: string, identity = null): boolean {
+    if (!this.authService.userLoginChecker()) {
+      this.msg.error("尚未登录");
+      return false;
+    }
+    if (!this.authService.userIdentityChecker(identity)) {
+      this.msg.error("权限不足");
+      return false;
+    }
+    return true;
   }
 }

@@ -13,11 +13,9 @@ export class TeacherManagementComponent implements OnInit {
 
   teacherList = [];
   courseId: string;
-
+  teachplanId:string;
   loading: boolean = false;
 
-  planId: string = '';
-  planList = [];
 
   constructor(
     private courseManagement$: CourseManagementBackHalfService,
@@ -27,12 +25,8 @@ export class TeacherManagementComponent implements OnInit {
 
   ngOnInit() {
     this.courseId = location.pathname.split('/')[3];
-    // this.teacherList = [
-    //   {name: 'admin'},
-    //   {name: 'ddd'},
-    //   {name: 'aaa'}
-    // ]
-    this.getPlanList()
+    this.teachplanId = location.pathname.split('/')[5];
+    this.getTeacherList(this.teachplanId);
   }
 
 
@@ -42,8 +36,8 @@ export class TeacherManagementComponent implements OnInit {
     this.teacherList.forEach(item => {
       idList.push(item.id)
     });
-    this.courseManagement$.sortTeacherSeq(this.planId, idList).subscribe(result => {
-      this.getTeacherList(this.planId);
+    this.courseManagement$.sortTeacherSeq(this.teachplanId, idList).subscribe(result => {
+      this.getTeacherList(this.teachplanId);
       this._notification.success(
         '排序成功！',
         ''
@@ -57,7 +51,7 @@ export class TeacherManagementComponent implements OnInit {
   }
 
   getTeacherList(planId: string) {
-    this.courseManagement$.getTeacherList(this.planId).subscribe(result => {
+    this.courseManagement$.getTeacherList(this.teachplanId).subscribe(result => {
       this.teacherList = result.data
     }, error1 => {
       this._notification.error(
@@ -68,8 +62,8 @@ export class TeacherManagementComponent implements OnInit {
   }
 
   addTeacher(data: any) {
-    this.courseManagement$.addTeacherIntoCourse(this.courseId, this.planId, data).subscribe(result => {
-      this.getTeacherList(this.planId);
+    this.courseManagement$.addTeacherIntoCourse(this.courseId, this.teachplanId, data).subscribe(result => {
+      this.getTeacherList(this.teachplanId);
       this._notification.success(
         '添加教师成功！',
         ''
@@ -82,30 +76,17 @@ export class TeacherManagementComponent implements OnInit {
     })
   }
 
-  getPlanList() {
-    this.courseManagement$.getTeachingPlan(this.courseId).subscribe(result => {
-      this.planList = result.data;
-      this.planId = this.planList[0].id;
-      this.getTeacherList(this.planId);
-    }, error1 => {
-      this._notification.error(
-        '获取计划列表失败！',
-        `${error1.error}`
-      )
-    })
-  }
-
   onChange(data: any) {
-    this.planId = data;
-    this.getTeacherList(this.planId)
+    this.teachplanId = data;
+    this.getTeacherList(this.teachplanId)
   }
 
   close(id: string) {
     this._modal.confirm({
       nzTitle: '是否删除该教师？',
       nzOnOk: () => {
-        this.courseManagement$.deleteTeacher(this.planId, id).subscribe(result => {
-          this.getTeacherList(this.planId);
+        this.courseManagement$.deleteTeacher(this.teachplanId, id).subscribe(result => {
+          this.getTeacherList(this.teachplanId);
           this._notification.success(
             '删除成功！',
             ''

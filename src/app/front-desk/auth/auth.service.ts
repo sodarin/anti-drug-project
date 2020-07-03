@@ -1,22 +1,35 @@
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { tap, delay } from 'rxjs/operators';
+import { Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class AuthService {
-  isLoggedIn = false;
-  redirectUrl: string;
-
-  login(): Observable<boolean> {
-    return of(true).pipe(
-      delay(1000),
-      tap(val => this.isLoggedIn = true)
-    );
+  userLoginChecker(): boolean {
+    return typeof window.localStorage.getItem("id") == "string";
+  }
+  
+  userIdentityChecker(identity: string): boolean {
+    let localIdentities = window.localStorage.getItem("authorities");
+    return localIdentities.indexOf(identity) != -1;
   }
 
-  logout(): void {
-    this.isLoggedIn = false;
+  userInGroupChecker(groupId: string): boolean {
+    let groups = window.localStorage.getItem("myGroups").split(";");
+    for (const item of groups) {
+      if (groupId == item) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  userOwnGroupChecker(groupId: string): boolean {
+    let groups = window.localStorage.getItem("myOwnGroups").split(";");
+    for (const item of groups) {
+      if (groupId == item) {
+        return true;
+      }
+    }
+    return false;
   }
 }

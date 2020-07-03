@@ -98,6 +98,8 @@ import { TeachingPlanPageComponent } from '../course-management/teaching-plan-pa
 import {PaperMarkingComponent as ClassPaperMarkingComponent} from '../class-management/paper-marking/paper-marking.component'
 import { HomeworkMarkingComponent } from '../client/mine-management/homework-marking/homework-marking.component';
 import { AuthGuard } from './auth/auth.guard';
+import { PageNotFoundComponent } from '../client/page-not-found/page-not-found.component';
+
 
 
 const routes: Routes = [
@@ -143,16 +145,15 @@ const routes: Routes = [
       { path: 'openresource', component: OpenresourceComponent},
       { path: 'openresourcedetail/:id', component: OpenresourcedetailComponent },
       {path: 'groupmainlist', component: GroupmainlistComponent,
-      canActivate: [AuthGuard], 
       children:[
           {path: '', component: GroupnowComponent},
           {path: 'groupmainsearch', component: GroupmainsearchComponent}
         ]},
       {path: 'groupcreate', component: GroupcreateComponent, canActivate: [AuthGuard]},
       {path: 'groupmainlist/:id', component: GrouplistComponent,
-      canActivate: [AuthGuard],  children: [
+       children: [
           {path: '', component: GroupInfoComponent},
-          {path: 'groupthread/grouptopic', component: GrouptopicComponent},
+          {path: 'groupthread/grouptopic', component: GrouptopicComponent, canActivate: [AuthGuard]},
           {path: 'groupsearch', component: GroupsearchComponent},
           {path: 'groupthread/:id', component: GroupthreadComponent},
           {path: 'groupthread/:id/groupthreadedit', component: GroupthreadeditComponent}
@@ -236,6 +237,8 @@ const routes: Routes = [
       { path:'course/:id/task/:id/show',component:CourseTaskComponent}
     ]
   },
+  
+  { path: '**', component: PageNotFoundComponent },
 ];
 
 @NgModule({

@@ -4,6 +4,7 @@ import { NzMessageService, NzModalService, NzNotificationService } from 'ng-zorr
 import { NewsService } from '../../../service/news/news.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import {ViewportScroller} from '@angular/common';
+import { AuthService } from 'src/app/front-desk/auth/auth.service';
 
 @Component({
   selector: 'app-news-details-modal',
@@ -14,7 +15,7 @@ export class NewsDetailsModalComponent implements OnInit {
   articleId: number;
   isDelete: number;
   isLike: boolean;
-  userId = 1;
+  userId: number;
   articleLike: {};
   pageIndex = 1;
   pageSize = 5;
@@ -28,7 +29,6 @@ export class NewsDetailsModalComponent implements OnInit {
   loading: boolean = false;
   id: string;
   replyId: string;
-  userid = 1;
 
 
   submitting = false;
@@ -46,12 +46,14 @@ export class NewsDetailsModalComponent implements OnInit {
     private _modalService: NzModalService,
     private routerInfo: ActivatedRoute,
     private _notification: NzNotificationService,
-    private vps: ViewportScroller
+    private vps: ViewportScroller,
+    private authService: AuthService
   ) {
   }
 
   ngOnInit() {
     this.id = this.routerInfo.snapshot.params['id'];
+    this.userId = parseInt(window.localStorage.getItem("id"));
     this.searchArticlebyid();
     this.getArticleLike();
     this.getComments()
@@ -71,7 +73,17 @@ export class NewsDetailsModalComponent implements OnInit {
     this.vps.scrollToAnchor('reply');
   }
 
-  deleteComment(commentId: string) {
+  deleteComment(commentId: string, commentUserId:number) {
+    if (!this.authService.userLoginChecker()) {
+      this._notification.error("尚未登录", "");
+      return;
+    }
+
+    if (!this.authService.userIdentityChecker("SUPER_ADMIN") && commentUserId != this.userId) {
+      this._notification.error("权限不足", "");
+      return;
+    }
+    
     this.newsService$.deleteComment(commentId).subscribe(result => {
       this._notification.success('删除成功！', '');
       this.getComments()
@@ -81,6 +93,11 @@ export class NewsDetailsModalComponent implements OnInit {
   }
 
   handleSubmit(): void {
+    if (!this.authService.userLoginChecker()) {
+      this._notification.error("尚未登录", "");
+      return;
+    }
+
     let content;
     let comment = {};
     let objecttype = '';
@@ -155,6 +172,11 @@ export class NewsDetailsModalComponent implements OnInit {
     });
   }
   setArticleLike() {
+    if (!this.authService.userLoginChecker()) {
+      this._notification.error("尚未登录", "");
+      return;
+    }
+
     this.loading = true;
     this.articleLike = {
       articleId: this.id,

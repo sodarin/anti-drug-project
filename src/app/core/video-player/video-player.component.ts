@@ -58,12 +58,12 @@ export class VideoPlayerComponent implements OnInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.onload();
+    // this.onload();
   }
 
   ngOnDestroy() {
     this.endPlay();
-    this.player.dispose();
+    // this.player.dispose();
   }
   success(): void {
     this.modalService.success({

@@ -54,7 +54,7 @@
                       <span (click)="addReplyValue(comment)">回复</span>
                     </nz-comment-action>
                     <nz-comment-action>
-                      <span (click)="deleteComment(comment.commentId)">删除</span>
+                      <span (click)="deleteComment(comment.commentId, comment.userid)">删除</span>
                     </nz-comment-action>
                     <ng-container *ngIf="comment.reply && comment.reply.length">
                       <ng-template ngFor let-child [ngForOf]="comment.reply">

@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { CourseService } from 'src/app/service/courselist-frontend/courselist-frontend.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { NzNotificationService } from 'ng-zorro-antd';
-import { ClassInfService } from 'src/app/service/classinf-frontend/classinf-frontend.service';
+import { Component, OnInit } from "@angular/core";
+import { CourseService } from "src/app/service/courselist-frontend/courselist-frontend.service";
+import { Router, ActivatedRoute } from "@angular/router";
+import { NzNotificationService } from "ng-zorro-antd";
+import { ClassInfService } from "src/app/service/classinf-frontend/classinf-frontend.service";
+import { AdminReviewService } from "src/app/service/admin-review/admin-review.service";
 
 @Component({
-  selector: 'app-dashboard-list-student',
-  templateUrl: './dashboard-list-student.component.html',
-  styleUrls: ['./dashboard-list-student.component.less']
+  selector: "app-dashboard-list-student",
+  templateUrl: "./dashboard-list-student.component.html",
+  styleUrls: ["./dashboard-list-student.component.less"],
 })
 export class DashboardListStudentComponent implements OnInit {
-
   studentList = [
     {
       name: "赵伟",
@@ -48,22 +48,20 @@ export class DashboardListStudentComponent implements OnInit {
       status: "开始学习",
       comment: "震惊！",
     },
-
   ];
-  constructor(private courseservice: CourseService, private router: Router,
-    private route: ActivatedRoute, private _notification: NzNotificationService,
-    private classinfservice: ClassInfService) { }
+  comment = [];
+
+  constructor(
+    private courseservice: CourseService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private _notification: NzNotificationService,
+    private adminReviewService: AdminReviewService,
+    private classinfservice: ClassInfService
+  ) {}
 
   ngOnInit() {
-    // this.classinfservice.getclassstdDynamic("")
-    //   .subscribe((res: any) => {
-    //     this.renderResulsts(res);
-    //   }, error => {
-    //     this._notification.create(
-    //       'error',
-    //       '发生错误！',
-    //       `${error.error}`)
-    //   });
+    this.initComment();
   }
 
   renderResulsts(res: any): void {
@@ -74,9 +72,39 @@ export class DashboardListStudentComponent implements OnInit {
     }
   }
 
+  initComment() {
+    this.adminReviewService
+      .getClassReviews(1, 5, {
+        rating: "",
+        author: "",
+        course: "",
+        keyword: "",
+      })
+      .subscribe((data) => {
+        this.comment = this.comment.concat(
+          data.data.backGroundClassroomReviewList
+        );
+        for (var item of this.comment) {
+          item.content = item.content.replace(/\<[^\>]*\>/g, "");
+        }
+        console.log(this.comment);
+        
+      });
+  }
+
+  getUserActivity(id: string) {
+    this.classinfservice.getclassstdDynamic(id).subscribe(
+      (res: any) => {
+        console.log(res);
+        // this.renderResulsts(res);
+      },
+      (error) => {
+        this._notification.create("error", "发生错误！", `${error.error}`);
+      }
+    );
+  }
+
   navigateByUrl(url: string) {
     this.router.navigateByUrl(url);
   }
-
-
 }
