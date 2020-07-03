@@ -29,6 +29,11 @@ export class AuthGuard implements CanActivate {
       return this.checkStatus(url, "SUPER_ADMIN");
     }
 
+    // 页面：后台管理，仅限管理员访问
+    if (url == "/admin") {
+      return this.checkStatus(url, "SUPER_ADMIN");
+    }
+
     // 页面：创建小组话题，仅限小组成员访问
     if (url.indexOf("/groupthread/grouptopic") != -1) {
       let targetGroupId = url.split("/")[3];
