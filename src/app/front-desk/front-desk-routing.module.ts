@@ -109,7 +109,7 @@ const routes: Routes = [
     path: 'client', component: FrontDeskComponent, children: [
       { path: '', component: ClientComponent },
       { path: 'dashboard', component: DashboardComponent },
-      { path: 'mine', component:MineManagementComponent, children:[
+      { path: 'mine', component:MineManagementComponent, canActivate: [AuthGuard], children:[
           {path: 'teachingcourse', component:TeachingCourseComponent},
           {path: 'createcourse', component:CreateCourseComponent},
           {path: 'teachingclass', component:TeachingClassComponent},

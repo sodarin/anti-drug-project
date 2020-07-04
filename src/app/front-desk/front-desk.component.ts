@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 import { NzMessageService, NzModalService } from "ng-zorro-antd";
 import { LoginModalComponent } from "../core/modal/login-modal/login-modal.component";
 import { RegisterModalComponent } from "../core/modal/register-modal/register-modal.component";
-import { AuthService } from './auth/auth.service';
+import { AuthService } from "./auth/auth.service";
 
 @Component({
   selector: "app-front-desk",
@@ -68,6 +68,7 @@ export class FrontDeskComponent implements OnInit {
     if (window.localStorage.getItem("id")) {
       window.localStorage.clear();
       this.isLogin = false;
+      this.navigateByUrl("/client");
       this.msg.success("注销成功");
     }
   }

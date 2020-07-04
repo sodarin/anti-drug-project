@@ -7,10 +7,10 @@ export class AuthService {
   userLoginChecker(): boolean {
     return typeof window.localStorage.getItem("id") == "string";
   }
-  
+
   userIdentityChecker(identity: string): boolean {
     let localIdentities = window.localStorage.getItem("authorities");
-    return localIdentities.indexOf(identity) != -1;
+    return localIdentities ? localIdentities.indexOf(identity) != -1 : false;
   }
 
   userInGroupChecker(groupId: string): boolean {
