@@ -4,14 +4,14 @@
   <h3>参与小组，结交更多同学，关注课程动态。</h3>
   <div class="list-row">
     <nz-list
-      [nzDataSource]="studentList"
+      [nzDataSource]="comment"
       nzBordered
       [nzHeader]="'学员评价'"
       [nzRenderItem]="item"
     >
       <ng-template #item let-item>
         <nz-list-item>
-          <a (click)="navigateByUrl(item.id)">
+          <a (click)="navigateByUrl(item.userId)">
             <nz-avatar
               nzIcon="user"
               nzSrc="../../../../assets/img/userface-small.jpg"
@@ -21,17 +21,17 @@
           <div class="info-column">
             <div class="first-row">
               <nz-rate [ngModel]="item.rating" nzDisabled></nz-rate>
-              {{ item.name }} 发布于 {{ item.course }}
+              {{ item.nickName }} 发布于 {{ item.classroomTitle }}
             </div>
-            <div class="second-row">{{ item.comment }}</div>
+            <div class="second-row">{{ item.content }}</div>
           </div>
-          <span class="time">{{ item.time }}</span>
+          <span class="time">{{ item.createdTimeString }}</span>
         </nz-list-item>
       </ng-template>
     </nz-list>
 
     <nz-list
-      [nzDataSource]="studentList"
+      [nzDataSource]="dynamic"
       nzBordered
       [nzHeader]="'学员动态'"
       [nzRenderItem]="item1"
@@ -47,7 +47,7 @@
           &nbsp;&nbsp;
           <div class="info-column">
             <div class="first-row">{{ item1.name }}</div>
-            <div class="second-row">开始学习 {{ item1.level }}</div>
+            <div class="second-row">开始学习 {{ item1.course }}</div>
           </div>
           <span class="time">{{ item1.time }}</span>
         </nz-list-item>

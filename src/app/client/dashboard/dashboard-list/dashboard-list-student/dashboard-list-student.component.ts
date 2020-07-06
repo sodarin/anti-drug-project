@@ -11,46 +11,8 @@ import { AdminReviewService } from "src/app/service/admin-review/admin-review.se
   styleUrls: ["./dashboard-list-student.component.less"],
 })
 export class DashboardListStudentComponent implements OnInit {
-  studentList = [
-    {
-      id: "1",
-      name: "赵伟",
-      rating: 5,
-      course: "初中第1课 毒品-人类的公敌",
-      level: "单元测试",
-      time: "10天前",
-      status: "开始学习",
-      comment: "感觉非常震惊！",
-    },
-    {
-      name: "小明",
-      rating: 4,
-      course: "初中第1课 毒品-人类的公敌",
-      level: "单元测试",
-      time: "10天前",
-      status: "开始学习",
-      comment: "感觉非常震惊！",
-    },
-    {
-      name: "小丽",
-      rating: 3,
-      course: "初中第1课 毒品-人类的公敌",
-      level: "单元测试",
-      time: "10天前",
-      status: "开始学习",
-      comment: "非常震惊！",
-    },
-    {
-      name: "小刚",
-      rating: 2,
-      course: "初中第1课 毒品-人类的公敌",
-      level: "单元测试",
-      time: "10天前",
-      status: "开始学习",
-      comment: "震惊！",
-    },
-  ];
   comment = [];
+  dynamic = [];
 
   constructor(
     private courseservice: CourseService,
@@ -63,14 +25,7 @@ export class DashboardListStudentComponent implements OnInit {
 
   ngOnInit() {
     this.initComment();
-  }
-
-  renderResulsts(res: any): void {
-    this.studentList = null;
-    if (res) {
-      this.studentList = res.data.data;
-      this.studentList.splice(8, 8);
-    }
+    this.initDynamic();
   }
 
   initComment() {
@@ -88,20 +43,33 @@ export class DashboardListStudentComponent implements OnInit {
         for (var item of this.comment) {
           item.content = item.content.replace(/\<[^\>]*\>/g, "");
         }
-        console.log(this.comment);
       });
   }
 
-  getUserActivity(id: string) {
-    this.classinfservice.getclassstdDynamic(id).subscribe(
-      (res: any) => {
-        console.log(res);
-        // this.renderResulsts(res);
-      },
-      (error) => {
-        this._notification.create("error", "发生错误！", `${error.error}`);
-      }
-    );
+  initDynamic() {
+    this.classinfservice
+      .getclassstdDynamic("6")  //测试用户id为6
+      .subscribe((data: any) => {
+        let resList = [];
+        for (var item of data.data) {
+          let time = new Date(item.updateTime * 1000);
+          
+          let Y = time.getFullYear() + "-";
+          let M = (time.getMonth() < 10 ? "0" + (time.getMonth()) : time.getMonth()) + "-";
+          let D = (time.getDate() < 10 ? "0" + (time.getDate()) : time.getDate()) + " ";
+          let h = (time.getHours() < 10 ? "0" + (time.getHours()) : time.getHours()) + ":";
+          let m = (time.getMinutes() < 10 ? "0" + (time.getMinutes()) : time.getMinutes()) + ":";
+          let s = (time.getSeconds() < 10 ? "0" + (time.getSeconds()) : time.getSeconds());
+
+          resList.push({
+            id: 1, //要通过昵称找id\改后端
+            name: item.nickname,
+            course: item.courseSetTitle,
+            time: Y + M + D + h + m + s
+          })
+        }
+        this.dynamic = this.dynamic.concat(resList);
+      });
   }
 
   navigateByUrl(id: string) {
