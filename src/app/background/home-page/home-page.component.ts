@@ -18,21 +18,15 @@ import { GroupTopicManagementTableService } from "src/app/service/group-topic-ma
 export class HomePageComponent implements OnInit {
   user = [];
   message = [];
-  course = [{title:"1"},{title:"1"},{title:"1"},{title:"1"},{title:"1"}];
+  course = [];
   class = [
-    {title:"1",classroomCategory:"测试班级"},
-    {title:"1",classroomCategory:"测试班级"},
-    {title:"1",classroomCategory:"测试班级"},
-    {title:"1",classroomCategory:"测试班级"},
-    {title:"1",classroomCategory:"测试班级"},
+    { title: "1", classroomCategory: "测试班级" },
+    { title: "1", classroomCategory: "测试班级" },
+    { title: "1", classroomCategory: "测试班级" },
+    { title: "1", classroomCategory: "测试班级" },
+    { title: "1", classroomCategory: "测试班级" },
   ];
-  question = [
-    {title:"1",content:"测试问答"},
-    {title:"1",content:"测试问答"},
-    {title:"1",content:"测试问答"},
-    {title:"1",content:"测试问答"},
-    {title:"1",content:"测试问答"},
-  ];
+  question = [];
   comment = [];
   tag = [];
   news = [];
@@ -111,6 +105,9 @@ export class HomePageComponent implements OnInit {
     this.classManagementService
       .getClassroomList(1, 5, { className: "" })
       .subscribe((data) => {
+        if (this.class != []) {
+          this.class = [];
+        }
         this.class = this.class.concat(data.data);
       });
   }
