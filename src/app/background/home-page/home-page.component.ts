@@ -18,9 +18,21 @@ import { GroupTopicManagementTableService } from "src/app/service/group-topic-ma
 export class HomePageComponent implements OnInit {
   user = [];
   message = [];
-  course = [];
-  class = [];
-  question = [];
+  course = [{title:"1"},{title:"1"},{title:"1"},{title:"1"},{title:"1"}];
+  class = [
+    {title:"1",classroomCategory:"测试班级"},
+    {title:"1",classroomCategory:"测试班级"},
+    {title:"1",classroomCategory:"测试班级"},
+    {title:"1",classroomCategory:"测试班级"},
+    {title:"1",classroomCategory:"测试班级"},
+  ];
+  question = [
+    {title:"1",content:"测试问答"},
+    {title:"1",content:"测试问答"},
+    {title:"1",content:"测试问答"},
+    {title:"1",content:"测试问答"},
+    {title:"1",content:"测试问答"},
+  ];
   comment = [];
   tag = [];
   news = [];

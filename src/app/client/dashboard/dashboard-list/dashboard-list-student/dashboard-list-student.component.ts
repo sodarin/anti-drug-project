@@ -13,6 +13,7 @@ import { AdminReviewService } from "src/app/service/admin-review/admin-review.se
 export class DashboardListStudentComponent implements OnInit {
   studentList = [
     {
+      id: "1",
       name: "赵伟",
       rating: 5,
       course: "初中第1课 毒品-人类的公敌",
@@ -87,14 +88,14 @@ export class DashboardListStudentComponent implements OnInit {
         for (var item of this.comment) {
           item.content = item.content.replace(/\<[^\>]*\>/g, "");
         }
-        // console.log(this.comment);
+        console.log(this.comment);
       });
   }
 
   getUserActivity(id: string) {
     this.classinfservice.getclassstdDynamic(id).subscribe(
       (res: any) => {
-        // console.log(res);
+        console.log(res);
         // this.renderResulsts(res);
       },
       (error) => {
@@ -103,7 +104,7 @@ export class DashboardListStudentComponent implements OnInit {
     );
   }
 
-  navigateByUrl(url: string) {
-    this.router.navigateByUrl(url);
+  navigateByUrl(id: string) {
+    this.router.navigateByUrl("/client/userpage/" + id);
   }
 }
