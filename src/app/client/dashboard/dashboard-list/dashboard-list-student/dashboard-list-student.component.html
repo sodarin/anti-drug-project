@@ -14,7 +14,7 @@
           <a (click)="navigateByUrl(item.userId)">
             <nz-avatar
               nzIcon="user"
-              nzSrc="../../../../assets/img/userface-small.jpg"
+              nzSrc="{{item.avatar}}"
             ></nz-avatar>
           </a>
           &nbsp;&nbsp;
@@ -25,7 +25,7 @@
             </div>
             <div class="second-row">{{ item.content }}</div>
           </div>
-          <span class="time">{{ item.createdTimeString }}</span>
+          <span class="time">{{ item.createdTime }}</span>
         </nz-list-item>
       </ng-template>
     </nz-list>
@@ -41,7 +41,7 @@
           <a (click)="navigateByUrl(item.id)">
             <nz-avatar
               nzIcon="user"
-              nzSrc="../../../../assets/img/userface-small.jpg"
+              nzSrc="{{item1.avatar}}"
             ></nz-avatar>
           </a>
           &nbsp;&nbsp;

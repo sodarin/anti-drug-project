@@ -18,6 +18,13 @@ h1 {
   nz-card {
     min-height: 210px;
   }
+  .first-row {
+    max-width: 180px;
+  }
+  
+  .second-row {
+    max-width: 180px;
+  }
 }
 .list-row {
   margin-top: 35px;
@@ -71,7 +78,17 @@ nz-list-item {
 
 .first-row {
   font-size: x-small;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
+
+.second-row {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 
 .num-row {
   display: flex;
