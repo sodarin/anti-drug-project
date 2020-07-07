@@ -88,10 +88,7 @@ export class DashboardListStudentComponent implements OnInit {
   }
 
   navigateByUrl(id: string) {
-    console.log(this.comment);
-    console.log(this.dynamic);
-
-    // this.router.navigateByUrl("/client/userpage/" + id);
+    this.router.navigateByUrl("/client/userpage/" + id);
   }
 
   calculatePeriod(timestamp: number): string {
