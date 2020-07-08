@@ -18,23 +18,22 @@ export class AuthGuard implements CanActivate {
     private authService: AuthService
   ) {}
 
-  canActivate(
+  async canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): boolean {
-    console.log(next.url);
-    
+  ): Promise<boolean> {
     let url: string = state.url;
+    let canActivate: boolean = true;
     console.log(url);
 
     // 页面：创建小组，仅限管理员访问
     if (url == "/client/groupcreate") {
-      return this.checkStatus(url, "SUPER_ADMIN");
+      canActivate = this.checkStatus("SUPER_ADMIN");
     }
 
     // 页面：后台管理，仅限管理员访问
     if (url == "/admin") {
-      return this.checkStatus(url, "SUPER_ADMIN");
+      canActivate = this.checkStatus("SUPER_ADMIN");
     }
 
     // 页面：我的教学系列，限管理员、教师访问
@@ -47,22 +46,27 @@ export class AuthGuard implements CanActivate {
       url == "/client/mine/papermarking" ||
       url == "/client/mine/teachingdatabase"
     ) {
-      return this.checkStatus(url, "ROLE_TEACHER");
+      canActivate = this.checkStatus("ROLE_TEACHER");
     }
 
     // 页面：创建小组话题，仅限小组成员访问
     if (url.indexOf("/groupthread/grouptopic") != -1) {
       let targetGroupId = url.split("/")[3];
-      if (!this.authService.userInGroupChecker(targetGroupId)) {
+      let res: any = await this.authService.userInGroupChecker(targetGroupId);
+      if (!res) {
         this.msg.error("您不在此小组内");
-        return false;
+        canActivate = false;
       }
-      return true;
     }
-    return true;
+
+    if (!canActivate && this.router.url == "/") {
+      this.router.navigate(["404"], { skipLocationChange: true });
+    }
+
+    return canActivate;
   }
 
-  checkStatus(url: string, identity = null): boolean {
+  checkStatus(identity = null): boolean {
     if (!this.authService.userLoginChecker()) {
       this.msg.error("尚未登录");
       return false;

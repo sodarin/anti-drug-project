@@ -5,6 +5,7 @@ import { NzNotificationService } from "ng-zorro-antd";
 import { ClassInfService } from "src/app/service/classinf-frontend/classinf-frontend.service";
 import { AdminReviewService } from "src/app/service/admin-review/admin-review.service";
 import { UserManagementService } from "src/app/service/user-management/user-management.service";
+import { AuthService } from 'src/app/front-desk/auth/auth.service';
 
 @Component({
   selector: "app-dashboard-list-student",
@@ -22,7 +23,8 @@ export class DashboardListStudentComponent implements OnInit {
     private _notification: NzNotificationService,
     private adminReviewService: AdminReviewService,
     private classinfservice: ClassInfService,
-    private userManagementService: UserManagementService
+    private userManagementService: UserManagementService,
+    private authService: AuthService,
   ) {}
 
   ngOnInit() {
@@ -88,7 +90,9 @@ export class DashboardListStudentComponent implements OnInit {
   }
 
   navigateByUrl(id: string) {
-    this.router.navigateByUrl("/client/userpage/" + id);
+    // this.router.navigateByUrl("/client/userpage/" + id);
+    this.authService.userInGroupChecker("1").then(res=>{console.log(res);}
+    )
   }
 
   calculatePeriod(timestamp: number): string {
