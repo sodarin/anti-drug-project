@@ -21,13 +21,6 @@ export class AuthService {
   }
 
   async userInGroupChecker(groupId: string): Promise<boolean> {
-    // let groups = window.localStorage.getItem("myGroups").split(";");
-    // for (const item of groups) {
-    //   if (groupId == item) {
-    //     return true;
-    //   }
-    // }
-    // return false;
     let userId = window.localStorage.getItem("id");
     if (userId) {
       let res: any = await this.myteachingService.getMyJoinGroup(parseInt(userId)).toPromise();
@@ -41,14 +34,6 @@ export class AuthService {
   }
 
   async userOwnGroupChecker(groupId: string): Promise<boolean> {
-    // let groups = window.localStorage.getItem("myOwnGroups").split(";");
-    // for (const item of groups) {
-    //   if (groupId == item) {
-    //     return true;
-    //   }
-    // }
-    // return false;
-
     let userId = window.localStorage.getItem("id");
     if (userId) {
       let res: any = await this.myteachingService.getMyOwnGroup(parseInt(userId)).toPromise();

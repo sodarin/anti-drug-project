@@ -26,36 +26,41 @@ export class AuthGuard implements CanActivate {
     let canActivate: boolean = true;
     console.log(url);
 
-    // 页面：创建小组，仅限管理员访问
-    if (url == "/client/groupcreate") {
-      canActivate = this.checkStatus("SUPER_ADMIN");
-    }
+    if (!this.authService.userLoginChecker()) {
+      this.msg.error("尚未登录");
+      canActivate = false;
+    } else {
+      // 页面：创建小组，仅限管理员访问
+      if (url == "/client/groupcreate") {
+        canActivate = this.checkIdentity("SUPER_ADMIN");
+      }
 
-    // 页面：后台管理，仅限管理员访问
-    if (url == "/admin") {
-      canActivate = this.checkStatus("SUPER_ADMIN");
-    }
+      // 页面：后台管理，仅限管理员访问
+      if (url == "/admin") {
+        canActivate = this.checkIdentity("SUPER_ADMIN");
+      }
 
-    // 页面：我的教学系列，限管理员、教师访问
-    if (
-      url == "/client/mine/teachingcourse" ||
-      url == "/client/mine/createcourse" ||
-      url == "/client/mine/teachingclass" ||
-      url == "/client/mine/studentQA" ||
-      url == "/client/mine/studenttopic" ||
-      url == "/client/mine/papermarking" ||
-      url == "/client/mine/teachingdatabase"
-    ) {
-      canActivate = this.checkStatus("ROLE_TEACHER");
-    }
+      // 页面：我的教学系列，限管理员、教师访问
+      if (
+        url == "/client/mine/teachingcourse" ||
+        url == "/client/mine/createcourse" ||
+        url == "/client/mine/teachingclass" ||
+        url == "/client/mine/studentQA" ||
+        url == "/client/mine/studenttopic" ||
+        url == "/client/mine/papermarking" ||
+        url == "/client/mine/teachingdatabase"
+      ) {
+        canActivate = this.checkIdentity("ROLE_TEACHER");
+      }
 
-    // 页面：创建小组话题，仅限小组成员访问
-    if (url.indexOf("/groupthread/grouptopic") != -1) {
-      let targetGroupId = url.split("/")[3];
-      let res: any = await this.authService.userInGroupChecker(targetGroupId);
-      if (!res) {
-        this.msg.error("您不在此小组内");
-        canActivate = false;
+      // 页面：创建小组话题，仅限小组成员访问
+      if (url.indexOf("/groupthread/grouptopic") != -1) {
+        let targetGroupId = url.split("/")[3];
+        let res: any = await this.authService.userInGroupChecker(targetGroupId);
+        if (!res) {
+          this.msg.error("您不在此小组内");
+          canActivate = false;
+        }
       }
     }
 
@@ -66,11 +71,7 @@ export class AuthGuard implements CanActivate {
     return canActivate;
   }
 
-  checkStatus(identity = null): boolean {
-    if (!this.authService.userLoginChecker()) {
-      this.msg.error("尚未登录");
-      return false;
-    }
+  checkIdentity(identity = null): boolean {
     if (!this.authService.userIdentityChecker(identity)) {
       this.msg.error("权限不足");
       return false;
