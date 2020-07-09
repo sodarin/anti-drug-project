@@ -88,29 +88,32 @@ export class AuthGuard implements CanActivate {
       }
     }
     
-    // 页面：小组与小组话题系列，判断关闭状态
+    // 页面：小组系列，判断关闭状态
     if (url.indexOf("/groupmainlist") != -1) {
-      let targetUrl = url.split("/");
+      var targetUrl = url.split("/");
       if (parseInt(targetUrl[3]) > 0) {
         let res: any = await this.authService.groupClosedChecker(targetUrl[3]);
         if (res) {
           this.msg.error("小组不存在");
           canActivate = false;
-        } else if (targetUrl[4] == "groupthread") {
-          // 页面：创建小组话题，仅限小组成员访问
-          if (targetUrl[5] == "grouptopic") {
-            let res: any = await this.authService.userInGroupChecker(targetUrl[3]);
-            if (!res) {
-              this.msg.error("您不在此小组内");
-              canActivate = false;
-            }
-          } else if (parseInt(targetUrl[5]) > 0) {
-            let res: any = await this.authService.groupThreadClosedChecker(targetUrl[5]);
-            if (res) {
-              this.msg.error("小组话题不存在");
-              canActivate = false;
-            }
-          }
+        }
+      }
+    }
+
+    // 页面：小组话题系列，判断关闭状态
+    if (canActivate && targetUrl[4] == "groupthread") {
+      // 页面：创建、编辑小组话题，仅限小组成员访问
+      if (url.indexOf("/grouptopic") != -1 || url.indexOf("/groupthreadedit") != -1) {
+        let res: any = await this.authService.userInGroupChecker(targetUrl[3]);
+        if (!res) {
+          this.msg.error("您不在此小组内");
+          canActivate = false;
+        }
+      } else if (parseInt(targetUrl[5]) > 0) {
+        let res: any = await this.authService.groupThreadClosedChecker(targetUrl[5]);
+        if (res) {
+          this.msg.error("小组话题不存在");
+          canActivate = false;
         }
       }
     }
