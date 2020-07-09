@@ -11,7 +11,7 @@
     >
       <ng-template #item let-item>
         <nz-list-item>
-          <a (click)="navigateByUrl(item.userId)">
+          <a (click)="navigateByUrl(item.id)">
             <nz-avatar
               nzIcon="user"
               nzSrc="{{item.avatar}}"
@@ -38,7 +38,7 @@
     >
       <ng-template #item1 let-item1>
         <nz-list-item>
-          <a (click)="navigateByUrl(item.id)">
+          <a (click)="navigateByUrl(item1.id)">
             <nz-avatar
               nzIcon="user"
               nzSrc="{{item1.avatar}}"

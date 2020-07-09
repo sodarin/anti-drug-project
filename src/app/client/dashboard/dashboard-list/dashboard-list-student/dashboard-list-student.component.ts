@@ -64,13 +64,13 @@ export class DashboardListStudentComponent implements OnInit {
 
   initDynamic() {
     this.classinfservice
-      .getclassstdDynamic("6") //测试用户id为6
+      .getclassstdDynamic("6") //测试课程id为6
       .subscribe((data: any) => {
         let resList = [];
         for (var item of data.data) {
           let timestamp = item.updateTime * 1000;
           resList.push({
-            id: "6",
+            id: item.userId,
             name: item.nickname,
             course: item.courseSetTitle,
             time: this.calculatePeriod(timestamp),
@@ -85,14 +85,14 @@ export class DashboardListStudentComponent implements OnInit {
   async initAvatar(itemList: any[]) {
     for (var item of itemList) {
       let res: any = await this.userManagementService.getPersonalDetailById(item.id).toPromise();
-      item.avatar = res.data.mediumAvatar;
+      let avatar = res.data.mediumAvatar.indexOf("public") == -1 ? res.data.mediumAvatar : "";
+      item.avatar = avatar;
     }
   }
 
-  navigateByUrl(id: string) {
+  navigateByUrl(id) {
     // this.router.navigateByUrl("/client/userpage/" + id);
-    this.authService.userInGroupChecker("1").then(res=>{console.log(res);}
-    )
+    this.authService.userInGroupChecker("1").then(res=>{console.log(res);})
   }
 
   calculatePeriod(timestamp: number): string {

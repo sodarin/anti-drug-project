@@ -18,13 +18,6 @@ h1 {
   nz-card {
     min-height: 210px;
   }
-  .first-row {
-    max-width: 180px;
-  }
-  
-  .second-row {
-    max-width: 180px;
-  }
 }
 .list-row {
   margin-top: 35px;
@@ -51,6 +44,14 @@ nz-list {
     max-width: 100%;
     min-width: 100%;
   }
+  
+  nz-list-item div.first-row {
+    max-width: 50vw;
+  }
+  
+  nz-list-item div.second-row {
+    max-width: 50vw;
+  }
 }
 
 nz-list-item {
@@ -69,6 +70,14 @@ nz-list-item {
   nz-list {
     width: 49%;
   }
+
+  div.first-row {
+    max-width: 20vw;
+  }
+  
+  div.second-row {
+    max-width: 20vw;
+  }
 }
 
 .time {
@@ -81,12 +90,14 @@ nz-list-item {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  max-width: 30vw;
 }
 
 .second-row {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  max-width: 30vw;
 }
 
 

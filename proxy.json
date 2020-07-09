@@ -12,13 +12,13 @@
     "changeOrigin": true
   },
   "/oauth": {
-    "target": "http://localhost:9000",
+    "target": "http://172.16.10.94:9003",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
   "/classroom": {
-    "target": "http://219.216.64.77:9001",
+    "target": "http://202.199.6.199:9001",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
@@ -91,6 +91,12 @@
   },
   "/other": {
     "target": "http://219.216.64.77:9013",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/system": {
+    "target": "http://172.16.10.94:9004",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
