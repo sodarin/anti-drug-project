@@ -187,8 +187,24 @@ export class CourseInfService {
   }
 
   //收藏
-  collect_submit() {
+  collect_submit(courseId:any,courseSetId:any,userId:any) {
+    //const uri = `/course/plan/favouriteCourse`;
+    return this.http.post(`/course/plan/favouriteCourse?courseId=${courseId}&courseSetId=${courseSetId}&userId=${userId}`,{});
+    // return this.http.post(uri,
+    //   {
+    //     courseId:courseId,
+    //     courseSetId:courseSetId,
+    //     userId:userId,
+    //   });
+  }
 
+  Uncollect_submit(courseId:any,courseSetId:any,userId:any) {
+    const uri = `/course/plan/unfavouriteCourse`;
+    const params = new HttpParams()
+      .set('courseId', courseId)
+      .set('courseSetId', courseSetId)
+      .set('userId', userId)
+    return this.http.delete(uri, { params })
   }
 
   //加入课程

@@ -4,14 +4,14 @@
       <div class="first">
 
           <div style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center;">
-            <h3>{{RecentThreadList?.threadTitle}}</h3>
-            <nz-tag style="font-size: 10px;margin-right: 4px" *ngIf="nzValueZD==0" [nzColor]="'#f50'">置顶</nz-tag>
-            <nz-tag style="font-size: 10px;margin-right: 4px" *ngIf="nzValueJ==0" [nzColor]="'#87d068'">精华</nz-tag>
+            <h3 style="margin-bottom: 0;">{{RecentThreadList?.threadTitle}}</h3>
+            <nz-tag style="font-size: 10px;margin-right: 4px" *ngIf="nzValueZD==0 || RecentThreadList?.isElite == 1" [nzColor]="'#f50'">置顶</nz-tag>
+            <nz-tag style="font-size: 10px;margin-right: 4px" *ngIf="nzValueJ==0 || RecentThreadList?.isStick == 1" [nzColor]="'#87d068'">精华</nz-tag>
           </div>
         <nz-divider></nz-divider>
-          <div style="display: flex; flex-direction: row; justify-content: space-between;height: 40px">
+          <div style="display: flex; flex-direction: row; justify-content: space-between">
             <nz-input-group style="display:flex; margin-left:2%;margin-right: 2%" [nzSuffix]="suffixTemplateInfo" [nzPrefix]="prefixTemplateUser">
-              <input type="text" nz-input placeholder="发表于{{RecentThreadList?.threadTime * 1000 | date: 'yyyy-MM-dd'}} {{RecentThreadList?.hitNum}}次查看" [(ngModel)]="value" [disabled]="true" />
+              <input type="text" nz-input placeholder="发表于{{RecentThreadList?.threadTime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}} {{RecentThreadList?.hitNum}}次查看" [(ngModel)]="value" [disabled]="true" />
             </nz-input-group>
             <ng-template #prefixTemplateUser></ng-template>
             <ng-template #suffixTemplateInfo>
@@ -27,55 +27,64 @@
             <br />
           </div>
 
-          <div style="display:flex; margin-left:2%;margin-right: 2%" [innerHTML]="RecentThreadList?.threadContent">
+          <div style="margin-left:2%;margin-right: 2%; margin-top: 2%" [innerHTML]="RecentThreadList?.threadContent">
           </div>
 
-          <div style="display: flex; flex-direction: row; justify-content: flex-end">
-            <button style="margin-right: 10px;" nz-button nzType="default" (click)="oclick()">编辑</button>
-            <button *ngIf="nzValueJ==1"  style=";margin-right: 10px;" nz-button nzType="default" (click)="getNzValueJ0()">加精</button>
-            <button *ngIf="nzValueJ==0"  style="margin-right: 10px;" nz-button nzType="default" (click)="getNzValueJ1()">取消加精</button>
-            <button *ngIf="nzValueZD==1"  style="margin-right: 10px;" nz-button nzType="default" (click)="getNzValueZD0()">置顶</button>
-            <button *ngIf="nzValueZD==0" style="margin-right: 10px;" nz-button nzType="default" (click)="getNzValueZD1()">取消置顶</button>
-            <button  *ngIf="only==1" style="margin-right: 10px;" nz-button nzType="default" (click)="onlyMy()">只看楼主</button>
-            <button  *ngIf="only==0" style="margin-right: 10px;" nz-button nzType="default" (click)="all()">查看全部</button>
-            <button  *ngIf="downToUp==1" nz-button nzType="default" (click)="downtoUp()">倒序查看</button>
-            <button  *ngIf="downToUp==0" nz-button nzType="default" (click)="upToDown()">正序查看</button>
-
+          <div *ngIf="curUserOwnThisGroup">
+            <button style="margin-right: 10px; width: 10%; height: 24px;" nz-button nzType="default" nzSize="small" (click)="oclick()">编辑</button>
+            <button *ngIf="nzValueJ==1 && RecentThreadList?.isElite == 0"  nzSize="small" style="margin-right: 10px; width: 10%; height: 24px;" nz-button nzType="primary" (click)="getNzValueJ0()">加精</button>
+            <button *ngIf="nzValueJ==0 || RecentThreadList?.isElite == 1"  nzSize="small" style="margin-right: 10px; width: 20%; height: 24px;" nz-button nzType="default" (click)="getNzValueJ1()">取消加精</button>
+            <button *ngIf="nzValueZD==1 && RecentThreadList?.isStick == 0"  nzSize="small" style="margin-right: 10px; width: 10%; height: 24px;" nz-button nzType="danger" (click)="getNzValueZD0()">置顶</button>
+            <button *ngIf="nzValueZD==0 || RecentThreadList?.isStick == 1" nzSize="small" style="margin-right: 10px; width: 20%; height: 24px;" nz-button nzType="default" (click)="getNzValueZD1()">取消置顶</button>
           </div>
       </div>
       <div class="two">
-        <h3>{{"1"}}回复</h3>
+        <p>文章评论：</p>
+        <nz-empty *ngIf="comments.length == 0"></nz-empty>
         <ng-template #commentTemplateRef let-comment="comment">
-          <nz-comment [nzAuthor]="comment.author">
-            <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="comment.avatar"></nz-avatar>
+          <nz-comment [nzAuthor]="comment.username" [nzDatetime]="comment.createdtime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'">
+            <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="comment.useravatar"></nz-avatar>
             <nz-comment-content>
               <p>{{ comment.content }}</p>
             </nz-comment-content>
-            <nz-comment-action>Reply to</nz-comment-action>
-            <ng-container *ngIf="comment.children && comment.children.length">
-              <ng-template ngFor let-child [ngForOf]="comment.children">
-                <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{ comment: child }">
+            <nz-comment-action>
+              <span (click)="addReplyValue(comment)">回复</span>
+            </nz-comment-action>
+            <nz-comment-action>
+              <span (click)="deleteComment(comment.commentId)">删除</span>
+            </nz-comment-action>
+            <ng-container *ngIf="comment.reply && comment.reply.length">
+              <ng-template ngFor let-child [ngForOf]="comment.reply">
+                <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{comment: child}">
                 </ng-template>
               </ng-template>
             </ng-container>
           </nz-comment>
         </ng-template>
 
-        <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{ comment: data1 }"> </ng-template>
+        <ng-container *ngIf="comments.length > 0">
+          <ng-template ngFor let-comment [ngForOf]="comments">
+            <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{comment: comment}"></ng-template>
+          </ng-template>
+        </ng-container>
+
+
+        <nz-pagination [nzHideOnSinglePage]="true" [(nzPageIndex)]="pageIndex" [nzTotal]="total" [nzPageSize]="pageSize" (nzPageIndexChange)="getComments()"></nz-pagination>
+
 
       </div>
 
         <div class="three">
-          <h3>发表回复</h3>
-          <nz-comment>
+          <nz-divider></nz-divider>
+          <nz-comment id="reply">
             <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="user.avatar"></nz-avatar>
             <nz-comment-content>
               <nz-form-item>
-                <textarea [(ngModel)]="inputValue" nz-input rows="4"></textarea>
+                <textarea [(ngModel)]="commentValue" nz-input rows="4"></textarea>
               </nz-form-item>
               <nz-form-item>
-                <button nz-button nzType="primary" [nzLoading]="submitting" [disabled]="!inputValue" (click)="handleSubmit()">
-                  回复
+                <button nz-button nzType="primary" [nzLoading]="submitting" [disabled]="!commentValue" (click)="handleSubmit()">
+                  发表评论
                 </button>
               </nz-form-item>
             </nz-comment-content>

@@ -9,6 +9,8 @@ import {GroupEditService} from '../../../../service/groupedit-edit/group-edit.se
 import {GroupmainlistService} from '../../../../service/groupmainlist/groupmainlist.service';
 import {GrouphotService} from '../../../../service/grouphot/grouphot.service';
 import {formatDistance} from 'date-fns';
+import {ViewportScroller} from '@angular/common';
+import { AuthService } from 'src/app/front-desk/auth/auth.service';
 
 @Component({
   selector: 'app-groupthread',
@@ -46,38 +48,16 @@ export class GroupthreadComponent implements OnInit {
   };
   inputValue = '';
 
-  data1 = {
-    author: 'Han Solo',
-    avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-    content:
-      'We supply a series of design principles, practical patterns and high quality design resources' +
-      '(Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-    children: [
-      {
-        author: 'Han Solo',
-        avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-        content:
-          'We supply a series of design principles, practical patterns and high quality design resources' +
-          '(Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-        children: [
-          {
-            author: 'Han Solo',
-            avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-            content:
-              'We supply a series of design principles, practical patterns and high quality design resources' +
-              '(Sketch and Axure), to help people create their product prototypes beautifully and efficiently.'
-          },
-          {
-            author: 'Han Solo',
-            avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-            content:
-              'We supply a series of design principles, practical patterns and high quality design resources' +
-              '(Sketch and Axure), to help people create their product prototypes beautifully and efficiently.'
-          }
-        ]
-      }
-    ]
-  };
+  comments = [];
+  pageIndex = 1;
+  total = 0;
+  pageSize: number = 5;
+
+  replyId: string;
+  replyString: string = '';
+  commentValue = this.replyString;
+
+  curUserOwnThisGroup:boolean;
 
   constructor(public router:Router,
               private grouplistService$:GrouplistService,
@@ -89,7 +69,9 @@ export class GroupthreadComponent implements OnInit {
               private groupmainlistService$:GroupmainlistService,
               private grouphotService$:GrouphotService,
               private _modal: NzModalService,
-              private groupfirstService$: GroupfirstService
+              private groupfirstService$: GroupfirstService,
+              private authService: AuthService,
+              private vps: ViewportScroller
               ) {
     this.publishReplyForm = this.fb.group({
       content: ['', Validators.required],
@@ -101,16 +83,94 @@ export class GroupthreadComponent implements OnInit {
     let pathList = location.pathname.split('/');
     this.groupId = pathList[3];
     this.threadId = pathList[5];
+    this.userId = window.localStorage.getItem("id");
     this.getList();
-    // this.getNewMember();
-    // this.getMemberMessage();
-    // this.getList();
+
     this.getThreadOwner();
     this.getThreadMessage();
-    //this.getMyPost()
+    this.getComments();
     this.threadCreatingForm = this.fb.group({
       title: ['', Validators.required],
       content: ['', Validators.required],
+    })
+    this.authService.userOwnGroupChecker(this.groupId).then(res => {
+      this.curUserOwnThisGroup = res;
+    });
+  }
+  // 获取评论
+  getComments() {
+    this.groupeditEditService$.getCommentListByArticleId(this.pageIndex, this.pageSize, this.threadId).subscribe(result => {
+      this.comments = result.data;
+      this.total = this.comments.length > 0? this.comments[0].count: 0;
+    })
+  }
+  // 点击回复按钮回复评论
+  addReplyValue(comment: any) {
+    this.replyString = `回复@${comment.username}：  `;
+    this.commentValue = this.replyString;
+    this.replyId = comment.commentId;
+    this.vps.scrollToAnchor('reply');
+  }
+  // 删除评论
+  deleteComment(commentId: string) {
+    if (!this.authService.userLoginChecker()) {
+      this._notification.error("尚未登录", "");
+      return;
+    }
+
+    this.groupeditEditService$.deleteComment(commentId).subscribe(result => {
+      this._notification.success('删除成功！', '');
+      this.getComments()
+    }, error1 => {
+      this._notification.error('删除失败！', error1.error)
+    })
+  }
+  //提交评论
+  handleSubmit(): void {
+    if (!this.authService.userLoginChecker()) {
+      this._notification.error("尚未登录", "");
+      return;
+    }
+
+    let content;
+    let comment = {};
+    let objecttype = '';
+    if (this.commentValue.startsWith(this.replyString) && this.replyString !== '') {
+      content = this.commentValue.split(this.replyString);
+      if (content[1] == '') {
+        this._notification.error('请填写评论内容！', '')
+      }else {
+        objecttype = 'comment';
+        this.submitting = true;
+        comment = {
+          content: content[1],
+          objectid: this.replyId,
+          userId: this.userId
+        };
+      }
+    }else {
+      this.submitting = true;
+      objecttype = 'groups_thread';
+      comment = {
+        content: this.commentValue,
+        objectid: this.threadId,
+        userId: this.userId
+      }
+    }
+
+    this.groupeditEditService$.insertComment(comment, objecttype).subscribe(result => {
+      this.submitting = false;
+      if (objecttype == 'groups_thread') {
+        this.pageIndex = Math.ceil((this.total + 1) / this.pageSize);
+      }
+      this.getComments();
+      this.commentValue = '';
+      this.replyString = '';
+      this.replyId = '';
+      this._notification.success('评论成功！','')
+    }, error1 => {
+      this.submitting = false;
+      this._notification.error('评论失败！', '')
     })
   }
 
@@ -410,60 +470,5 @@ export class GroupthreadComponent implements OnInit {
         `${error1.error}`)
     })
   }
-  //获取回复的话题
-  /*
-  getMyPost(){
-    this.groupmainlistService$.showMyPost(this.userId).subscribe(result=>{
-      if(this.userId==result.data.userId) {
-        this.postList = result.data;
-      }
-    },error1 => {
-      this._notification.create(
-        'error',
-        '获取回复话题列表失败',
-        `${error1.error}`)
-    }
-    )
-  }
-*/
-//发表回复
 
-  publishReply() {
-    this.groupmainlistService$.addThreadPost(this.userId,this.content).subscribe(result=>{
-      this._notification.create(
-        'success',
-        '回复话题成功',
-        ''
-      )
-    },error1 => {
-        this._notification.create(
-          'error',
-          '回复话题失败',
-          `${error1.error}`)
-      }
-    )
-  }
-
-  handleSubmit(): void {
-    this.submitting = true;
-    const content = this.inputValue;
-    this.inputValue = '';
-    setTimeout(() => {
-      this.submitting = false;
-      this.data= [
-        ...this.data,
-        {
-          ...this.user,
-          content,
-          datetime: new Date(),
-          displayTime: formatDistance(new Date(), new Date())
-        }
-      ].map(e => {
-        return {
-          ...e,
-          displayTime: formatDistance(new Date(), e.datetime)
-        };
-      });
-    }, 800);
-  }
 }

@@ -46,6 +46,7 @@ export class BaseInfoComponent implements OnInit {
         this.isLoading = false;
         this.promptVisable = true;
         this._nzNotificationService.create('success', '保存成功', '基本信息已保存');
+        this.route.navigateByUrl('client/course/'+ this.courseId)
       }, error => {
         this.isLoading = false;
         this.promptVisable = false;
@@ -58,6 +59,7 @@ export class BaseInfoComponent implements OnInit {
 
   constructor(
     private router: ActivatedRoute,
+    private route: Router,
     private fb: FormBuilder,
     private _courseBaseInfoEditService: CourseBaseInfoEditService,
     private _nzNotificationService: NzNotificationService,
@@ -78,6 +80,7 @@ export class BaseInfoComponent implements OnInit {
     this.getAllCategories();
 
   }
+
 
   getAllCategories() {
     this._courseBaseInfoEditService.getAllCategories().subscribe(result => {

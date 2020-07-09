@@ -34,6 +34,7 @@ export class CourseinfComponent implements OnInit {
   joinINf = null;
 
   //各种数据
+  currentcourse = null;
   introduces = null;
   courses = null;
   notes = null;
@@ -43,26 +44,52 @@ export class CourseinfComponent implements OnInit {
   teachers = null;
   studentdata = null;
 
-  constructor(private courseservice: CourseService, 
+  @ViewChild('header', null) HeaderComponent: any
+
+  constructor(private courseservice: CourseService,
     private courseinfservice: CourseInfService,
-    private router: Router, 
-    private activateInfo: ActivatedRoute, 
+    private router: Router,
+    private activateInfo: ActivatedRoute,
     private message: NzMessageService,
-    private notification: NzNotificationService, 
+    private notification: NzNotificationService,
     private testuserservice: TestuserService,
     private courseManagement$: CourseManagementBackHalfService,
-    private coursemanagementService:CourseManagementService) {
+    private coursemanagementService: CourseManagementService) {
   }
 
   ngOnInit() {
+
+
     //获取当前页id
     this.activateInfo.params.subscribe(
       (params: Params) => {
         this.courseid = params["id"];
         this.teachplanId = params["pid"];
-        this.courseinfservice.get_course_isJoin("1",this.courseid).subscribe((res: any) => {
+
+        this.courseinfservice.get_course_isJoin("1", this.courseid).subscribe((res: any) => {
           this.joinINf = res.data;
-          console.log(this.joinINf)
+          if (this.joinINf.courseId!=0&&this.teachplanId == undefined) {
+            this.teachplanId = this.joinINf.courseId;
+            this.reLoadData();
+          }else if(this.teachplanId == undefined){
+            this.courseinfservice.get_teaching_plan(this.courseid).subscribe((res: any) => {
+              this.teachplanId =  res.data[0].id;
+              this.reLoadData();
+            }, error => {
+              this.notification.create(
+                'error',
+                '错误！',
+                `${error}`,
+                { nzDuration: 100 }
+              )
+            });
+          }else if(this.joinINf.courseId!=0&&this.joinINf.courseId != this.teachplanId){
+            this.teachplanId = this.joinINf.courseId;
+            this.reLoadData();
+          }else{
+            this.reLoadData();
+          }
+          
         }, error => {
           this.joinINf = null;
           this.notification.create(
@@ -77,13 +104,8 @@ export class CourseinfComponent implements OnInit {
           'error',
           '发生错误！',
           `${error.error}`)
-      }
-    )
-    //仅测试用
-    //this.user = this.testuserservice.user;
-    this.isJoin = this.testuserservice.isInCourse(this.courseid);
-    //初始化当前页码数据
-    //this.reLoadData();
+      })
+
   }
 
 
@@ -92,9 +114,9 @@ export class CourseinfComponent implements OnInit {
   }
 
   updataload() {
-    this.courseinfservice.get_course_isJoin("1",this.courseid).subscribe((res: any) => {
+    this.courseinfservice.get_course_isJoin("1", this.courseid).subscribe((res: any) => {
       this.joinINf = res.data;
-      console.log(this.joinINf)
+      //this.reLoadData();
     }, error => {
       this.joinINf = null;
       this.notification.create(
@@ -109,15 +131,15 @@ export class CourseinfComponent implements OnInit {
   changeteachplan(id: number) {
     this.teachplanId = id;
     this.navigateByUrl('/client/courseinf/' + this.courseid + '/teachplan/' + id);
-    this.reLoadData();
+    //this.reLoadData();
   }
 
   navigateByUrl(url: string) {
     this.router.navigateByUrl(url)
   }
 
-  preLoadData(){
-    this.coursemanagementService.getMyCourse(this.pageIndex,this.courses.length,"1","learning").subscribe((res: any) => {
+  preLoadData() {
+    this.coursemanagementService.getMyCourse(this.pageIndex, this.courses.length, "1", "learning").subscribe((res: any) => {
       this.setCoursesIntroduce(res);
     }, error => {
       this.notification.create(

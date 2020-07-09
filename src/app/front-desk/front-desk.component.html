@@ -38,14 +38,13 @@
         </ul>
       </li>
 
-      <!-- <li nz-submenu *ngIf="isLogin" nzTitle="管理后台"> -->
-      <li nz-submenu nzTitle="管理后台">
-        <ul>
-          <li nz-menu-item>进入后台</li>
-          <li nz-menu-item>我的教学</li>
-          <li nz-menu-item>我的学习</li>
-        </ul>
-      </li>
+      <li nz-submenu nzTitle="管理后台" *ngIf="isLogin">
+          <ul>
+            <li nz-menu-item (click)="navigateByUrl('/admin')" [style.display]="checkIdentity('SUPER_ADMIN') ? '' : 'none'">我的后台</li>
+            <li nz-menu-item (click)="navigateByUrl('/client/mine/teachingcourse')" [style.display]="checkIdentity('ROLE_TEACHER') ? '' : 'none'">我的教学</li>
+            <li nz-menu-item (click)="navigateByUrl('/client/mine/mycourse')">我的学习</li>
+          </ul>
+        </li>
 
       <li nz-menu-item *ngIf="!isLogin" (click)="login()">登录</li>
       <li nz-menu-item *ngIf="!isLogin" (click)="register()">注册</li>
@@ -105,9 +104,17 @@
 
           <li nz-submenu *ngIf="isLogin" nzTitle="管理后台" class="menu-item">
             <ul>
-              <li nz-menu-item>进入后台</li>
-              <li nz-menu-item>我的教学</li>
-              <li nz-menu-item>我的学习</li>
+              <li 
+                nz-menu-item 
+                (click)="navigateByUrl('/admin')"
+                [style.display]="checkIdentity('SUPER_ADMIN') ? '' : 'none'"
+              >我的后台</li>
+              <li
+                nz-menu-item
+                (click)="navigateByUrl('/client/mine/teachingcourse')"
+                [style.display]="checkIdentity('ROLE_TEACHER') ? '' : 'none'"
+              >我的教学</li>
+              <li nz-menu-item (click)="navigateByUrl('/client/mine/mycourse')">我的学习</li>
             </ul>
           </li>
 

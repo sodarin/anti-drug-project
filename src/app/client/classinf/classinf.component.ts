@@ -98,13 +98,22 @@ export class ClassinfComponent implements OnInit {
     // });
     //仅测试用
     
-  
   }
 
 
-
-  setuser(res: any) {
-    this.user = res;
+  reloadData(){
+    this.classinfservice.get_class_isJoin("1",this.classid).subscribe((res: any) => {
+      this.joinINf = res.data;
+      console.log(this.joinINf)
+    }, error => {
+      this.joinINf = null;
+      this.notification.create(
+        'error',
+        '错误！',
+        `${error}`,
+        { nzDuration: 100 }
+      )
+    });
   }
 
   // setclassNotices(res: any) {

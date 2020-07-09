@@ -19,7 +19,13 @@ export class HomePageComponent implements OnInit {
   user = [];
   message = [];
   course = [];
-  class = [];
+  class = [
+    { title: "1", classroomCategory: "测试班级" },
+    { title: "1", classroomCategory: "测试班级" },
+    { title: "1", classroomCategory: "测试班级" },
+    { title: "1", classroomCategory: "测试班级" },
+    { title: "1", classroomCategory: "测试班级" },
+  ];
   question = [];
   comment = [];
   tag = [];
@@ -99,6 +105,9 @@ export class HomePageComponent implements OnInit {
     this.classManagementService
       .getClassroomList(1, 5, { className: "" })
       .subscribe((data) => {
+        if (this.class != []) {
+          this.class = [];
+        }
         this.class = this.class.concat(data.data);
       });
   }

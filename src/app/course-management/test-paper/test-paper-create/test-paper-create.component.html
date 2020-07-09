@@ -26,7 +26,7 @@
       <nz-form-item>
         <nz-form-label nzSpan="3">生成方式</nz-form-label>
         <nz-form-control nzSpan="21">
-          <nz-radio-group (ngModelChange)="wayChange($event)" [(ngModel)]="way" name="way"
+          <nz-radio-group (ngModelChange)="wayChange($event)" [ngModel]="way" name="way"
             [ngModelOptions]="{standalone: true}">
             <label nz-radio nzValue="随机生成">随机生成</label>
             <label nz-radio nzValue="按难易程度">按难易程度</label>
@@ -69,19 +69,28 @@
             <li *ngFor="let item of questions" cdkDrag>
               <div nz-row>
                 <i nz-icon nzType="drag" nzTheme="outline" class="move drag-icon"></i><span
-                  style="min-width: 85px;display: inline-block;">{{item}}</span>
-                <span class="mlm">题目数量:</span><input type="text" nz-input style="width: 60px;"
-                  formControlName="minQuestion" class="not-allowed" disabled="true"><span
-                  style="min-width: 45px;display: inline-block">/0</span>
+                  style="min-width: 85px;display: inline-block;">{{item.name}}</span>
+                <span *ngIf="questionNum[item.type]==0">
+                  <span class="mlm">题目数量:</span><input type="text" nz-input style="width: 60px;"
+                    formControlName="minQuestion" class="not-allowed" disabled="true"><span
+                    style="min-width: 45px;display: inline-block">{{questionNum[item.type]}}</span>
+                </span>
+
+                <span *ngIf="questionNum[item.type]!=0">
+                  <span class="mlm">题目数量:</span><input type="text" nz-input style="width: 60px;"
+                    formControlName="minQuestion"><span
+                    style="min-width: 45px;display: inline-block">{{questionNum[item.type]}}</span>
+                </span>
+
                 <span>题目分值:</span><input type="text" nz-input style="width: 60px;" class="input-width" value="2">
                 <div style="display: inline-block">
                   <nz-form-control nzErrorTip="请输入不大于2的数值">
-                    <div *ngIf="item=='多选题'" style="display: inline-block;">
+                    <div *ngIf="item.name=='多选题'" style="display: inline-block;">
                       <span class="mlm">漏选分值:</span>
                       <input type="text" nz-input style="width: 50px;" class="input-width" value="0"
                         formControlName="multi_missing">
                     </div>
-                    <div *ngIf="item=='不定项选择题'" style="display: inline-block;">
+                    <div *ngIf="item.name=='不定项选择题'" style="display: inline-block;">
                       <span class="mlm">漏选分值:</span>
                       <input type="text" nz-input style="width: 50px;" class="input-width" value="0"
                         formControlName="indifinite_missing">

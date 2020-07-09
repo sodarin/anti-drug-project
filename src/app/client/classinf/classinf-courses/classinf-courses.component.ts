@@ -46,7 +46,7 @@ export class ClassinfCoursesComponent implements OnInit {
     this.total_course_p_num = res.data.total;
 
     for(var i=0;i<this.courses.length;i++){
-      if (this.courses[i].smallAvatar == "") {
+      if (this.courses[i].smallAvatar == ""||this.courses[i].smallAvatar == undefined) {
         this.courses[i].smallAvatar = "../../../../assets/img/timg.jpg";
       } else if (this.courses[i].smallAvatar.substr(0, 6) == "public") {
         this.courses[i].smallAvatar = "../../../../assets/img/timg.jpg";

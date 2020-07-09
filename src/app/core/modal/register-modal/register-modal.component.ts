@@ -52,6 +52,7 @@ export class RegisterModalComponent implements OnInit {
             this.msg.success('注册成功');
             this.modal.destroy();
           } else {
+            this.msg.error("注册失败");
             console.log('error', error);
           }
         }
