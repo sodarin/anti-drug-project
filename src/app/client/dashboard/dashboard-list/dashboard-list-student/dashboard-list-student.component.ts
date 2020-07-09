@@ -91,8 +91,7 @@ export class DashboardListStudentComponent implements OnInit {
   }
 
   navigateByUrl(id) {
-    // this.router.navigateByUrl("/client/userpage/" + id);
-    this.authService.userInGroupChecker("1").then(res=>{console.log(res);})
+    this.router.navigateByUrl("/client/userpage/" + id);
   }
 
   calculatePeriod(timestamp: number): string {
